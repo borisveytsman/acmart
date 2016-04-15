@@ -3,7 +3,7 @@
 % Copyright 2016, Association for Computing Machinery
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
-% version 1.3 of this license or (at your option) any 
+% version 1.3 of this license or (at your option) any
 % later version.
 % The latest version of the license is in
 %    http://www.latex-project.org/lppl.txt
@@ -13,12 +13,12 @@
 % This work has the LPPL maintenance status `maintained'.
 %
 % The Current Maintainer of this work is Boris Veytsman,
-% <borisv@lk.net> 
+% <borisv@lk.net>
 %
 % This work consists of the file acmart.dtx and the
-% derived file acmart.cls, and 
+% derived file acmart.cls, and
 %
-% \fi 
+% \fi
 % \CheckSum{3040}
 %
 %
@@ -36,21 +36,21 @@
 %%   Commercial at \@     Left bracket  \[     Backslash     \\
 %%   Right bracket \]     Circumflex    \^     Underscore    \_
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%%   Right brace   \}     Tilde         \~} 
+%%   Right brace   \}     Tilde         \~}
 %
-% 
+%
 % \MakeShortVerb{|}
 % \GetFileInfo{acmart.dtx}
 % \newcommand{\progname}[1]{\textsf{#1}}
 % \title{\LaTeX{} Class for \emph{Association for Computing
-% Machinery}\thanks{\copyright 2016, Association for Computing Machinery}} 
+% Machinery}\thanks{\copyright 2016, Association for Computing Machinery}}
 % \author{Boris Veytsman\thanks{%
 % \href{mailto:borisv@lk.net}{\texttt{borisv@lk.net}},
-% \href{mailto:boris@varphi.com}{\texttt{boris@varphi.com}}}} 
+% \href{mailto:boris@varphi.com}{\texttt{boris@varphi.com}}}}
 % \date{\filedate, \fileversion}
 % \maketitle
 % \begin{abstract}
-%   This package provides a class for typesetting publications of 
+%   This package provides a class for typesetting publications of
 %   Association for Computing Machinery.
 % \end{abstract}
 % \tableofcontents
@@ -59,7 +59,7 @@
 %
 %\section{Introduction}
 %\label{sec:intro}
-% 
+%
 % Association for Computing Machinery is the world's largest
 % educational and scientific computing society, which delivers
 % resources that advance computing as a science and a
@@ -79,7 +79,7 @@
 % Live, Mik\TeX\ and other popular \TeX\ distributions.  It is
 % intended to be published in these distributions itself, which
 % minimizes users' efforts in the installation and support of the
-% package.  
+% package.
 %
 %
 %
@@ -94,10 +94,10 @@
 % favorite \TeX\ distribution;  if not, you may want to upgrade.  You
 % may need to upgrade it anyway since the package uses a number
 % relatively recent packages, especially the ones related to the
-% fonts.  
+% fonts.
 %
 % If you decide to install the package yourself, follow the standard
-% rules: 
+% rules:
 % \begin{enumerate}
 % \item Run \progname{latex} on |acmart.ins|.  This will produce the file
 % |acmart.cls|.
@@ -113,7 +113,7 @@
 % As an alternative to items~\ref{item:install} and~\ref{item:update}
 % you can just put the files in the working directory where your
 % |.tex| file is.
-% 
+%
 %
 %
 %\subsection{Invocation and options}
@@ -129,22 +129,22 @@
 % \begin{verbatim}
 % \documentclass[format=acmsmall, screen=true, review=false]{acmart}
 % \end{verbatim}
-% 
+%
 %
 % The option |format| describes the format of the output.  There are
 % several possible values for this option, for example,
 % \begin{verbatim}
 %   \documentclass[format=acmtog]{acmart}
 % \end{verbatim}
-% Actually the words |format=| can be omitted, e.g.
+% Actually the words |format=| can be omitted, e.g.,
 % \begin{verbatim}
 %   \documentclass[acmtog, review=false]{acmart}
 % \end{verbatim}
 % The possible formats are listed in
 % Table~\ref{tab:opts_format}.  Note that formats starting with |acm|
 % are intended for journals and transactions, while formats starting
-% with |sig| are intended for proceedings published as books.  
-% 
+% with |sig| are intended for proceedings published as books.
+%
 % \begin{table}
 %   \centering
 %   \caption{The possible values for the \texttt{format} option}
@@ -153,13 +153,13 @@
 %     \toprule
 %     \normalfont Value & Meaning\\
 %     \midrule
-%     manuscript  & A manuscript. This is the default \\  
+%     manuscript  & A manuscript. This is the default \\
 %   acmsmall & Small format, used for CIE, CSUR, JACM, JDIQ, JEA, JERIC,
 %            JETC, TAAS, TACCESS, TACO, TALG, TALLIP (formerly TALIP), TCPS,
 %            TEAC, TECS, TIIS, TISSEC, TIST, TKDD, TMIS, TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
 %            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOS, TOSEM, TOSN, TRETS,
-%            TSAS, TSLP, TWEB. \\
+%            TSAS, TSLP, TWEB\@. \\
 %           acmlarge  & Large single colummn format, used for
 %          JOCCH, TAP \\
 %            acmtog   & Large double column format, used for
@@ -191,7 +191,7 @@
 % articles.  The option |natbib| is used when the corresponding
 % \BibTeX\ style is based on |natbib|.  The option |anonymous| is used
 % for anonymous review process: all author information becomes
-% obscured.  
+% obscured.
 %
 % \begin{table}
 %   \centering
@@ -201,7 +201,7 @@
 %     \toprule
 %     \normalfont Option & \normalfont Default & Meaning\\
 %     \midrule
-%     review & false & A review version: doublespaced, lines are 
+%     review & false & A review version: doublespaced, lines are
 %     numbered, hyperlinks are colored\\
 %     screen & false & A screen version: hyperlinks are colored\\
 %     natbib & false & Whether to use |natbib| package (see
@@ -211,7 +211,7 @@
 %   \end{tabularx}
 % \end{table}
 %
-% 
+%
 %\subsection{Topmatter commands}
 %\label{sec:ug_topmatter}
 %
@@ -229,7 +229,7 @@
 %
 %
 % The class internally loads |amsart| class, so many top matter
-% commands are inherited from |amsart|~\cite{Downes04:amsart}.  
+% commands are inherited from |amsart|~\cite{Downes04:amsart}.
 %
 % \DescribeMacro{\acmJournal}%
 % The macro \cs{acmJournal}\marg{shortName} sets the name of the
@@ -259,13 +259,13 @@
 %     JEA & ACM Journal of Experimental Algorithmics \\
 %     JERIC & ACM Journal of Educational Resources in Computing\\
 %     JETC & ACM Journal on Emerging Technologies in Computing Systems \\
-%     JOCCH & ACM Journal on Computing and Cultural Heritage \\ 
+%     JOCCH & ACM Journal on Computing and Cultural Heritage \\
 %     TAAS & ACM Transactions on Autonomous and Adaptive Systems\\
 %     TACCESS & ACM Transactions on Accessible Computing\\
 %     TACO & ACM Transactions on Architecture and Code Optimization \\
 %     TALG & ACM Transactions on Algorithms \\
 %     TALLIP & ACM Transactions on Asian and Low-Resource Language
-%     Information Processing\\ 
+%     Information Processing\\
 %     TAP & ACM Transactions on Applied Perception \\
 %     TCPS & ACM Transactions on Cyber-Physical Systems\\
 %     TEAC & ACM Transactions on Economics and Computation\\
@@ -287,9 +287,9 @@
 %     TOIT & ACM Transactions on Internet Technology\\
 %     TOMACS & ACM Transactions on Modeling and Computer Simulation \\
 %     TOMM  & ACM Transactions on Multimedia Computing, Communications
-%     and Applications \\ 
+%     and Applications \\
 %     TOMPECS & ACM Transactions on Modeling and Performance Evaluation
-%     of Computing Systems\\ 
+%     of Computing Systems\\
 %     TOMS & ACM Transactions on Mathematical Software\\
 %     TOPC & ACM Transactions on Parallel Computing\\
 %     TOPLAS & ACM Transactions on Programming Languages and Systems\\
@@ -306,7 +306,7 @@
 %
 % It is expected that this command is inserted by the author of the
 % manuscript when she decides to which journal to submit the
-% manuscript.  
+% manuscript.
 %
 % \DescribeMacro{\acmConference}%
 % The macro
@@ -339,14 +339,14 @@
 % The mandatory argument is the full title of the article.  The
 % optional argument, if present, defines the shorter version of the
 % title for running heads.  If the optional argument is absent, the
-% full title is used instead.  
-% 
+% full title is used instead.
+%
 % It is expected that this command is inserted by the author of the
-% manuscript. 
+% manuscript.
 %
 % \DescribeMacro{\subtitle}%
 % Besides title, ACM classes allow subtitle, set with the
-% \cs{subtitle}\marg{subtitle} macro.  
+% \cs{subtitle}\marg{subtitle} macro.
 %
 % \DescribeMacro{\author}%
 % \DescribeMacro{\affiliation}%
@@ -374,7 +374,7 @@
 % \email{author@nsw.edu.au}
 % \author{A. N. Other}
 % \affiliation{University of Pennsylvania, USA and University of New South
-% Wales, Australia} 
+% Wales, Australia}
 % \email{other@upenn.edu}
 % \end{verbatim}
 % For \emph{conferences} the affiliations should \emph{always} be
@@ -382,12 +382,12 @@
 %
 % Note that old ACM conference formats did not allow for more than six
 % authors and required some efforts from the authors to achieve
-% alignment.  The new format is much better in this.   
+% alignment.  The new format is much better in this.
 %
 %
 %
 % It is expected that these commands are inserted by the author of the
-% manuscript. 
+% manuscript.
 %
 % \DescribeMacro{\thanks}
 % Like \progname{amsart} (and unlike standard \LaTeX{}),
@@ -395,17 +395,17 @@
 % commands |\title| and |\author|.  Example:
 % \begin{verbatim}
 % \thanks{This work is supported by the Widget Corporation Grant
-% \#312-001.\\ 
-% Author's address: D. Pineo, Kingsbury Hall, 33 Academic Way, Durham, 
-% N.H. 03824; email: dspineo@comcast.net; Colin Ware, Jere A. Chase 
-% Ocean Engineering Lab, 24 Colovos Road, Durham, NH 03824; email: 
-% cware@ccom.unh.edu;  
+% \#312-001.\\
+% Author's address: D. Pineo, Kingsbury Hall, 33 Academic Way, Durham,
+% N.H. 03824; email: dspineo@comcast.net; Colin Ware, Jere A. Chase
+% Ocean Engineering Lab, 24 Colovos Road, Durham, NH 03824; email:
+% cware@ccom.unh.edu;
 % Sean Fogarty, (Current address) NASA Ames Research Center, Moffett
-% Field, California 94035.} 
+% Field, California 94035.}
 % \end{verbatim}
-% 
+%
 % It is expected that this command is inserted by the author of the
-% manuscript. 
+% manuscript.
 %
 % \DescribeMacro{\titlenote}%
 % \DescribeMacro{\subtitlenote}%
@@ -422,7 +422,7 @@
 % \author{A. U. Thor}
 % \authornote{This is an authornote}
 % \end{verbatim}
-% 
+%
 %
 % \DescribeMacro{\acmVolume}%
 % \DescribeMacro{\acmNumber}%
@@ -441,17 +441,17 @@
 % \acmYear{2010}
 % \acmMonth{3}
 % \end{verbatim}
-% 
+%
 % \DescribeMacro{\articleSeq}%
 % The articles in the same issue of a journal have \emph{sequential
 % number}.  It is used to position black blob in same formats.  By
 % default it is the same as article number, but the command
 % \cs{articleSeq}{sequence number} can be used to change it:
 % \begin{verbatim}
-% \acmArticle{39} % The sequence number will be 39 by default 
+% \acmArticle{39} % The sequence number will be 39 by default
 % \articleSeq{5}  % We rededine it to 5
 % \end{verbatim}
-% 
+%
 %
 %
 % \DescribeMacro{\acmPrice}%
@@ -460,16 +460,16 @@
 % \begin{verbatim}
 % \acmPrice{25.00}
 % \end{verbatim}
-% 
+%
 %
 % \DescribeMacro{\isbn}%
 % Book-like volumes have ISBN numbers attached to them.  The macro
 % \cs{isbn}\marg{ISBN} sets it.  Normally it is set by the
 % typesetter, for example,
 % \begin{verbatim}
-% \isbn{978-1-4503-3916-2} 
+% \isbn{978-1-4503-3916-2}
 % \end{verbatim}
-% 
+%
 %
 % \DescribeMacro{\doi}%
 % The macro \cs{doi}{DOI} sets the DOI number of the article, for
@@ -477,15 +477,15 @@
 % \begin{verbatim}
 % \doi{http://doi.acm.org/10.1145/9999997.9999999}
 % \end{verbatim}
-% It is normally set by the typesetter.  
+% It is normally set by the typesetter.
 %
-% 
+%
 %
 % \DescribeMacro{\startPage}%
 % The macro \cs{startPage}\marg{page} sets the first page of the
-% article in the journal or book.  It is used by the typesetter.  
+% article in the journal or book.  It is used by the typesetter.
 %
-% 
+%
 % \DescribeMacro{\terms}%
 % \DescribeMacro{\keywords}%
 % The macros \cs{terms}\marg{term, term,\ldots} and
@@ -497,15 +497,15 @@
 % \keywords{wireless sensor networks, media access control,
 % multi-channel, radio interference, time synchronization}
 % \end{verbatim}
-% 
+%
 % \DescribeEnv{CCSXML}%
-% \DescribeMacro{\ccsdesc}% 
+% \DescribeMacro{\ccsdesc}%
 % ACM publications are classified according to the ACM Computing
 % Classification Scheme (CCS).  CCS codes are used both in the typeset
 % version of the publications \emph{and}  in the metadata in the various
 % databases.  Therefore you need to provide both \TeX\ commands and XML
 % metadata with the paper.
-% 
+%
 % The tool at \url{http://dl.acm.org/ccs.cfm} can be used to generate
 % CCS codes.  After you select the topics, click on ``Generate CCS
 % codes'' to get the result like the following:
@@ -532,15 +532,15 @@
 %   <concept_desc>Networks~Network reliability</concept_desc>
 %   <concept_significance>100</concept_significance>
 %  </concept>
-% </ccs2012>  
+% </ccs2012>
 % \end{CCSXML}
-% 
+%
 % \ccsdesc[500]{Computer systems organization~Embedded systems}
 % \ccsdesc[300]{Computer systems organization~Redundancy}
 % \ccsdesc{Computer systems organization~Robotics}
 % \ccsdesc[100]{Networks~Network reliability}
 % \end{verbatim}
-% 
+%
 % You need to just copy this code and paste it in your paper anywhere
 % before \verb|\maketitle|.
 %
@@ -553,7 +553,7 @@
 % copyright status of the paper, for example,
 % \verb|\setcopyright{acmcopyright}|.  The possible values for this
 % command are listed in Table~\ref{tab:setcopyright}.
-% 
+%
 % \begin{table}
 %   \centering
 %   \caption{Parameters for \texttt{\textbackslash setcopyright} command}
@@ -567,7 +567,7 @@
 %     \texttt{acmcopyright} & The authors transfer the copyright to ACM
 %     (the ``traditional''   choice).\\
 %     \texttt{acmlicensed} &  The authors retain the copyright but
-%     license the publication rights  to ACM.  \\
+%     license the publication rights  to ACM\@.  \\
 %     \texttt{rightsretained} & The authors retain the copyright and
 %     publication rights to  themselves or somebody else.  \\
 %     \texttt{usgov} & All the authors are employees of the US
@@ -583,21 +583,21 @@
 % \end{table}
 % The ACM submission software should generate the right command for you
 % to paste into your file.
-% 
+%
 %
 % \DescribeMacro{\copyrightyear}%
 % Each copyright statement must have the year of copyright.  By
 % default it is the same as \cs{acmYear}, but you can override this
-% decision using the macro \cs{copyrightyear}, e.g.
+% decision using the macro \cs{copyrightyear}, e.g.,
 % \begin{verbatim}
 % \acmYear{2016}
 % \copyrightyear{2015}
 % \end{verbatim}
-% 
+%
 %
 % \DescribeEnv{abstract}%
 % The environment |abstract| must \emph{precede} \cs{maketitle}
-% command.  Again, this is different from the standard \LaTeX.  
+% command.  Again, this is different from the standard \LaTeX.
 %
 %
 % \DescribeEnv{teaserfigure}%
@@ -613,7 +613,7 @@
 %   \label{fig:teaser}
 % \end{teaserfigure}
 % \end{verbatim}
-% 
+%
 %
 % \DescribeMacro{\settopmatter}%
 % Some information in the top matter is printed for certain journals
@@ -624,7 +624,7 @@
 % \begin{verbatim}
 % \settopmatter{printbib=false, printccs=true}
 % \end{verbatim}
-% 
+%
 %
 % \begin{table}
 %   \centering
@@ -652,29 +652,29 @@
 % \received[revised]{March 2009}
 % \received[accepted]{June 2009}
 % \end{verbatim}
-% 
+%
 %
 % \DescribeMacro{\maketitle}%
 % The macro \cs{maketitle} must be the last command in the top matter
-% group:  i.e. it must follow the commands defined in this section.  
-% 
+% group:  i.e., it must follow the commands defined in this section.
+%
 %
 % \DescribeMacro{\shortauthors}%
 % \emph{After} the command \cs{maketitle} the macro \cs{shortauthors}
 % stores the names of the authors for the running head.  You may
-% redefine it if the list of author's name is too long, e.g.
+% redefine it if the list of author's name is too long, e.g.,
 % \begin{verbatim}
 % \maketitle
 % \renewcommand{\shortauthors}{Zhou et. al.}
 % \end{verbatim}
-% 
+%
 %
 %\subsection{Algorithms}
 %\label{sec:ug_algorithms}
 %
 % There now several good packages for typesetting
 % algorithms~\cite{Fiorio15, Brito09, Heinz15}, and the authors are
-% now free to choose their favorite one.  
+% now free to choose their favorite one.
 %
 %
 %
@@ -709,9 +709,9 @@
 % \item For |figure| in two-column mode---\cs{columnwidth}.
 % \item For |marginfigure|--\cs{marginparwidth}.
 % \item For |figure*| in SIGCHI Extended
-% abstracts---\cs{fulltextwidth}. 
+% abstracts---\cs{fulltextwidth}.
 % \end{enumerate}
-% 
+%
 % \end{enumerate}
 %
 % It is strongly recommended to use the package booktabs~\cite{Fear05}
@@ -720,7 +720,7 @@
 % \item Never, ever use vertical rules.
 % \item Never use double rules.
 % \end{enumerate}
-% It is also a good idea not to overuse horizontal rules.  
+% It is also a good idea not to overuse horizontal rules.
 %
 % For table \emph{footnotes} you have several options described in TeX
 % FAQ~\cite{TeXFAQ}. The simplest one is to use \cs{minipage}
@@ -734,7 +734,7 @@
 % \begin{tabular}{ll}
 %   \toprule
 %   TERRAIN\footnote{This is a table footnote. This is a
-%     table footnote. This is a table footnote.}   & 
+%     table footnote. This is a table footnote.}   &
 %     (200\,m$\times$200\,m) Square\\
 %   Node Number     & 289\\
 %   Node Placement  & Uniform\\
@@ -752,12 +752,12 @@
 % \footnotesize\emph{Source:} This is a table
 %  sourcenote. This is a table sourcenote. This is a table
 %  sourcenote.
-% 
+%
 %  \emph{Note:} This is a table footnote.
 % \end{minipage}
 % \end{table}
 % \end{verbatim}
-% 
+%
 % \DescribeEnv{sidebar}%
 % \DescribeEnv{marginfigure}%
 % \DescribeEnv{margintable}%
@@ -768,7 +768,7 @@
 % \item[marginfigure:] a figure on the margin
 % \item[margintable:] a table on the margin
 % \end{description}
-% 
+%
 %
 %\subsection{Theorems}
 %\label{sec:ug_theorems}
@@ -776,16 +776,16 @@
 % ACM classes define two theorem styles and several pre-defined
 % theorem environments:
 % \begin{description}
-% \item[acmplain:] this is  the style used for 
+% \item[acmplain:] this is  the style used for
 % |theorem|,
 % |conjecture|,
 % |proposition|,
 % |lemma|,
 % |corollary|, and
 % \item[acmdefinition:] this is the style used for |example| and
-% |definition|. 
+% |definition|.
 % \end{description}
-% 
+%
 %
 %
 %\subsection{Online-only and offline-only material}
@@ -801,7 +801,7 @@
 % option is set to |false|.  For example
 % \begin{verbatim}
 % \section{Supplementary materials}
-% 
+%
 % \begin{printonly}
 %   This section is included in the online version of the paper.
 % \end{printonly}
@@ -811,7 +811,7 @@
 % \end{screenonly}
 %
 % \end{verbatim}
-% 
+%
 %
 %\subsection{Bibliography}
 %\label{sec:ug_bibliography}
@@ -821,7 +821,7 @@
 % \cs{citep} and \cs{citeauthor} are automatically supported.
 %
 % ACM journals use |natbib| and the style
-% |ACM-Reference-Format-Journals|.  
+% |ACM-Reference-Format-Journals|.
 %
 % ACM conference proceedings do \emph{not} use |natbib|.  SIGGRAPH
 % conferences use |acmsiggraph| style.  SIGCHI conferences use
@@ -836,13 +836,13 @@
 % The author should consult specific instructions about the
 % style to choose.
 %
-% 
+%
 %
 % \StopEventually{
 % \clearpage
 % \bibliography{acmart}
 % \bibliographystyle{unsrt}}
-% 
+%
 % \clearpage
 %
 %
@@ -865,7 +865,7 @@
 Computing Machinery]
 %    \end{macrocode}
 %
-% \changes{v1.00}{2016/04/14}{First released version}  
+% \changes{v1.00}{2016/04/14}{First released version}
 
 %
 % And the driver code:
@@ -885,7 +885,7 @@ Computing Machinery]
 \begin{document}
   \DocInput{acmart.dtx}
 \end{document}
-%</gobble> 
+%</gobble>
 %<*class>
 \def\@classname{acmart}
 %    \end{macrocode}
@@ -897,15 +897,15 @@ Computing Machinery]
 %    \begin{macrocode}
 \RequirePackage{xkeyval}
 %    \end{macrocode}
-% 
+%
 % \begin{macro}{format}
 %   The possible formats
 %    \begin{macrocode}
 \define@choicekey*+{acmart.cls}{format}[\ACM@format\ACM@format@nr]{%
-  manuscript, acmsmall, acmlarge, acmtog, sigconf, siggraph, 
+  manuscript, acmsmall, acmlarge, acmtog, sigconf, siggraph,
   sigplan, sigchi, sigchi-a}[manuscript]{}{%
   \ClassError{\@classname}{The option format must be manuscript,
-    acmsmall, acmlarge, acmtog, sigconf, siggraph, 
+    acmsmall, acmlarge, acmtog, sigconf, siggraph,
     sigplan, sigchi or sigchi-a}}
 \def\@DeclareACMFormat#1{\DeclareOptionX{#1}{\setkeys{acmart.cls}{format=#1}}}
 \@DeclareACMFormat{manuscript}
@@ -919,7 +919,7 @@ Computing Machinery]
 \@DeclareACMFormat{sigchi-a}
 \ExecuteOptionsX{format}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@screen}
@@ -934,7 +934,7 @@ Computing Machinery]
     false}}
 \ExecuteOptionsX{screen=false}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -950,7 +950,7 @@ Computing Machinery]
     false}}
 \ExecuteOptionsX{review=false}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -967,7 +967,7 @@ Computing Machinery]
     false}}
 \ExecuteOptionsX{natbib=false}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{if@ACM@anonymous}
@@ -982,7 +982,7 @@ Computing Machinery]
     false}}
 \ExecuteOptionsX{anonymous=false}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\ACM@fontsize}
@@ -994,9 +994,9 @@ Computing Machinery]
 \DeclareOptionX{11pt}{\edef\ACM@fontsize{\CurrentOption}}
 \DeclareOptionX{12pt}{\edef\ACM@fontsize{\CurrentOption}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 
 %
 %    \begin{macrocode}
@@ -1015,7 +1015,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \newif\if@ACM@manuscript
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@journal}
@@ -1023,7 +1023,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \newif\if@ACM@journal
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@sigchiamode}
@@ -1032,7 +1032,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \newif\if@ACM@sigchiamode
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -1066,7 +1066,7 @@ Computing Machinery]
   \@ACM@sigchiamodetrue
 \fi
 %    \end{macrocode}
-% 
+%
 %
 %\subsection{Loading base class and package}
 %\label{sec:loading}
@@ -1100,19 +1100,19 @@ Computing Machinery]
 \LoadClass[\ACM@fontsize, reqno]{amsart}
 \RequirePackage{microtype}
 %    \end{macrocode}
-% 
+%
 %
 % We need |totpages| package to calculate the number of pages
 %    \begin{macrocode}
 \RequirePackage{totpages}
 %    \end{macrocode}
-% 
+%
 % The |amsmath| \cs{collect@body} is defined using \cs{def}.  We load
 % |environ| to access the \cs{long} version of the command
 %    \begin{macrocode}
 \RequirePackage{environ}
 %    \end{macrocode}
-% 
+%
 % We use |setspace| for doublespacing
 %    \begin{macrocode}
 \if@ACM@manuscript
@@ -1120,7 +1120,7 @@ Computing Machinery]
 \onehalfspacing
 \fi
 %    \end{macrocode}
-% 
+%
 % Citations:
 %    \begin{macrocode}
 \if@ACM@natbib
@@ -1128,7 +1128,7 @@ Computing Machinery]
   \bibpunct[, ]{[}{]}{;}{a}{}{,}
 \fi
 %    \end{macrocode}
-% 
+%
 % Before we call |hyperref|, we redefine \cs{startsection} commands to
 % their \LaTeX\ defaults, since |amsart| ones are too AMS-specific.
 % We need to do this early since we want |hyperref| to have a chance
@@ -1220,7 +1220,7 @@ Computing Machinery]
   \fi
   \@xsect{#3}}
 %    \end{macrocode}
-% 
+%
 %
 % And |hyperref|
 %    \begin{macrocode}
@@ -1238,7 +1238,7 @@ Computing Machinery]
   \hypersetup{hidelinks}
 \fi
 %    \end{macrocode}
-% 
+%
 % Bibliography mangling
 %    \begin{macrocode}
 \if@ACM@natbib
@@ -1258,7 +1258,7 @@ Computing Machinery]
   \providecommand\citename[1]{#1}
 \fi
 %    \end{macrocode}
-% 
+%
 % Graphics and color
 %    \begin{macrocode}
 \RequirePackage{graphicx, xcolor}
@@ -1272,13 +1272,13 @@ Computing Machinery]
 \RequirePackage{geometry}
 \ifcase\ACM@format@nr
 \relax % manuscript
-   \geometry{letterpaper}% 
+   \geometry{letterpaper}%
 \or% acmsmall
    \geometry{twoside=true,
      includeheadfoot, head=1pc, foot=2pc,
      paperwidth=6.75in, paperheight=10in,
      top=58pt, bottom=44pt, inner=46pt, outer=46pt
-   }% 
+   }%
 \or % acmlarge
    \geometry{twoside=true, head=1pc, foot=2pc,
      paperwidth=8.5in, paperheight=11in,
@@ -1318,15 +1318,15 @@ Computing Machinery]
 \or % sigchi-a
    \geometry{twoside=false,
      paperwidth=11in, paperheight=8.5in,
-     includeheadfoot, marginparsep=72pt, 
+     includeheadfoot, marginparsep=72pt,
      marginparwidth=170pt, columnsep=20pt,
      top=72pt, bottom=72pt, left=314pt, right=72pt
-     }% 
+     }%
      \@mparswitchfalse
      \reversemarginpar
 \fi
 %    \end{macrocode}
-% 
+%
 %
 % \begin{macro}{\parindent}
 % \begin{macro}{\parskip}
@@ -1347,7 +1347,7 @@ Computing Machinery]
 \or % sigchi-a
 \fi
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 % \end{macro}
 %
@@ -1357,7 +1357,7 @@ Computing Machinery]
 \def\footnoterule{\kern-3\p@
   \hrule \@width \columnwidth \kern 2.6\p@}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\endminipage}
@@ -1377,7 +1377,7 @@ Computing Machinery]
   \expandafter\@iiiparbox\@mpargs{\unvbox\@tempboxa}}
 
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@makefntext}
@@ -1385,9 +1385,9 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@makefntext{\noindent\@makefnmark}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 % \begin{macro}{\@footnotetext}
 %   In sigchi-a mode our footnotes are on the margins!
 %    \begin{macrocode}
@@ -1404,7 +1404,7 @@ Computing Machinery]
     \color@endgroup}}%
 \fi
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %\subsection{Fonts}
@@ -1416,28 +1416,28 @@ Computing Machinery]
 \usepackage[libertine]{newtxmath}
 \usepackage[varqu]{zi4}
 %    \end{macrocode}
-% 
+%
 % The sigchi abstract are sans serif:
 %    \begin{macrocode}
 \if@ACM@sigchiamode
   \renewcommand{\familydefault}{\sfdefault}
 \fi
 %    \end{macrocode}
-% 
+%
 %
 %\subsection{Floats}
 %\label{sec:floats}
-% 
+%
 % We use |caption| package
 %    \begin{macrocode}
 \RequirePackage{caption, float}
 \captionsetup[table]{position=top}
 \if@ACM@journal
-  \captionsetup{labelfont={sf, small}, 
+  \captionsetup{labelfont={sf, small},
     textfont={sf, small},  margin=\z@}
   \captionsetup[figure]{name={Fig.}}
 \else
-  \captionsetup{labelfont={bf}, 
+  \captionsetup{labelfont={bf},
     textfont={bf}, labelsep=colon, margin=\z@}
   \ifcase\ACM@format@nr
   \relax % manuscript
@@ -1449,15 +1449,15 @@ Computing Machinery]
     \captionsetup{textfont={it}}
   \or % sigplan
   \or % sigchi
-    \captionsetup[figure]{labelfont={bf, small}, 
+    \captionsetup[figure]{labelfont={bf, small},
       textfont={bf, small}}
   \or % sigchi-a
-    \captionsetup[figure]{labelfont={bf, small}, 
+    \captionsetup[figure]{labelfont={bf, small},
       textfont={bf, small}}
   \fi
 \fi
 %    \end{macrocode}
-% 
+%
 % \begin{macro}{sidebar}
 %   The sidebar environment:
 %    \begin{macrocode}
@@ -1465,52 +1465,52 @@ Computing Machinery]
 \floatname{sidebar}{Sidebar}
 \renewenvironment{sidebar}{\Collect@Body\@sidebar}{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 % \begin{macro}{\@sidebar}
 %   The processing of the saved text
 %    \begin{macrocode}
 \long\def\@sidebar#1{\bgroup\captionsetup{type=sidebar}%
   \marginpar{\small#1}\egroup}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 % \begin{macro}{marginfigure}
 %   The marginfigure environment:
 %    \begin{macrocode}
 \newenvironment{marginfigure}{\Collect@Body\@marginfigure}{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 % \begin{macro}{\@marginfigure}
 %   The processing of the saved text
 %    \begin{macrocode}
 \long\def\@marginfigure#1{\bgroup\captionsetup{type=figure}%
   \marginpar{\small#1}\egroup}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 % \begin{macro}{margintable}
 %   The margintable environment:
 %    \begin{macrocode}
 \newenvironment{margintable}{\Collect@Body\@margintable}{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 % \begin{macro}{\@margintable}
 %   The processing of the saved text
 %    \begin{macrocode}
 \long\def\@margintable#1{\bgroup\captionsetup{type=table}%
   \marginpar{\small#1}\egroup}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 %
 % SIGCHI extended abstract provides an interesting possibility to push
 % into the margin.  Here we use |figure*| and |table*| for this.
@@ -1520,9 +1520,9 @@ Computing Machinery]
 \newdimen\fulltextwidth
 \fulltextwidth=\dimexpr(\textwidth+\marginparwidth+\marginparsep)
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 % \begin{macro}{\@dblfloat}
 %   We redefine the double float command.  First, we make the size
 %   bigger.  Second, our default position is going to be |tp| (to give
@@ -1535,7 +1535,7 @@ Computing Machinery]
   \@float}
 \fi
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\end@dblfloat}
@@ -1546,25 +1546,25 @@ Computing Machinery]
     \end@float\egroup}
 \fi
 %    \end{macrocode}
-% 
+%
 % \end{macro}
 %
 % \begin{macro}{\@endwidefloatbox}
-%   This is the end of a wide box - we basically move everything 
+%   This is the end of a wide box - we basically move everything
 %   to the left
 %    \begin{macrocode}
 \def\@endwidefloatbox{%
-  \par\vskip\z@skip    
+  \par\vskip\z@skip
   \@minipagefalse
   \outer@nobreak
-  \egroup                
+  \egroup
   \color@endbox
-  \global\setbox\@currbox=\vbox{\moveleft 
+  \global\setbox\@currbox=\vbox{\moveleft
     \dimexpr(\fulltextwidth-\textwidth)\box\@currbox}%
   \wd\@currbox=\textwidth
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %\subsection{Top matter data}
@@ -1623,23 +1623,23 @@ Computing Machinery]
   TWEB%
 }{%
 \ifcase\@journalCode@nr
-\relax % CIE 
+\relax % CIE
   \def\@journalName{ACM Computers in Entertainment}%
   \def\@journalNameShort{ACM Comput. Entertain.}%
   \def\@permissionCodeOne{1544-3574}%
-\or % CSUR 
+\or % CSUR
   \def\@journalName{ACM Computing Surveys}%
   \def\@journalNameShort{ACM Comput. Surv.}%
   \def\@permissionCodeOne{0360-0300}%
-\or % JACM 
+\or % JACM
   \def\@journalName{Journal of the ACM}%
   \def\@journalNameShort{J. ACM}%
   \def\@permissionCodeOne{0004-5411}%
-\or % JDIQ 
+\or % JDIQ
   \def\@journalName{ACM Journal of Data and Information Quality}%
   \def\@journalNameShort{ACM J. Data Inform. Quality}%
   \def\@permissionCodeOne{1936-1955}%
-\or % JEA 
+\or % JEA
   \def\@journalName{ACM Journal of Experimental Algorithmics}%
   \def\@journalNameShort{ACM J. Exp. Algor.}%
   \def\@permissionCodeOne{1084-6654}%
@@ -1647,151 +1647,151 @@ Computing Machinery]
   \def\@journalName{ACM Journal of Educational Resources in Computing}%
   \def\@journalNameShort{ACM J. Edu. Resources in Comput.}%
   \def\@permissionCodeOne{1073-0516}%
-\or % JETC 
+\or % JETC
   \def\@journalName{ACM Journal on Emerging Technologies in Computing Systems}%
   \def\@journalNameShort{ACM J. Emerg. Technol. Comput. Syst.}%
   \def\@permissionCodeOne{1550-4832}%
-\or % JOCCH 
-  \def\@journalName{ACM Journal on Computing and Cultural Heritage}% 
-  \def\@journalName{ACM J. Comput. Cult. Herit.}% 
-\or % TAAS 
+\or % JOCCH
+  \def\@journalName{ACM Journal on Computing and Cultural Heritage}%
+  \def\@journalName{ACM J. Comput. Cult. Herit.}%
+\or % TAAS
   \def\@journalName{ACM Transactions on Autonomous and Adaptive Systems}%
   \def\@journalNameShort{ACM Trans. Autonom. Adapt. Syst.}%
   \def\@permissionCodeOne{1556-4665}%
-\or % TACCESS 
+\or % TACCESS
   \def\@journalName{ACM Transactions on Accessible Computing}%
   \def\@journalNameShort{ACM Trans. Access. Comput.}%
   \def\@permissionCodeOne{1936-7228}%
-\or % TACO 
+\or % TACO
   \def\@journalName{ACM Transactions on Architecture and Code Optimization}%
-\or % TALG 
+\or % TALG
   \def\@journalName{ACM Transactions on Algorithms}%
   \def\@journalNameShort{ACM Trans. Algor.}%
   \def\@permissionCodeOne{1549-6325}%
-\or % TALLIP 
-  \def\@journalName{ACM Transactions on Asian and Low-Resource Language Information Processing}% 
+\or % TALLIP
+  \def\@journalName{ACM Transactions on Asian and Low-Resource Language Information Processing}%
   \def\@journalNameShort{ACM Trans. Asian Low-Resour. Lang. Inf. Process.}%
   \def\@permissionCodeOne{2375-4699}%
-\or % TAP 
+\or % TAP
   \def\@journalName{ACM Transactions on Applied Perception}%
-\or % TCPS 
+\or % TCPS
   \def\@journalName{ACM Transactions on Cyber-Physical Systems}%
-\or % TEAC 
+\or % TEAC
   \def\@journalName{ACM Transactions on Economics and Computation}%
-\or % TECS 
+\or % TECS
   \def\@journalName{ACM Transactions on Embedded Computing Systems}%
   \def\@journalNameShort{ACM Trans. Embedd. Comput. Syst.}%
   \def\@permissionCodeOne{1539-9087}%
-\or % TIIS 
+\or % TIIS
   \def\@journalName{ACM Transactions on Interactive Intelligent Systems}%
   \def\@journalNameShort{ACM Trans. Interact. Intell. Syst.}%
   \def\@permissionCodeOne{2160-6455}%
-\or % TISSEC 
+\or % TISSEC
   \def\@journalName{ACM Transactions on Information and System Security}%
   \def\@journalNameShort{ACM Trans. Info. Syst. Sec.}%
   \def\@permissionCodeOne{1094-9224}%
-\or % TIST 
+\or % TIST
   \def\@journalName{ACM Transactions on Intelligent Systems and Technology}%
   \def\@journalNameShort{ACM Trans. Intell. Syst. Technol.}%
   \def\@permissionCodeOne{2157-6904}%
-\or % TKDD 
+\or % TKDD
   \def\@journalName{ACM Transactions on Knowledge Discovery from Data}%
   \def\@journalNameShort{ACM Trans. Knowl. Discov. Data.}%
   \def\@permissionCodeOne{1556-4681}%
-\or % TMIS 
+\or % TMIS
   \def\@journalName{ACM Transactions on Management Information Systems}%
   \def\@journalNameShort{ACM Trans. Manag. Inform. Syst.}%
   \def\@permissionCodeOne{2158-656X}%
-\or % TOCE 
+\or % TOCE
   \def\@journalName{ACM Transactions on Computing Education}%
   \def\@journalNameShort{ACM Trans. Comput. Educ.}%
   \def\@permissionCodeOne{1946-6226}%
-\or % TOCHI 
+\or % TOCHI
   \def\@journalName{ACM Transactions on Computer-Human Interaction}%
   \def\@journalNameShort{ACM Trans. Comput.-Hum. Interact.}%
   \def\@permissionCodeOne{1073-0516}%
-\or % TOCL 
+\or % TOCL
   \def\@journalName{ACM Transactions on Computational Logic}%
   \def\@journalNameShort{ACM Trans. Comput. Logic}%
   \def\@permissionCodeOne{1529-3785}%
-\or % TOCS 
+\or % TOCS
   \def\@journalName{ACM Transactions on Computer Systems}%
   \def\@journalNameShort{ACM Trans. Comput. Syst.}%
   \def\@permissionCodeOne{0734-2071}%
-\or % TOCT 
+\or % TOCT
   \def\@journalName{ACM Transactions on Computation Theory}%
   \def\@journalNameShort{ACM Trans. Comput. Theory}%
   \def\@permissionCodeOne{1942-3454}%
-\or % TODAES 
+\or % TODAES
   \def\@journalName{ACM Transactions on Design Automation of Electronic Systems}%
   \def\@journalNameShort{ACM Trans. Des. Autom. Electron. Syst.}%
   \def\@permissionCodeOne{1084-4309}%
-\or % TODS 
+\or % TODS
   \def\@journalName{ACM Transactions on Database Systems}%
   \def\@journalNameShort{ACM Trans. Datab. Syst.}%
   \def\@permissionCodeOne{0362-5915}%
-\or % TOG 
+\or % TOG
   \def\@journalName{ACM Transactions on Graphics}%
   \def\@journalNameShort{ACM Trans. Graph.}%
   \def\@permissionCodeOne{0730-0301}
-\or % TOIS 
+\or % TOIS
   \def\@journalName{ACM Transactions on Information Systems}%
   \def\@journalName{ACM Transactions on Information Systems}%
   \def\@permissionCodeOne{1046-8188}%
-\or % TOIT 
+\or % TOIT
   \def\@journalName{ACM Transactions on Internet Technology}%
   \def\@journalNameShort{ACM Trans. Internet Technol.}%
   \def\@permissionCodeOne{1533-5399}%
-\or % TOMACS 
+\or % TOMACS
   \def\@journalName{ACM Transactions on Modeling and Computer Simulation}%
   \def\@journalName{ACM Transactions on Modeling and Computer Simulation}%
   \def\@journalNameShort{ACM Trans. Model. Comput. Simul.}%
-\or % TOMM  
-  \def\@journalName{ACM Transactions on Multimedia Computing, Communications and Applications}% 
+\or % TOMM
+  \def\@journalName{ACM Transactions on Multimedia Computing, Communications and Applications}%
   \def\@journalNameShort{ACM Trans. Multimedia Comput. Commun. Appl.}%
   \def\@permissionCodeOne{1551-6857}%
   \def\@permissionCodeTwo{0100}%
-\or % TOMPECS 
-  \def\@journalName{ACM Transactions on Modeling and Performance Evaluation of Computing Systems}% 
+\or % TOMPECS
+  \def\@journalName{ACM Transactions on Modeling and Performance Evaluation of Computing Systems}%
   \def\@journalNameShort{ACM Trans. Model. Perform. Eval. Comput. Syst.}%
   \def\@permissionCodeOne{2376-3639}%
-\or % TOMS 
+\or % TOMS
   \def\@journalName{ACM Transactions on Mathematical Software}%
   \def\@journalNameShort{ACM Trans. Math. Softw.}%
   \def\@permissionCodeOne{0098-3500}%
-\or % TOPC 
+\or % TOPC
   \def\@journalName{ACM Transactions on Parallel Computing}%
   \def\@journalNameShort{ACM Trans. Parallel Comput.}%
   \def\@permissionCodeOne{1539-9087}%
-\or % TOPLAS 
+\or % TOPLAS
   \def\@journalName{ACM Transactions on Programming Languages and Systems}%
   \def\@journalNameShort{ACM Trans. Program. Lang. Syst.}%
   \def\@permissionCodeOne{0164-0925}%
-\or % TOS 
+\or % TOS
   \def\@journalName{ACM Transactions on Storage}%
   \def\@journalNameShort{ACM Trans. Storage}%
   \def\@permissionCodeOne{1553-3077}%
-\or % TOSEM 
+\or % TOSEM
   \def\@journalName{ACM Transactions on Software Engineering and Methodology}%
   \def\@journalNameShort{ACM Trans. Softw. Eng. Methodol.}%
   \def\@permissionCodeOne{1049-331X}%
-\or % TOSN 
+\or % TOSN
   \def\@journalName{ACM Transactions on Sensor Networks}%
   \def\@journalNameShort{ACM Trans. Sensor Netw.}%
   \def\@permissionCodeOne{1550-4859}%
-\or % TRETS 
+\or % TRETS
   \def\@journalName{ACM Transactions on Reconfigurable Technology and Systems}%
   \def\@journalNameShort{ACM Trans. Reconfig. Technol. Syst.}%
   \def\@permissionCodeOne{1936-7406}%
-\or % TSAS 
+\or % TSAS
   \def\@journalName{ACM Transactions on Spatial Algorithms and Systems}%
   \def\@journalNameShort{ACM Trans. Spatial Algorithms Syst.}%
   \def\@permissionCodeOne{2374-0353}%
-\or % TSLP 
+\or % TSLP
   \def\@journalName{ACM Transactions on Speech and Language Processing}%
   \def\@journalNameShort{ACM Trans. Speech Lang. Process.}%
   \def\@permissionCodeOne{1550-4875}%
-\or % TWEB 
+\or % TWEB
   \def\@journalName{ACM Transactions on the Web}%
   \def\@journalNameShort{ACM Trans. Web}%
   \def\@permissionCodeOne{1559-1131}%
@@ -1806,7 +1806,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\acmJournal#1{\setkeys{ACM}{acmJournal=#1}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % The defaults:
@@ -1816,7 +1816,7 @@ Computing Machinery]
 \def\@permissionCodeOne{XXXX-XX}%
 \def\@permissionCodeTwo{}%
 %    \end{macrocode}
-% 
+%
 %
 % \begin{macro}{\acmConference}
 %   This is the conference command
@@ -1832,7 +1832,7 @@ Computing Machinery]
 \acmConference[Conference'17]{ACM Conference}{July 2017}{Washington,
   DC, USA}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\subtitle}
@@ -1841,7 +1841,7 @@ Computing Machinery]
 \def\subtitle#1{\def\@subtitle{#1}}
 \subtitle{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -1851,7 +1851,7 @@ Computing Machinery]
 \newcount\num@authors
 \num@authors=0\relax
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\author}
@@ -1899,7 +1899,7 @@ Computing Machinery]
     \fi
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -1915,7 +1915,7 @@ Computing Machinery]
     \g@addto@macro\addresses{\affiliation{#1}{#2}}%
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\email}
@@ -1930,7 +1930,7 @@ Computing Machinery]
     \g@addto@macro\addresses{\email{#1}{#2}}%
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@titlenotes}
@@ -1938,7 +1938,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@titlenotes{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\titlenote}
@@ -1953,7 +1953,7 @@ Computing Machinery]
     \g@addto@macro\@titlenotes{\stepcounter{footnote}\footnotetext{#1}}%
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@subtitlenotes}
@@ -1961,7 +1961,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@subtitlenotes{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\subtitlenote}
@@ -1977,7 +1977,7 @@ Computing Machinery]
       \stepcounter{footnote}\footnotetext{#1}}%
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@authornotes}
@@ -1985,7 +1985,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@authornotes{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2001,7 +2001,7 @@ Computing Machinery]
       \stepcounter{footnote}\footnotetext{#1}}%
    \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\acmVolume}
@@ -2010,7 +2010,7 @@ Computing Machinery]
 \def\acmVolume#1{\def\@acmVolume{#1}}
 \acmVolume{VV}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\acmNumber}
@@ -2019,7 +2019,7 @@ Computing Machinery]
 \def\acmNumber#1{\def\@acmNumber{#1}}
 \acmNumber{NNN}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\acmArticle}
@@ -2028,7 +2028,7 @@ Computing Machinery]
 \def\acmArticle#1{\def\@acmArticle{#1}}
 \acmArticle{AA}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\articleSeq}
@@ -2037,7 +2037,7 @@ Computing Machinery]
 \def\articleSeq#1{\def\@articleSeq{#1}}
 \articleSeq{\@acmArticle}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\acmYear}
@@ -2046,7 +2046,7 @@ Computing Machinery]
 \def\acmYear#1{\def\@acmYear{#1}}
 \acmYear{YYYY}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\acmMonth}
@@ -2055,7 +2055,7 @@ Computing Machinery]
 \def\acmMonth#1{\def\@acmMonth{#1}}
 \acmMonth{MM}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2067,7 +2067,7 @@ Computing Machinery]
   July\or August\or September\or October\or November\or
   December\fi~\@acmYear}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\acmPrice}
@@ -2076,7 +2076,7 @@ Computing Machinery]
 \def\acmPrice#1{\def\@acmPrice{#1}}
 \acmPrice{15.00}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\isbn}
@@ -2085,7 +2085,7 @@ Computing Machinery]
 \def\isbn#1{\def\@isbn{#1}}
 \isbn{978-xxxx-xxxxx}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\doi}
@@ -2094,7 +2094,7 @@ Computing Machinery]
 \def\doi#1{\def\@doi{\url{#1}}}
 \doi{dddddddddddd}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\startPage}
@@ -2103,7 +2103,7 @@ Computing Machinery]
 \def\startPage#1{\def\@startPage{#1}}
 \startPage{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\terms}
@@ -2113,7 +2113,7 @@ Computing Machinery]
 \def\terms#1{\def\@terms{#1}}
 \terms{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\keywords}
@@ -2123,7 +2123,7 @@ Computing Machinery]
 \def\keywords#1{\def\@keywords{#1}}
 \keywords{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2133,7 +2133,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \renewenvironment{abstract}{\Collect@Body\@saveabstract}{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@saveabstract}
@@ -2142,7 +2142,7 @@ Computing Machinery]
 \long\def\@saveabstract#1{\long\gdef\@abstract{#1}}
 \@saveabstract{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@lempty}
@@ -2150,7 +2150,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \long\def\@lempty{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@printccs}
@@ -2163,7 +2163,7 @@ Computing Machinery]
     \ClassInfo{\@classname}{Suppressing CSS}%
   \fi}{\ClassError{\@classname}{printcss must be true or false}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 % \begin{macro}{\if@ACM@printbib}
 %   Whether to print ACM bib
@@ -2175,7 +2175,7 @@ Computing Machinery]
     \ClassInfo{\@classname}{Suppressing bibformat}%
   \fi}{\ClassError{\@classname}{printbib must be true or false}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2184,7 +2184,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\settopmatter#1{\setkeys{@ACM@topmatter@}{#1}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2207,7 +2207,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@received{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\received}
@@ -2232,7 +2232,7 @@ Computing Machinery]
     \par\bigskip\noindent\small\normalfont\@received\par
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %\subsection{Concepts system}
@@ -2243,13 +2243,13 @@ Computing Machinery]
 \RequirePackage{comment}
 \excludecomment{CCSXML}
 %    \end{macrocode}
-% 
+%
 % \begin{macro}{\@concepts}
 %   This is the storage macro for concepts
 %    \begin{macrocode}
 \let\@concepts\@empty
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\ccsdesc}
@@ -2259,7 +2259,7 @@ Computing Machinery]
 \newcommand\ccsdesc[2][100]{%
   \ccsdesc@parse#1~#2~}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\ccsdesc@parse}
@@ -2274,9 +2274,9 @@ Computing Machinery]
     \ifnum#1>299\textit{#3; }\else
     #3; \fi\fi}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 %
 %\subsection{Copyright system}
 %\label{sec:copyright}
@@ -2289,7 +2289,7 @@ Computing Machinery]
 \newif\if@printcopyright
 \@printcopyrighttrue
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\if@printpermission}
@@ -2298,7 +2298,7 @@ Computing Machinery]
 \newif\if@printpermission
 \@printpermissiontrue
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\if@acmowned}
@@ -2307,9 +2307,9 @@ Computing Machinery]
 \newif\if@acmowned
 \@acmownedtrue
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 % Keys:
 %    \begin{macrocode}
 \define@choicekey*{ACM@}{acmcopyrightmode}[%
@@ -2359,7 +2359,7 @@ Computing Machinery]
 \def\setcopyright#1{\setkeys{ACM@}{acmcopyrightmode=#1}}
 \setcopyright{acmcopyright}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2369,31 +2369,31 @@ Computing Machinery]
 \def\@copyrightowner{%
   \ifcase\acm@copyrightmode\relax % none
   \or % acmcopyright
-  ACM.
+  ACM\@.
   \or % acmlicensed
   Copyright held by the owner/author(s). Publication rights licensed to
-  ACM.
+  ACM\@.
   \or % rightsretained
   Copyright held by the owner/author(s).
   \or % usgov
   \or % usgovmixed
-  ACM.
+  ACM\@.
   \or % cagov
   Crown in Right of Canada.
   \or %cagovmixed
-  ACM.
+  ACM\@.
   \or %licensedusgovmixed
   Copyright held by the owner/author(s). Publication rights licensed to
-  ACM.
+  ACM\@.
   \or %licensedcagovmixed
   Copyright held by the owner/author(s). Publication rights licensed to
-  ACM.
+  ACM\@.
   \or % othergov
-  ACM.
+  ACM\@.
   \or % licensedothergov
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@copyrightpermission}
@@ -2436,7 +2436,7 @@ Computing Machinery]
    Government and is in the public domain. Non-exclusive copying or
    redistribution is allowed, provided that the article citation is
    given and the authors and agency are clearly identified as its
-   source. 
+   source.
   \or % usgovmixed
    ACM acknowledges that this contribution was authored or co-authored
    by an employee, or contractor of the national government. As such,
@@ -2448,7 +2448,7 @@ Computing Machinery]
    components of this work owned by others than ACM must be
    honored. To copy otherwise, distribute, republish, or post,
    requires prior specific permission and\hspace*{.5pt}/or a
-   fee. Request permissions from permissions@acm.org. 
+   fee. Request permissions from permissions@acm.org.
   \or % cagov
    This article was authored by employees of the Government of Canada.
    As such, the Canadian government retains all interest in the
@@ -2476,35 +2476,35 @@ Computing Machinery]
    specific permission and\hspace*{.5pt}/or a fee. Request permissions
    from permissions@acm.org.
   \or % licensedusgovmixed
-   Publication rights licensed to ACM. ACM acknowledges that this
+   Publication rights licensed to ACM\@. ACM acknowledges that this
    contribution was authored or co-authored by an employee, contractor
    or affiliate of the United States government. As such, the
    Government retains a nonexclusive, royalty-free right to publish or
    reproduce this article, or to allow others to do so, for Government
-   purposes only. 
+   purposes only.
   \or % licensedcagovmixed
-   Publication rights licensed to ACM. ACM acknowledges that this
+   Publication rights licensed to ACM\@. ACM acknowledges that this
    contribution was authored or co-authored by an employee, contractor
    or affiliate of the national government of Canada. As such, the
    Government retains a nonexclusive, royalty-free right to publish or
    reproduce this article, or to allow others to do so, for Government
-   purposes only. 
+   purposes only.
   \or % othergov
    ACM acknowledges that this contribution was authored or co-authored
    by an employee, contractor or affiliate of a national government. As
    such, the Government retains a nonexclusive, royalty-free right to
    publish or reproduce this article, or to allow others to do so, for
-   Government purposes only. 
+   Government purposes only.
   \or % licensedothergov
-   Publication rights licensed to ACM. ACM acknowledges that this
+   Publication rights licensed to ACM\@. ACM acknowledges that this
    contribution was authored or co-authored by an employee, contractor
    or affiliate of a national government. As such, the Government
    retains a nonexclusive, royalty-free right to publish or reproduce
    this article, or to allow others to do so, for Government purposes
-   only. 
+   only.
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2515,7 +2515,7 @@ Computing Machinery]
 \def\copyrightyear#1{\def\@copyrightyear{#1}}
 \copyrightyear{\@acmYear}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@teaserfigures}
@@ -2523,7 +2523,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@teaserfigures{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{teaserfigure}
@@ -2531,7 +2531,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \newenvironment{teaserfigure}{\Collect@Body\@saveteaser}{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@saveteaser}
@@ -2539,7 +2539,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \long\def\@saveteaser#1{\g@addto@macro\@teaserfigures{\@teaser{#1}}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\thanks}
@@ -2553,7 +2553,7 @@ Computing Machinery]
     \g@addto@macro\thankses{\thanks{#1}}%
    \fi}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \subsection{Typesetting top matter}
@@ -2567,13 +2567,13 @@ Computing Machinery]
 %    \begin{macrocode}
 \newbox\mktitle@bx
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
 % \begin{macro}{\maketitle}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
-%   are \emph{not} in the title box.  
+%   are \emph{not} in the title box.
 %    \begin{macrocode}
 \def\maketitle{\begingroup
   \let\@footnotemark\@footnotemark@nolink
@@ -2604,15 +2604,15 @@ Computing Machinery]
       \fi
     \fi
     \if@printcopyright
-     \copyright\ \@copyrightyear\ \@copyrightowner\  
+     \copyright\ \@copyrightyear\ \@copyrightowner\
     \else
-      \@copyrightyear\ 
+      \@copyrightyear\
     \fi
     \if@ACM@manuscript
       Manuscript submitted to ACM\\
     \else
       \if@ACM@journal
-        \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\ 
+        \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
         \$\@acmPrice\\
       \else % Conference
          \@isbn
@@ -2651,7 +2651,7 @@ Computing Machinery]
   \@afterheading
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@specialsection}
@@ -2664,9 +2664,9 @@ Computing Machinery]
     \section*{#1}%
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
-% 
+%
 %
 % \begin{macro}{\@printtopmatter}
 %   The printing of top matter starts the new page, and uses the given
@@ -2705,7 +2705,7 @@ Computing Machinery]
   \fi
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@mktitle}
@@ -2734,7 +2734,7 @@ Computing Machinery]
   \fi
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@mktitle@i}
@@ -2747,7 +2747,7 @@ Computing Machinery]
     \noindent\mdseries\@subtitle\par
   \fi}}%
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@mktitle@ii}
@@ -2762,7 +2762,7 @@ Computing Machinery]
      \fi
      \par\bigskip}}%
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2777,7 +2777,7 @@ Computing Machinery]
      \fi
      \par\bigskip}}%
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2786,14 +2786,14 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@mktitle@iv{\hsize=\textwidth
     \setbox\mktitle@bx=\vbox{\raggedright\leftskip5pc\bfseries\Huge
-      \noindent\leavevmode\leaders\hrule height 2pt\hfill\kern0pt\par      
+      \noindent\leavevmode\leaders\hrule height 2pt\hfill\kern0pt\par
       \noindent\@title
      \ifx\@subtitle\@empty\else
        \par\noindent\mdseries\@subtitle
      \fi
      \par\bigskip}}%
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2825,7 +2825,7 @@ Computing Machinery]
   \endgroup
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@authorfont}
@@ -2834,7 +2834,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@authorfont{\Large\sffamily}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@affiliationfont}
@@ -2868,7 +2868,7 @@ Computing Machinery]
   \def\@affiliationfont{\mdseries}
 \fi
 %    \end{macrocode}
-% 
+%
 % \begin{macro}{\@mkauthors@i}
 %   This is version used in most formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
@@ -2896,7 +2896,7 @@ Computing Machinery]
     \noindent\addresses\andify\@currentauthors\par\noindent\@currentauthors\par\medskip}%
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@mkauthors@ii}
@@ -2925,7 +2925,7 @@ Computing Machinery]
     \noindent\addresses\andify\@currentauthors\par\noindent\@currentauthors\par\medskip}%
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\author@bx}
@@ -2933,7 +2933,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \newbox\author@bx
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\author@bx@wd}
@@ -2941,7 +2941,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \newdimen\author@bx@wd
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\author@bx@sep}
@@ -2950,7 +2950,7 @@ Computing Machinery]
 \newskip\author@bx@sep
 \author@bx@sep=1pc\relax
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -2965,7 +2965,7 @@ Computing Machinery]
 % boxes are separated by \cs{author@bx@sep} plus two
 % \cs{author@bx@sep} margins.  This means that each box must be of
 % width $(\cs{textwidth}-\cs{author@bx@sep})/N-\cs{author@bx@sep}$,
-% where $N$ is the number of boxes per row.  
+% where $N$ is the number of boxes per row.
 %    \begin{macrocode}
   \author@bx@wd=\textwidth\relax
   \advance\author@bx@wd by -\author@bx@sep\relax
@@ -3027,7 +3027,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@mkauthors@iv}
 %   The |sigchia| version.  Now we put
-%   authors in the main text, and no more than 2 authors per line.  
+%   authors in the main text, and no more than 2 authors per line.
 %    \begin{macrocode}
 \def\@mkauthors@iv{%
 %    \end{macrocode}
@@ -3035,7 +3035,7 @@ Computing Machinery]
 % boxes are separated by \cs{author@bx@sep} plus two
 % \cs{author@bx@sep} margins.  This means that each box must be of
 % width $(\cs{textwidth}-\cs{author@bx@sep})/N-\cs{author@bx@sep}$,
-% where $N$ is the number of boxes per row.  
+% where $N$ is the number of boxes per row.
 %    \begin{macrocode}
   \author@bx@wd=\columnwidth\relax
   \advance\author@bx@wd by -\author@bx@sep\relax
@@ -3091,7 +3091,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@authornotemark{\g@addto@macro\@currentauthors{\footnotemark}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@mkteasers}
@@ -3105,7 +3105,7 @@ Computing Machinery]
     \noindent\@teaserfigures\par\medskip}%
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@setaddresses}
@@ -3113,7 +3113,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@setaddresses{}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@mkabstract}
@@ -3123,13 +3123,13 @@ Computing Machinery]
   \ifx\@abstract\@lempty\else
   {\if@ACM@journal
        \small\noindent
-    \else 
+    \else
       \section*{ABSTRACT}%
     \fi
       \@abstract\par}%
   \fi\egroup}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@mkbibcitation}
@@ -3138,12 +3138,12 @@ Computing Machinery]
 \def\@mkbibcitation{\bgroup
   \par\medskip\small\noindent{\bfseries ACM Reference format:}\par
   \noindent\authors. \@acmYear. \@title. \textit{\@journalNameShort}
-  \@acmVolume, \@acmNumber, Article~\@acmArticle\ 
+  \@acmVolume, \@acmNumber, Article~\@acmArticle\
   (\@acmPubDate), \ref{TotPages}~pages.\par
   \noindent DOI: \@doi
 \par\egroup}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@printendtopmatter}
@@ -3171,7 +3171,7 @@ Computing Machinery]
   \fi
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@setthanks}
@@ -3179,7 +3179,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@setthanks{\long\def\thanks##1{\par##1\@addpunct.}\thankses}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -3191,7 +3191,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \RequirePackage{fancyhdr}
 %    \end{macrocode}
-% 
+%
 % \begin{macro}{\ACM@linenum}
 %   The number of lines (plus one) on the page
 %    \begin{macrocode}
@@ -3217,7 +3217,7 @@ Computing Machinery]
   \def\ACM@linenum{40}
 \fi
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\ACM@linecount@bx}
@@ -3231,7 +3231,7 @@ Computing Machinery]
       \advance\@tempcnta by \@ne\ifnum\@tempcnta<\ACM@linenum\repeat}}
 \fi
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\ACM@linecount}
@@ -3244,10 +3244,10 @@ Computing Machinery]
   \end{picture}%
   \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
-% 
+%
 %
 % \begin{macro}{standardpagestyle}
 %   The pagestyle for all pages but the first one
@@ -3293,7 +3293,7 @@ Computing Machinery]
 }
 \pagestyle{standardpagestyle}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\@folio@wd}
@@ -3323,7 +3323,7 @@ Computing Machinery]
   \def\@folio@max{10}
 \fi
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -3334,14 +3334,14 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@folioblob{\@tempcnta=\@articleSeq\relax
 %    \end{macrocode}
-% First, we calculate \cs{@articleSeq} modulo \cs{@folio@max} 
+% First, we calculate \cs{@articleSeq} modulo \cs{@folio@max}
 %    \begin{macrocode}
   \loop
      \ifnum\@tempcnta>\@folio@max\relax
       \advance\@tempcnta by - \@folio@max
    \repeat
 %    \end{macrocode}
-% 
+%
 %    \begin{macrocode}
     \advance\@tempcnta by -1\relax
     \@tempdima=\@folio@ht\relax
@@ -3356,10 +3356,10 @@ Computing Machinery]
           \centering
           \textcolor{white}{\LARGE\bfseries\sffamily\@acmArticle}}}}
   \end{picture}}
-          
+
 %    \end{macrocode}
-%   
-%   
+%
+%
 % \end{macro}
 %
 % \begin{macro}{firstpagestyle}
@@ -3401,7 +3401,7 @@ Computing Machinery]
   \fi
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -3445,13 +3445,13 @@ Computing Machinery]
  \def\@subsecfont{\bfseries\sffamily\raggedright}
 \fi
 %    \end{macrocode}
-% 
+%
 % \begin{macro}{\@adddotafter}
 %   Add punctuation after the command
 %    \begin{macrocode}
 \def\@adddotafter#1{#1\@addpunct{.}}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %   Sectioning is different for different levels
@@ -3500,7 +3500,7 @@ Computing Machinery]
   {.5em}% spacing after head
   {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}% head spec
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{acmdefinition}
@@ -3518,7 +3518,7 @@ Computing Machinery]
   {.5em}% spacing after head
   {\thmname{#1}\thmnumber{ #2}\thmnote{ \itshape(#3)}}% head spec
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % The definitions for theorems:
@@ -3533,7 +3533,7 @@ Computing Machinery]
 \newtheorem{example}[theorem]{Example}
 \newtheorem{definition}[theorem]{Definition}
 %    \end{macrocode}
-% 
+%
 %
 % \begin{macro}{proof}
 %   We want small caps proof name
@@ -3549,7 +3549,7 @@ Computing Machinery]
   \popQED\endtrivlist\@endpefalse
 }
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 %
@@ -3566,7 +3566,7 @@ Computing Machinery]
   \includecomment{printonly}
 \fi
 %    \end{macrocode}
-% 
+%
 %
 %\subsection{End of Class}
 %\label{end}
