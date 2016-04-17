@@ -57,13 +57,13 @@ the three are discussed in the next sections.
 A formula that appears in the running text is called an
 inline or in-text formula.  It is produced by the
 \textbf{math} environment, which can be
-invoked with the usual \texttt{{\char'134}begin. . .{\char'134}end}
-construction or with the short form \texttt{\$. . .\$}. You
+invoked with the usual \texttt{{\char'134}begin\,\ldots{\char'134}end}
+construction or with the short form \texttt{\$\,\ldots\$}. You
 can use any of the symbols and structures,
 from $\alpha$ to $\omega$, available in
-\LaTeX \cite{Lamport:LaTeX}; this section will simply show a
+\LaTeX~\cite{Lamport:LaTeX}; this section will simply show a
 few examples of in-text equations in context. Notice how
-this equation: 
+this equation:
 \begin{math}
   \lim_{n\rightarrow \infty}x=0
 \end{math},
@@ -77,7 +77,7 @@ environment. An unnumbered display equation is produced by the
 \textbf{displaymath} environment.
 
 Again, in either environment, you can use any of the symbols
-and structures available in \LaTeX; this section will just
+and structures available in \LaTeX\@; this section will just
 give a couple of examples of display equations in context.
 First, consider the equation, shown as an inline equation above:
 \begin{equation}
@@ -96,16 +96,16 @@ and follow it with another numbered equation:
 just to demonstrate \LaTeX's able handling of numbering.
 
 \subsection{Citations}
-Citations to articles  \cite{bowman:reasoning,
+Citations to articles~\cite{bowman:reasoning,
 clark:pct, braams:babel, herlihy:methodology},
-conference proceedings  \cite{clark:pct} or maybe
-books  \cite{salas:calculus, Lamport:LaTeX} listed
+conference proceedings~\cite{clark:pct} or maybe
+books~\cite{Lamport:LaTeX, salas:calculus} listed
 in the Bibliography section of your
 article will occur throughout the text of your article.
 You should use BibTeX to automatically produce this bibliography;
 you simply need to insert one of several citation commands with
 a key of the item cited in the proper location in
-the \texttt{.tex} file  \cite{Lamport:LaTeX}.
+the \texttt{.tex} file~\cite{Lamport:LaTeX}.
 The key is a short reference you invent to uniquely
 identify each work; in this sample document, the key is
 the first author's surname and a
@@ -116,7 +116,7 @@ The details of the construction of the \texttt{.bib} file
 are beyond the scope of this sample document, but more
 information can be found in the \textit{Author's Guide},
 and exhaustive details in the \textit{\LaTeX\ User's
-Guide} \cite{Lamport:LaTeX}.
+Guide}~\cite{Lamport:LaTeX}.
 
 This article shows only the plainest form
 of the citation command, using \texttt{{\char'134}cite}.
@@ -132,7 +132,7 @@ in the \textbf{tabular} environment, to
 be aligned properly in rows and columns, with the desired
 horizontal and vertical rules.  Again, detailed instructions
 on \textbf{tabular} material
-is found in the \textit{\LaTeX\ User's Guide}.
+are found in the \textit{\LaTeX\ User's Guide}.
 
 Immediately following this sentence is the point at which
 Table~\ref{tab:freq} is included in the input file; compare the
@@ -143,13 +143,13 @@ output of this document.
   \centering
   \caption{Frequency of Special Characters}
   \label{tab:freq}
-  \begin{tabular}{ccl} 
+  \begin{tabular}{ccl}
     \toprule
-    Non-English or Math&Frequency&Comments\\ 
+    Non-English or Math&Frequency&Comments\\
     \midrule
-    \O & 1 in 1,000& For Swedish names\\ 
-    $\pi$ & 1 in 5& Common in math\\ 
-    \$ & 4 in 5 & Used in business\\ 
+    \O & 1 in 1,000& For Swedish names\\
+    $\pi$ & 1 in 5& Common in math\\
+    \$ & 4 in 5 & Used in business\\
     $\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
   \bottomrule
 \end{tabular}
@@ -158,7 +158,7 @@ output of this document.
 To set a wider table, which takes up the whole width of the page's
 live area, use the environment \textbf{table*} to enclose the table's
 contents and the table caption.  As with a single-column table, this
-wide table will ``float" to a location deemed more desirable.
+wide table will ``float'' to a location deemed more desirable.
 Immediately following this sentence is the point at which
 Table~\ref{tab:commands} is included in the input file; again, it is
 instructive to compare the placement of the table here with the table
@@ -169,13 +169,13 @@ in the printed output of this document.
   \centering
   \caption{Some Typical Commands}
   \label{tab:commands}
-  \begin{tabular}{ccl} 
+  \begin{tabular}{ccl}
     \toprule
-    Command &A Number & Comments\\ 
+    Command &A Number & Comments\\
     \midrule
-    \texttt{{\char'134}author} & 100& Author \\ 
-    \texttt{{\char'134}table}& 300 & For tables\\ 
-    \texttt{{\char'134}table*}& 400& For wider tables\\ 
+    \texttt{{\char'134}author} & 100& Author \\
+    \texttt{{\char'134}table}& 300 & For tables\\
+    \texttt{{\char'134}table*}& 400& For wider tables\\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -187,7 +187,7 @@ and follow its main principles of typography with respect to tables:
 \item Never, ever use vertical rules.
 \item Never use double rules.
 \end{enumerate}
-It is also a good idea not to overuse horizontal rules.  
+It is also a good idea not to overuse horizontal rules.
 
 
 \subsection{Figures}
@@ -198,11 +198,11 @@ initial cite.  To ensure this proper ``floating'' placement of
 figures, use the environment \textbf{figure} to enclose the figure and
 its caption.
 
-This sample document contains examples of \textbf{.eps} files to be
+This sample document contains examples of \texttt{.eps} files to be
 displayable with \LaTeX.  If you work with pdf\LaTeX, use files in the
-\textbf{.pdf} format.  Note that most modern \TeX\ system will convert
-\textbf{.eps} to \textbf{.pdf} for you on the fly.  More details on
-each of these is found in the \textit{Author's Guide}.
+\texttt{.pdf} format.  Note that most modern \TeX\ systems will convert
+\texttt{.eps} to \texttt{.pdf} for you on the fly.  More details on
+each of these are found in the \textit{Author's Guide}.
 
 \begin{figure}
 \centering
@@ -221,8 +221,8 @@ that has been resized with the \texttt{includegraphics} command.}
 As was the case with tables, you may want a figure that spans two
 columns.  To do this, and still to ensure proper ``floating''
 placement of tables, use the environment \textbf{figure*} to enclose
-the figure and its caption.  and don't forget to end the environment
-with {figure*}, not {figure}!
+the figure and its caption.  And don't forget to end the environment
+with \textbf{figure*}, not \textbf{figure}!
 
 \begin{figure*}
 \centering
@@ -244,36 +244,36 @@ been resized with the \texttt{includegraphics} command.}
 Other common constructs that may occur in your article are the forms
 for logical constructs like theorems, axioms, corollaries and proofs.
 ACM uses two types of these constructs:  theorem-like and
-definition-like.  
+definition-like.
 
 Here is a theorem:
 \begin{theorem}
   Let $f$ be continuous on $[a,b]$.  If $G$ is
   an antiderivative for $f$ on $[a,b]$, then
   \begin{displaymath}
-    \int^b_af(t)dt = G(b) - G(a).
+    \int^b_af(t)\,dt = G(b) - G(a).
   \end{displaymath}
 \end{theorem}
 
 Here is a definition:
 \begin{definition}
   If $z$ is irrational, then by $e^z$ we mean the
-  unique number which has
-  logarithm $z$: 
+  unique number that has
+  logarithm $z$:
   \begin{displaymath}
     \log e^z = z.
   \end{displaymath}
 \end{definition}
 
-The pre-defined theorem-like constructs are \texttt{theorem},
-\texttt{conjecture}, \texttt{proposition}, \texttt{lemma} and
-\texttt{corollary}.  The pre-defined definition-like constructs are
-\texttt{example} and \texttt{definition}.  You can add your own
+The pre-defined theorem-like constructs are \textbf{theorem},
+\textbf{conjecture}, \textbf{proposition}, \textbf{lemma} and
+\textbf{corollary}.  The pre-defined definition-like constructs are
+\textbf{example} and \textbf{definition}.  You can add your own
 constructs using the \textsl{amsthm} interface~\cite{Amsthm15}.  The
-styles used in the \verb|\theoremstyle| command are \texttt{acmplain}
-and \texttt{acmdefinition}.
+styles used in the \verb|\theoremstyle| command are \textbf{acmplain}
+and \textbf{acmdefinition}.
 
-Another construct is \texttt{proof}, for example, 
+Another construct is \textbf{proof}, for example,
 
 \begin{proof}
   Suppose on the contrary there exists a real number $L$ such that
@@ -310,7 +310,7 @@ to acknowledge grants, funding, editing assistance and
 what have you.  In the present case, for example, the
 authors would like to thank Gerald Murray of ACM for
 his help in codifying this \textit{Author's Guide}
-and the \textbf{.cls} and \textbf{.tex} files that it describes.
+and the \texttt{.cls} and \texttt{.tex} files that it describes.
 
 
 \appendix
@@ -321,7 +321,7 @@ the body of the article are different in the appendices.
 In the \textbf{appendix} environment, the command
 \textbf{section} is used to
 indicate the start of each Appendix, with alphabetic order
-designation (i.e. the first is A, the second B, etc.) and
+designation (i.e., the first is A, the second B, etc.) and
 a title (if you include one).  So, if you need
 hierarchical structure
 \textit{within} an Appendix, start with \textbf{subsection} as the
@@ -341,10 +341,10 @@ document in Appendix-appropriate form:
 \subsection{Conclusions}
 \subsection{Acknowledgments}
 \subsection{References}
-Generated by bibtex from your ~.bib file.  Run latex,
+Generated by bibtex from your \texttt{.bib} file.  Run latex,
 then bibtex, then latex twice (to resolve references)
-to create the ~.bbl file.  Insert that ~.bbl file into
-the .tex source file and comment out
+to create the \texttt{.bbl} file.  Insert that \texttt{.bbl}
+file into the \texttt{.tex} source file and comment out
 the command \texttt{{\char'134}thebibliography}.
 % This next section command marks the start of
 % Appendix B, and does not continue the present hierarchy
@@ -352,4 +352,4 @@ the command \texttt{{\char'134}thebibliography}.
 
 Of course, reading the source code is always useful.  The file
 \texttt{acmart.pdf} contains both the user guide and the commented
-code.  
+code.
