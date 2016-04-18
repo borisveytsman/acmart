@@ -19,7 +19,7 @@
 % derived file acmart.cls, and
 %
 % \fi
-% \CheckSum{3058}
+% \CheckSum{3061}
 %
 %
 %% \CharacterTable
@@ -210,6 +210,7 @@
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
+%
 %
 %
 %\subsection{Topmatter commands}
@@ -1013,9 +1014,12 @@ Computing Machinery]
 %
 % \end{macro}
 %
-
+%
+% \changes{v1.01}{2016/04/18}{Explicitly put draft option
+% (closes \url{https://github.com/borisveytsman/acmart/issues/4})}
 %
 %    \begin{macrocode}
+\DeclareOptionX{draft}{\PassOptionsToClass{\CurrentOption}{amsart}}
 \DeclareOptionX{*}{\PassOptionsToClass{\CurrentOption}{amsart}}
 \ProcessOptionsX
 \ClassInfo{\@classname}{Using format \ACM@format, number \ACM@format@nr}
