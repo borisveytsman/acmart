@@ -19,7 +19,7 @@
 % derived file acmart.cls, and
 %
 % \fi
-% \CheckSum{3093}
+% \CheckSum{3132}
 %
 %
 %% \CharacterTable
@@ -3178,7 +3178,7 @@ Computing Machinery]
   {\if@ACM@journal
        \small\noindent
     \else
-      \section*{ABSTRACT}%
+      \section*{Abstract}%
     \fi
       \@abstract\par}%
   \fi\egroup}
@@ -3463,6 +3463,31 @@ Computing Machinery]
 %\label{sec:sectioninng}
 %
 %
+%   Sectioning is different for different levels
+%    \begin{macrocode}
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {.25\baselineskip}%
+  {\@secfont}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {.25\baselineskip}%
+  {\@subsecfont}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{10pt}%
+  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {-3.5\p@}%
+  {\@subsubsecfont\@adddotafter}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
+  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {-3.5\p@}%
+  {\@parfont\@adddotafter}}
+\renewcommand\part{\@startsection{part}{9}{\z@}%
+  {-10\p@ \@plus -4\p@ \@minus -2\p@}%
+  {4\p@}%
+  {\@parfont}}
+%    \end{macrocode}
+%
+%
 % Fonts for sections etc. are different for different formats.  Also,
 % some formats use the ugly period after section number (sigh):
 %    \begin{macrocode}
@@ -3487,8 +3512,21 @@ Computing Machinery]
  \def\@secfont{\bfseries\sffamily\Large\raggedright\MakeUppercase}
  \def\@subsecfont{\bfseries\sffamily\Large\raggedright}
 \or % sigplan
- \def\@secfont{\bfseries\Large\raggedright\MakeUppercase}
- \def\@subsecfont{\bfseries\Large\raggedright}
+ \renewcommand\thesection{\arabic{section}.}
+ \def\@secfont{\bfseries\Large\raggedright}
+ \renewcommand\thesubsection{\thesection\arabic{subsection}}
+ \def\@subsecfont{\bfseries\raggedright}
+ \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+   {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+   {.25\baselineskip}%
+   {\@subsubsecfont}}
+ \def\@subsubsecfont{\bfseries\raggedright}
+ \def\@parfont{\bfseries\itshape}
+ \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+   {-3.5\p@}%
+   {\@subparfont\@adddotafter}}
+ \def\@subparfont{\itshape}
 \or % sigchi
  \setcounter{secnumdepth}{1}
  \def\@secfont{\bfseries\sffamily\raggedright\MakeUppercase}
@@ -3507,30 +3545,6 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \end{macro}
-%
-%   Sectioning is different for different levels
-%    \begin{macrocode}
-\renewcommand\section{\@startsection{section}{1}{\z@}%
-  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {.25\baselineskip}%
-  {\@secfont}}
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {.25\baselineskip}%
-  {\@subsecfont}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{10pt}%
-  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {-3.5\p@}%
-  {\@subsubsecfont\@adddotafter}}
-\renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
-  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {-3.5\p@}%
-  {\@parfont\@adddotafter}}
-\renewcommand\part{\@startsection{part}{9}{\z@}%
-  {-10\p@ \@plus -4\p@ \@minus -2\p@}%
-  {4\p@}%
-  {\@parfont}}
-%    \end{macrocode}
 %
 %
 %
