@@ -19,7 +19,7 @@
 % derived file acmart.cls, and
 %
 % \fi
-% \CheckSum{3061}
+% \CheckSum{3085}
 %
 %
 %% \CharacterTable
@@ -2763,7 +2763,7 @@ Computing Machinery]
   \or % siggraph
     \@mktitle@iii
   \or % sigplan
-    \@mktitle@iii
+    \@mktitle@sigplan
   \or % sigchi
     \@mktitle@iii
   \or % sigchi-a
@@ -2808,6 +2808,21 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@mktitle@iii{\hsize=\textwidth
     \setbox\mktitle@bx=\vbox{\centering\Huge\sffamily\bfseries\noindent
+      \@title
+     \ifx\@subtitle\@empty\else
+       \par\noindent{\LARGE\mdseries\@subtitle}
+     \fi
+     \par\bigskip}}%
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
+% \begin{macro}{\@mktitle@sigplan}
+%   The version of \cs{@mktitle} for sigplan
+%    \begin{macrocode}
+\def\@mktitle@sigplan{\hsize=\textwidth
+    \setbox\mktitle@bx=\vbox{\centering\Huge\bfseries\noindent
       \@title
      \ifx\@subtitle\@empty\else
        \par\noindent{\LARGE\mdseries\@subtitle}
