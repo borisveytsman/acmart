@@ -3521,11 +3521,15 @@ Computing Machinery]
    {.25\baselineskip}%
    {\@subsubsecfont}}
  \def\@subsubsecfont{\bfseries\raggedright}
- \def\@parfont{\bfseries\itshape}
- \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+ \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
    {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
    {-3.5\p@}%
-   {\@subparfont\@adddotafter}}
+   {\@parfont\@addspaceafter}}
+ \def\@parfont{\bfseries\itshape}
+ \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}%
+   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+   {-3.5\p@}%
+   {\@subparfont\@addspaceafter}}
  \def\@subparfont{\itshape}
 \or % sigchi
  \setcounter{secnumdepth}{1}
@@ -3542,6 +3546,14 @@ Computing Machinery]
 %   Add punctuation after the command
 %    \begin{macrocode}
 \def\@adddotafter#1{#1\@addpunct{.}}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@addspaceafter}
+%   Add space after the command
+%    \begin{macrocode}
+\def\@addspaceafter#1{#1\@addpunct{\enspace}}
 %    \end{macrocode}
 %
 % \end{macro}
