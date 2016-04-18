@@ -19,7 +19,7 @@
 % derived file acmart.cls, and
 %
 % \fi
-% \CheckSum{3050}
+% \CheckSum{3058}
 %
 %
 %% \CharacterTable
@@ -838,6 +838,17 @@
 %
 %
 %
+%\subsection{Colors}
+%\label{sec:ug_colors}
+%
+% While printed ACM publications are usually black and white, screen
+% mode allows the use of colors.  The ACM classes pre-define several
+% colors according to~\cite{ACMIdentityStandards}:  |ACMBlue|,
+% |ACMYellow|, |ACMOrange|, |ACMRed|, |ACMLightBlue|, |ACMGreen|,
+% |ACMPurple|, |ACMDarkBlue|.  You can use them in the color
+% assignments.
+%
+%
 % \StopEventually{
 % \clearpage
 % \bibliography{acmart}
@@ -861,12 +872,17 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/04/14 v1.00 Typesetting articles for Association of
+[2016/04/18 v1.01 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
-
+% \changes{v1.01}{2016/04/18}{Defined ACM colors}
+% \changes{v1.01}{2016/04/18}{Changed hyperref colors in screen mode
+% (closes \url{https://github.com/borisveytsman/acmart/issues/1})}
+% \changes{v1.01}{2016/04/18}{Set headheight to 1pc for all formats
+% (closes \url{https://github.com/borisveytsman/acmart/issues/5})}
+%
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -1233,7 +1249,11 @@ Computing Machinery]
   \urlstyle{rm}
 \fi
 \if@ACM@screen
-  \hypersetup{colorlinks}
+  \hypersetup{colorlinks,
+    linkcolor=ACMRed,
+    citecolor=ACMPurple,
+    urlcolor=ACMDarkBlue,
+    filecolor=ACMDarkBlue}
 \else
   \hypersetup{hidelinks}
 \fi
@@ -1264,6 +1284,19 @@ Computing Machinery]
 \RequirePackage{graphicx, xcolor}
 %    \end{macrocode}
 %
+% We define ACM colors according to~\cite{ACMIdentityStandards}:
+%    \begin{macrocode}
+\definecolor[named]{ACMBlue}{cmyk}{1,0.1,0,0.1}
+\definecolor[named]{ACMYellow}{cmyk}{0,0.16,1,0}
+\definecolor[named]{ACMOrange}{cmyk}{0,0.42,1,0.01}
+\definecolor[named]{ACMRed}{cmyk}{0,0.90,0.86,0}
+\definecolor[named]{ACMLightBlue}{cmyk}{0.49,0.01,0,0}
+\definecolor[named]{ACMGreen}{cmyk}{0.20,0,1,0.19}
+\definecolor[named]{ACMPurple}{cmyk}{0.55,1,0,0.15}
+\definecolor[named]{ACMDarkBlue}{cmyk}{1,0.58,0,0.21}
+%    \end{macrocode}
+% 
+%
 %\subsection{Paper size and paragraphing}
 %\label{sec:paper}
 %
@@ -1272,7 +1305,7 @@ Computing Machinery]
 \RequirePackage{geometry}
 \ifcase\ACM@format@nr
 \relax % manuscript
-   \geometry{letterpaper}%
+   \geometry{letterpaper,head=1pc}%
 \or% acmsmall
    \geometry{twoside=true,
      includeheadfoot, head=1pc, foot=2pc,
@@ -1292,31 +1325,31 @@ Computing Machinery]
      top=52pt, bottom=75pt, inner=52pt, outer=52pt
      }%
 \or % sigconf
-   \geometry{twoside=true,
+   \geometry{twoside=true, head=1pc,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
      top=57pt, bottom=75pt, inner=54pt, outer=57pt
      }%
 \or % siggraph
-   \geometry{twoside=true,
+   \geometry{twoside=true, head=1pc,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
      top=57pt, bottom=75pt, inner=54pt, outer=57pt
      }%
 \or % sigplan
-   \geometry{twoside=true,
+   \geometry{twoside=true, head=1pc,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
      top=74pt, bottom=70pt, inner=54pt, outer=54pt
      }%
 \or % sigchi
-   \geometry{twoside=true,
+   \geometry{twoside=true, head=1pc,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
      top=66pt, bottom=78pt, inner=54pt, outer=48pt
      }%
 \or % sigchi-a
-   \geometry{twoside=false,
+   \geometry{twoside=false, head=1pc,
      paperwidth=11in, paperheight=8.5in,
      includeheadfoot, marginparsep=72pt,
      marginparwidth=170pt, columnsep=20pt,
@@ -3227,7 +3260,7 @@ Computing Machinery]
   \newsavebox{\ACM@linecount@bx}
   \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
       \@tempcnta\@ne\relax
-      \loop{\color{red}\scriptsize\the\@tempcnta}\\
+      \loop{\color{ACMRed}\scriptsize\the\@tempcnta}\\
       \advance\@tempcnta by \@ne\ifnum\@tempcnta<\ACM@linenum\repeat}}
 \fi
 %    \end{macrocode}
