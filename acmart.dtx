@@ -19,7 +19,6 @@
 % derived file acmart.cls, and
 %
 % \fi
-% \CheckSum{3151}
 %
 %
 %% \CharacterTable
@@ -171,7 +170,7 @@
 %          journal issues \\
 %            sigplan & Proceedings format used for SIGPLAN conferences\\
 %            sigchi  & Proceedings format for SIGCHI conferences\\
-%           sigchi-a & Format for SIGCHI extented abstract\\
+%           sigchi-a & Format for SIGCHI extended abstract\\
 %   \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -206,7 +205,7 @@
 %     screen & false & A screen version: hyperlinks are colored\\
 %     natbib & false & Whether to use |natbib| package (see
 %     Section~\ref{sec:ug_bibliography}\\
-%     anonymous & false & Whether to make the authors anonumous\\
+%     anonymous & false & Whether to make the authors anonymous\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -323,7 +322,7 @@
 % \end{description}
 % Examples:
 % \begin{verbatim}
-% \acmConference[TD'15]{Technichal Data Conference}{November
+% \acmConference[TD'15]{Technical Data Conference}{November
 % 12--16}{Dallas, TX, USA}
 % \acmConference{SA'15 Art Papers}{November 02--06, 2015}{Kobe, Japan}
 % \end{verbatim}
@@ -762,7 +761,7 @@
 % \DescribeEnv{sidebar}%
 % \DescribeEnv{marginfigure}%
 % \DescribeEnv{margintable}%
-% Sigchi extended abstract extensively uses margin space.  The package
+% SIGCHI extended abstract extensively uses margin space.  The package
 % provides three environments for this with option captions:
 % \begin{description}
 % \item[sidebar:] textual information on the margin
@@ -1146,6 +1145,7 @@ Computing Machinery]
 \if@ACM@natbib
   \RequirePackage{natbib}
   \bibpunct[, ]{[}{]}{;}{a}{}{,}
+  \renewcommand{\bibfont}{\bibliofont}
 \fi
 %    \end{macrocode}
 %
@@ -1376,7 +1376,7 @@ Computing Machinery]
 %
 % \begin{macro}{\parindent}
 % \begin{macro}{\parskip}
-%   Paragraping
+%   Paragraphing
 %    \begin{macrocode}
 \setlength\parindent{10\p@}
 \setlength\parskip{\z@}
@@ -1463,7 +1463,7 @@ Computing Machinery]
 \usepackage[varqu]{zi4}
 %    \end{macrocode}
 %
-% The sigchi abstract are sans serif:
+% The SIGCHI extended abstracts are sans serif:
 %    \begin{macrocode}
 \if@ACM@sigchiamode
   \renewcommand{\familydefault}{\sfdefault}
@@ -2589,7 +2589,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\thanks}
-%   We redefine |amsart| \cs{thanks}, so the |anonumous| key works
+%   We redefine |amsart| \cs{thanks}, so the |anonymous| key works
 %    \begin{macrocode}
 \renewcommand{\thanks}[1]{%
   \@ifnotempty{#1}{%
