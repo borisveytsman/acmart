@@ -19,7 +19,7 @@
 % derived file acmart.cls, and
 %
 % \fi
-% \CheckSum{3132}
+% \CheckSum{3151}
 %
 %
 %% \CharacterTable
@@ -1247,10 +1247,19 @@ Computing Machinery]
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
 \RequirePackage{hyperref}
-\if@ACM@sigchiamode
-  \urlstyle{sf}
-\else
   \urlstyle{rm}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or% acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+  \urlstyle{sf}
+\or % sigchi
+\or % sigchi-a
+  \urlstyle{sf}
 \fi
 \if@ACM@screen
   \hypersetup{colorlinks,
