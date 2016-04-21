@@ -114,6 +114,49 @@
 % |.tex| file is.
 %
 %
+% The class uses a number of other packages.  They are included in all
+% major \TeX\ distributions (\TeX Live, Mac\TeX, Mik\TeX) of 2015 and
+% later, so you probably have them installed.  Just in case here is
+% the list of these packages:
+% \begin{itemize}
+% \item \textsl{algorithm2e}, \url{http://www.ctan.org/pkg/algorithm2e}
+% \item \textsl{amscls}, \url{http://www.ctan.org/pkg/amscls}
+% \item \textsl{amsfonts}, \url{http://www.ctan.org/pkg/amsfonts}
+% \item \textsl{amsmath}, \url{http://www.ctan.org/pkg/amsmath}
+% \item \textsl{booktabs}, \url{http://www.ctan.org/pkg/booktabs}
+% \item \textsl{caption}, \url{http://www.ctan.org/pkg/caption}
+% \item \textsl{comment}, \url{http://www.ctan.org/pkg/comment}
+% \item \textsl{environ}, \url{http://www.ctan.org/pkg/environ}
+% \item \textsl{fancyhdr}, \url{http://www.ctan.org/pkg/fancyhdr}
+% \item \textsl{float}, \url{http://www.ctan.org/pkg/float}
+% \item \textsl{fontaxes}, \url{http://www.ctan.org/pkg/fontaxes}
+% \item \textsl{geometry}, \url{http://www.ctan.org/pkg/geometry}
+% \item \textsl{graphics}, \url{http://www.ctan.org/pkg/graphics}
+% \item \textsl{hyperref}, \url{http://www.ctan.org/pkg/hyperref}
+% \item \textsl{ifluatex}, \url{http://www.ctan.org/pkg/ifluatex}
+% \item \textsl{ifxetex}, \url{http://www.ctan.org/pkg/ifxetex}
+% \item \textsl{inconsolata}, \url{http://www.ctan.org/pkg/inconsolata}
+% \item \textsl{kastrup}, \url{http://www.ctan.org/pkg/kastrup}
+% \item \textsl{libertine}, \url{http://www.ctan.org/pkg/libertine}
+% \item \textsl{microtype}, \url{http://www.ctan.org/pkg/microtype}
+% \item \textsl{mptopdf}, \url{http://www.ctan.org/pkg/mptopdf}
+% \item \textsl{ms}, \url{http://www.ctan.org/pkg/ms}
+% \item \textsl{mweights}, \url{http://www.ctan.org/pkg/mweights}
+% \item \textsl{natbib}, \url{http://www.ctan.org/pkg/natbib}
+% \item \textsl{newtx}, \url{http://www.ctan.org/pkg/newtx}
+% \item \textsl{oberdiek}, \url{http://www.ctan.org/pkg/oberdiek}
+% \item \textsl{pdftex-def}, \url{http://www.ctan.org/pkg/pdftex-def}
+% \item \textsl{relsize}, \url{http://www.ctan.org/pkg/relsize}
+% \item \textsl{setspace}, \url{http://www.ctan.org/pkg/setspace}
+% \item \textsl{tools}, \url{http://www.ctan.org/pkg/tools}
+% \item \textsl{totpages}, \url{http://www.ctan.org/pkg/totpages}
+% \item \textsl{trimspaces}, \url{http://www.ctan.org/pkg/trimspaces}
+% \item \textsl{upquote}, \url{http://www.ctan.org/pkg/upquote}
+% \item \textsl{url}, \url{http://www.ctan.org/pkg/url}
+% \item \textsl{xcolor}, \url{http://www.ctan.org/pkg/xcolor}
+% \item \textsl{xkeyval}, \url{http://www.ctan.org/pkg/xkeyval}
+% \end{itemize}
+% 
 %
 %\subsection{Invocation and options}
 %\label{sec:invocation}
@@ -157,8 +200,9 @@
 %            JETC, TAAS, TACCESS, TACO, TALG, TALLIP (formerly TALIP), TCPS,
 %            TEAC, TECS, TIIS, TISSEC, TIST, TKDD, TMIS, TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
-%            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOS, TOSEM, TOSN, TRETS,
-%            TSAS, TSLP, TWEB\@. \\
+%            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS,
+%            TOS, TOSEM, TOSN, TRETS,
+%            TSAS, TSC, TSLP, TWEB\@. \\
 %           acmlarge  & Large single colummn format, used for
 %          JOCCH, TAP \\
 %            acmtog   & Large double column format, used for
@@ -246,7 +290,7 @@
 % \begin{table}
 %   \centering
 %   \caption{ACM publications and arguments of the \cs{acmJournal}
-%   command}\small
+%   command}\footnotesize
 %   \label{tab:pubs}
 %   \begin{tabularx}{\textwidth}{>{\ttfamily}lX}
 %     \toprule
@@ -293,11 +337,13 @@
 %     TOMS & ACM Transactions on Mathematical Software\\
 %     TOPC & ACM Transactions on Parallel Computing\\
 %     TOPLAS & ACM Transactions on Programming Languages and Systems\\
+%     TOPS & ACM Transactions on Privacy and Security\\
 %     TOS & ACM Transactions on Storage\\
 %     TOSEM & ACM Transactions on Software Engineering and Methodology\\
 %     TOSN & ACM Transactions on Sensor Networks\\
 %     TRETS & ACM Transactions on Reconfigurable Technology and Systems\\
 %     TSAS & ACM Transactions on Spatial Algorithms and Systems\\
+%     TSC & ACM Transactions on Social Computing\\
 %     TSLP & ACM Transactions on Speech and Language Processing \\
 %     TWEB & ACM Transactions on the Web\\
 %   \bottomrule
@@ -872,7 +918,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/04/18 v1.01 Typesetting articles for Association of
+[2016/04/21 v1.02 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -882,6 +928,10 @@ Computing Machinery]
 % (closes \url{https://github.com/borisveytsman/acmart/issues/1})}
 % \changes{v1.01}{2016/04/18}{Set headheight to 1pc for all formats
 % (closes \url{https://github.com/borisveytsman/acmart/issues/5})}
+% \changes{v1.02}{2016/04/21}{Documentation changes
+% (closes \url{https://github.com/borisveytsman/acmart/issues/13})}
+% \changes{v1.02}{2016/04/21}{Added TOPS and TSC
+% (closes \url{https://github.com/borisveytsman/acmart/issues/12})}
 %
 %
 % And the driver code:
@@ -1650,12 +1700,14 @@ Computing Machinery]
   TOMPECS,%
   TOMS,%
   TOPC,%
+  TOPS,%
   TOPLAS,%
   TOS,%
   TOSEM,%
   TOSN,%
   TRETS,%
   TSAS,%
+  TSC,%
   TSLP,%
   TWEB%
 }{%
@@ -1800,6 +1852,10 @@ Computing Machinery]
   \def\@journalName{ACM Transactions on Parallel Computing}%
   \def\@journalNameShort{ACM Trans. Parallel Comput.}%
   \def\@permissionCodeOne{1539-9087}%
+\or % TOPS
+  \def\@journalName{ACM Transactions on Privacy and Security}%
+  \def\@journalNameShort{ACM Trans. Priv. Sec.}%
+  \def\@permissionCodeOne{2471-2566}%
 \or % TOPLAS
   \def\@journalName{ACM Transactions on Programming Languages and Systems}%
   \def\@journalNameShort{ACM Trans. Program. Lang. Syst.}%
@@ -1824,6 +1880,10 @@ Computing Machinery]
   \def\@journalName{ACM Transactions on Spatial Algorithms and Systems}%
   \def\@journalNameShort{ACM Trans. Spatial Algorithms Syst.}%
   \def\@permissionCodeOne{2374-0353}%
+\or % TSC
+  \def\@journalName{ACM Transactions on Social Computing}%
+  \def\@journalNameShort{ACM Trans. Soc. Comput.}%
+  \def\@permissionCodeOne{2469-7818}%
 \or % TSLP
   \def\@journalName{ACM Transactions on Speech and Language Processing}%
   \def\@journalNameShort{ACM Trans. Speech Lang. Process.}%
