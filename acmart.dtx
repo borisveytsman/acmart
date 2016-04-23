@@ -229,12 +229,18 @@
 % The option
 % |review| is useful when combined with the |manuscript| format
 % option: it provides a version suitable for reviewers and
-% copyeditors.  The option |screen| may in the future involve
+% copyeditors.  
+%
+% The option |screen| may in the future involve
 % additional features  suitable for on-screen versions of the
-% articles.  The option |natbib| is used when the corresponding
-% \BibTeX\ style is based on |natbib|.  The option |anonymous| is used
+% articles.  
+% 
+% The option |natbib| is used when the corresponding
+% \BibTeX\ style is based on |natbib|.  
+%
+% The option |anonymous| is used
 % for anonymous review process: all author information becomes
-% obscured.
+% obscured.  
 %
 % \begin{table}
 %   \centering
@@ -248,8 +254,11 @@
 %     numbered, hyperlinks are colored\\
 %     screen & false & A screen version: hyperlinks are colored\\
 %     natbib & false & Whether to use |natbib| package (see
-%     Section~\ref{sec:ug_bibliography}\\
+%     Section~\ref{sec:ug_bibliography})\\
 %     anonymous & false & Whether to make the authors anonymous\\
+%     authorversion & false & Whether to generate a special
+%     version for authors' personal use or posting (see
+%     Section~\ref{sec:ug_topmatter})\\ 
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -594,7 +603,7 @@
 % There are several possibilities for the copyright of the papers
 % published by ACM: the authors may transfer the rights to ACM, license
 % them to ACM, some or all authors might be employees of the US or
-% Canada Government, etc.  Accordingly the new command
+% Canada Government, etc.  Accordingly the command
 % \verb|\setcopyright{...}| is introduced.  Its argument is the
 % copyright status of the paper, for example,
 % \verb|\setcopyright{acmcopyright}|.  The possible values for this
@@ -640,6 +649,16 @@
 % \copyrightyear{2015}
 % \end{verbatim}
 %
+% There is a special case for a personal copy that the authors may be
+% allowed to generate for their use or a posting on a personal site
+% (check the instructions for the specific journal or conference for
+% the details).  The document option |authorversion=true| produces the
+% special form of the copyright statement for this case.  Note that
+% you still need the \cs{setcopyright} command and (optionally)
+% \cs{authoryear} command to tell \TeX\ about the copyright owner and
+% year.  Also, you should be aware that due to the different sizes of
+% the permssion blocks for the printed version and authors' version
+% the page breaks might be different between them.
 %
 % \DescribeEnv{abstract}%
 % The environment |abstract| must \emph{precede} \cs{maketitle}
@@ -859,6 +878,26 @@
 % \end{verbatim}
 %
 %
+%
+%\subsection{Note about anonymous mode}
+%\label{sec:ug_anonymous}
+%
+% \DescribeEnv{anonsuppress}%
+% When the option |anonymous| is selected, \TeX\ suppresses authors'
+% names and affiliations for a blind review.  However, sometimes the
+% information identifying the authors may be present in the body of
+% the paper, for example, in the acknowledgements.  The environment
+% |anonsuppress| is used to suppress such information, for example
+% \begin{verbatim}
+% \section*{Acknowledgements}
+% \begin{anonsuppress}
+%   The authors wish to thank Prof. C.~O.~Lleague for her generous
+%   advices and the Society for Development of Oort Cloud for the
+%   financial support.
+% \end{anonsuppress}
+% \end{verbatim}
+% 
+%
 %\subsection{Bibliography}
 %\label{sec:ug_bibliography}
 %
@@ -918,7 +957,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/04/21 v1.02 Typesetting articles for Association of
+[2016/04/22 v1.03 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -932,6 +971,9 @@ Computing Machinery]
 % (closes \url{https://github.com/borisveytsman/acmart/issues/13})}
 % \changes{v1.02}{2016/04/21}{Added TOPS and TSC
 % (closes \url{https://github.com/borisveytsman/acmart/issues/12})}
+% \changes{v1.03}{2016/04/22}{Added authorversion option
+% (closes \url{https://github.com/borisveytsman/acmart/issues/9})}
+% \changes{v1.03}{2016/04/22}{Added anonsuppress environment}
 %
 %
 % And the driver code:
@@ -1015,6 +1057,22 @@ Computing Machinery]
   \fi}{\PackageError{\@classname}{Option review can be either true or
     false}}
 \ExecuteOptionsX{review=false}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\if@ACM@authorversion}
+% \changes{v1.03}{2016/04/22}{Added macro}
+%   Whether we use author's version
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{authorversion}[true]{%
+  \if@ACM@authorversion
+    \PackageInfo{\@classname}{Using authorversion mode}%
+  \else
+    \PackageInfo{\@classname}{Not using authorversion mode}%
+  \fi}{\PackageError{\@classname}{Option authorversion can be either true or
+    false}}
+\ExecuteOptionsX{authorversion=false}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2188,8 +2246,8 @@ Computing Machinery]
 % \begin{macro}{\doi}
 %   The paper isbn
 %    \begin{macrocode}
-\def\doi#1{\def\@doi{\url{#1}}}
-\doi{dddddddddddd}
+\def\doi#1{\def\@doi{#1}}
+\doi{}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2493,6 +2551,15 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\@formatdoi}
+% \changes{v1.03}{2016/04/22}{Added macro}
+%   Print a clickable doi
+%    \begin{macrocode}
+\def\@formatdoi#1{\url{http://dx.doi.org/#1}}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 % \begin{macro}{\@copyrightpermission}
 %   The canned permission block.
 %    \begin{macrocode}
@@ -2605,6 +2672,8 @@ Computing Machinery]
 % \end{macro}
 %
 %
+%
+%
 % \begin{macro}{\copyrightyear}
 %   By default, the copyright year is the same as \cs{acmYear}, but
 %   one can override this:
@@ -2669,6 +2738,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\maketitle}
+% \changes{v1.03}{2016/04/22}{Added special case of authorversion}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %    \begin{macrocode}
@@ -2693,7 +2763,9 @@ Computing Machinery]
   \ifx\@empty\thankses\else
     \@footnotetext{\def\par{\let\par\@par}\parindent\z@\@setthanks}%
   \fi
-  \if@printpermission\@footnotetext{\parindent\z@\@copyrightpermission}\fi
+  \if@ACM@authorversion\else
+    \if@printpermission\@footnotetext{\parindent\z@\@copyrightpermission}\fi
+  \fi
   \@footnotetext{\parindent\z@
     \if@ACM@manuscript\else
       \if@ACM@journal\else % Print the conference short name
@@ -2703,20 +2775,36 @@ Computing Machinery]
     \if@printcopyright
      \copyright\ \@copyrightyear\ \@copyrightowner\
     \else
-      \@copyrightyear\
+      \@copyrightyear.\
     \fi
     \if@ACM@manuscript
       Manuscript submitted to ACM\\
     \else
-      \if@ACM@journal
-        \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
-        \$\@acmPrice\\
-      \else % Conference
-         \@isbn
-         \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
+      \if@ACM@authorversion
+        This is the author's version of the work. It is posted here for
+        your personal use. Not for redistribution. The definitive Version
+        of Record was published in 
+        \if@ACM@journal
+          \emph{\@journalName}%
+        \else
+          \emph{Proceedings of \acmConference@name, \acmConference@date}%
+        \fi
+        \ifx\@doi\@empty
+        .
+        \else
+          , \@formatdoi{\@doi}.
+        \fi\\
+      \else
+        \if@ACM@journal
+          \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
+          \$\@acmPrice\\
+        \else % Conference
+           \@isbn
+           \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
+        \fi
       \fi
     \fi
-    DOI: \@doi}%
+    DOI: \nolinkurl{\@doi}}%
   \@mkabstract
   \if@ACM@printcss
     \ifx\@concepts\@empty\else\bgroup
@@ -3237,7 +3325,7 @@ Computing Machinery]
   \noindent\authors. \@acmYear. \@title. \textit{\@journalNameShort}
   \@acmVolume, \@acmNumber, Article~\@acmArticle\
   (\@acmPubDate), \ref{TotPages}~pages.\par
-  \noindent DOI: \@doi
+  \noindent DOI: \nolinkurl{\@doi}
 \par\egroup}
 %    \end{macrocode}
 %
@@ -3661,6 +3749,11 @@ Computing Machinery]
 \else
   \excludecomment{screenonly}
   \includecomment{printonly}
+\fi
+\if@ACM@anonymous
+  \excludecomment{anonsuppress}
+\else
+  \includecomment{anonsuppress}
 \fi
 %    \end{macrocode}
 %
