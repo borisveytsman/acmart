@@ -2817,8 +2817,12 @@ Computing Machinery]
          \@terms\par}\egroup
    \fi
    \ifx\@keywords\@empty\else\bgroup
-      {\@specialsection{Additional Key
-        Words and Phrases}\@keywords}\par\egroup
+      {\if@ACM@journal
+         \@specialsection{Additional Key Words and Phrases}%
+       \else
+         \@specialsection{Keywords}%
+       \fi
+         \@keywords}\par\egroup
    \fi
   \andify\authors
   \andify\shortauthors
