@@ -1353,7 +1353,8 @@ FUNCTION {begin.bib}
   preamble$ empty$
     'skip$
     { preamble$ write$ newline$ }
-  write$ newline$
+  if$
+  "\begin{thebibliography}{"  longest.label  * "}" * write$ newline$
   "\providecommand{\url}[1]{\texttt{#1}}"
   write$ newline$
   "\expandafter\ifx\csname urlstyle\endcsname\relax"
@@ -1362,8 +1363,6 @@ FUNCTION {begin.bib}
   write$ newline$
   "  \providecommand{\doi}[1]{doi: \url{http://dx.doi.org/#1}}\fi"
   write$ newline$
-  if$
-  "\begin{thebibliography}{"  longest.label  * "}" * write$ newline$
 }
 
 EXECUTE {begin.bib}
