@@ -272,8 +272,8 @@
 % the computer science jargon, \emph{metadata} for the article.  They
 % establish the publication name, article title, authors, doi and
 % other data.  Some of these commands, like \cs{title} or \cs{author},
-% should be put by the authors.  Others, like \cs{volume} or
-% \cs{doi}---by the editors.  Below we describe these commands and
+% should be put by the authors.  Others, like \cs{acmVolume} or
+% \cs{acmDOI}---by the editors.  Below we describe these commands and
 % mention who should issue them.  These macros should be used
 % \emph{before} the \cs{maketitle} command.  Note that in the previous
 % versions of ACM classes some of these commands should be used before
@@ -497,14 +497,14 @@
 % \acmMonth{3}
 % \end{verbatim}
 %
-% \DescribeMacro{\articleSeq}%
+% \DescribeMacro{\acmArticleSeq}%
 % The articles in the same issue of a journal have \emph{sequential
 % number}.  It is used to position black blob in same formats.  By
 % default it is the same as article number, but the command
-% \cs{articleSeq}{sequence number} can be used to change it:
+% \cs{acmArticleSeq}\marg{n} can be used to change it:
 % \begin{verbatim}
-% \acmArticle{39} % The sequence number will be 39 by default
-% \articleSeq{5}  % We rededine it to 5
+% \acmArticle{39}   % The sequence number will be 39 by default
+% \acmArticleSeq{5} % We rededine it to 5
 % \end{verbatim}
 %
 %
@@ -517,20 +517,20 @@
 % \end{verbatim}
 %
 %
-% \DescribeMacro{\isbn}%
+% \DescribeMacro{\acmISBN}%
 % Book-like volumes have ISBN numbers attached to them.  The macro
-% \cs{isbn}\marg{ISBN} sets it.  Normally it is set by the
+% \cs{acmISBN}\marg{ISBN} sets it.  Normally it is set by the
 % typesetter, for example,
 % \begin{verbatim}
-% \isbn{978-1-4503-3916-2}
+% \acmISBN{978-1-4503-3916-2}
 % \end{verbatim}
 %
 %
-% \DescribeMacro{\doi}%
-% The macro \cs{doi}{DOI} sets the DOI number of the article, for
+% \DescribeMacro{\acmDOI}%
+% The macro \cs{acmDOI}\marg{DOI} sets the DOI number of the article, for
 % example,
 % \begin{verbatim}
-% \doi{http://doi.acm.org/10.1145/9999997.9999999}
+% \acmDOI{10.1145/9999997.9999999}
 % \end{verbatim}
 % It is normally set by the typesetter.
 %
@@ -2186,11 +2186,11 @@ Computing Machinery]
 %
 % \end{macro}
 %
-% \begin{macro}{\articleSeq}
+% \begin{macro}{\acmArticleSeq}
 %   The sequence number
 %    \begin{macrocode}
-\def\articleSeq#1{\def\@articleSeq{#1}}
-\articleSeq{\@acmArticle}
+\def\acmArticleSeq#1{\def\@acmArticleSeq{#1}}
+\acmArticleSeq{\@acmArticle}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2234,20 +2234,20 @@ Computing Machinery]
 %
 % \end{macro}
 %
-% \begin{macro}{\isbn}
-%   The paper isbn
+% \begin{macro}{\acmISBN}
+%   The book isbn
 %    \begin{macrocode}
-\def\isbn#1{\def\@isbn{#1}}
-\isbn{978-xxxx-xxxxx}
+\def\acmISBN#1{\def\@acmISBN{#1}}
+\acmISBN{978-x-xxxx-xxxx-x/YY/MM}
 %    \end{macrocode}
 %
 % \end{macro}
 %
-% \begin{macro}{\doi}
-%   The paper isbn
+% \begin{macro}{\acmDOI}
+%   The paper doi
 %    \begin{macrocode}
-\def\doi#1{\def\@doi{#1}}
-\doi{}
+\def\acmDOI#1{\def\@acmDOI{#1}}
+\acmDOI{10.1145/nnnnnnn.nnnnnnn}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2789,22 +2789,22 @@ Computing Machinery]
         \else
           \emph{Proceedings of \acmConference@name, \acmConference@date}%
         \fi
-        \ifx\@doi\@empty
+        \ifx\@acmDOI\@empty
         .
         \else
-          , \@formatdoi{\@doi}.
+          , \@formatdoi{\@acmDOI}.
         \fi\\
       \else
         \if@ACM@journal
           \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
           \$\@acmPrice\\
         \else % Conference
-           \@isbn
+           \@acmISBN
            \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
         \fi
       \fi
     \fi
-    DOI: \nolinkurl{\@doi}}%
+    DOI: \nolinkurl{\@acmDOI}}%
   \@mkabstract
   \if@ACM@printcss
     \ifx\@concepts\@empty\else\bgroup
@@ -3329,7 +3329,7 @@ Computing Machinery]
   \noindent\authors. \@acmYear. \@title. \textit{\@journalNameShort}
   \@acmVolume, \@acmNumber, Article~\@acmArticle\
   (\@acmPubDate), \ref{TotPages}~pages.\par
-  \noindent DOI: \nolinkurl{\@doi}
+  \noindent DOI: \nolinkurl{\@acmDOI}
 \par\egroup}
 %    \end{macrocode}
 %
@@ -3521,9 +3521,9 @@ Computing Machinery]
 % \begin{macro}{\@folioblob}
 %   The macro to typeset the folio blob.
 %    \begin{macrocode}
-\def\@folioblob{\@tempcnta=\@articleSeq\relax
+\def\@folioblob{\@tempcnta=\@acmArticleSeq\relax
 %    \end{macrocode}
-% First, we calculate \cs{@articleSeq} modulo \cs{@folio@max}
+% First, we calculate \cs{@acmArticleSeq} modulo \cs{@folio@max}
 %    \begin{macrocode}
   \loop
      \ifnum\@tempcnta>\@folio@max\relax
