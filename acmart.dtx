@@ -3496,43 +3496,18 @@ Computing Machinery]
 \RequirePackage{fancyhdr}
 %    \end{macrocode}
 %
-% \begin{macro}{\ACM@linenum}
-%   The number of lines (plus one) on the page
-%    \begin{macrocode}
-\def\ACM@linenum{42}
-\ifcase\ACM@format@nr
-\relax % manuscript
-  \def\ACM@linenum{43}
-\or% acmsmall
-  \def\ACM@linenum{51}
-\or % acmlarge
-  \def\ACM@linenum{54}
-\or % acmtog
-  \def\ACM@linenum{61}
-\or % sigconf
-  \def\ACM@linenum{60}
-\or % siggraph
-  \def\ACM@linenum{60}
-\or % sigplan
-  \def\ACM@linenum{60}
-\or % sigchi
-  \def\ACM@linenum{53}
-\or % sigchi-a
-  \def\ACM@linenum{40}
-\fi
-%    \end{macrocode}
-%
-% \end{macro}
-%
 % \begin{macro}{\ACM@linecount@bx}
 %   This is the box displayed in the review mode
 %    \begin{macrocode}
 \if@ACM@review
   \newsavebox{\ACM@linecount@bx}
   \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
-      \@tempcnta\@ne\relax\normalsize\normalfont
+      \newlength\ACM@linecount@bxht\setlength{\ACM@linecount@bxht}{-\baselineskip}
+      \@tempcnta\@ne\relax
       \loop{\color{ACMRed}\scriptsize\the\@tempcnta}\\
-      \advance\@tempcnta by \@ne\ifnum\@tempcnta<\ACM@linenum\repeat}}
+      \advance\@tempcnta by \@ne
+      \addtolength{\ACM@linecount@bxht}{\baselineskip}
+      \ifdim\ACM@linecount@bxht<\textheight\repeat}}
 \fi
 %    \end{macrocode}
 %
