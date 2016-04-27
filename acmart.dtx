@@ -2892,9 +2892,24 @@ Computing Machinery]
 %   This macro starts section for proceedings and uses small for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
-  \if@ACM@journal
+  \ifcase\ACM@format@nr
+  \relax % manuscript
     \par\medskip\small\noindent#1: %
-  \else
+  \or% acmsmall
+    \par\medskip\small\noindent#1: %
+  \or % acmlarge
+    \par\medskip\small\noindent#1: %
+  \or % acmtog
+    \par\medskip\small\noindent#1: %
+  \or % sigconf
+    \section*{#1}%
+  \or % siggraph
+    \section*{#1}%
+  \or % sigplan
+    \paragraph*{#1}%
+  \or % sigchi
+    \section*{#1}%
+  \or % sigchi-a
     \section*{#1}%
   \fi}
 %    \end{macrocode}
