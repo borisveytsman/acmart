@@ -114,6 +114,49 @@
 % |.tex| file is.
 %
 %
+% The class uses a number of other packages.  They are included in all
+% major \TeX\ distributions (\TeX Live, Mac\TeX, Mik\TeX) of 2015 and
+% later, so you probably have them installed.  Just in case here is
+% the list of these packages:
+% \begin{itemize}
+% \item \textsl{algorithm2e}, \url{http://www.ctan.org/pkg/algorithm2e}
+% \item \textsl{amscls}, \url{http://www.ctan.org/pkg/amscls}
+% \item \textsl{amsfonts}, \url{http://www.ctan.org/pkg/amsfonts}
+% \item \textsl{amsmath}, \url{http://www.ctan.org/pkg/amsmath}
+% \item \textsl{booktabs}, \url{http://www.ctan.org/pkg/booktabs}
+% \item \textsl{caption}, \url{http://www.ctan.org/pkg/caption}
+% \item \textsl{comment}, \url{http://www.ctan.org/pkg/comment}
+% \item \textsl{environ}, \url{http://www.ctan.org/pkg/environ}
+% \item \textsl{fancyhdr}, \url{http://www.ctan.org/pkg/fancyhdr}
+% \item \textsl{float}, \url{http://www.ctan.org/pkg/float}
+% \item \textsl{fontaxes}, \url{http://www.ctan.org/pkg/fontaxes}
+% \item \textsl{geometry}, \url{http://www.ctan.org/pkg/geometry}
+% \item \textsl{graphics}, \url{http://www.ctan.org/pkg/graphics}
+% \item \textsl{hyperref}, \url{http://www.ctan.org/pkg/hyperref}
+% \item \textsl{ifluatex}, \url{http://www.ctan.org/pkg/ifluatex}
+% \item \textsl{ifxetex}, \url{http://www.ctan.org/pkg/ifxetex}
+% \item \textsl{inconsolata}, \url{http://www.ctan.org/pkg/inconsolata}
+% \item \textsl{kastrup}, \url{http://www.ctan.org/pkg/kastrup}
+% \item \textsl{libertine}, \url{http://www.ctan.org/pkg/libertine}
+% \item \textsl{microtype}, \url{http://www.ctan.org/pkg/microtype}
+% \item \textsl{mptopdf}, \url{http://www.ctan.org/pkg/mptopdf}
+% \item \textsl{ms}, \url{http://www.ctan.org/pkg/ms}
+% \item \textsl{mweights}, \url{http://www.ctan.org/pkg/mweights}
+% \item \textsl{natbib}, \url{http://www.ctan.org/pkg/natbib}
+% \item \textsl{newtx}, \url{http://www.ctan.org/pkg/newtx}
+% \item \textsl{oberdiek}, \url{http://www.ctan.org/pkg/oberdiek}
+% \item \textsl{pdftex-def}, \url{http://www.ctan.org/pkg/pdftex-def}
+% \item \textsl{relsize}, \url{http://www.ctan.org/pkg/relsize}
+% \item \textsl{setspace}, \url{http://www.ctan.org/pkg/setspace}
+% \item \textsl{tools}, \url{http://www.ctan.org/pkg/tools}
+% \item \textsl{totpages}, \url{http://www.ctan.org/pkg/totpages}
+% \item \textsl{trimspaces}, \url{http://www.ctan.org/pkg/trimspaces}
+% \item \textsl{upquote}, \url{http://www.ctan.org/pkg/upquote}
+% \item \textsl{url}, \url{http://www.ctan.org/pkg/url}
+% \item \textsl{xcolor}, \url{http://www.ctan.org/pkg/xcolor}
+% \item \textsl{xkeyval}, \url{http://www.ctan.org/pkg/xkeyval}
+% \end{itemize}
+% 
 %
 %\subsection{Invocation and options}
 %\label{sec:invocation}
@@ -157,8 +200,9 @@
 %            JETC, TAAS, TACCESS, TACO, TALG, TALLIP (formerly TALIP), TCPS,
 %            TEAC, TECS, TIIS, TISSEC, TIST, TKDD, TMIS, TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
-%            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOS, TOSEM, TOSN, TRETS,
-%            TSAS, TSLP, TWEB\@. \\
+%            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS,
+%            TOS, TOSEM, TOSN, TRETS,
+%            TSAS, TSC, TSLP, TWEB\@. \\
 %           acmlarge  & Large single colummn format, used for
 %          JOCCH, TAP \\
 %            acmtog   & Large double column format, used for
@@ -185,12 +229,18 @@
 % The option
 % |review| is useful when combined with the |manuscript| format
 % option: it provides a version suitable for reviewers and
-% copyeditors.  The option |screen| may in the future involve
+% copyeditors.  
+%
+% The option |screen| may in the future involve
 % additional features  suitable for on-screen versions of the
-% articles.  The option |natbib| is used when the corresponding
-% \BibTeX\ style is based on |natbib|.  The option |anonymous| is used
+% articles.  
+% 
+% The option |natbib| is used when the corresponding
+% \BibTeX\ style is based on |natbib|.  
+%
+% The option |anonymous| is used
 % for anonymous review process: all author information becomes
-% obscured.
+% obscured.  
 %
 % \begin{table}
 %   \centering
@@ -204,8 +254,11 @@
 %     numbered, hyperlinks are colored\\
 %     screen & false & A screen version: hyperlinks are colored\\
 %     natbib & false & Whether to use |natbib| package (see
-%     Section~\ref{sec:ug_bibliography}\\
+%     Section~\ref{sec:ug_bibliography})\\
 %     anonymous & false & Whether to make the authors anonymous\\
+%     authorversion & false & Whether to generate a special
+%     version for authors' personal use or posting (see
+%     Section~\ref{sec:ug_topmatter})\\ 
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -219,8 +272,8 @@
 % the computer science jargon, \emph{metadata} for the article.  They
 % establish the publication name, article title, authors, doi and
 % other data.  Some of these commands, like \cs{title} or \cs{author},
-% should be put by the authors.  Others, like \cs{volume} or
-% \cs{doi}---by the editors.  Below we describe these commands and
+% should be put by the authors.  Others, like \cs{acmVolume} or
+% \cs{acmDOI}---by the editors.  Below we describe these commands and
 % mention who should issue them.  These macros should be used
 % \emph{before} the \cs{maketitle} command.  Note that in the previous
 % versions of ACM classes some of these commands should be used before
@@ -246,7 +299,7 @@
 % \begin{table}
 %   \centering
 %   \caption{ACM publications and arguments of the \cs{acmJournal}
-%   command}\small
+%   command}\footnotesize
 %   \label{tab:pubs}
 %   \begin{tabularx}{\textwidth}{>{\ttfamily}lX}
 %     \toprule
@@ -293,11 +346,13 @@
 %     TOMS & ACM Transactions on Mathematical Software\\
 %     TOPC & ACM Transactions on Parallel Computing\\
 %     TOPLAS & ACM Transactions on Programming Languages and Systems\\
+%     TOPS & ACM Transactions on Privacy and Security\\
 %     TOS & ACM Transactions on Storage\\
 %     TOSEM & ACM Transactions on Software Engineering and Methodology\\
 %     TOSN & ACM Transactions on Sensor Networks\\
 %     TRETS & ACM Transactions on Reconfigurable Technology and Systems\\
 %     TSAS & ACM Transactions on Spatial Algorithms and Systems\\
+%     TSC & ACM Transactions on Social Computing\\
 %     TSLP & ACM Transactions on Speech and Language Processing \\
 %     TWEB & ACM Transactions on the Web\\
 %   \bottomrule
@@ -442,14 +497,14 @@
 % \acmMonth{3}
 % \end{verbatim}
 %
-% \DescribeMacro{\articleSeq}%
+% \DescribeMacro{\acmArticleSeq}%
 % The articles in the same issue of a journal have \emph{sequential
 % number}.  It is used to position black blob in same formats.  By
 % default it is the same as article number, but the command
-% \cs{articleSeq}{sequence number} can be used to change it:
+% \cs{acmArticleSeq}\marg{n} can be used to change it:
 % \begin{verbatim}
-% \acmArticle{39} % The sequence number will be 39 by default
-% \articleSeq{5}  % We rededine it to 5
+% \acmArticle{39}   % The sequence number will be 39 by default
+% \acmArticleSeq{5} % We rededine it to 5
 % \end{verbatim}
 %
 %
@@ -462,20 +517,20 @@
 % \end{verbatim}
 %
 %
-% \DescribeMacro{\isbn}%
+% \DescribeMacro{\acmISBN}%
 % Book-like volumes have ISBN numbers attached to them.  The macro
-% \cs{isbn}\marg{ISBN} sets it.  Normally it is set by the
+% \cs{acmISBN}\marg{ISBN} sets it.  Normally it is set by the
 % typesetter, for example,
 % \begin{verbatim}
-% \isbn{978-1-4503-3916-2}
+% \acmISBN{978-1-4503-3916-2}
 % \end{verbatim}
 %
 %
-% \DescribeMacro{\doi}%
-% The macro \cs{doi}{DOI} sets the DOI number of the article, for
+% \DescribeMacro{\acmDOI}%
+% The macro \cs{acmDOI}\marg{DOI} sets the DOI number of the article, for
 % example,
 % \begin{verbatim}
-% \doi{http://doi.acm.org/10.1145/9999997.9999999}
+% \acmDOI{10.1145/9999997.9999999}
 % \end{verbatim}
 % It is normally set by the typesetter.
 %
@@ -548,7 +603,7 @@
 % There are several possibilities for the copyright of the papers
 % published by ACM: the authors may transfer the rights to ACM, license
 % them to ACM, some or all authors might be employees of the US or
-% Canada Government, etc.  Accordingly the new command
+% Canada Government, etc.  Accordingly the command
 % \verb|\setcopyright{...}| is introduced.  Its argument is the
 % copyright status of the paper, for example,
 % \verb|\setcopyright{acmcopyright}|.  The possible values for this
@@ -594,6 +649,16 @@
 % \copyrightyear{2015}
 % \end{verbatim}
 %
+% There is a special case for a personal copy that the authors may be
+% allowed to generate for their use or a posting on a personal site
+% (check the instructions for the specific journal or conference for
+% the details).  The document option |authorversion=true| produces the
+% special form of the copyright statement for this case.  Note that
+% you still need the \cs{setcopyright} command and (optionally)
+% \cs{authoryear} command to tell \TeX\ about the copyright owner and
+% year.  Also, you should be aware that due to the different sizes of
+% the permssion blocks for the printed version and authors' version
+% the page breaks might be different between them.
 %
 % \DescribeEnv{abstract}%
 % The environment |abstract| must \emph{precede} \cs{maketitle}
@@ -813,6 +878,26 @@
 % \end{verbatim}
 %
 %
+%
+%\subsection{Note about anonymous mode}
+%\label{sec:ug_anonymous}
+%
+% \DescribeEnv{anonsuppress}%
+% When the option |anonymous| is selected, \TeX\ suppresses authors'
+% names and affiliations for a blind review.  However, sometimes the
+% information identifying the authors may be present in the body of
+% the paper, for example, in the acknowledgements.  The environment
+% |anonsuppress| is used to suppress such information, for example
+% \begin{verbatim}
+% \section*{Acknowledgements}
+% \begin{anonsuppress}
+%   The authors wish to thank Prof. C.~O.~Lleague for her generous
+%   advices and the Society for Development of Oort Cloud for the
+%   financial support.
+% \end{anonsuppress}
+% \end{verbatim}
+% 
+%
 %\subsection{Bibliography}
 %\label{sec:ug_bibliography}
 %
@@ -872,7 +957,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/04/18 v1.01 Typesetting articles for Association of
+[2016/04/26 v1.04 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -882,6 +967,14 @@ Computing Machinery]
 % (closes \url{https://github.com/borisveytsman/acmart/issues/1})}
 % \changes{v1.01}{2016/04/18}{Set headheight to 1pc for all formats
 % (closes \url{https://github.com/borisveytsman/acmart/issues/5})}
+% \changes{v1.02}{2016/04/21}{Documentation changes
+% (closes \url{https://github.com/borisveytsman/acmart/issues/13})}
+% \changes{v1.02}{2016/04/21}{Added TOPS and TSC
+% (closes \url{https://github.com/borisveytsman/acmart/issues/12})}
+% \changes{v1.03}{2016/04/22}{Added authorversion option
+% (closes \url{https://github.com/borisveytsman/acmart/issues/9})}
+% \changes{v1.03}{2016/04/22}{Added anonsuppress environment}
+% \changes{v1.04}{2016/04/26}{Updated bibliography for siggraph}
 %
 %
 % And the driver code:
@@ -965,6 +1058,22 @@ Computing Machinery]
   \fi}{\PackageError{\@classname}{Option review can be either true or
     false}}
 \ExecuteOptionsX{review=false}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\if@ACM@authorversion}
+% \changes{v1.03}{2016/04/22}{Added macro}
+%   Whether we use author's version
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{authorversion}[true]{%
+  \if@ACM@authorversion
+    \PackageInfo{\@classname}{Using authorversion mode}%
+  \else
+    \PackageInfo{\@classname}{Not using authorversion mode}%
+  \fi}{\PackageError{\@classname}{Option authorversion can be either true or
+    false}}
+\ExecuteOptionsX{authorversion=false}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -1272,7 +1381,7 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
-% Bibliography mangling
+% Bibliography mangling.  Siggraph does not want the label.  
 %    \begin{macrocode}
 \if@ACM@natbib
   \let\citeN\cite
@@ -1289,6 +1398,38 @@ Computing Machinery]
   \providecommand\newblock{}
 \else
   \providecommand\citename[1]{#1}
+\fi
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or% acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+   \def\@biblabel#1{}
+   \ifx\bibhang\@undefined
+      \newlength\bibhang
+   \fi
+   \setlength{\bibhang}{1em}
+    \renewenvironment{thebibliography}[1]{%
+      \@bibtitlestyle
+      \normalfont\bibliofont\labelsep .5em\relax
+      \renewcommand\theenumiv{\arabic{enumiv}}\let\p@enumiv\@empty
+      \list{\@biblabel{\theenumiv}}{\labelwidth\z@
+        \setlength{\itemindent}{-\bibhang}%
+        \setlength{\leftmargin}{\bibhang}%
+        \labelsep\z@
+        \def\newblock{\hskip .11em plus .33em minus .07em}%
+        \usecounter{enumiv}}%
+      \sloppy \clubpenalty\@M \widowpenalty\clubpenalty
+      \sfcode`\.=\@m
+    }{%
+      \def\@noitemerr{\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist
+    }
+\or % sigplan  
+\or % sigchi
+\or % sigchi-a
 \fi
 %    \end{macrocode}
 %
@@ -1659,12 +1800,14 @@ Computing Machinery]
   TOMPECS,%
   TOMS,%
   TOPC,%
+  TOPS,%
   TOPLAS,%
   TOS,%
   TOSEM,%
   TOSN,%
   TRETS,%
   TSAS,%
+  TSC,%
   TSLP,%
   TWEB%
 }{%
@@ -1809,6 +1952,10 @@ Computing Machinery]
   \def\@journalName{ACM Transactions on Parallel Computing}%
   \def\@journalNameShort{ACM Trans. Parallel Comput.}%
   \def\@permissionCodeOne{1539-9087}%
+\or % TOPS
+  \def\@journalName{ACM Transactions on Privacy and Security}%
+  \def\@journalNameShort{ACM Trans. Priv. Sec.}%
+  \def\@permissionCodeOne{2471-2566}%
 \or % TOPLAS
   \def\@journalName{ACM Transactions on Programming Languages and Systems}%
   \def\@journalNameShort{ACM Trans. Program. Lang. Syst.}%
@@ -1833,6 +1980,10 @@ Computing Machinery]
   \def\@journalName{ACM Transactions on Spatial Algorithms and Systems}%
   \def\@journalNameShort{ACM Trans. Spatial Algorithms Syst.}%
   \def\@permissionCodeOne{2374-0353}%
+\or % TSC
+  \def\@journalName{ACM Transactions on Social Computing}%
+  \def\@journalNameShort{ACM Trans. Soc. Comput.}%
+  \def\@permissionCodeOne{2469-7818}%
 \or % TSLP
   \def\@journalName{ACM Transactions on Speech and Language Processing}%
   \def\@journalNameShort{ACM Trans. Speech Lang. Process.}%
@@ -2077,11 +2228,12 @@ Computing Machinery]
 %
 % \end{macro}
 %
-% \begin{macro}{\articleSeq}
+% \begin{macro}{\acmArticleSeq}
+% \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
 %   The sequence number
 %    \begin{macrocode}
-\def\articleSeq#1{\def\@articleSeq{#1}}
-\articleSeq{\@acmArticle}
+\def\acmArticleSeq#1{\def\@acmArticleSeq{#1}}
+\acmArticleSeq{\@acmArticle}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2125,20 +2277,22 @@ Computing Machinery]
 %
 % \end{macro}
 %
-% \begin{macro}{\isbn}
-%   The paper isbn
+% \begin{macro}{\acmISBN}
+% \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
+%   The book isbn
 %    \begin{macrocode}
-\def\isbn#1{\def\@isbn{#1}}
-\isbn{978-xxxx-xxxxx}
+\def\acmISBN#1{\def\@acmISBN{#1}}
+\acmISBN{978-x-xxxx-xxxx-x/YY/MM}
 %    \end{macrocode}
 %
 % \end{macro}
 %
-% \begin{macro}{\doi}
-%   The paper isbn
+% \begin{macro}{\acmDOI}
+% \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
+%   The paper doi
 %    \begin{macrocode}
-\def\doi#1{\def\@doi{\url{#1}}}
-\doi{dddddddddddd}
+\def\acmDOI#1{\def\@acmDOI{#1}}
+\acmDOI{10.1145/nnnnnnn.nnnnnnn}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2442,6 +2596,15 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\@formatdoi}
+% \changes{v1.03}{2016/04/22}{Added macro}
+%   Print a clickable doi
+%    \begin{macrocode}
+\def\@formatdoi#1{\url{http://dx.doi.org/#1}}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 % \begin{macro}{\@copyrightpermission}
 %   The canned permission block.
 %    \begin{macrocode}
@@ -2554,6 +2717,8 @@ Computing Machinery]
 % \end{macro}
 %
 %
+%
+%
 % \begin{macro}{\copyrightyear}
 %   By default, the copyright year is the same as \cs{acmYear}, but
 %   one can override this:
@@ -2618,6 +2783,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\maketitle}
+% \changes{v1.03}{2016/04/22}{Added special case of authorversion}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %    \begin{macrocode}
@@ -2642,7 +2808,9 @@ Computing Machinery]
   \ifx\@empty\thankses\else
     \@footnotetext{\def\par{\let\par\@par}\parindent\z@\@setthanks}%
   \fi
-  \if@printpermission\@footnotetext{\parindent\z@\@copyrightpermission}\fi
+  \if@ACM@authorversion\else
+    \if@printpermission\@footnotetext{\parindent\z@\@copyrightpermission}\fi
+  \fi
   \@footnotetext{\parindent\z@
     \if@ACM@manuscript\else
       \if@ACM@journal\else % Print the conference short name
@@ -2652,20 +2820,36 @@ Computing Machinery]
     \if@printcopyright
      \copyright\ \@copyrightyear\ \@copyrightowner\
     \else
-      \@copyrightyear\
+      \@copyrightyear.\
     \fi
     \if@ACM@manuscript
       Manuscript submitted to ACM\\
     \else
-      \if@ACM@journal
-        \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
-        \$\@acmPrice\\
-      \else % Conference
-         \@isbn
-         \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
+      \if@ACM@authorversion
+        This is the author's version of the work. It is posted here for
+        your personal use. Not for redistribution. The definitive Version
+        of Record was published in 
+        \if@ACM@journal
+          \emph{\@journalName}%
+        \else
+          \emph{Proceedings of \acmConference@name, \acmConference@date}%
+        \fi
+        \ifx\@acmDOI\@empty
+        .
+        \else
+          , \@formatdoi{\@acmDOI}.
+        \fi\\
+      \else
+        \if@ACM@journal
+          \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
+          \$\@acmPrice\\
+        \else % Conference
+           \@acmISBN
+           \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
+        \fi
       \fi
     \fi
-    DOI: \@doi}%
+    DOI: \nolinkurl{\@acmDOI}}%
   \@mkabstract
   \if@ACM@printcss
     \ifx\@concepts\@empty\else\bgroup
@@ -2678,8 +2862,12 @@ Computing Machinery]
          \@terms\par}\egroup
    \fi
    \ifx\@keywords\@empty\else\bgroup
-      {\@specialsection{Additional Key
-        Words and Phrases}\@keywords}\par\egroup
+      {\if@ACM@journal
+         \@specialsection{Additional Key Words and Phrases}%
+       \else
+         \@specialsection{Keywords}%
+       \fi
+         \@keywords}\par\egroup
    \fi
   \andify\authors
   \andify\shortauthors
@@ -3203,7 +3391,7 @@ Computing Machinery]
   \noindent\authors. \@acmYear. \@title. \textit{\@journalNameShort}
   \@acmVolume, \@acmNumber, Article~\@acmArticle\
   (\@acmPubDate), \ref{TotPages}~pages.\par
-  \noindent DOI: \@doi
+  \noindent DOI: \nolinkurl{\@acmDOI}
 \par\egroup}
 %    \end{macrocode}
 %
@@ -3395,9 +3583,9 @@ Computing Machinery]
 % \begin{macro}{\@folioblob}
 %   The macro to typeset the folio blob.
 %    \begin{macrocode}
-\def\@folioblob{\@tempcnta=\@articleSeq\relax
+\def\@folioblob{\@tempcnta=\@acmArticleSeq\relax
 %    \end{macrocode}
-% First, we calculate \cs{@articleSeq} modulo \cs{@folio@max}
+% First, we calculate \cs{@acmArticleSeq} modulo \cs{@folio@max}
 %    \begin{macrocode}
   \loop
      \ifnum\@tempcnta>\@folio@max\relax
@@ -3651,6 +3839,11 @@ Computing Machinery]
 \else
   \excludecomment{screenonly}
   \includecomment{printonly}
+\fi
+\if@ACM@anonymous
+  \excludecomment{anonsuppress}
+\else
+  \includecomment{anonsuppress}
 \fi
 %    \end{macrocode}
 %
