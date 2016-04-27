@@ -957,7 +957,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/04/22 v1.03 Typesetting articles for Association of
+[2016/04/26 v1.04 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -974,6 +974,7 @@ Computing Machinery]
 % \changes{v1.03}{2016/04/22}{Added authorversion option
 % (closes \url{https://github.com/borisveytsman/acmart/issues/9})}
 % \changes{v1.03}{2016/04/22}{Added anonsuppress environment}
+% \changes{v1.04}{2016/04/26}{Updated bibliography for siggraph}
 %
 %
 % And the driver code:
@@ -1371,7 +1372,7 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
-% Bibliography mangling
+% Bibliography mangling.  Siggraph does not want the label.  
 %    \begin{macrocode}
 \if@ACM@natbib
   \let\citeN\cite
@@ -1388,6 +1389,38 @@ Computing Machinery]
   \providecommand\newblock{}
 \else
   \providecommand\citename[1]{#1}
+\fi
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or% acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+   \def\@biblabel#1{}
+   \ifx\bibhang\@undefined
+      \newlength\bibhang
+   \fi
+   \setlength{\bibhang}{1em}
+    \renewenvironment{thebibliography}[1]{%
+      \@bibtitlestyle
+      \normalfont\bibliofont\labelsep .5em\relax
+      \renewcommand\theenumiv{\arabic{enumiv}}\let\p@enumiv\@empty
+      \list{\@biblabel{\theenumiv}}{\labelwidth\z@
+        \setlength{\itemindent}{-\bibhang}%
+        \setlength{\leftmargin}{\bibhang}%
+        \labelsep\z@
+        \def\newblock{\hskip .11em plus .33em minus .07em}%
+        \usecounter{enumiv}}%
+      \sloppy \clubpenalty\@M \widowpenalty\clubpenalty
+      \sfcode`\.=\@m
+    }{%
+      \def\@noitemerr{\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist
+    }
+\or % sigplan  
+\or % sigchi
+\or % sigchi-a
 \fi
 %    \end{macrocode}
 %
@@ -2187,6 +2220,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\acmArticleSeq}
+% \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
 %   The sequence number
 %    \begin{macrocode}
 \def\acmArticleSeq#1{\def\@acmArticleSeq{#1}}
@@ -2235,6 +2269,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\acmISBN}
+% \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
 %   The book isbn
 %    \begin{macrocode}
 \def\acmISBN#1{\def\@acmISBN{#1}}
@@ -2244,6 +2279,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\acmDOI}
+% \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
 %   The paper doi
 %    \begin{macrocode}
 \def\acmDOI#1{\def\@acmDOI{#1}}
