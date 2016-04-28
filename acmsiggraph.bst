@@ -1361,7 +1361,11 @@ FUNCTION {begin.bib}
   write$ newline$
   "  \providecommand{\doi}[1]{doi: #1}\else"
   write$ newline$
-  "  \providecommand{\doi}[1]{doi: \url{http://dx.doi.org/#1}}\fi"
+  "  \expandafter\ifx\csname href\endcsname\relax"
+  write$ newline$
+  "    \providecommand{\doi}[1]{doi: \url{#1}}\else"
+  write$ newline$
+  "    \providecommand{\doi}[1]{doi: \href{http://dx.doi.org/#1}{\nolinkurl{#1}}}\fi\fi"
   write$ newline$
 }
 
