@@ -2846,7 +2846,12 @@ Computing Machinery]
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %    \begin{macrocode}
-\def\maketitle{\begingroup
+\def\maketitle{%
+  \if@ACM@anonymous
+    % Anonymize omission of \author-s
+    \ifnum\num@authors=0\author{}\fi
+  \fi
+  \begingroup
   \let\@footnotemark\@footnotemark@nolink
   \let\@footnotetext\@footnotetext@nolink
   \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
