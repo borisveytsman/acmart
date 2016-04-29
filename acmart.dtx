@@ -262,7 +262,7 @@
 %     screen & false & A screen version: hyperlinks are colored\\
 %     natbib & false & Whether to use |natbib| package (see
 %     Section~\ref{sec:ug_bibliography})\\
-%     anonymous & false & Whether to make the authors anonymous\\
+%     anonymous & false & Whether to make author(s) anonymous\\
 %     authorversion & false & Whether to generate a special
 %     version for authors' personal use or posting (see
 %     Section~\ref{sec:ug_topmatter})\\ 
@@ -890,11 +890,12 @@
 %\label{sec:ug_anonymous}
 %
 % \DescribeEnv{anonsuppress}%
-% When the option |anonymous| is selected, \TeX\ suppresses authors'
-% names and affiliations for a blind review.  However, sometimes the
-% information identifying the authors may be present in the body of
-% the paper, for example, in the acknowledgements.  The environment
-% |anonsuppress| is used to suppress such information, for example
+% When the option |anonymous| is selected, \TeX\ suppresses author
+% information (including number of authors) for a blind review.
+% However, sometimes the information identifying the authors may be
+% present in the body of the paper, for example, in the
+% acknowledgements.  The environment |anonsuppress| is used to
+% suppress such information, for example
 % \begin{verbatim}
 % \section*{Acknowledgements}
 % \begin{anonsuppress}
@@ -2128,17 +2129,14 @@ Computing Machinery]
   \global\advance\num@authors by 1\relax
   \ifx\addresses\@empty
     \if@ACM@anonymous
-      \gdef\addresses{\@author{Anonymous}}%
-      \gdef\authors{Anonymous}%
+      \gdef\addresses{\@author{Anonymous Author(s)}}%
+      \gdef\authors{Anonymous Author(s)}%
     \else
       \gdef\addresses{\@author{#2}}%
       \gdef\authors{#2}%
     \fi
   \else
-    \if@ACM@anonymous
-      \g@addto@macro\addresses{\and\@author{Anonymous}}%
-      \g@addto@macro\authors{\and Anonymous}%
-    \else
+    \if@ACM@anonymous\else
       \g@addto@macro\addresses{\and\@author{#2}}%
       \g@addto@macro\authors{\and#2}%
     \fi
@@ -2146,8 +2144,6 @@ Computing Machinery]
   \if@ACM@anonymous
     \ifx\shortauthors\@empty
       \gdef\shortauthors{Anon.}%
-    \else
-      \g@addto@macro\shortauthors{\and Anon.}%
     \fi
   \else
     \def\@tempa{#1}%
@@ -2176,9 +2172,7 @@ Computing Machinery]
 %   but keep for the possible future use.
 %    \begin{macrocode}
 \newcommand{\affiliation}[2][]{%
-  \if@ACM@anonymous
-    \g@addto@macro\addresses{\affiliation{}{Address}}%
-  \else
+  \if@ACM@anonymous\else
     \g@addto@macro\addresses{\affiliation{#1}{#2}}%
   \fi}
 %    \end{macrocode}
@@ -2191,9 +2185,7 @@ Computing Machinery]
 %   but keep for the possible future use.
 %    \begin{macrocode}
 \renewcommand{\email}[2][]{%
-  \if@ACM@anonymous
-    \g@addto@macro\addresses{\email{}{e-mail}}%
-  \else
+  \if@ACM@anonymous\else
     \g@addto@macro\addresses{\email{#1}{#2}}%
   \fi}
 %    \end{macrocode}
@@ -2248,7 +2240,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@authornotes}
-%   The subtitlenotes
+%   The authornotes
 %    \begin{macrocode}
 \def\@authornotes{}
 %    \end{macrocode}
@@ -2259,14 +2251,12 @@ Computing Machinery]
 % \begin{macro}{\authornote}
 %   Adding note to the author
 %    \begin{macrocode}
-\def\authornote#1{\g@addto@macro\addresses{\@authornotemark}%
-  \if@ACM@anonymous
-    \g@addto@macro\@authornotes{%
-      \stepcounter{footnote}\footnotetext{Author note}}%
-   \else
+\def\authornote#1{%
+  \if@ACM@anonymous\else
+    \g@addto@macro\addresses{\@authornotemark}
     \g@addto@macro\@authornotes{%
       \stepcounter{footnote}\footnotetext{#1}}%
-   \fi}
+  \fi}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2857,7 +2847,12 @@ Computing Machinery]
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %    \begin{macrocode}
-\def\maketitle{\begingroup
+\def\maketitle{%
+  \if@ACM@anonymous
+    % Anonymize omission of \author-s
+    \ifnum\num@authors=0\author{}\fi
+  \fi
+  \begingroup
   \let\@footnotemark\@footnotemark@nolink
   \let\@footnotetext\@footnotetext@nolink
   \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
