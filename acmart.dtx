@@ -262,7 +262,7 @@
 %     screen & false & A screen version: hyperlinks are colored\\
 %     natbib & false & Whether to use |natbib| package (see
 %     Section~\ref{sec:ug_bibliography})\\
-%     anonymous & false & Whether to make the authors anonymous\\
+%     anonymous & false & Whether to make author(s) anonymous\\
 %     authorversion & false & Whether to generate a special
 %     version for authors' personal use or posting (see
 %     Section~\ref{sec:ug_topmatter})\\ 
@@ -890,11 +890,12 @@
 %\label{sec:ug_anonymous}
 %
 % \DescribeEnv{anonsuppress}%
-% When the option |anonymous| is selected, \TeX\ suppresses authors'
-% names and affiliations for a blind review.  However, sometimes the
-% information identifying the authors may be present in the body of
-% the paper, for example, in the acknowledgements.  The environment
-% |anonsuppress| is used to suppress such information, for example
+% When the option |anonymous| is selected, \TeX\ suppresses author
+% information (including number of authors) for a blind review.
+% However, sometimes the information identifying the authors may be
+% present in the body of the paper, for example, in the
+% acknowledgements.  The environment |anonsuppress| is used to
+% suppress such information, for example
 % \begin{verbatim}
 % \section*{Acknowledgements}
 % \begin{anonsuppress}
