@@ -1271,7 +1271,6 @@ Computing Machinery]
 %    \begin{macrocode}
 \if@ACM@natbib
   \RequirePackage{natbib}
-  \bibpunct[, ]{[}{]}{;}{a}{}{,}
   \renewcommand{\bibfont}{\bibliofont}
   \renewcommand\setcitestyle[1]{
   \@for\@tempa:=#1\do
@@ -1337,7 +1336,11 @@ Computing Machinery]
    \fi
   }%
   \NAT@@setcites
- }
+  }
+  \setcitestyle{%
+    open={[},close={]},citesep={;},%
+    authoryear,aysep={},yysep={,},%
+    notesep={, }}
 \fi
 %    \end{macrocode}
 %
