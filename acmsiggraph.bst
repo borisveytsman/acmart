@@ -1,5 +1,5 @@
 %    'acmsiggraph.bst'
-%    ACM SIGGRAPH bibliography style (07-Sep-01 version)
+%    ACM SIGGRAPH bibliography style 
 %    * based on "ACM Transactions bibliography style (24-Jan-88 version)"
 %      A lot like abbrv.bst, but names come out "Last, initials", and in \sc.
 %      Some dates are parenthesized.
@@ -8,12 +8,15 @@
 %    Version History
 %    * 07 Sept 2001: original version - Stephen Spencer (spencer@acm.org)
 %    * 22 Dec 2003: tweaked file for entry w/out year, removed "n. d." 
-
+%    * 28 Apr 2016: added doi
+%   
+%
 ENTRY
   { address
     author
     booktitle
     chapter
+    doi
     edition
     editor
     howpublished
@@ -294,6 +297,14 @@ FUNCTION {format.title}
     { title "t" change.case$ }
   if$
 }
+
+FUNCTION {format.doi}
+{ doi empty$
+    { "" }
+    { new.block "\doi{" doi * "}" * }
+  if$
+}
+
 
 FUNCTION {n.dashify}
 { 't :=
@@ -638,6 +649,7 @@ FUNCTION {article}
       format.pages output
     }
   if$
+  format.doi output
   new.block
   note output
   fin.entry
@@ -672,6 +684,7 @@ FUNCTION {book}
     }
   if$
   format.month output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -688,6 +701,7 @@ FUNCTION {booklet}
   howpublished output
   address output
   format.month output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -723,6 +737,7 @@ FUNCTION {inbook}
   if$
   format.month output
   format.chapter.pages "chapter and pages" output.check
+  format.doi output
   new.block
   note output
   fin.entry
@@ -749,6 +764,7 @@ FUNCTION {incollection}
     { format.incoll.inproc.crossref output.nonnull }
   if$
   format.chapter.pages output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -787,6 +803,7 @@ FUNCTION {inproceedings}
     { format.incoll.inproc.crossref output.nonnull }
   if$
   format.pages output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -813,6 +830,7 @@ FUNCTION {manual}
   if$
   address output
   format.month output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -829,6 +847,7 @@ FUNCTION {mastersthesis}
   "Master's thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -843,6 +862,7 @@ FUNCTION {misc}
   howpublished new.block.checka
   howpublished output
   format.month output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -860,6 +880,7 @@ FUNCTION {phdthesis}
   "PhD thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -896,6 +917,7 @@ FUNCTION {proceedings}
       if$ 
     }
   if$
+  format.doi output
   new.block
   note output
   fin.entry
@@ -913,6 +935,7 @@ FUNCTION {techreport}
   institution "institution" output.check
   address output
   format.month output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1324,7 +1347,7 @@ REVERSE {reverse.pass}
 
 FUNCTION {begin.bib}
 { et.al.char.used
-    { "\newcommand{\etalchar}[1]{$^{#1}$}" write$ newline$ }
+    { "\providecommand{\etalchar}[1]{$^{#1}$}" write$ newline$ }
     'skip$
   if$
   preamble$ empty$
@@ -1332,6 +1355,18 @@ FUNCTION {begin.bib}
     { preamble$ write$ newline$ }
   if$
   "\begin{thebibliography}{"  longest.label  * "}" * write$ newline$
+  "\providecommand{\url}[1]{\texttt{#1}}"
+  write$ newline$
+  "\expandafter\ifx\csname urlstyle\endcsname\relax"
+  write$ newline$
+  "  \providecommand{\doi}[1]{doi: #1}\else"
+  write$ newline$
+  "  \expandafter\ifx\csname href\endcsname\relax"
+  write$ newline$
+  "    \providecommand{\doi}[1]{doi: \url{#1}}\else"
+  write$ newline$
+  "    \providecommand{\doi}[1]{doi: \href{http://dx.doi.org/#1}{\nolinkurl{#1}}}\fi\fi"
+  write$ newline$
 }
 
 EXECUTE {begin.bib}

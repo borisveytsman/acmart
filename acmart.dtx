@@ -80,7 +80,14 @@
 % minimizes users' efforts in the installation and support of the
 % package.
 %
-%
+%  I am grateful to
+%  Matthew Fluet, 
+%  John Owens,
+%  Craig Rodkin,
+%  Bernard Rous,
+%  David Shamma,
+%  Stephen Spencer
+%  and many others for their invaluable help.
 %
 %\section{User's guide}
 %\label{sec:ug}
@@ -255,7 +262,7 @@
 %     screen & false & A screen version: hyperlinks are colored\\
 %     natbib & false & Whether to use |natbib| package (see
 %     Section~\ref{sec:ug_bibliography})\\
-%     anonymous & false & Whether to make the authors anonymous\\
+%     anonymous & false & Whether to make author(s) anonymous\\
 %     authorversion & false & Whether to generate a special
 %     version for authors' personal use or posting (see
 %     Section~\ref{sec:ug_topmatter})\\ 
@@ -883,11 +890,12 @@
 %\label{sec:ug_anonymous}
 %
 % \DescribeEnv{anonsuppress}%
-% When the option |anonymous| is selected, \TeX\ suppresses authors'
-% names and affiliations for a blind review.  However, sometimes the
-% information identifying the authors may be present in the body of
-% the paper, for example, in the acknowledgements.  The environment
-% |anonsuppress| is used to suppress such information, for example
+% When the option |anonymous| is selected, \TeX\ suppresses author
+% information (including number of authors) for a blind review.
+% However, sometimes the information identifying the authors may be
+% present in the body of the paper, for example, in the
+% acknowledgements.  The environment |anonsuppress| is used to
+% suppress such information, for example
 % \begin{verbatim}
 % \section*{Acknowledgements}
 % \begin{anonsuppress}
@@ -903,14 +911,19 @@
 %
 % The Boolean option |natbib| selects whether to use |natbib| package
 % for bibliography.  If you use |natbib|, then commands like
-% \cs{citep} and \cs{citeauthor} are automatically supported.
+% \cs{citep} and \cs{citeauthor} are automatically supported.  You may
+% customize \cs{natbib} using \cs{setcitestyle} command, for example,
+% \begin{verbatim}
+% \setcitestyle{numbers,sort&compress}
+% \end{verbatim}
+% 
 %
 % ACM journals use |natbib| and the style
 % |ACM-Reference-Format-Journals|.
 %
-% ACM conference proceedings do \emph{not} use |natbib|.  SIGGRAPH
-% conferences use |acmsiggraph| style.  SIGCHI conferences use
-% |SIGCHI-Reference-Format| style.  The other conferences employ
+% Most ACM conference proceedings do \emph{not} use |natbib|.
+% SIGGRAPH conferences use |acmsiggraph| style.  SIGCHI conferences
+% use |SIGCHI-Reference-Format| style.  The other conferences employ
 % one of the four styles:
 % \begin{enumerate}
 % \item acm-abbrv
@@ -957,7 +970,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/04/26 v1.04 Typesetting articles for Association of
+[2016/04/27 v1.05 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -975,6 +988,10 @@ Computing Machinery]
 % (closes \url{https://github.com/borisveytsman/acmart/issues/9})}
 % \changes{v1.03}{2016/04/22}{Added anonsuppress environment}
 % \changes{v1.04}{2016/04/26}{Updated bibliography for siggraph}
+% \changes{v1.05}{2016/04/27}{Patched \cs{setcitestyle} command;
+% closes \url{https://github.com/borisveytsman/acmart/issues/19}}
+% \changes{v1.05}{2016/04/27}{Added processing doi numbers for
+% acmsiggraph and doi numbers for sigproc.bib}
 %
 %
 % And the driver code:
@@ -1080,7 +1097,7 @@ Computing Machinery]
 %
 %
 %
-% \begin{macro}{if@ACM@natbib}
+% \begin{macro}{\if@ACM@natbib}
 %   Whether we use natbib mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{natbib}[true]{%
@@ -1095,7 +1112,8 @@ Computing Machinery]
 %
 % \end{macro}
 %
-% \begin{macro}{if@ACM@anonymous}
+%
+% \begin{macro}{\if@ACM@anonymous}
 %   Whether we use anonymous mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{anonymous}[true]{%
@@ -1249,12 +1267,81 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
-% Citations:
+% Citations.  We patch \cs{setcitestyle} to allow, e.g.,
+% \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|
 %    \begin{macrocode}
 \if@ACM@natbib
   \RequirePackage{natbib}
-  \bibpunct[, ]{[}{]}{;}{a}{}{,}
   \renewcommand{\bibfont}{\bibliofont}
+  \renewcommand\setcitestyle[1]{
+  \@for\@tempa:=#1\do
+  {\def\@tempb{round}\ifx\@tempa\@tempb
+     \renewcommand\NAT@open{(}\renewcommand\NAT@close{)}\fi
+   \def\@tempb{square}\ifx\@tempa\@tempb
+     \renewcommand\NAT@open{[}\renewcommand\NAT@close{]}\fi
+   \def\@tempb{angle}\ifx\@tempa\@tempb
+     \renewcommand\NAT@open{$<$}\renewcommand\NAT@close{$>$}\fi
+   \def\@tempb{curly}\ifx\@tempa\@tempb
+     \renewcommand\NAT@open{\{}\renewcommand\NAT@close{\}}\fi
+   \def\@tempb{semicolon}\ifx\@tempa\@tempb
+     \renewcommand\NAT@sep{;}\fi
+   \def\@tempb{colon}\ifx\@tempa\@tempb
+     \renewcommand\NAT@sep{;}\fi
+   \def\@tempb{comma}\ifx\@tempa\@tempb
+     \renewcommand\NAT@sep{,}\fi
+   \def\@tempb{authoryear}\ifx\@tempa\@tempb
+     \NAT@numbersfalse\fi
+   \def\@tempb{numbers}\ifx\@tempa\@tempb
+     \NAT@numberstrue\NAT@superfalse\fi
+   \def\@tempb{super}\ifx\@tempa\@tempb
+     \NAT@numberstrue\NAT@supertrue\fi
+   \def\@tempb{nobibstyle}\ifx\@tempa\@tempb
+     \let\bibstyle=\@gobble\fi
+   \def\@tempb{bibstyle}\ifx\@tempa\@tempb
+     \let\bibstyle=\@citestyle\fi
+   \def\@tempb{sort}\ifx\@tempa\@tempb
+     \def\NAT@sort{\@ne}\fi
+   \def\@tempb{nosort}\ifx\@tempa\@tempb
+     \def\NAT@sort{\z@}\fi
+   \def\@tempb{compress}\ifx\@tempa\@tempb
+     \def\NAT@cmprs{\@ne}\fi
+   \def\@tempb{nocompress}\ifx\@tempa\@tempb
+     \def\NAT@cmprs{\@z}\fi
+   \def\@tempb{sort&compress}\ifx\@tempa\@tempb
+     \def\NAT@sort{\@ne}\def\NAT@cmprs{\@ne}\fi
+   \def\@tempb{mcite}\ifx\@tempa\@tempb
+     \let\NAT@merge\@ne\fi
+   \def\@tempb{merge}\ifx\@tempa\@tempb
+     \@ifnum{\NAT@merge<\tw@}{\let\NAT@merge\tw@}{}\fi
+   \def\@tempb{elide}\ifx\@tempa\@tempb
+     \@ifnum{\NAT@merge<\thr@@}{\let\NAT@merge\thr@@}{}\fi
+   \def\@tempb{longnamesfirst}\ifx\@tempa\@tempb
+     \NAT@longnamestrue\fi
+   \def\@tempb{nonamebreak}\ifx\@tempa\@tempb
+     \def\NAT@nmfmt#1{\mbox{\NAT@up#1}}\fi
+   \expandafter\NAT@find@eq\@tempa=\relax\@nil
+   \if\@tempc\relax\else
+     \expandafter\NAT@rem@eq\@tempc
+     \def\@tempb{open}\ifx\@tempa\@tempb
+      \xdef\NAT@open{\@tempc}\fi
+     \def\@tempb{close}\ifx\@tempa\@tempb
+      \xdef\NAT@close{\@tempc}\fi
+     \def\@tempb{aysep}\ifx\@tempa\@tempb
+      \xdef\NAT@aysep{\@tempc}\fi
+     \def\@tempb{yysep}\ifx\@tempa\@tempb
+      \xdef\NAT@yrsep{\@tempc}\fi
+     \def\@tempb{notesep}\ifx\@tempa\@tempb
+      \xdef\NAT@cmt{\@tempc}\fi
+     \def\@tempb{citesep}\ifx\@tempa\@tempb
+      \xdef\NAT@sep{\@tempc}\fi
+   \fi
+  }%
+  \NAT@@setcites
+  }
+  \setcitestyle{%
+    open={[},close={]},citesep={;},%
+    authoryear,aysep={},yysep={,},%
+    notesep={, }}
 \fi
 %    \end{macrocode}
 %
@@ -2060,17 +2147,14 @@ Computing Machinery]
   \global\advance\num@authors by 1\relax
   \ifx\addresses\@empty
     \if@ACM@anonymous
-      \gdef\addresses{\@author{Anonymous}}%
-      \gdef\authors{Anonymous}%
+      \gdef\addresses{\@author{Anonymous Author(s)}}%
+      \gdef\authors{Anonymous Author(s)}%
     \else
       \gdef\addresses{\@author{#2}}%
       \gdef\authors{#2}%
     \fi
   \else
-    \if@ACM@anonymous
-      \g@addto@macro\addresses{\and\@author{Anonymous}}%
-      \g@addto@macro\authors{\and Anonymous}%
-    \else
+    \if@ACM@anonymous\else
       \g@addto@macro\addresses{\and\@author{#2}}%
       \g@addto@macro\authors{\and#2}%
     \fi
@@ -2078,8 +2162,6 @@ Computing Machinery]
   \if@ACM@anonymous
     \ifx\shortauthors\@empty
       \gdef\shortauthors{Anon.}%
-    \else
-      \g@addto@macro\shortauthors{\and Anon.}%
     \fi
   \else
     \def\@tempa{#1}%
@@ -2108,9 +2190,7 @@ Computing Machinery]
 %   but keep for the possible future use.
 %    \begin{macrocode}
 \newcommand{\affiliation}[2][]{%
-  \if@ACM@anonymous
-    \g@addto@macro\addresses{\affiliation{}{Address}}%
-  \else
+  \if@ACM@anonymous\else
     \g@addto@macro\addresses{\affiliation{#1}{#2}}%
   \fi}
 %    \end{macrocode}
@@ -2123,9 +2203,7 @@ Computing Machinery]
 %   but keep for the possible future use.
 %    \begin{macrocode}
 \renewcommand{\email}[2][]{%
-  \if@ACM@anonymous
-    \g@addto@macro\addresses{\email{}{e-mail}}%
-  \else
+  \if@ACM@anonymous\else
     \g@addto@macro\addresses{\email{#1}{#2}}%
   \fi}
 %    \end{macrocode}
@@ -2180,7 +2258,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@authornotes}
-%   The subtitlenotes
+%   The authornotes
 %    \begin{macrocode}
 \def\@authornotes{}
 %    \end{macrocode}
@@ -2191,14 +2269,12 @@ Computing Machinery]
 % \begin{macro}{\authornote}
 %   Adding note to the author
 %    \begin{macrocode}
-\def\authornote#1{\g@addto@macro\addresses{\@authornotemark}%
-  \if@ACM@anonymous
-    \g@addto@macro\@authornotes{%
-      \stepcounter{footnote}\footnotetext{Author note}}%
-   \else
+\def\authornote#1{%
+  \if@ACM@anonymous\else
+    \g@addto@macro\addresses{\@authornotemark}
     \g@addto@macro\@authornotes{%
       \stepcounter{footnote}\footnotetext{#1}}%
-   \fi}
+  \fi}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2789,7 +2865,12 @@ Computing Machinery]
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %    \begin{macrocode}
-\def\maketitle{\begingroup
+\def\maketitle{%
+  \if@ACM@anonymous
+    % Anonymize omission of \author-s
+    \ifnum\num@authors=0\author{}\fi
+  \fi
+  \begingroup
   \let\@footnotemark\@footnotemark@nolink
   \let\@footnotetext\@footnotetext@nolink
   \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
@@ -3460,43 +3541,18 @@ Computing Machinery]
 \RequirePackage{fancyhdr}
 %    \end{macrocode}
 %
-% \begin{macro}{\ACM@linenum}
-%   The number of lines (plus one) on the page
-%    \begin{macrocode}
-\def\ACM@linenum{42}
-\ifcase\ACM@format@nr
-\relax % manuscript
-  \def\ACM@linenum{43}
-\or% acmsmall
-  \def\ACM@linenum{51}
-\or % acmlarge
-  \def\ACM@linenum{54}
-\or % acmtog
-  \def\ACM@linenum{61}
-\or % sigconf
-  \def\ACM@linenum{60}
-\or % siggraph
-  \def\ACM@linenum{60}
-\or % sigplan
-  \def\ACM@linenum{60}
-\or % sigchi
-  \def\ACM@linenum{53}
-\or % sigchi-a
-  \def\ACM@linenum{40}
-\fi
-%    \end{macrocode}
-%
-% \end{macro}
-%
 % \begin{macro}{\ACM@linecount@bx}
 %   This is the box displayed in the review mode
 %    \begin{macrocode}
 \if@ACM@review
   \newsavebox{\ACM@linecount@bx}
   \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
+      \newlength\ACM@linecount@bxht\setlength{\ACM@linecount@bxht}{-\baselineskip}
       \@tempcnta\@ne\relax
       \loop{\color{ACMRed}\scriptsize\the\@tempcnta}\\
-      \advance\@tempcnta by \@ne\ifnum\@tempcnta<\ACM@linenum\repeat}}
+      \advance\@tempcnta by \@ne
+      \addtolength{\ACM@linecount@bxht}{\baselineskip}
+      \ifdim\ACM@linecount@bxht<\textheight\repeat}}
 \fi
 %    \end{macrocode}
 %
