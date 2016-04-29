@@ -1843,6 +1843,29 @@ Computing Machinery]
 %
 % \end{macro}
 %
+%
+%\subsection{Lists}
+%\label{sec:lists}
+%
+%    \begin{macrocode}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+\def\labelenumi{\theenumi.}
+\def\labelenumii{\theenumii.}
+\def\labelenumiii{\theenumiii.}
+\def\labelenumiv{\theenumiv.}
+\or % sigchi
+\or % sigchi-a
+\fi
+%    \end{macrocode}
+%
+%
 %\subsection{Top matter data}
 %\label{sec:top_matter_data}
 %
