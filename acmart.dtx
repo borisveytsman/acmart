@@ -1268,11 +1268,10 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % Citations.  We patch \cs{setcitestyle} to allow, e.g.,
-% \cs{setcitestyle}|{sort&compress}| 
+% \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|
 %    \begin{macrocode}
 \if@ACM@natbib
   \RequirePackage{natbib}
-  \bibpunct[, ]{[}{]}{;}{a}{}{,}
   \renewcommand{\bibfont}{\bibliofont}
   \renewcommand\setcitestyle[1]{
   \@for\@tempa:=#1\do
@@ -1302,8 +1301,12 @@ Computing Machinery]
      \let\bibstyle=\@citestyle\fi
    \def\@tempb{sort}\ifx\@tempa\@tempb
      \def\NAT@sort{\@ne}\fi
+   \def\@tempb{nosort}\ifx\@tempa\@tempb
+     \def\NAT@sort{\z@}\fi
    \def\@tempb{compress}\ifx\@tempa\@tempb
      \def\NAT@cmprs{\@ne}\fi
+   \def\@tempb{nocompress}\ifx\@tempa\@tempb
+     \def\NAT@cmprs{\@z}\fi
    \def\@tempb{sort&compress}\ifx\@tempa\@tempb
      \def\NAT@sort{\@ne}\def\NAT@cmprs{\@ne}\fi
    \def\@tempb{mcite}\ifx\@tempa\@tempb
@@ -1334,7 +1337,11 @@ Computing Machinery]
    \fi
   }%
   \NAT@@setcites
- }
+  }
+  \setcitestyle{%
+    open={[},close={]},citesep={;},%
+    authoryear,aysep={},yysep={,},%
+    notesep={, }}
 \fi
 %    \end{macrocode}
 %
