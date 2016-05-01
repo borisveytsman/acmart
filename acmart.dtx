@@ -542,6 +542,28 @@
 % It is normally set by the typesetter.
 %
 %
+% \DescribeMacro{\acmBadgeR}%
+% \DescribeMacro{\acmBadgeL}%
+% Some conference articles get special distinction, for example, the
+% artifact evaluation for PPoPP~2016
+% (see~\url{http://ctuning.org/ae/ppopp2016.html}).  These articles
+% display special badges supplied by the conference organizers.  The
+% class provides commands to add these badges:
+% \cs{acmBadgeR}\oarg{url}\marg{graphics} and 
+% \cs{acmBadgeL}\oarg{url}\marg{graphics}.  The first command puts the
+% badge to the right of the title, and the second one---to the left.
+% The exception is the |sigchi-a| mode for SIGCHI Extended abstract,
+% which puts the badges on the left margin.  The argument have the
+% following meaning: \oarg{url}, if provided, sets the link to the
+% badge authority in the screen version, while \marg{graphics} sets
+% the graphics file with the badge image.  The file must be a cropped
+% square, which is scaled to a standard size in the output.  For
+% example, if the badge image is |ae-logo.pdf|, the command is
+% \begin{verbatim}
+% \acmBadgeR[http://ctuning.org/ae/ppopp2016.html]{ae-logo}
+% \end{verbatim}
+% 
+%
 %
 % \DescribeMacro{\startPage}%
 % The macro \cs{startPage}\marg{page} sets the first page of the
@@ -970,7 +992,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/04/27 v1.05 Typesetting articles for Association of
+[2016/05/01 v1.06 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2364,6 +2386,75 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\if@ACM@badge}
+% \changes{v1.06}{2016/05/01}{Added macro}
+%   Whether to print badge.  Note that either left or right badge
+%   triggers it:
+%    \begin{macrocode}
+\newif\if@ACM@badge
+\@ACM@badgefalse
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\@ACM@badge@width}
+% \changes{v1.06}{2016/05/01}{Added macro}
+%   The width of the badge
+%    \begin{macrocode}
+\newlength\@ACM@badge@width
+\setlength\@ACM@badge@width{5pc}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+%
+% \begin{macro}{\@ACM@title@width}
+% \changes{v1.06}{2016/05/01}{Added macro}
+%   The width of the badge
+%    \begin{macrocode}
+\newlength\@ACM@title@width
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+%
+% \begin{macro}{\@ACM@badge@skip}
+% \changes{v1.06}{2016/05/01}{Added macro}
+%   The space between the badge and the title
+%    \begin{macrocode}
+\newlength\@ACM@badge@skip
+\setlength\@ACM@badge@skip{1pc}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\acmBadgeR}
+% \changes{v1.06}{2016/05/01}{Added macro}
+%   Setting the right badge
+%    \begin{macrocode}
+\newcommand\acmBadgeR[2][]{\@ACM@badgetrue
+  \def\@acmBadgeR@url{#1}%
+  \def\@acmBadgeR@image{#2}}
+\def\@acmBadgeR@url{}
+\def\@acmBadgeR@image{}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\acmBadgeL}
+% \changes{v1.06}{2016/05/01}{Added macro}
+%   Setting the left badge
+%    \begin{macrocode}
+\newcommand\acmBadgeL[2][]{\@ACM@badgetrue
+  \def\@acmBadgeL@url{#1}%
+  \def\@acmBadgeL@image{#2}}
+\def\@acmBadgeL@url{}
+\def\@acmBadgeL@image{}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+%
 % \begin{macro}{\startPage}
 %   The start page of the paper
 %    \begin{macrocode}
@@ -2975,8 +3066,10 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\@printtopmatter}
+% \changes{v1.06}{2016/05/01}{Added processing badges}
 %   The printing of top matter starts the new page, and uses the given
-%   title box.
+%   title box.  Note that for sigchi-a we print badges here rather
+%   than in \cs{mktitle} since we want them on the margins.
 %    \begin{macrocode}
 \def\@printtopmatter{%
   \ifx\@startPage\@empty
@@ -3008,6 +3101,18 @@ Computing Machinery]
     \twocolumn[\box\mktitle@bx]%
   \or % sigchi-a
     \par\box\mktitle@bx\par\bigskip
+    \if@ACM@badge
+       \marginpar{\noindent
+         \ifx\@acmBadgeL@image\@empty\else
+           \href{\@acmBadgeL@url}{%
+             \includegraphics[width=\@ACM@badge@width]{\@acmBadgeL@image}}%
+            \hskip\@ACM@badge@skip
+          \fi
+         \ifx\@acmBadgeR@image\@empty\else
+           \href{\@acmBadgeR@url}{%
+             \includegraphics[width=\@ACM@badge@width]{\@acmBadgeR@image}}%
+          \fi}%
+    \fi
   \fi
 }
 %    \end{macrocode}
@@ -3026,7 +3131,7 @@ Computing Machinery]
   \or % acmlarge
     \@mktitle@i
   \or % acmtog
-    \@mktitle@ii
+    \@mktitle@i
   \or % sigconf
     \@mktitle@iii
   \or % siggraph
@@ -3043,59 +3148,158 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\@titlefont}
+% \changes{v1.06}{2016/05/01}{Added macro}
+%   The font to typeset title
+%    \begin{macrocode}
+\def\@titlefont{%
+  \ifcase\ACM@format@nr
+  \relax % manuscript
+    \LARGE\bfseries\sffamily
+  \or% acmsmall
+    \LARGE\bfseries\sffamily
+  \or % acmlarge
+    \LARGE\bfseries\sffamily
+  \or % acmtog
+    \Huge\sffamily
+  \or % sigconf
+    \Huge\sffamily\bfseries
+  \or % siggraph
+    \Huge\sffamily\bfseries
+  \or % sigplan
+    \Huge\sffamily\bfseries
+  \or % sigchi
+    \Huge\sffamily\bfseries
+  \or % sigchi-a
+     \Huge\bfseries
+  \fi}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\@subtitlefont}
+% \changes{v1.06}{2016/05/01}{Added macro}
+%   The font to typeset title
+%    \begin{macrocode}
+\def\@subtitlefont{%
+  \ifcase\ACM@format@nr
+  \relax % manuscript
+    \mdseries
+  \or% acmsmall
+    \mdseries
+  \or % acmlarge
+    \mdseries
+  \or % acmtog
+     \LARGE
+  \or % sigconf
+     \LARGE\mdseries
+  \or % siggraph
+     \LARGE\mdseries
+  \or % sigplan
+     \LARGE\mdseries
+  \or % sigchi
+     \LARGE\mdseries
+  \or % sigchi-a
+     \mdseries
+  \fi}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 % \begin{macro}{\@mktitle@i}
+% \changes{v1.06}{2016/05/01}{Made generic}
+% \changes{v1.06}{2016/05/01}{Added processing badges}
 %   The version of \cs{mktitle} for most journals
 %    \begin{macrocode}
 \def\@mktitle@i{\hsize=\textwidth
-  \setbox\mktitle@bx=\vbox{\raggedright\LARGE\bfseries\sffamily\noindent
-    \@title\par
+  \@ACM@title@width=\hsize
+  \ifx\@acmBadgeL@image\@empty\else
+    \advance\@ACM@title@width by -\@ACM@badge@width
+    \advance\@ACM@title@width by -\@ACM@badge@skip
+  \fi
+  \ifx\@acmBadgeR@image\@empty\else
+    \advance\@ACM@title@width by -\@ACM@badge@width
+    \advance\@ACM@title@width by -\@ACM@badge@skip
+  \fi
+  \setbox\mktitle@bx=\vbox{\noindent\@titlefont
+    \ifx\@acmBadgeL@image\@empty\else
+      \raisebox{-.5\baselineskip}[\z@][\z@]{\href{\@acmBadgeL@url}{%
+          \includegraphics[width=\@ACM@badge@width]{\@acmBadgeL@image}}}%
+      \hskip\@ACM@badge@skip
+    \fi
+    \parbox[t]{\@ACM@title@width}{\raggedright
+      \@titlefont\noindent
+      \@title
   \ifx\@subtitle\@empty\else
-    \noindent\mdseries\@subtitle\par
-  \fi}}%
+    \par\noindent{\@subtitlefont\@subtitle}
+  \fi}%
+  \ifx\@acmBadgeR@image\@empty\else
+    \hskip\@ACM@badge@skip
+    \raisebox{-.5\baselineskip}[\z@][\z@]{\href{\@acmBadgeR@url}{%
+        \includegraphics[width=\@ACM@badge@width]{\@acmBadgeR@image}}}%
+  \fi
+  \par\bigskip}}%
 %    \end{macrocode}
 %
 % \end{macro}
 %
 % \begin{macro}{\@mktitle@ii}
-%   The version of \cs{mktitle} for TOG
-%    \begin{macrocode}
-\def\@mktitle@ii{\hsize=\textwidth
-    \setbox\mktitle@bx=\vbox{\raggedright\Huge\sffamily\noindent
-    \def\@currentfmarkstyle{\Huge\sffamily}%
-      \@title
-     \ifx\@subtitle\@empty\else
-       \par\noindent{\LARGE\@subtitle}
-     \fi
-     \par\bigskip}}%
-%    \end{macrocode}
-%
+% \changes{v1.06}{2016/05/01}{Now this macro is obsolete}
+%   The version of \cs{mktitle} for TOG.  Since v1.06 is subsumed by
+%   the \cs{mktitle@i} macro
 % \end{macro}
 %
 %
 % \begin{macro}{\@mktitle@iii}
-%   The version of \cs{@mktitle} for sigproc
+% \changes{v1.06}{2016/05/01}{Made more generic}
+% \changes{v1.06}{2016/05/01}{Added processing badges}
+%   The version of \cs{@mktitle} for sigproc.  Note that since the
+%   title is centered, we leave the space for the left badge even if
+%   only the right badge is defined.
 %    \begin{macrocode}
 \def\@mktitle@iii{\hsize=\textwidth
-    \setbox\mktitle@bx=\vbox{\centering\Huge\sffamily\bfseries\noindent
-      \@title
-     \ifx\@subtitle\@empty\else
-       \par\noindent{\LARGE\mdseries\@subtitle}
-     \fi
-     \par\bigskip}}%
+    \setbox\mktitle@bx=\vbox{\@titlefont\centering
+      \@ACM@title@width=\hsize
+      \if@ACM@badge
+        \advance\@ACM@title@width by -2\@ACM@badge@width
+        \advance\@ACM@title@width by -2\@ACM@badge@skip
+        \parbox[b]{\@ACM@badge@width}{\strut
+          \ifx\@acmBadgeL@image\@empty\else
+            \raisebox{-.5\baselineskip}[\z@][\z@]{\href{\@acmBadgeL@url}{%
+                \includegraphics[width=\@ACM@badge@width]{\@acmBadgeL@image}}}%
+          \fi}%
+        \hskip\@ACM@badge@skip
+      \fi
+      \parbox[t]{\@ACM@title@width}{\centering\@titlefont
+        \@title
+        \ifx\@subtitle\@empty\else
+          \par\noindent{\@subtitlefont\@subtitle}
+        \fi
+      }%
+      \if@ACM@badge
+        \hskip\@ACM@badge@skip
+        \parbox[b]{\@ACM@badge@width}{\strut
+          \ifx\@acmBadgeR@image\@empty\else
+            \raisebox{-.5\baselineskip}[\z@][\z@]{\href{\@acmBadgeR@url}{%
+                \includegraphics[width=\@ACM@badge@width]{\@acmBadgeR@image}}}%
+          \fi}%
+      \fi
+      \par\bigskip}}%
 %    \end{macrocode}
 %
 % \end{macro}
 %
 %
 % \begin{macro}{\@mktitle@iv}
+% \changes{v1.06}{2016/05/01}{Made more generic}
 %   The version of \cs{@mktitle} for sigchi-a
 %    \begin{macrocode}
 \def\@mktitle@iv{\hsize=\textwidth
-    \setbox\mktitle@bx=\vbox{\raggedright\leftskip5pc\bfseries\Huge
+    \setbox\mktitle@bx=\vbox{\raggedright\leftskip5pc\@titlefont
       \noindent\leavevmode\leaders\hrule height 2pt\hfill\kern0pt\par
       \noindent\@title
      \ifx\@subtitle\@empty\else
-       \par\noindent\mdseries\@subtitle
+       \par\noindent\@subtitlefont\@subtitle
      \fi
      \par\bigskip}}%
 %    \end{macrocode}
