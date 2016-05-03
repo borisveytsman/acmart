@@ -1744,7 +1744,8 @@ Computing Machinery]
   \or % siggraph
     \captionsetup{textfont={it}}
   \or % sigplan
-    \captionsetup{labelfont={bf},
+    \DeclareCaptionFormat{@ACM@sigplan@capfmt}{\hrulefill\\#1#2#3}
+    \captionsetup{format=@ACM@sigplan@capfmt,labelfont={bf},
       textfont={normalfont}, labelsep=period, margin=\z@}
   \or % sigchi
     \captionsetup[figure]{labelfont={bf, small},
