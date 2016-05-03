@@ -1744,8 +1744,11 @@ Computing Machinery]
   \or % siggraph
     \captionsetup{textfont={it}}
   \or % sigplan
-    \DeclareCaptionFormat{@ACM@sigplan@capfmt}{\hrulefill\\#1#2#3}
-    \captionsetup{format=@ACM@sigplan@capfmt,labelfont={bf},
+    \setlength\abovecaptionskip{4\p@}
+    \captionsetup[figure]{position=bottom}
+    \captionsetup[table]{position=bottom}
+    \DeclareCaptionFormat{@ACM@sigplan@capfmtWithRule}{\hrulefill\\#1#2#3\par}
+    \captionsetup{format=@ACM@sigplan@capfmtWithRule,labelfont={bf},
       textfont={normalfont}, labelsep=period, margin=\z@}
   \or % sigchi
     \captionsetup[figure]{labelfont={bf, small},
