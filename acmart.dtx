@@ -145,11 +145,13 @@
 % \item \textsl{inconsolata}, \url{http://www.ctan.org/pkg/inconsolata}
 % \item \textsl{kastrup}, \url{http://www.ctan.org/pkg/kastrup}
 % \item \textsl{libertine}, \url{http://www.ctan.org/pkg/libertine}
+% \item \textsl{manyfoot}, \url{http://www.ctan.org/pkg/manyfoot}
 % \item \textsl{microtype}, \url{http://www.ctan.org/pkg/microtype}
 % \item \textsl{mptopdf}, \url{http://www.ctan.org/pkg/mptopdf}
 % \item \textsl{ms}, \url{http://www.ctan.org/pkg/ms}
 % \item \textsl{mweights}, \url{http://www.ctan.org/pkg/mweights}
 % \item \textsl{natbib}, \url{http://www.ctan.org/pkg/natbib}
+% \item \textsl{nccfoots}, \url{http://www.ctan.org/pkg/nccfoots}
 % \item \textsl{newtx}, \url{http://www.ctan.org/pkg/newtx}
 % \item \textsl{oberdiek}, \url{http://www.ctan.org/pkg/oberdiek}
 % \item \textsl{pdftex-def}, \url{http://www.ctan.org/pkg/pdftex-def}
@@ -992,7 +994,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/05/01 v1.06 Typesetting articles for Association of
+[2016/05/03 v1.07 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1646,6 +1648,18 @@ Computing Machinery]
 %
 % \end{macro}
 % \end{macro}
+%
+% Footnotes require some consideration.  We have several layers of
+% footnotes:  frontmatter footnotes, ``regular'' footnotes and the
+% special insert for bibstrip.  In the old ACM classes bibstrip was a
+% \cs{@float}.  The problem with floats is that they tend to, well,
+% float---and we want the guarantee they stay.  
+%    \begin{macrocode}
+\RequirePackage{manyfoot}
+\DeclareNewFootnote{copyrightpermission}
+\skip\footinscopyrightpermission=0.1\baselineskip plus 0.1\baselineskip
+%    \end{macrocode}
+% 
 %
 % \begin{macro}{\footnoterule}
 %   Tschichold's rules:
@@ -2980,6 +2994,9 @@ Computing Machinery]
 %
 % \begin{macro}{\maketitle}
 % \changes{v1.03}{2016/04/22}{Added special case of authorversion}
+% \changes{v1.07}{2016/05/03}{Corrected a bug with abstract footnotes}
+% \changes{v1.07}{2016/05/03}{Corrected a bug with permssion and
+% footnotes order}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %    \begin{macrocode}
@@ -3009,24 +3026,24 @@ Computing Machinery]
   \ifx\@empty\thankses\else
     \@footnotetext{\def\par{\let\par\@par}\parindent\z@\@setthanks}%
   \fi
+  \footnotetextcopyrightpermission{\parindent\z@\parskip0.1\baselineskip
   \if@ACM@authorversion\else
-    \if@printpermission\@footnotetext{\parindent\z@\@copyrightpermission}\fi
+    \if@printpermission\@copyrightpermission\par\fi
   \fi
-  \@footnotetext{\parindent\z@
-    \if@ACM@manuscript\else
-      \if@ACM@journal\else % Print the conference short name
-        {\itshape \acmConference@shortname, \acmConference@venue}\par
-      \fi
+  \if@ACM@manuscript\else
+    \if@ACM@journal\else % Print the conference short name
+      {\itshape \acmConference@shortname, \acmConference@venue}\par
     \fi
-    \if@printcopyright
-     \copyright\ \@copyrightyear\ \@copyrightowner\
-    \else
-      \@copyrightyear.\
-    \fi
-    \if@ACM@manuscript
-      Manuscript submitted to ACM\\
-    \else
-      \if@ACM@authorversion
+  \fi
+  \if@printcopyright
+    \copyright\ \@copyrightyear\ \@copyrightowner\
+  \else
+    \@copyrightyear.\
+  \fi
+  \if@ACM@manuscript
+    Manuscript submitted to ACM\\
+  \else
+    \if@ACM@authorversion
         This is the author's version of the work. It is posted here for
         your personal use. Not for redistribution. The definitive Version
         of Record was published in 
@@ -3051,6 +3068,8 @@ Computing Machinery]
       \fi
     \fi
     DOI: \nolinkurl{\@acmDOI}}%
+  \endgroup
+  \setcounter{footnote}{0}%
   \@mkabstract
   \if@ACM@printcss
     \ifx\@concepts\@empty\else\bgroup
@@ -3080,8 +3099,6 @@ Computing Machinery]
   \hypersetup{pdfauthor={\authors},
     pdftitle={\@title}, pdfkeywords={\@concepts}}%
   \@printendtopmatter
-  \endgroup
-  \setcounter{footnote}{0}%
   \@afterindentfalse
   \@afterheading
 }
