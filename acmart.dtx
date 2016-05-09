@@ -208,14 +208,14 @@
 %     \normalfont Value & Meaning\\
 %     \midrule
 %     manuscript  & A manuscript. This is the default \\
-%   acmsmall & Small format, used for CIE, CSUR, JACM, JDIQ, JEA, JERIC,
+%   acmsmall & Small single column format, used for CIE, CSUR, JACM, JDIQ, JEA, JERIC,
 %            JETC, TAAS, TACCESS, TACO, TALG, TALLIP (formerly TALIP), TCPS,
 %            TEAC, TECS, TIIS, TISSEC, TIST, TKDD, TMIS, TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
 %            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS,
 %            TOS, TOSEM, TOSN, TRETS,
 %            TSAS, TSC, TSLP, TWEB\@. \\
-%           acmlarge  & Large single colummn format, used for
+%           acmlarge  & Large single column format, used for
 %          JOCCH, TAP \\
 %            acmtog   & Large double column format, used for
 %          TOG\\
@@ -224,7 +224,7 @@
 %           siggraph & Proceedings format for SIGGRAPH and SIGGRAPH
 %          Asia conferences, published in ACM Transactions on Graphics
 %          journal issues \\
-%            sigplan & Proceedings format used for SIGPLAN conferences\\
+%            sigplan & Proceedings format for SIGPLAN conferences\\
 %            sigchi  & Proceedings format for SIGCHI conferences\\
 %           sigchi-a & Format for SIGCHI extended abstract\\
 %   \bottomrule
@@ -262,8 +262,8 @@
 %     \toprule
 %     \normalfont Option & \normalfont Default & Meaning\\
 %     \midrule
-%     review & false & A review version: doublespaced, lines are
-%     numbered, hyperlinks are colored\\
+%     review & false & A review version: lines are numbered,
+%     hyperlinks are colored\\
 %     screen & false & A screen version: hyperlinks are colored\\
 %     natbib & false & Whether to use |natbib| package (see
 %     Section~\ref{sec:ug_bibliography})\\
@@ -689,7 +689,7 @@
 % the details).  The document option |authorversion=true| produces the
 % special form of the copyright statement for this case.  Note that
 % you still need the \cs{setcopyright} command and (optionally)
-% \cs{authoryear} command to tell \TeX\ about the copyright owner and
+% \cs{copyrightyear} command to tell \TeX\ about the copyright owner and
 % year.  Also, you should be aware that due to the different sizes of
 % the permssion blocks for the printed version and authors' version
 % the page breaks might be different between them.
