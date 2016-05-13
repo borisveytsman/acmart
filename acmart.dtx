@@ -742,8 +742,8 @@
 %
 %
 % \DescribeMacro{\received}%
-% The command \cs{received}\marg[stage]\oarg{date} sets the history of
-% the publication.  The \marg{stage} argument is optional; the default
+% The command \cs{received}\oarg{stage}\marg{date} sets the history of
+% the publication.  The \oarg{stage} argument is optional; the default
 % is |Received| for the first date and |revised| for the subsequent
 % ones.  For example
 % \begin{verbatim}
@@ -3923,7 +3923,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{firstpagestyle}
-%   The pagestyle for all pages but the first one
+%   The pagestyle for the first page only.
 %    \begin{macrocode}
 \fancypagestyle{firstpagestyle}{%
   \fancyhf{}%
