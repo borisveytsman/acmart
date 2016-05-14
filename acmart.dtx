@@ -868,6 +868,16 @@
 % \item[margintable:] a table on the margin
 % \end{description}
 %
+% \DescribeMacro{\nocaptionrule}%
+% \DescribeMacro{\captionruleoff}%
+% \DescribeMacro{\captionruleon}%
+% SIGPLAN format uses rules between captions and float bodies.  In
+% some cases these rules interfere with the material.  The command
+% \cs{nocaptionrule} before the caption (but inside figure or table)
+% switches the rule off.  The command \cs{captionruleoff} switches off
+% caption rules for all subsequent figures, while the command
+% \cs{captionruleon} switches them on.  In other formats this command
+% does not make any difference.
 %
 %\subsection{Theorems}
 %\label{sec:ug_theorems}
@@ -997,7 +1007,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/05/13 v1.08 Typesetting articles for Association of
+[2016/05/14 v1.08 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1747,6 +1757,73 @@ Computing Machinery]
 %    \begin{macrocode}
 \RequirePackage{caption, float}
 \captionsetup[table]{position=top}
+%    \end{macrocode}
+% 
+%
+%
+% \begin{macro}{\if@ACM@captionrule}
+% \changes{v1.08}{2016/05/14}{Introduced macro}
+%   Whether to use caption rules in SIGPLAN.  We define it here, so
+%   caption rule commands do not produce errors with other
+%   formats. Fortunately, other formats do not use rules.
+%    \begin{macrocode}
+\newif\if@ACM@captionrule
+\@ACM@captionruletrue
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\nocaptionrule}
+% \changes{v1.08}{2016/05/14}{Introduced macro}
+%   Locally delete caption rule
+%    \begin{macrocode}
+\def\nocaptionrule{\@ACM@captionrulefalse}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\captionruleoff}
+% \changes{v1.08}{2016/05/14}{Introduced macro}
+%   Globally switching rules off
+%    \begin{macrocode}
+\def\captionruleoff{\global\@ACM@captionrulefalse}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\captionruleon}
+% \changes{v1.08}{2016/05/14}{Introduced macro}
+%   Globally switching rules on
+%    \begin{macrocode}
+\def\captionruleon{\global\@ACM@captionruletrue}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{@ACM@capfmtWithRuleAbove}
+% \changes{v1.08}{2016/05/14}{Introduced macro}
+%   The SIGPLAN ruled caption for figures
+%    \begin{macrocode}
+\DeclareCaptionFormat{@ACM@capfmtWithRuleAbove}{%
+  \if@ACM@captionrule\hrulefill\par\noindent\fi#1#2#3\par}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{@ACM@capfmtWithRuleBelow}
+% \changes{v1.08}{2016/05/14}{Introduced macro}
+%   The SIGPLAN ruled caption for tables
+%    \begin{macrocode}
+\DeclareCaptionFormat{@ACM@capfmtWithRuleBelow}{%
+  #1#2#3\if@ACM@captionrule\par\vspace{-.5\baselineskip}%
+  \noindent\hrulefill\fi\par}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+%
+% And the actual setup
+%    \begin{macrocode}
 \if@ACM@journal
   \captionsetup{labelfont={sf, small},
     textfont={sf, small},  margin=\z@}
@@ -1764,10 +1841,9 @@ Computing Machinery]
     \captionsetup{textfont={it}}
   \or % sigplan
     \setlength\abovecaptionskip{4\p@}
-    \captionsetup[figure]{position=bottom}
-    \captionsetup[table]{position=bottom}
-    \DeclareCaptionFormat{@ACM@sigplan@capfmtWithRule}{\hrulefill\\#1#2#3\par}
-    \captionsetup{format=@ACM@sigplan@capfmtWithRule,labelfont={bf},
+    \captionsetup[figure]{format=@ACM@capfmtWithRuleAbove}
+    \captionsetup[table]{format=@ACM@capfmtWithRuleBelow}
+    \captionsetup{labelfont={bf},
       textfont={normalfont}, labelsep=period, margin=\z@}
   \or % sigchi
     \captionsetup[figure]{labelfont={bf, small},
