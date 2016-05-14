@@ -1470,10 +1470,19 @@ Computing Machinery]
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
 \RequirePackage{hyperref}
-\if@ACM@sigchiamode
+\urlstyle{rm}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
   \urlstyle{sf}
-\else
-  \urlstyle{rm}
+\or % sigchi
+\or % sigchi-a
+  \urlstyle{sf}
 \fi
 \if@ACM@screen
   \hypersetup{colorlinks,
@@ -1598,8 +1607,8 @@ Computing Machinery]
 \or % sigplan
    \geometry{twoside=true, head=1pc,
      paperwidth=8.5in, paperheight=11in,
-     includeheadfoot, columnsep=2pc,
-     top=74pt, bottom=70pt, inner=54pt, outer=54pt
+     includeheadfoot=false, columnsep=2pc,
+     top=1in, bottom=1in, inner=0.75in, outer=0.75in
      }%
 \or % sigchi
    \geometry{twoside=true, head=1pc,
@@ -1752,6 +1761,12 @@ Computing Machinery]
   \or % siggraph
     \captionsetup{textfont={it}}
   \or % sigplan
+    \setlength\abovecaptionskip{4\p@}
+    \captionsetup[figure]{position=bottom}
+    \captionsetup[table]{position=bottom}
+    \DeclareCaptionFormat{@ACM@sigplan@capfmtWithRule}{\hrulefill\\#1#2#3\par}
+    \captionsetup{format=@ACM@sigplan@capfmtWithRule,labelfont={bf},
+      textfont={normalfont}, labelsep=period, margin=\z@}
   \or % sigchi
     \captionsetup[figure]{labelfont={bf, small},
       textfont={bf, small}}
@@ -1870,6 +1885,29 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \end{macro}
+%
+%
+%\subsection{Lists}
+%\label{sec:lists}
+%
+%    \begin{macrocode}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+\def\labelenumi{\theenumi.}
+\def\labelenumii{\theenumii.}
+\def\labelenumiii{\theenumiii.}
+\def\labelenumiv{\theenumiv.}
+\or % sigchi
+\or % sigchi-a
+\fi
+%    \end{macrocode}
+%
 %
 %\subsection{Top matter data}
 %\label{sec:top_matter_data}
@@ -3075,9 +3113,24 @@ Computing Machinery]
 %   This macro starts section for proceedings and uses small for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
-  \if@ACM@journal
+  \ifcase\ACM@format@nr
+  \relax % manuscript
     \par\medskip\small\noindent#1: %
-  \else
+  \or % acmsmall
+    \par\medskip\small\noindent#1: %
+  \or % acmlarge
+    \par\medskip\small\noindent#1: %
+  \or % acmtog
+    \par\medskip\small\noindent#1: %
+  \or % sigconf
+    \section*{#1}%
+  \or % siggraph
+    \section*{#1}%
+  \or % sigplan
+    \paragraph*{#1}%
+  \or % sigchi
+    \section*{#1}%
+  \or % sigchi-a
     \section*{#1}%
   \fi}
 %    \end{macrocode}
@@ -3187,7 +3240,7 @@ Computing Machinery]
   \or % siggraph
     \Huge\sffamily\bfseries
   \or % sigplan
-    \Huge\sffamily\bfseries
+    \Huge\bfseries
   \or % sigchi
     \Huge\sffamily\bfseries
   \or % sigchi-a
@@ -3390,6 +3443,8 @@ Computing Machinery]
   \def\@authorfont{\normalsize\normalfont}
   \def\@affiliationfont{\normalsize\normalfont}
 \or % sigplan
+  \def\@authorfont{\Large\normalfont}
+  \def\@affiliationfont{\normalsize\normalfont}
 \or % sigchi
   \def\@authorfont{\bfseries}
   \def\@affiliationfont{\mdseries}
@@ -3654,7 +3709,7 @@ Computing Machinery]
   {\if@ACM@journal
        \small\noindent
     \else
-      \section*{ABSTRACT}%
+      \section*{Abstract}%
     \fi
       \@abstract\par}%
   \fi\egroup}
@@ -3914,6 +3969,31 @@ Computing Machinery]
 %\label{sec:sectioninng}
 %
 %
+%   Sectioning is different for different levels
+%    \begin{macrocode}
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {.25\baselineskip}%
+  {\@secfont}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {.25\baselineskip}%
+  {\@subsecfont}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{10pt}%
+  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {-3.5\p@}%
+  {\@subsubsecfont\@adddotafter}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
+  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {-3.5\p@}%
+  {\@parfont\@adddotafter}}
+\renewcommand\part{\@startsection{part}{9}{\z@}%
+  {-10\p@ \@plus -4\p@ \@minus -2\p@}%
+  {4\p@}%
+  {\@parfont}}
+%    \end{macrocode}
+%
+%
 % Fonts for sections etc. are different for different formats.  Also,
 % some formats use the ugly period after section number (sigh):
 %    \begin{macrocode}
@@ -3938,8 +4018,23 @@ Computing Machinery]
  \def\@secfont{\bfseries\sffamily\Large\raggedright\MakeUppercase}
  \def\@subsecfont{\bfseries\sffamily\Large\raggedright}
 \or % sigplan
- \def\@secfont{\bfseries\Large\raggedright\MakeUppercase}
- \def\@subsecfont{\bfseries\Large\raggedright}
+ \def\@secfont{\bfseries\Large\raggedright}
+ \def\@subsecfont{\bfseries\raggedright}
+ \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+   {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+   {.25\baselineskip}%
+   {\@subsubsecfont}}
+ \def\@subsubsecfont{\bfseries\raggedright}
+ \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+   {-3.5\p@}%
+   {\@parfont\@addspaceafter}}
+ \def\@parfont{\bfseries\itshape}
+ \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}%
+   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+   {-3.5\p@}%
+   {\@subparfont\@addspaceafter}}
+ \def\@subparfont{\itshape}
 \or % sigchi
  \setcounter{secnumdepth}{1}
  \def\@secfont{\bfseries\sffamily\raggedright\MakeUppercase}
@@ -3959,29 +4054,13 @@ Computing Machinery]
 %
 % \end{macro}
 %
-%   Sectioning is different for different levels
+% \begin{macro}{\@addspaceafter}
+%   Add space after the command
 %    \begin{macrocode}
-\renewcommand\section{\@startsection{section}{1}{\z@}%
-  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {.25\baselineskip}%
-  {\@secfont}}
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {.25\baselineskip}%
-  {\@subsecfont}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{10pt}%
-  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {-3.5\p@}%
-  {\@subsubsecfont\@adddotafter}}
-\renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
-  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {-3.5\p@}%
-  {\@parfont\@adddotafter}}
-\renewcommand\part{\@startsection{part}{9}{\z@}%
-  {-10\p@ \@plus -4\p@ \@minus -2\p@}%
-  {4\p@}%
-  {\@parfont}}
+\def\@addspaceafter#1{#1\@addpunct{\enspace}}
 %    \end{macrocode}
+%
+% \end{macro}
 %
 %
 %
