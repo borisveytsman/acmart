@@ -4,3 +4,5 @@ Association for Computing Machinery.
 Changes
 
 version 1.08    SIGPLAN reformatting (Matthew Fluet); bug fixes
+
+version 1.09    SIGPLAN: revert caption rules (Matthew Fluet)
