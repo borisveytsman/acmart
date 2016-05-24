@@ -997,7 +997,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/05/22 v1.10 Typesetting articles for Association of
+[2016/05/23 v1.10 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3001,6 +3001,9 @@ Computing Machinery]
 % \changes{v1.07}{2016/05/03}{Corrected a bug with abstract footnotes}
 % \changes{v1.07}{2016/05/03}{Corrected a bug with permssion and
 % footnotes order}
+% \changes{v1.10}{2016/05/23}{Corrected a bug with doi in manuscript
+% and author vertsion,
+% \url{https://github.com/borisveytsman/acmart/issues/36}} 
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %    \begin{macrocode}
@@ -3065,13 +3068,14 @@ Computing Machinery]
         \if@ACM@journal
           \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
           \$\@acmPrice\\
+          DOI: \nolinkurl{\@acmDOI}%
         \else % Conference
            \@acmISBN
            \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
+           DOI: \nolinkurl{\@acmDOI}%
         \fi
       \fi
-    \fi
-    DOI: \nolinkurl{\@acmDOI}}%
+    \fi}%
   \endgroup
   \setcounter{footnote}{0}%
   \@mkabstract
