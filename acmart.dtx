@@ -997,7 +997,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/05/18 v1.09 Typesetting articles for Association of
+[2016/05/22 v1.10 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2722,6 +2722,7 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \changes{v1.10}{2016/05/22}{Changes of `licensedothergov' wording}
 % Keys:
 %    \begin{macrocode}
 \define@choicekey*{ACM@}{acmcopyrightmode}[%
@@ -2761,7 +2762,6 @@ Computing Machinery]
   \fi
   \ifnum\acm@copyrightmode=11\relax % licensedothergov
    \@acmownedfalse
-   \@printcopyrightfalse
   \fi}
 %    \end{macrocode}
 %
@@ -2803,6 +2803,8 @@ Computing Machinery]
   \or % othergov
   ACM\@.
   \or % licensedothergov
+  Copyright held by the owner/author(s). Publication rights licensed to
+  ACM\@.
   \fi}
 %    \end{macrocode}
 %
@@ -3809,6 +3811,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{standardpagestyle}
+% \changes{v1.10}{2016/05/22}{Reversed folios location}
 %   The pagestyle for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
@@ -3817,16 +3820,16 @@ Computing Machinery]
   \renewcommand{\footrulewidth}{\z@}%
   \ifcase\ACM@format@nr
   \relax % manuscript
-    \fancyhead[RE]{\thepage}%
-    \fancyhead[LO]{\ACM@linecount\thepage}%
-    \fancyhead[LE]{\ACM@linecount\shortauthors}%
-    \fancyhead[RO]{\shorttitle}%
+    \fancyhead[LE]{\ACM@linecount\thepage}%
+    \fancyhead[RO]{\thepage}%
+    \fancyhead[RE]{\shortauthors}%
+    \fancyhead[LO]{\ACM@linecount\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize Manuscript submitted to ACM}%
   \or % acmsmall
-    \fancyhead[RE]{\sffamily\@acmArticle:\thepage}%
-    \fancyhead[LO]{\ACM@linecount\sffamily\@acmArticle:\thepage}%
-    \fancyhead[LE]{\ACM@linecount\sffamily\shortauthors}%
-    \fancyhead[RO]{\sffamily\shorttitle}%
+    \fancyhead[LE]{\ACM@linecount\sffamily\@acmArticle:\thepage}%
+    \fancyhead[RO]{\sffamily\@acmArticle:\thepage}%
+    \fancyhead[RE]{\sffamily\shortauthors}%
+    \fancyhead[LO]{\ACM@linecount\sffamily\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmlarge
