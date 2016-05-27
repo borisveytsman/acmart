@@ -994,7 +994,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/05/23 v1.10 Typesetting articles for Association of
+[2016/05/23 v1.11 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1019,6 +1019,8 @@ Computing Machinery]
 % \changes{v1.08}{2016/05/13}{SIGPLAN reformatting by Matthew Fluet}
 % \changes{v1.08}{2016/05/13}{Typos corrected (Tobias Pape)}
 % \changes{v1.09}{2016/05/18}{Revert SIGPLAN caption rules}
+% \changes{v1.11}{2016/05/27}{Customization of ACM theorem styles and
+% proof environment by Matthew Fluet}
 %
 %
 % And the driver code:
@@ -4072,6 +4074,57 @@ Computing Machinery]
 %\label{sec:theorems}
 %
 %
+% \begin{macro}{\@acmplainbodyfont}
+%   The font to typeset the |acmplain| theorem style body.
+%    \begin{macrocode}
+\def\@acmplainbodyfont{\itshape}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmplainindent}
+%   The amount to indent the |acmplain| theorem style.
+%    \begin{macrocode}
+\def\@acmplainindent{\parindent}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmplainheadfont}
+%   The font to typeset the |acmplain| theorem style head.
+%    \begin{macrocode}
+\def\@acmplainheadfont{\scshape}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmplainnotefont}
+%   The font to typeset the |acmplain| theorem style note.
+%    \begin{macrocode}
+\def\@acmplainnotefont{\@empty}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% Customization of |acmplain| theorem style:
+%    \begin{macrocode}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+  \def\@acmplainbodyfont{\itshape}
+  \def\@acmplainindent{\z@}
+  \def\@acmplainheadfont{\bfseries}
+  \def\@acmplainnotefont{\normalfont}
+\or % sigchi
+\or % sigchi-a
+\fi
+%    \end{macrocode}
+%
 % \begin{macro}{acmplain}
 %   The |acmplain| theorem style
 %    \begin{macrocode}
@@ -4079,16 +4132,68 @@ Computing Machinery]
   {.5\baselineskip\@plus.2\baselineskip
     \@minus.2\baselineskip}% space above
   {.5\baselineskip\@plus.2\baselineskip
-    \@minus.2\baselineskip}% Space below
-  {\itshape}% body font
-  {\parindent}% indent amount
-  {\scshape}% head font
+    \@minus.2\baselineskip}% space below
+  {\@acmplainbodyfont}% body font
+  {\@acmplainindent}% indent amount
+  {\@acmplainheadfont}% head font
   {.}% punctuation after head
   {.5em}% spacing after head
-  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}% head spec
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ {\@acmplainnotefont(#3)}}}% head spec
 %    \end{macrocode}
 %
 % \end{macro}
+%
+%
+% \begin{macro}{\@acmdefinitionbodyfont}
+%   The font to typeset the |acmdefinition| theorem style body.
+%    \begin{macrocode}
+\def\@acmdefinitionbodyfont{\normalfont}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmdefinitionindent}
+%   The amount to indent the |acmdefinition| theorem style.
+%    \begin{macrocode}
+\def\@acmdefinitionindent{\parindent}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmdefinitionheadfont}
+%   The font to typeset the |acmdefinition| theorem style head.
+%    \begin{macrocode}
+\def\@acmdefinitionheadfont{\itshape}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmdefinitionnotefont}
+%   The font to typeset the |acmdefinition| theorem style note.
+%    \begin{macrocode}
+\def\@acmdefinitionnotefont{\@empty}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% Customization of |acmdefinition| theorem style:
+%    \begin{macrocode}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+  \def\@acmdefinitionbodyfont{\normalfont}
+  \def\@acmdefinitionindent{\z@}
+  \def\@acmdefinitionheadfont{\bfseries}
+  \def\@acmdefinitionnotefont{\normalfont}
+\or % sigchi
+\or % sigchi-a
+\fi
+%    \end{macrocode}
 %
 % \begin{macro}{acmdefinition}
 %   The |acmdefinition| theorem style
@@ -4097,13 +4202,13 @@ Computing Machinery]
   {.5\baselineskip\@plus.2\baselineskip
     \@minus.2\baselineskip}% space above
   {.5\baselineskip\@plus.2\baselineskip
-    \@minus.2\baselineskip}% Space below
-  {\normalfont}% body font
-  {\parindent}% indent amount
-  {\itshape}% head font
+    \@minus.2\baselineskip}% space below
+  {\@acmdefinitionbodyfont}% body font
+  {\@acmdefinitionindent}% indent amount
+  {\@acmdefinitionheadfont}% head font
   {.}% punctuation after head
   {.5em}% spacing after head
-  {\thmname{#1}\thmnumber{ #2}\thmnote{ \itshape(#3)}}% head spec
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ {\@acmdefinitionnotefont(#3)}}}% head spec
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4119,19 +4224,52 @@ Computing Machinery]
 \theoremstyle{acmdefinition}
 \newtheorem{example}[theorem]{Example}
 \newtheorem{definition}[theorem]{Definition}
+\theoremstyle{acmplain}
 %    \end{macrocode}
 %
 %
+% \begin{macro}{\@proofnamefont}
+%   The font to typeset the proof name.
+%    \begin{macrocode}
+\def\@proofnamefont{\scshape}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@proofindent}
+%   Whether or not to indent proofs.
+%    \begin{macrocode}
+\def\@proofindent{\indent}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% Customization of proof environment.
+%    \begin{macrocode}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+  \def\@proofnamefont{\itshape}
+  \def\@proofindent{\noindent}
+\or % sigchi
+\or % sigchi-a
+\fi
+%    \end{macrocode}
+%
 % \begin{macro}{proof}
-%   We want small caps proof name
+%   We want some customization of proof environment.
 %    \begin{macrocode}
 \renewenvironment{proof}[1][\proofname]{\par
   \pushQED{\qed}%
   \normalfont \topsep6\p@\@plus6\p@\relax
   \trivlist
-  \item[\indent\hskip\labelsep
-        \scshape
-    #1\@addpunct{.}]\ignorespaces
+  \item[\@proofindent\hskip\labelsep
+        {\@proofnamefont #1\@addpunct{.}}]\ignorespaces
 }{%
   \popQED\endtrivlist\@endpefalse
 }
