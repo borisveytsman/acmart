@@ -4130,6 +4130,20 @@ Computing Machinery]
 %   The font to typeset the proof name.
 %    \begin{macrocode}
 \def\@proofnamefont{\scshape}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@proofindent}
+%   Whether or not to indent proofs.
+%    \begin{macrocode}
+\def\@proofindent{\indent}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% Customization of proof environment.
+%    \begin{macrocode}
 \ifcase\ACM@format@nr
 \relax % manuscript
 \or % acmsmall
@@ -4139,33 +4153,11 @@ Computing Machinery]
 \or % siggraph
 \or % sigplan
   \def\@proofnamefont{\itshape}
-\or % sigchi
-\or % sigchi-a
-\fi
-%    \end{macrocode}
-%
-% \end{macro}
-%
-% \begin{macro}{\@proofindent}
-%   Whether or not to indent proofs.
-%    \begin{macrocode}
-\def\@proofindent{\indent}
-\ifcase\ACM@format@nr
-\relax % manuscript
-\or % acmsmall
-\or % acmlarge
-\or % acmtog
-\or % sigconf
-\or % siggraph
-\or % sigplan
   \def\@proofindent{\noindent}
 \or % sigchi
 \or % sigchi-a
 \fi
 %    \end{macrocode}
-%
-% \end{macro}
-%
 %
 % \begin{macro}{proof}
 %   We want some customization of proof environment.
