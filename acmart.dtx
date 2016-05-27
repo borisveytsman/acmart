@@ -4075,6 +4075,57 @@ Computing Machinery]
 %\label{sec:theorems}
 %
 %
+% \begin{macro}{\@acmplainbodyfont}
+%   The font to typeset the |acmplain| theorem style body.
+%    \begin{macrocode}
+\def\@acmplainbodyfont{\itshape}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmplainindent}
+%   The amount to indent the |acmplain| theorem style.
+%    \begin{macrocode}
+\def\@acmplainindent{\parindent}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmplainheadfont}
+%   The font to typeset the |acmplain| theorem style head.
+%    \begin{macrocode}
+\def\@acmplainheadfont{\scshape}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmplainnotefont}
+%   The font to typeset the |acmplain| theorem style note.
+%    \begin{macrocode}
+\def\@acmplainnotefont{\@empty}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% Customization of |acmplain| theorem style:
+%    \begin{macrocode}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+  \def\@acmplainbodyfont{\itshape}
+  \def\@acmplainindent{\z@}
+  \def\@acmplainheadfont{\bfseries}
+  \def\@acmplainnotefont{\normalfont}
+\or % sigchi
+\or % sigchi-a
+\fi
+%    \end{macrocode}
+%
 % \begin{macro}{acmplain}
 %   The |acmplain| theorem style
 %    \begin{macrocode}
@@ -4082,16 +4133,68 @@ Computing Machinery]
   {.5\baselineskip\@plus.2\baselineskip
     \@minus.2\baselineskip}% space above
   {.5\baselineskip\@plus.2\baselineskip
-    \@minus.2\baselineskip}% Space below
-  {\itshape}% body font
-  {\parindent}% indent amount
-  {\scshape}% head font
+    \@minus.2\baselineskip}% space below
+  {\@acmplainbodyfont}% body font
+  {\@acmplainindent}% indent amount
+  {\@acmplainheadfont}% head font
   {.}% punctuation after head
   {.5em}% spacing after head
-  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}% head spec
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ {\@acmplainnotefont(#3)}}}% head spec
 %    \end{macrocode}
 %
 % \end{macro}
+%
+%
+% \begin{macro}{\@acmdefinitionbodyfont}
+%   The font to typeset the |acmdefinition| theorem style body.
+%    \begin{macrocode}
+\def\@acmdefinitionbodyfont{\normalfont}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmdefinitionindent}
+%   The amount to indent the |acmdefinition| theorem style.
+%    \begin{macrocode}
+\def\@acmdefinitionindent{\parindent}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmdefinitionheadfont}
+%   The font to typeset the |acmdefinition| theorem style head.
+%    \begin{macrocode}
+\def\@acmdefinitionheadfont{\itshape}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@acmdefinitionnotefont}
+%   The font to typeset the |acmdefinition| theorem style note.
+%    \begin{macrocode}
+\def\@acmdefinitionnotefont{\@empty}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% Customization of |acmdefinition| theorem style:
+%    \begin{macrocode}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+  \def\@acmdefinitionbodyfont{\normalfont}
+  \def\@acmdefinitionindent{\z@}
+  \def\@acmdefinitionheadfont{\bfseries}
+  \def\@acmdefinitionnotefont{\normalfont}
+\or % sigchi
+\or % sigchi-a
+\fi
+%    \end{macrocode}
 %
 % \begin{macro}{acmdefinition}
 %   The |acmdefinition| theorem style
@@ -4100,13 +4203,13 @@ Computing Machinery]
   {.5\baselineskip\@plus.2\baselineskip
     \@minus.2\baselineskip}% space above
   {.5\baselineskip\@plus.2\baselineskip
-    \@minus.2\baselineskip}% Space below
-  {\normalfont}% body font
-  {\parindent}% indent amount
-  {\itshape}% head font
+    \@minus.2\baselineskip}% space below
+  {\@acmdefinitionbodyfont}% body font
+  {\@acmdefinitionindent}% indent amount
+  {\@acmdefinitionheadfont}% head font
   {.}% punctuation after head
   {.5em}% spacing after head
-  {\thmname{#1}\thmnumber{ #2}\thmnote{ \itshape(#3)}}% head spec
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ {\@acmdefinitionnotefont(#3)}}}% head spec
 %    \end{macrocode}
 %
 % \end{macro}
