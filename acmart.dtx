@@ -4126,16 +4126,56 @@ Computing Machinery]
 %    \end{macrocode}
 %
 %
+% \begin{macro}{\@proofnamefont}
+%   The font to typeset the proof name.
+%    \begin{macrocode}
+\def\@proofnamefont{\scshape}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+  \def\@proofnamefont{\itshape}
+\or % sigchi
+\or % sigchi-a
+\fi
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@proofindent}
+%   Whether or not to indent proofs.
+%    \begin{macrocode}
+\def\@proofindent{\indent}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+  \def\@proofindent{\noindent}
+\or % sigchi
+\or % sigchi-a
+\fi
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
 % \begin{macro}{proof}
-%   We want small caps proof name
+%   We want some customization of proof environment.
 %    \begin{macrocode}
 \renewenvironment{proof}[1][\proofname]{\par
   \pushQED{\qed}%
   \normalfont \topsep6\p@\@plus6\p@\relax
   \trivlist
-  \item[\indent\hskip\labelsep
-        \scshape
-    #1\@addpunct{.}]\ignorespaces
+  \item[\@proofindent\hskip\labelsep
+        {\@proofnamefont #1\@addpunct{.}}]\ignorespaces
 }{%
   \popQED\endtrivlist\@endpefalse
 }
