@@ -1963,6 +1963,15 @@ Computing Machinery]
 %    \end{macrocode}
 %
 %
+% \begin{macro}{\descriptionlabel}
+% \changes{v1.12}{2016/05/30}{Redefined}
+%   We do not use default colon as \cs{amsart} does:
+%    \begin{macrocode}
+\renewcommand{\descriptionlabel}[1]{\hspace\labelsep \upshape\bfseries #1}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 %\subsection{Top matter data}
 %\label{sec:top_matter_data}
 %
