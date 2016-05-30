@@ -865,6 +865,12 @@
 % \end{description}
 %
 %
+% Tables and figures (including margin tables and margin figures) are
+% by default centered.  However, in some cases (for example, when you
+% use several subimages per figure) you may need to override this
+% decision.  A good way to do so is to put the contents into a
+% \cs{minipage} of the width \cs{columnwidth}.  
+%
 %\subsection{Theorems}
 %\label{sec:ug_theorems}
 %
@@ -970,6 +976,29 @@
 % assignments.
 %
 %
+%
+%
+%\subsection{Typographich niceties}
+%\label{sec:ug_penalties}
+%
+% By default |acmart| prevents all widows and orphans (i.e. lonely
+% lines at the beginning and the end of the page) and hyphenation at
+% the end of the page.  This is done by rather strict settings
+% \begin{verbatim}
+% \widowpenalty=10000
+% \clubpenalty=10000
+% \brokenpenalty=10000
+% \end{verbatim}
+% However, this may lead to frustrating results when the authors must
+% obey a page limit.  Setting these penalties to smaller values may
+% help if you absolutely need to.
+%
+% Another problem might be the too strict line breaking rules.  Again,
+% a strategically placed \cs{sloppy} command might help---but beware
+% the results might be, well, sloppy.
+%
+%
+%
 % \StopEventually{
 % \clearpage
 % \bibliography{acmart}
@@ -1020,6 +1049,7 @@ Computing Machinery]
 % \changes{v1.09}{2016/05/18}{Revert SIGPLAN caption rules}
 % \changes{v1.11}{2016/05/27}{Customization of ACM theorem styles and
 % proof environment by Matthew Fluet}
+% \changes{v1.12}{2016/05/30}{Documentation updates}
 %
 %
 % And the driver code:
@@ -1827,10 +1857,11 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@marginfigure}
+% \changes{v1.12}{2016/05/30}{Now centering by default}
 %   The processing of the saved text
 %    \begin{macrocode}
 \long\def\@marginfigure#1{\bgroup\captionsetup{type=figure}%
-  \marginpar{\small#1}\egroup}
+  \marginpar{\centering\small#1}\egroup}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -1844,10 +1875,11 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@margintable}
+% \changes{v1.12}{2016/05/30}{Now centering by default}
 %   The processing of the saved text
 %    \begin{macrocode}
 \long\def\@margintable#1{\bgroup\captionsetup{type=table}%
-  \marginpar{\small#1}\egroup}
+  \marginpar{\centering\small#1}\egroup}
 %    \end{macrocode}
 %
 % \end{macro}
