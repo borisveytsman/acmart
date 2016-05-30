@@ -9,3 +9,5 @@ version 1.09    SIGPLAN: revert caption rules (Matthew Fluet)
 
 version 1.11    Customization of ACM theorem styles and proof
                 environment (Matthew Fluet).
+
+version 1.12    Bug fixes
