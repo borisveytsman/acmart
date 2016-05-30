@@ -1725,11 +1725,35 @@ Computing Machinery]
 %\subsection{Fonts}
 %\label{sec:fonts}
 %
-% We use Times throughout
+% \changes{v1.12}{2016/05/30}{Added graceful behavior when libertine
+% fonts are absent}%
+%
+% \begin{macro}{\if@ACM@newfonts}
+% \changes{v1.12}{2016/05/30}{Added macro}%
+%   Whether we load the new fonts
 %    \begin{macrocode}
-\usepackage[tt=false]{libertine}
-\usepackage[varqu]{zi4}
-\usepackage[libertine]{newtxmath}
+\newif\if@ACM@newfonts
+\@ACM@newfontstrue
+\IfFileExists{libertine.sty}{}{\ClassWarning{\@classname}{You do not
+    have libertine package installed.  Please upgrade your 
+    TeX}\@ACM@newfontsfalse}
+\IfFileExists{zi4.sty}{}{\ClassWarning{\@classname}{You do not
+    have zi4 package installed.  Please upgrade your TeX}\@ACM@newfontsfalse}
+\IfFileExists{newtxmath.sty}{}{\ClassWarning{\@classname}{You do not
+    have newtxmath package installed.  Please upgrade your
+    TeX}\@ACM@newfontsfalse} 
+%    \end{macrocode}
+%   
+% \end{macro}
+% 
+% We use Times throughout.
+%    \begin{macrocode}
+\if@ACM@newfonts
+\RequirePackage[tt=false]{libertine}
+\RequirePackage[varqu]{zi4}
+\RequirePackage[libertine]{newtxmath}
+\fi
+\RequirePackage{textcomp}
 %    \end{macrocode}
 %
 % The SIGCHI extended abstracts are sans serif:
