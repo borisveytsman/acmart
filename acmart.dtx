@@ -244,7 +244,9 @@
 % articles.  
 % 
 % The option |natbib| is used when the corresponding
-% \BibTeX\ style is based on |natbib|.  
+% \BibTeX\ style is based on |natbib|.  In most cases you do not need
+% to set it.  See
+% Section~\ref{sec:ug_bibliography}.  
 %
 % The option |anonymous| is used
 % for anonymous review process: all author information becomes
@@ -261,7 +263,7 @@
 %     review & false & A review version: lines are numbered,
 %     hyperlinks are colored\\
 %     screen & false & A screen version: hyperlinks are colored\\
-%     natbib & false & Whether to use |natbib| package (see
+%     natbib &  & Whether to use |natbib| package (see
 %     Section~\ref{sec:ug_bibliography})\\
 %     anonymous & false & Whether to make author(s) anonymous\\
 %     authorversion & false & Whether to generate a special
@@ -938,30 +940,42 @@
 %\subsection{Bibliography}
 %\label{sec:ug_bibliography}
 %
-% The Boolean option |natbib| selects whether to use |natbib| package
-% for bibliography.  If you use |natbib|, then commands like
-% \cs{citep} and \cs{citeauthor} are automatically supported.  You may
-% customize \cs{natbib} using \cs{setcitestyle} command, for example,
+% At present some formats use \textsl{natbib} package by default,
+% while some are not compatible with \textsl{natbib}.  Table
+%
+% \begin{table}
+%   \caption{Bibliography styles used by different formats}
+%   \label{tab:bst}
+%   \begin{tabularx}{\textwidth}{l<{\ttfamily}lX<{\raggedright}l}
+%     \toprule
+%     \normalfont Format & \textsl{natbib} use & Bibliography style &
+%     Citaton format\\
+%     \midrule
+%     manuscript & Yes & ACM-Reference-Format-Journals & Author/year\\
+%     acmsmall & Yes & ACM-Reference-Format-Journals & Author/year\\
+%     acmlarge & Yes & ACM-Reference-Format-Journals & Author/year\\
+%     acmtog & Yes & ACM-Reference-Format-Journals & Author/year\\
+%     sigconf & No & acm-abbrv, acm-alpha, acm-plain or acm-unsrt &
+%     Numeric or alpha \\
+%     siggraph & No & acmsiggraph & Author/year \\
+%     sigplan & Yes & ACM-Reference-Format-Journals & Author/year \\
+%     sigchi & No & SIGCHI-Reference-Format & Numeric\\
+%     sigchi-a & No & SIGCHI-Reference-Format & Numeric \\
+%     \bottomrule
+%   \end{tabularx}
+% \end{table}
+%
+% Usually when you select a format, \LaTeX\ automatically determines
+% whether you need \textsl{natbib} and the required settings.
+% However, you can ovveride these decision by manually setting the
+% option |natbib| to |true| or |false|.  You may further customize
+% \textsl{natbib} using \cs{setcitestyle} command, for example,
 % \begin{verbatim}
 % \setcitestyle{numbers,sort&compress}
 % \end{verbatim}
-% 
 %
-% ACM journals use |natbib| and the style
-% |ACM-Reference-Format-Journals|.
-%
-% Most ACM conference proceedings do \emph{not} use |natbib|.
-% SIGGRAPH conferences use |acmsiggraph| style.  SIGCHI conferences
-% use |SIGCHI-Reference-Format| style.  The other conferences employ
-% one of the four styles:
-% \begin{enumerate}
-% \item acm-abbrv
-% \item acm-alpha
-% \item acm-plain
-% \item acm-unsrt
-% \end{enumerate}
-% The author should consult specific instructions about the
-% style to choose.
+% If you use |natbib|, then commands like \cs{citep} and
+% \cs{citeauthor} are automatically supported.  
 %
 %
 %
@@ -1155,18 +1169,27 @@ Computing Machinery]
 % \end{macro}
 %
 %
+% \begin{macro}{\if@ACM@natbib@override}
+% \changes{v1.12}{2016/05/30}{Added macro}
+%   Whether to override the format decision about \textsl{natbib}
+%    \begin{macrocode}
+\newif\if@ACM@natbib@override
+\@ACM@natbib@overridefalse
+%    \end{macrocode}
+%   
+% \end{macro}
 %
 % \begin{macro}{\if@ACM@natbib}
 %   Whether we use natbib mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{natbib}[true]{%
+  \@ACM@natbib@overridetrue
   \if@ACM@natbib
-    \PackageInfo{\@classname}{Using natbib mode}%
+    \PackageInfo{\@classname}{Explicitly selecting natbib mode}%
   \else
-    \PackageInfo{\@classname}{Not using natbib mode}%
+    \PackageInfo{\@classname}{Explicitly deselecting natbib mode}%
   \fi}{\PackageError{\@classname}{Option natbib can be either true or
     false}}
-\ExecuteOptionsX{natbib=false}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -1272,6 +1295,34 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
+% A format sets up \cs{if@ACM@natbib} only if
+% \cs{@ACM@natbib@override} is false (i.e. user did \emph{not}
+% overrode format's selection):
+%    \begin{macrocode}
+\if@ACM@natbib@override\else
+  \ifcase\ACM@format@nr
+  \relax % manuscript
+    \@ACM@natbibtrue
+  \or % acmsmall
+    \@ACM@natbibtrue
+  \or % acmlarge
+    \@ACM@natbibtrue
+  \or % acmtog
+    \@ACM@natbibtrue
+  \or % sigconf
+    \@ACM@natbibfalse
+  \or % siggraph
+    \@ACM@natbibfalse
+   \or % sigplan
+    \@ACM@natbibtrue
+   \or % sigchi
+    \@ACM@natbibfalse
+  \or % sigchi-a
+    \@ACM@natbibfalse
+  \fi
+\fi
+%    \end{macrocode}
+% 
 %
 %\subsection{Loading base class and package}
 %\label{sec:loading}

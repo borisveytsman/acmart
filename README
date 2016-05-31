@@ -10,4 +10,7 @@ version 1.09    SIGPLAN: revert caption rules (Matthew Fluet)
 version 1.11    Customization of ACM theorem styles and proof
                 environment (Matthew Fluet).
 
-version 1.12    Bug fixes and documentation updates.
+version 1.12    Bug fixes and documentation updates.  
+		Footnotes rearranged.
+                Option natbib is now mostly superfluous: the class 
+		makes a guess based on the format chosen.
