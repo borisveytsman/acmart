@@ -1689,18 +1689,32 @@ Computing Machinery]
 % special insert for bibstrip.  In the old ACM classes bibstrip was a
 % \cs{@float}.  The problem with floats is that they tend to, well,
 % float---and we want the guarantee they stay.  
+%
+% We use \textsl{manyfoot} for layered footnotes instead.
+%
+% \begin{macro}{\copyrightpermissionfootnoterule}
+% \changes{v1.12}{2016/05/30}{Added macro}
+%   This is the footnote rule that separates bibstrip from the rest of
+%   the paper.  It is a full width rule.
+%    \begin{macrocode}
+\def\copyrightpermissionfootnoterule{\kern-3\p@
+  \hrule \@width \columnwidth \kern 2.6\p@}
+%    \end{macrocode}
+% \end{macro}
+%
 %    \begin{macrocode}
 \RequirePackage{manyfoot}
+\SelectFootnoteRule[2]{copyrightpermission}
 \DeclareNewFootnote{copyrightpermission}
-\skip\footinscopyrightpermission=0.1\baselineskip plus 0.1\baselineskip
 %    \end{macrocode}
 % 
 %
 % \begin{macro}{\footnoterule}
+% \changes{v1.12}{2016/05/30}{Made shorter}
 %   Tschichold's rules:
 %    \begin{macrocode}
 \def\footnoterule{\kern-3\p@
-  \hrule \@width \columnwidth \kern 2.6\p@}
+  \hrule \@width 4pc \kern 2.6\p@}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -3069,8 +3083,14 @@ Computing Machinery]
 % \changes{v1.10}{2016/05/23}{Corrected a bug with doi in manuscript
 % and author vertsion,
 % \url{https://github.com/borisveytsman/acmart/issues/36}} 
+% \changes{v1.12}{2016/05/30}{Moved thankses to copyrightpermission box.}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
+%
+%  Another note: there is a subtle difference between author notes,
+%  title notes and thankses.  The latter refer to the paper itself,
+%  and therefore belong to the copyright/permission block.  By the
+%  way, this was the default behavior of the old ACM classes.  
 %    \begin{macrocode}
 \def\maketitle{%
   \if@ACM@anonymous
@@ -3096,7 +3116,8 @@ Computing Machinery]
   \let\@makefnmark\relax  \let\@thefnmark\relax
   \let\@makefntext\noindent
   \ifx\@empty\thankses\else
-    \@footnotetext{\def\par{\let\par\@par}\parindent\z@\@setthanks}%
+    \footnotetextcopyrightpermission{%
+      \def\par{\let\par\@par}\parindent\z@\@setthanks}%
   \fi
   \footnotetextcopyrightpermission{\parindent\z@\parskip0.1\baselineskip
   \if@ACM@authorversion\else
