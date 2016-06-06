@@ -16,3 +16,5 @@ version 1.12    Bug fixes and documentation updates.
 		Footnotes rearranged.
                 Option natbib is now mostly superfluous: the class 
 		makes a guess based on the format chosen.
+
+version 1.13    Formatting changes: headers, folios etc.

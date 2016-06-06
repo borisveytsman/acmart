@@ -719,7 +719,7 @@
 % settings and their meanings are listed in
 % Table~\ref{tab:settopmatter}.  For example,
 % \begin{verbatim}
-% \settopmatter{printbib=false, printccs=true}
+% \settopmatter{printbib=false, printccs=true, printfolios=true}
 % \end{verbatim}
 %
 %
@@ -734,6 +734,7 @@
 %     printccs & true/false & Whether to print CCS categories\\
 %     printbib & true/false & Whether to print ACM bibliographic
 %     entry\\
+%     printfolios & true/false & Whether to print page numbers (folios)\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1037,7 +1038,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/05/30 v1.12 Typesetting articles for Association of
+[2016/06/30 v1.13 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1327,6 +1328,8 @@ Computing Machinery]
 %\subsection{Loading base class and package}
 %\label{sec:loading}
 %
+% \changes{v1.13}{2016/06/06}{Increased font size for ACM Large}
+%
 %
 % At this point we either have \cs{ACM@fontsize}, or use defaults
 %    \begin{macrocode}
@@ -1337,7 +1340,7 @@ Computing Machinery]
   \or % acmsmall
     \def\ACM@fontsize{10pt}%
   \or % acmlarge
-    \def\ACM@fontsize{9pt}%
+    \def\ACM@fontsize{10pt}%
   \or % acmtog
     \def\ACM@fontsize{9pt}%
   \or % sigconf
@@ -1753,8 +1756,21 @@ Computing Machinery]
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v1.13}{2016/06/06}{Smaller copyright/permission for acmsmall}
 %    \begin{macrocode}
 \RequirePackage{manyfoot}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+    \SetFootnoteHook{\scriptsize}
+\or % acmlarge
+\or % acmtog
+\or % sigconf
+\or % siggraph
+\or % sigplan
+\or % sigchi
+\or % sigchi-a
+\fi
 \SelectFootnoteRule[2]{copyrightpermission}
 \DeclareNewFootnote{copyrightpermission}
 %    \end{macrocode}
@@ -1785,7 +1801,6 @@ Computing Machinery]
   \color@endgroup
   \egroup
   \expandafter\@iiiparbox\@mpargs{\unvbox\@tempboxa}}
-
 %    \end{macrocode}
 %
 % \end{macro}
@@ -1816,6 +1831,27 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \end{macro}
+%
+% \begin{macro}{\@mpfootnotetext}
+% \changes{v1.13}{2016/06/06}{Made minipage footnotes centered}
+%   We want the footnotes in minipages centered:
+%    \begin{macrocode}
+\long\def\@mpfootnotetext#1{%
+  \global\setbox\@mpfootins\vbox{%
+    \unvbox\@mpfootins
+    \reset@font\footnotesize
+    \hsize\columnwidth
+    \@parboxrestore
+    \protected@edef\@currentlabel
+         {\csname p@mpfootnote\endcsname\@thefnmark}%
+    \color@begingroup\centering
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+    \color@endgroup}}
+%    \end{macrocode}
+%   
+% \end{macro}
+% 
 %
 %\subsection{Fonts}
 %\label{sec:fonts}
@@ -2711,7 +2747,7 @@ Computing Machinery]
 %   Whether to print ACM bib
 %    \begin{macrocode}
 \define@boolkey+{@ACM@topmatter@}[@ACM@]{printbib}[true]{%
-  \if@ACM@printcss
+  \if@ACM@printbib
     \ClassInfo{\@classname}{Printing bibformat}%
   \else
     \ClassInfo{\@classname}{Suppressing bibformat}%
@@ -2720,7 +2756,19 @@ Computing Machinery]
 %
 % \end{macro}
 %
-%
+% \begin{macro}{\if@ACM@printfolios}
+% \changes{v1.13}{2016/06/06}{Added macro}
+%   Whether to print folios
+%    \begin{macrocode}
+\define@boolkey+{@ACM@topmatter@}[@ACM@]{printfolios}[true]{%
+  \if@ACM@printfolios
+    \ClassInfo{\@classname}{Printing folios}%
+  \else
+    \ClassInfo{\@classname}{Suppressing folios}%
+  \fi}{\ClassError{\@classname}{printfolios must be true or false}}
+%    \end{macrocode}
+% \end{macro}
+% 
 % \begin{macro}{\settopmatter}
 %   The usual syntactic sugar
 %    \begin{macrocode}
@@ -2730,16 +2778,18 @@ Computing Machinery]
 % \end{macro}
 %
 %
+% \changes{v1.13}{2016/06/06}{Print bibliographic information by
+% default for the proceedings}
 % Now the settings
 %    \begin{macrocode}
-\settopmatter{printcss=true}
+\settopmatter{printcss=true, printbib=true}
 \if@ACM@manuscript
-  \settopmatter{printbib=false}
+  \settopmatter{printfolios=true}
 \else
   \if@ACM@journal
-    \settopmatter{printbib=true}
+    \settopmatter{printfolios=true}
   \else
-    \settopmatter{printbib=false}
+    \settopmatter{printfolios=false}
   \fi
 \fi
 %    \end{macrocode}
@@ -3863,10 +3913,17 @@ Computing Machinery]
 %   Print bibcitation format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup
+  \def\footnotemark{}%
   \par\medskip\small\noindent{\bfseries ACM Reference format:}\par
-  \noindent\authors. \@acmYear. \@title. \textit{\@journalNameShort}
-  \@acmVolume, \@acmNumber, Article~\@acmArticle\
-  (\@acmPubDate), \ref{TotPages}~pages.\par
+  \noindent\authors. \@acmYear. \@title. 
+  \if@ACM@journal
+     \textit{\@journalNameShort}
+     \@acmVolume, \@acmNumber, Article~\@acmArticle\ (\@acmPubDate), 
+     \ref{TotPages}~pages.
+  \else
+     \textit{\acmConference@shortname, \acmConference@venue,
+       \acmConference@date}. 
+  \fi\par
   \noindent DOI: \nolinkurl{\@acmDOI}
 \par\egroup}
 %    \end{macrocode}
@@ -3953,6 +4010,8 @@ Computing Machinery]
 %
 % \begin{macro}{standardpagestyle}
 % \changes{v1.10}{2016/05/22}{Reversed folios location}
+% \changes{v1.13}{2016/06/06}{Suppressed folios if sig}
+% \changes{v1.13}{2016/06/06}{Added headers for sigs}
 %   The pagestyle for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
@@ -3961,37 +4020,42 @@ Computing Machinery]
   \renewcommand{\footrulewidth}{\z@}%
   \ifcase\ACM@format@nr
   \relax % manuscript
-    \fancyhead[LE]{\ACM@linecount\thepage}%
-    \fancyhead[RO]{\thepage}%
+    \fancyhead[LE]{\ACM@linecount\if@ACM@printfolios\thepage\fi}%
+    \fancyhead[RO]{\if@ACM@printfolios\thepage\fi}%
     \fancyhead[RE]{\shortauthors}%
     \fancyhead[LO]{\ACM@linecount\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize Manuscript submitted to ACM}%
   \or % acmsmall
-    \fancyhead[LE]{\ACM@linecount\sffamily\@acmArticle:\thepage}%
-    \fancyhead[RO]{\sffamily\@acmArticle:\thepage}%
+    \fancyhead[LE]{\ACM@linecount\sffamily\@acmArticle\if@ACM@printfolios:\thepage\fi}%
+    \fancyhead[RO]{\sffamily\@acmArticle\if@ACM@printfolios:\thepage\fi}%
     \fancyhead[RE]{\sffamily\shortauthors}%
     \fancyhead[LO]{\ACM@linecount\sffamily\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmlarge
     \fancyhead[LE]{\ACM@linecount\sffamily
-      \@acmArticle:\thepage\quad\textbullet\quad\shortauthors}%
+      \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\shortauthors}%
     \fancyhead[LO]{\ACM@linecount}%
     \fancyhead[RO]{\sffamily
-      \shorttitle\quad\textbullet\quad\@acmArticle:\thepage}%
+      \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmtog
     \fancyhead[LE]{\ACM@linecount\sffamily
-      \@acmArticle:\thepage\quad\textbullet\quad\shortauthors}%
+      \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\shortauthors}%
     \fancyhead[LO]{\ACM@linecount}%
     \fancyhead[RO]{\sffamily
-      \shorttitle\quad\textbullet\quad\@acmArticle:\thepage}%
+      \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \else % Proceedings
-    \fancyfoot[R]{\footnotesize\thepage}%
-    \fancyhead[L]{\ACM@linecount}%
+    \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
+    \fancyhead[LO]{\ACM@linecount\sffamily\shortauthors}%
+    \fancyhead[RE]{\sffamily\shortauthors}%
+    \fancyhead[LE]{\ACM@linecount\sffamily\acmConference@shortname,
+      \acmConference@date, \acmConference@venue}%
+    \fancyhead[RO]{\sffamily\acmConference@shortname,
+      \acmConference@date, \acmConference@venue}%
   \fi
 }
 \pagestyle{standardpagestyle}
@@ -4075,7 +4139,7 @@ Computing Machinery]
   \ifcase\ACM@format@nr
   \relax % manuscript
     \fancyhead[L]{\ACM@linecount}%
-    \fancyfoot[RO,LE]{\small\thepage}%
+    \fancyfoot[RO,LE]{\if@ACM@printfolios\small\thepage\fi}%
     \fancyfoot[RE,LO]{\footnotesize Manuscript submitted to ACM}%
   \or % acmsmall
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
@@ -4100,7 +4164,7 @@ Computing Machinery]
     \fancyhead[L]{\ACM@linecount}%
   \else % Conference proceedings
     \fancyhead[L]{\ACM@linecount}%
-    \fancyfoot[R]{\footnotesize\thepage}%
+    \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
   \fi
 }
 %    \end{macrocode}
