@@ -4070,6 +4070,7 @@ Computing Machinery]
 % \changes{v1.10}{2016/05/22}{Reversed folios location}
 % \changes{v1.13}{2016/06/06}{Suppressed folios if sig}
 % \changes{v1.13}{2016/06/06}{Added headers for sigs}
+% \changes{v1.13}{2016/06/06}{Expanded headers for sigchi-a}
 %   The pagestyle for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
@@ -4114,6 +4115,9 @@ Computing Machinery]
       \acmConference@date, \acmConference@venue}%
     \fancyhead[RO]{\sffamily\acmConference@shortname,
       \acmConference@date, \acmConference@venue}%
+  \fi
+  \if@ACM@sigchiamode
+     \fancyheadoffset[L]{\dimexpr(\marginparsep+\marginparwidth)}%
   \fi
 }
 \pagestyle{standardpagestyle}
