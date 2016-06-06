@@ -969,7 +969,19 @@
 % Usually when you select a format, \LaTeX\ automatically determines
 % whether you need \textsl{natbib} and the required settings.
 % However, you can ovveride these decision by manually setting the
-% option |natbib| to |true| or |false|.  You may further customize
+% option |natbib| to |true| or |false|.  
+%
+% \DescribeMacro{\citestyle}%
+% If you use |natbib|, you can select one of two predefined sitation
+% styles: the author-year format |acmauthoryear| or the numberic
+% format |acmnumeric| using the command \cs{sitestyle}, for example,
+% \begin{verbatim}
+% \citestyle{acmnumeric}
+% \end{verbatim}
+% 
+%  
+% \DescribeMacro{\setcitestyle}%
+% You may further customize
 % \textsl{natbib} using \cs{setcitestyle} command, for example,
 % \begin{verbatim}
 % \setcitestyle{numbers,sort&compress}
@@ -1594,8 +1606,9 @@ Computing Machinery]
   \def\shortcite#1{\citeyear{#1}}
   \DeclareRobustCommand\citeA
      {\begingroup\NAT@swafalse
-       \let\NAT@ctype\@ne\NAT@partrue\NAT@fullfalse\NAT@open\NAT@citetp}
-  \providecommand\newblock{}
+       \let\NAT@ctype\@ne\NAT@partrue\NAT@fullfalse\NAT@open\NAT@citetp}%
+  \providecommand\newblock{}%
+  \citestyle{acmauthoryear}%
 \else
   \providecommand\citename[1]{#1}
 \fi
@@ -1649,6 +1662,34 @@ Computing Machinery]
 %    \end{macrocode}
 %   
 % \end{macro}
+%
+% \begin{macro}{\bibstyle@acmauthoryear}
+% \changes{v1.13}{2016/06/06}{Added macro}
+%   The default author-year format:
+%    \begin{macrocode}
+\newcommand{\bibstyle@acmauthoryear}{%
+  \setcitestyle{%
+    authoryear,%
+    open={(},close={)},citesep={;},%
+    aysep={},yysep={,},%
+    notesep={, }}}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\bibstyle@acmnumeric}
+% \changes{v1.13}{2016/06/06}{Added macro}
+%   The default author-year format:
+%    \begin{macrocode}
+\newcommand{\bibstyle@acmnumeric}{%
+  \setcitestyle{%
+    numbers,sort&compress,%
+    open={[},close={]},citesep={,},%
+    notesep={, }}}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 %
 % Graphics and color
 %    \begin{macrocode}
