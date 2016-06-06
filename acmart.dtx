@@ -4228,6 +4228,43 @@ Computing Machinery]
 %\label{sec:sectioninng}
 %
 %
+%   Sectioning is different for different levels
+%    \begin{macrocode}
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {.25\baselineskip}%
+  {\@secfont}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {.25\baselineskip}%
+  {\@subsecfont}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{10pt}%
+  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {-3.5\p@}%
+  {\@subsubsecfont\@adddotafter}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
+  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {-3.5\p@}%
+  {\@parfont\@adddotafter}}
+\renewcommand\part{\@startsection{part}{9}{\z@}%
+  {-10\p@ \@plus -4\p@ \@minus -2\p@}%
+  {4\p@}%
+  {\@parfont}}
+%    \end{macrocode}
+%
+% \begin{macro}{\section@raggedright}
+%   \changes{v1.12}{2016/05/30}{Introduced macro}%
+%   Special version of \cs{raggedright} compatible with
+%   \cs{MakeUppercase}
+%    \begin{macrocode}
+\def\section@raggedright{\@rightskip\@flushglue
+  \rightskip\@rightskip
+  \leftskip\z@skip
+  \parindent\z@}
+%    \end{macrocode}
+%
+% \end{macro}
+%
 %
 % \begin{macro}{\@secfont}
 % \begin{macro}{\@subsecfont}
@@ -4304,44 +4341,6 @@ Computing Machinery]
 \def\@addspaceafter#1{#1\@addpunct{\enspace}}
 %    \end{macrocode}
 %
-% \end{macro}
-%
-%
-%   Sectioning is different for different levels
-%    \begin{macrocode}
-\renewcommand\section{\@startsection{section}{1}{\z@}%
-  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {.25\baselineskip}%
-  {\@secfont}}
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-  {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {.25\baselineskip}%
-  {\@subsecfont}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{10pt}%
-  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {-3.5\p@}%
-  {\@subsubsecfont\@adddotafter}}
-\renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
-  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
-  {-3.5\p@}%
-  {\@parfont\@adddotafter}}
-\renewcommand\part{\@startsection{part}{9}{\z@}%
-  {-10\p@ \@plus -4\p@ \@minus -2\p@}%
-  {4\p@}%
-  {\@parfont}}
-%    \end{macrocode}
-%
-% \begin{macro}{\section@raggedright}
-%   \changes{v1.12}{2016/05/30}{Introduced macro}%
-%   Special version of \cs{raggedright} compatible with
-%   \cs{MakeUppercase}
-%    \begin{macrocode}
-\def\section@raggedright{\@rightskip\@flushglue 
-  \rightskip\@rightskip
-  \leftskip\z@skip
-  \parindent\z@}
-%    \end{macrocode}
-%   
 % \end{macro}
 %
 %
