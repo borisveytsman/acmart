@@ -1633,6 +1633,23 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
+%
+% \begin{macro}{\bibliographystyle}
+% \changes{v1.13}{2016/06/06}{Redefined macro}
+%   Amsart redefines \cs{bibliographystyle} since it prefers AMS
+%   bibliography.  We turn it back to \LaTeX\ definition:
+%    \begin{macrocode}
+\def\bibliographystyle#1{%
+  \ifx\@begindocumenthook\@undefined\else
+    \expandafter\AtBeginDocument
+  \fi
+    {\if@filesw
+       \immediate\write\@auxout{\string\bibstyle{#1}}%
+     \fi}}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 % Graphics and color
 %    \begin{macrocode}
 \RequirePackage{graphicx, xcolor}
