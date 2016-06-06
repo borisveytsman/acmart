@@ -1814,21 +1814,8 @@ Computing Machinery]
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{v1.13}{2016/06/06}{Smaller copyright/permission for acmsmall}
 %    \begin{macrocode}
 \RequirePackage{manyfoot}
-\ifcase\ACM@format@nr
-\relax % manuscript
-\or % acmsmall
-    \SetFootnoteHook{\scriptsize}
-\or % acmlarge
-\or % acmtog
-\or % sigconf
-\or % siggraph
-\or % sigplan
-\or % sigchi
-\or % sigchi-a
-\fi
 \SelectFootnoteRule[2]{copyrightpermission}
 \DeclareNewFootnote{copyrightpermission}
 %    \end{macrocode}
@@ -3677,11 +3664,14 @@ Computing Machinery]
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v1.13}{2016/06/06}{Font adjustments for acmsmall}
 % Adjusting fonts for different formats
 %    \begin{macrocode}
 \ifcase\ACM@format@nr
 \relax % manuscript
 \or % acmsmall
+  \def\@authorfont{\large\sffamily}
+  \def\@affiliationfont{\small\normalfont}
 \or % acmlarge
 \or % acmtog
   \def\@authorfont{\LARGE\sffamily}
