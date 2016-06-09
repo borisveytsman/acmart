@@ -19,3 +19,7 @@ version 1.12    Bug fixes and documentation updates.
 
 version 1.13    Formatting changes: headers, folios etc.
 		Bibliography changes.
+
+version 1.14    Warn about undefined citation styles; move definitions
+                of acmauthoryear and acmnumeric citation styles before
+                use.

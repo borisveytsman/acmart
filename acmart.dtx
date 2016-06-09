@@ -1078,6 +1078,7 @@ Computing Machinery]
 % \changes{v1.11}{2016/05/27}{Customization of ACM theorem styles and
 % proof environment by Matthew Fluet}
 % \changes{v1.12}{2016/05/30}{Documentation updates}
+% \changes{v1.14}{2016/06/09}{\cs{citestyle} updates (Matthew Fluet)}
 %
 %
 % And the driver code:
@@ -1392,6 +1393,7 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
+% \changes{v1.14}{2016/06/09}{Patched \cs{citestyle}}
 % Citations.  We patch \cs{setcitestyle} to allow, e.g.,
 % \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|.  We patch
 % \cs{citestyle} to warn about undefined citation styles.
@@ -1476,6 +1478,8 @@ Computing Machinery]
 %
 % \begin{macro}{\bibstyle@acmauthoryear}
 % \changes{v1.13}{2016/06/06}{Added macro}
+% \changes{v1.14}{2016/06/09}{Moved def of \cs{bibstyle@acmauthoryear}
+%   before use}
 %   The default author-year format:
 %    \begin{macrocode}
 \newcommand{\bibstyle@acmauthoryear}{%
@@ -1490,6 +1494,8 @@ Computing Machinery]
 %
 % \begin{macro}{\bibstyle@acmnumeric}
 % \changes{v1.13}{2016/06/06}{Added macro}
+% \changes{v1.14}{2016/06/09}{Moved def of \cs{bibstyle@numeric}
+%   before use}
 %   The default author-year format:
 %    \begin{macrocode}
 \newcommand{\bibstyle@acmnumeric}{%
