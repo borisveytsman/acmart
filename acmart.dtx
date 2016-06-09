@@ -973,7 +973,7 @@
 %
 % \DescribeMacro{\citestyle}%
 % If you use |natbib|, you can select one of two predefined sitation
-% styles: the author-year format |acmauthoryear| or the numberic
+% styles: the author-year format |acmauthoryear| or the numeric
 % format |acmnumeric| using the command \cs{sitestyle}, for example,
 % \begin{verbatim}
 % \citestyle{acmnumeric}
@@ -1078,6 +1078,7 @@ Computing Machinery]
 % \changes{v1.11}{2016/05/27}{Customization of ACM theorem styles and
 % proof environment by Matthew Fluet}
 % \changes{v1.12}{2016/05/30}{Documentation updates}
+% \changes{v1.14}{2016/06/09}{\cs{citestyle} updates (Matthew Fluet)}
 %
 %
 % And the driver code:
@@ -1392,8 +1393,10 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
+% \changes{v1.14}{2016/06/09}{Patched \cs{citestyle}}
 % Citations.  We patch \cs{setcitestyle} to allow, e.g.,
-% \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|
+% \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|.  We patch
+% \cs{citestyle} to warn about undefined citation styles.
 %    \begin{macrocode}
 \if@ACM@natbib
   \RequirePackage{natbib}
@@ -1463,12 +1466,47 @@ Computing Machinery]
   }%
   \NAT@@setcites
   }
-  \setcitestyle{%
-    open={[},close={]},citesep={;},%
-    authoryear,aysep={},yysep={,},%
-    notesep={, }}
+  \renewcommand\citestyle[1]{%
+    \ifcsname bibstyle@#1\endcsname%
+    \csname bibstyle@#1\endcsname\let\bibstyle\@gobble%
+    \else%
+    \@latex@error{Undefined `#1' citestyle}%
+    \fi
+  }%
 \fi
 %    \end{macrocode}
+%
+% \begin{macro}{\bibstyle@acmauthoryear}
+% \changes{v1.13}{2016/06/06}{Added macro}
+% \changes{v1.14}{2016/06/09}{Moved def of \cs{bibstyle@acmauthoryear}
+%   before use}
+%   The default author-year format:
+%    \begin{macrocode}
+\newcommand{\bibstyle@acmauthoryear}{%
+  \setcitestyle{%
+    authoryear,%
+    open={(},close={)},citesep={;},%
+    aysep={},yysep={,},%
+    notesep={, }}}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\bibstyle@acmnumeric}
+% \changes{v1.13}{2016/06/06}{Added macro}
+% \changes{v1.14}{2016/06/09}{Moved def of \cs{bibstyle@numeric}
+%   before use}
+%   The default author-year format:
+%    \begin{macrocode}
+\newcommand{\bibstyle@acmnumeric}{%
+  \setcitestyle{%
+    numbers,sort&compress,%
+    open={[},close={]},citesep={,},%
+    notesep={, }}}
+%    \end{macrocode}
+%
+% \end{macro}
+%
 %
 % Before we call |hyperref|, we redefine \cs{startsection} commands to
 % their \LaTeX\ defaults, since |amsart| ones are too AMS-specific.
@@ -1659,33 +1697,6 @@ Computing Machinery]
     {\if@filesw
        \immediate\write\@auxout{\string\bibstyle{#1}}%
      \fi}}
-%    \end{macrocode}
-%   
-% \end{macro}
-%
-% \begin{macro}{\bibstyle@acmauthoryear}
-% \changes{v1.13}{2016/06/06}{Added macro}
-%   The default author-year format:
-%    \begin{macrocode}
-\newcommand{\bibstyle@acmauthoryear}{%
-  \setcitestyle{%
-    authoryear,%
-    open={(},close={)},citesep={;},%
-    aysep={},yysep={,},%
-    notesep={, }}}
-%    \end{macrocode}
-%   
-% \end{macro}
-%
-% \begin{macro}{\bibstyle@acmnumeric}
-% \changes{v1.13}{2016/06/06}{Added macro}
-%   The default author-year format:
-%    \begin{macrocode}
-\newcommand{\bibstyle@acmnumeric}{%
-  \setcitestyle{%
-    numbers,sort&compress,%
-    open={[},close={]},citesep={,},%
-    notesep={, }}}
 %    \end{macrocode}
 %   
 % \end{macro}
