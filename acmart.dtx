@@ -1393,7 +1393,8 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % Citations.  We patch \cs{setcitestyle} to allow, e.g.,
-% \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|
+% \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|.  We patch
+% \cs{citestyle} to warn about undefined citation styles.
 %    \begin{macrocode}
 \if@ACM@natbib
   \RequirePackage{natbib}
@@ -1463,6 +1464,13 @@ Computing Machinery]
   }%
   \NAT@@setcites
   }
+  \renewcommand\citestyle[1]{%
+    \ifcsname bibstyle@#1\endcsname%
+    \csname bibstyle@#1\endcsname\let\bibstyle\@gobble%
+    \else%
+    \@latex@error{Undefined `#1' citestyle}%
+    \fi
+  }%
   \setcitestyle{%
     open={[},close={]},citesep={;},%
     authoryear,aysep={},yysep={,},%
