@@ -1478,6 +1478,34 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
+% \begin{macro}{\bibstyle@acmauthoryear}
+% \changes{v1.13}{2016/06/06}{Added macro}
+%   The default author-year format:
+%    \begin{macrocode}
+\newcommand{\bibstyle@acmauthoryear}{%
+  \setcitestyle{%
+    authoryear,%
+    open={(},close={)},citesep={;},%
+    aysep={},yysep={,},%
+    notesep={, }}}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\bibstyle@acmnumeric}
+% \changes{v1.13}{2016/06/06}{Added macro}
+%   The default author-year format:
+%    \begin{macrocode}
+\newcommand{\bibstyle@acmnumeric}{%
+  \setcitestyle{%
+    numbers,sort&compress,%
+    open={[},close={]},citesep={,},%
+    notesep={, }}}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
 % Before we call |hyperref|, we redefine \cs{startsection} commands to
 % their \LaTeX\ defaults, since |amsart| ones are too AMS-specific.
 % We need to do this early since we want |hyperref| to have a chance
@@ -1667,33 +1695,6 @@ Computing Machinery]
     {\if@filesw
        \immediate\write\@auxout{\string\bibstyle{#1}}%
      \fi}}
-%    \end{macrocode}
-%   
-% \end{macro}
-%
-% \begin{macro}{\bibstyle@acmauthoryear}
-% \changes{v1.13}{2016/06/06}{Added macro}
-%   The default author-year format:
-%    \begin{macrocode}
-\newcommand{\bibstyle@acmauthoryear}{%
-  \setcitestyle{%
-    authoryear,%
-    open={(},close={)},citesep={;},%
-    aysep={},yysep={,},%
-    notesep={, }}}
-%    \end{macrocode}
-%   
-% \end{macro}
-%
-% \begin{macro}{\bibstyle@acmnumeric}
-% \changes{v1.13}{2016/06/06}{Added macro}
-%   The default author-year format:
-%    \begin{macrocode}
-\newcommand{\bibstyle@acmnumeric}{%
-  \setcitestyle{%
-    numbers,sort&compress,%
-    open={[},close={]},citesep={,},%
-    notesep={, }}}
 %    \end{macrocode}
 %   
 % \end{macro}
