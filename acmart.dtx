@@ -2384,7 +2384,7 @@ Computing Machinery]
 %
 % The defaults:
 %    \begin{macrocode}
-\def\@journalName{}%
+\def\@journalName{ACM Journal}%
 \def\@journalNameShort{\@journalName}%
 \def\@permissionCodeOne{XXXX-XX}%
 \def\@permissionCodeTwo{}%
@@ -2623,12 +2623,15 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\@acmPubDate}
+% \changes{v1.14}{2016/06/15}{Made robust against uninitialized
+% month (Matthew Fluet)}
 %   The publication date
 %    \begin{macrocode}
-\def\@acmPubDate{\ifcase\@acmMonth\or
+\def\@acmPubDate{\def\@tempa{MM}%
+  \ifx\@acmMonth\@tempa MM\else\ifcase\@acmMonth\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or
-  December\fi~\@acmYear}
+  December\fi\fi~\@acmYear}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4160,9 +4163,17 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@folioblob}
+% \changes{v1.14}{2016/06/15}{Made robust against uninitialized
+% article number (Matthew Fluet)}
 %   The macro to typeset the folio blob.
 %    \begin{macrocode}
-\def\@folioblob{\@tempcnta=\@acmArticleSeq\relax
+\def\@folioblob{
+  \def\@tempa{AA}
+  \ifx\@acmArticlSeq\@tempa
+     \@tempcnta=\@acmArticleSeq
+  \else
+     \@tempcnta=1
+  \fi
 %    \end{macrocode}
 % First, we calculate \cs{@acmArticleSeq} modulo \cs{@folio@max}
 %    \begin{macrocode}

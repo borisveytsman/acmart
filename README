@@ -23,3 +23,5 @@ version 1.13    Formatting changes: headers, folios etc.
 version 1.14    Warn about undefined citation styles; move definitions
                 of acmauthoryear and acmnumeric citation styles before
                 use.
+
+version 1.15    Make robust against uninitialized journal metadata.
