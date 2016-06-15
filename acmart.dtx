@@ -1079,6 +1079,8 @@ Computing Machinery]
 % proof environment by Matthew Fluet}
 % \changes{v1.12}{2016/05/30}{Documentation updates}
 % \changes{v1.14}{2016/06/09}{\cs{citestyle} updates (Matthew Fluet)}
+% \changes{v1.15}{2016/06/09}{Make robust against uninitialized
+% journal metadata (Matthew Fluet)}
 %
 %
 % And the driver code:
@@ -1479,7 +1481,7 @@ Computing Machinery]
 % \begin{macro}{\bibstyle@acmauthoryear}
 % \changes{v1.13}{2016/06/06}{Added macro}
 % \changes{v1.14}{2016/06/09}{Moved def of \cs{bibstyle@acmauthoryear}
-%   before use}
+% before use}
 %   The default author-year format:
 %    \begin{macrocode}
 \newcommand{\bibstyle@acmauthoryear}{%
@@ -1495,7 +1497,7 @@ Computing Machinery]
 % \begin{macro}{\bibstyle@acmnumeric}
 % \changes{v1.13}{2016/06/06}{Added macro}
 % \changes{v1.14}{2016/06/09}{Moved def of \cs{bibstyle@numeric}
-%   before use}
+% before use}
 %   The default author-year format:
 %    \begin{macrocode}
 \newcommand{\bibstyle@acmnumeric}{%
@@ -2623,7 +2625,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\@acmPubDate}
-% \changes{v1.14}{2016/06/15}{Made robust against uninitialized
+% \changes{v1.15}{2016/06/15}{Made robust against uninitialized
 % month (Matthew Fluet)}
 %   The publication date
 %    \begin{macrocode}
@@ -4163,7 +4165,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@folioblob}
-% \changes{v1.14}{2016/06/15}{Made robust against uninitialized
+% \changes{v1.15}{2016/06/15}{Made robust against uninitialized
 % article number (Matthew Fluet)}
 %   The macro to typeset the folio blob.
 %    \begin{macrocode}
