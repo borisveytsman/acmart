@@ -413,37 +413,124 @@
 % Besides title, ACM classes allow subtitle, set with the
 % \cs{subtitle}\marg{subtitle} macro.
 %
+% The commands for specification of authors are highly structured.
+% The reason is, they serve double duty:  the authors' information is
+% typeset in the manuscript, \emph{and} is used by the metadata
+% extraction tools for indexing and cataloguing.  Therefore it is very
+% important to follow the guidelines exactly.
+%
 % \DescribeMacro{\author}%
+% \DescribeMacro{\orcid}
 % \DescribeMacro{\affiliation}%
 % \DescribeMacro{\email}%
-% The interface for specifying the authors and their affiliations is
-% close the the one of \progname{amsart}~\cite{instr-l} (and different
-% from the standard \LaTeX).  For each author a separate command
-% |\author| should be used, followed by |\affliation| and |\email|.
-% If several authors share affiliations, in journal formats like
-% |acmsmall| or |acmlarge| one may put the
-% affiliation after all these authors, for example:
+% The basic commands are \cs{author}, \cs{orcid} (for the researchers
+% registered with ORCID, \url{http://www.orcid.org/}), \cs{affiliation} and
+% \cs{email}.  In the simplest case you enter them in this order:
+% \begin{verbatim}
+% \author{...}
+% \orcid{...}
+% \affiliation{...}
+% \email{...}
+% \end{verbatim}
+% Do \emph{not} use \LaTeX\ \cs{and} macro! Each author deserves
+% his or her own \cs{author} command.
+%
+% Note that some formats do not typset e-mails of ORCID identifiers.
+% Do now worry: metadata tools will get them.  
+%
+% Sometimes an author has several affiliations.  In this case the
+% \cs{affiliation} command should be repeated:
+% \begin{verbatim}
+% \author{...}
+% \orcid{...}
+% \affiliation{...}
+% \affiliation{...}
+% \email{...} 
+% \end{verbatim}
+% Similarly you can repeat \cs{email} command.
+%
+% You may have several authors with the same afifliation, different
+% affiliations or overlapping affiliations (author~$A_1$ is affiliated
+% with institutions $I_1$ and $I_2$, while author $A_2$ is affiliated
+% with $I_2$ only, and author $A_3$ is affiliated with
+% $I_1$ and $I_3$, \ldots).  The recommended solution is to put the
+% \cs{affiliation} commands after each author, possibly repeating them:
+% \begin{verbatim}
+% \author{...}
+% \orcid{...}
+% \affiliation{...}
+% \affiliation{...}
+% \email{...} 
+% \author{...}
+% \orcid{...}
+% \affiliation{...}
+% \email{...}  
+% \author{...}
+% \orcid{...}
+% \affiliation{...}
+% \affiliation{...}
+% \email{...} 
+% \end{verbatim}
+%  In some cases when several authors share the same affiliation you may
+%  try to save the space using the format
+% \begin{verbatim}
+% \author{...}
+% \author{...}
+% \affiliation{...}
+% \end{verbatim}
+%  However, this format does not allow typesetting separate e-mails
+%  for different authors.  It is not generally recommended.
+%
+%  \DescribeMacro{\institution}%
+%  \DescribeMacro{\department}%
+%  \DescribeMacro{\streetaddress}%
+%  \DescribeMacro{\city}%
+%  \DescribeMacro{\state}%
+%  \DescribeMacro{\postcode}%
+%  \DescribeMacro{\country}%
+%  The \cs{affiliation} command is further structured to interact with
+%  the metadata extraction tools.  Inside the this command you should
+%  use \cs{institution}, \cs{department}, \cs{city},
+%  \cs{streetaddress}, \cs{state}, \cs{postcode} and \cs{country}
+%  macros to indicate the corresponding parts of the affiliation.
+%  Note that in some cases (for example, journals) these parts are not
+%  printed in the resulting copy, but they \emph{are} necessary since
+%  they are used by the XML metadata extraction programs.  Do
+%  \emph{not} put commas or |\\| between the elements of
+%  \cs{affiliation}: they will be provided automatically.
+%
+% An example of the author block:
 % \begin{verbatim}
 % \author{A. U. Thor}
+% \orcid{1234-4564-1234-4565}
+% \affiliation{%
+%   \institution{University of New South Wales}
+%   \department{School of Biomedical Engineering}
+%   \streetaddress{Samuels Building (F25), Kensington Campus}
+%   \city{Sidney}
+%   \state{NSW}
+%   \postcode{2052}
+%   \country{Australia}}
 % \email{author@nsw.au.edu}
-% \affiliation{University of New South Wales}
 % \author{A. N. Other}
+% \affiliation{%
+%   \institution{University of New South Wales}
+%   \city{Sidney}
+%   \state{NSW}
+%   \country{Australia}}
 % \author{C. O. Respondent}
-% \affiliation{University of Pennsylvania}
+% \orcid{1234-4565-4564-1234}
+% \affiliation{%
+%   \institution{University of Pennsylvania}
+%   \city{Philadelphia}
+%   \state{PA}
+%   \country{USA}}
+% \affiliation{%
+%   \institution{University of New South Wales}
+%   \city{Sidney}
+%   \state{NSW}
+%   \country{Australia}}
 % \end{verbatim}
-% In the cases of overlapping affiliations it is advisable to repeat
-% the full list, for example,
-% \begin{verbatim}
-% \author{A. U. Thor}
-% \affiliation{University of New South Wales, Australia}
-% \email{author@nsw.edu.au}
-% \author{A. N. Other}
-% \affiliation{University of Pennsylvania, USA and University of New South
-% Wales, Australia}
-% \email{other@upenn.edu}
-% \end{verbatim}
-% For \emph{conferences} the affiliations should \emph{always} be
-% repeated, even if they are shared between the authors.
 %
 % Note that old ACM conference formats did not allow for more than six
 % authors and required some efforts from the authors to achieve
@@ -1050,7 +1137,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/06/30 v1.13 Typesetting articles for Association of
+[2016/06/25 v1.15 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2384,6 +2471,7 @@ Computing Machinery]
 %
 % The defaults:
 %    \begin{macrocode}
+\def\@journalCode@nr{0}
 \def\@journalName{}%
 \def\@journalNameShort{\@journalName}%
 \def\@permissionCodeOne{XXXX-XX}%
@@ -2418,20 +2506,33 @@ Computing Machinery]
 % \end{macro}
 %
 %
-% \begin{macro}{\num@authors}
-%   The total number of authors
+% \begin{macro}{\num@authorgroups}
+% \changes{v1.15}{2016/06/25}{Renamed}
+%   The total number of ``groups''.  Each group is several authors with
+%   the same affiliations(s)
 %    \begin{macrocode}
-\newcount\num@authors
-\num@authors=0\relax
+\newcount\num@authorgroups
+\num@authorgroups=0\relax
 %    \end{macrocode}
 %
 % \end{macro}
 %
+% \begin{macro}{\if@insideauthorgroup}
+% \changes{v1.15}{2016/06/25}{Introduced macro}
+%  Whether we are continuing an author group
+\newif\if@insideauthorgroup
+\@insideauthorgroupfalse
+% \end{macro}
+%
 % \begin{macro}{\author}
+% \changes{v1.15}{2016/06/25}{Added code for author groups}
 %   Adding an author to the list of authors and addresses
 %    \begin{macrocode}
 \renewcommand\author[2][]{%
-  \global\advance\num@authors by 1\relax
+  \if@insideauthorgroup\else
+    \global\advance\num@authorgroups by 1\relax
+    \global\@insideauthorgrouptrue
+  \fi
   \ifx\addresses\@empty
     \if@ACM@anonymous
       \gdef\addresses{\@author{Anonymous Author(s)}}%
@@ -2472,11 +2573,13 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\affiliation}
+% \changes{v1.15}{2016/06/25}{Added code for author groups}
 %   The macro \cs{affiliation} mimics \cs{address} from |amsart|.
 %   Note that it has an optional argument we do not currently need,
 %   but keep for the possible future use.
 %    \begin{macrocode}
 \newcommand{\affiliation}[2][]{%
+  \global\@insideauthorgroupfalse
   \if@ACM@anonymous\else
     \g@addto@macro\addresses{\affiliation{#1}{#2}}%
   \fi}
@@ -2497,6 +2600,12 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\orcid}
+% \changes{v1.15}{2016/06/25}{Introduced macro}
+%   Right now we do not typeset orcids
+\let\orcid\@gobble
+% \end{macro}
+% 
 % \begin{macro}{\@titlenotes}
 %   The titlenotes
 %    \begin{macrocode}
@@ -3252,7 +3361,7 @@ Computing Machinery]
 \def\maketitle{%
   \if@ACM@anonymous
     % Anonymize omission of \author-s
-    \ifnum\num@authors=0\author{}\fi
+    \ifnum\num@authorgroups=0\author{}\fi
   \fi
   \begingroup
   \let\@footnotemark\@footnotemark@nolink
@@ -3706,10 +3815,18 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \begin{macro}{\@mkauthors@i}
+% \changes{v1.15}{2016/06/25}{Added structured affiliation command}
 %   This is version used in most formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
 \def\@mkauthors@i{%
+  \def\institution##1{##1\ignorespaces}%
+  \let\department\@gobble
+  \let\streetaddress\@gobble
+  \let\city\@gobble
+  \let\state\@gobble
+  \let\postcode\@gobble
+  \let\country\@gobble
   \def\@currentauthors{}%
   \def\and{%
     \andify\@currentauthors\par\noindent
@@ -3805,13 +3922,13 @@ Computing Machinery]
 %    \begin{macrocode}
   \author@bx@wd=\textwidth\relax
   \advance\author@bx@wd by -\author@bx@sep\relax
-  \ifcase\num@authors
+  \ifcase\num@authorgroups
   \relax % 0?
   \or  % 1=one author per row
   \or  % 2=two authors per row
-     \divide\author@bx@wd by \num@authors\relax
+     \divide\author@bx@wd by \num@authorgroups\relax
   \or  % 3=three authors per row
-     \divide\author@bx@wd by \num@authors\relax
+     \divide\author@bx@wd by \num@authorgroups\relax
   \or  % 4=two authors per row (!)
      \divide\author@bx@wd by 2\relax
   \else % three authors per row
@@ -3875,7 +3992,7 @@ Computing Machinery]
 %    \begin{macrocode}
   \author@bx@wd=\columnwidth\relax
   \advance\author@bx@wd by -\author@bx@sep\relax
-  \ifcase\num@authors
+  \ifcase\num@authorgroups
   \relax % 0?
   \or  % 1=one author per row
   \else  % 2=two authors per row
