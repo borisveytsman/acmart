@@ -981,6 +981,8 @@
 %
 %
 %
+%
+%
 %\subsection{Online-only and offline-only material}
 %\label{sec:ug_screen}
 %
@@ -1002,10 +1004,11 @@
 % \begin{screenonly}
 %   (The actual section).
 % \end{screenonly}
-%
 % \end{verbatim}
 %
-%
+% We use \textsl{comment} package for typesetting this code, so
+% |\begin| and |\end| should start at the first positions of the lines
+% of their own (no initial spaces etc.).
 %
 %\subsection{Note about anonymous mode}
 %\label{sec:ug_anonymous}
@@ -1014,16 +1017,70 @@
 % When the option |anonymous| is selected, \TeX\ suppresses author
 % information (including number of authors) for a blind review.
 % However, sometimes the information identifying the authors may be
-% present in the body of the paper, for example, in the
-% acknowledgements.  The environment |anonsuppress| is used to
-% suppress such information, for example
+% present in the body of the paper
 % \begin{verbatim}
-% \section*{Acknowledgements}
 % \begin{anonsuppress}
-%   The authors wish to thank Prof. C.~O.~Lleague for her generous
-%   advices and the Society for Development of Oort Cloud for the
-%   financial support.
+%   This is the continuation of the previous work by the author
+%   \cite{prev1, prev2}.  
 % \end{anonsuppress}
+% \end{verbatim}
+%
+% As for |printonly| and |screenonly| environments,
+% |\begin{anonsuppress}| and |\end{anonsuppress}| should start the
+% line of their own (no leading or trailing spaces).  
+% 
+%\subsection{Acknowledgments}
+%\label{sec:ug_acks}
+%
+% The traditional ``Acknowledgments'' section is conventionally used
+% to thank persons and granting agencies for their help and support.
+% However, there are several important considerations about this
+% section.
+%
+% First, in the anonymous mode this section must be omitted: it gives
+% too much information to the reviewers.  Second, the data about
+% the grants is extracted and stored separately by the postprocessing
+% software.  ACM classes provide facilities for both these tasks.
+%
+% \DescribeEnv{acks}%
+% The environment |acks| starts an unnumbered section
+% ``Acknowledgments'' unless the anonymous mode is chosen.  Put all
+% thanks inside this environment.
+%
+% As for |printonly| and |screenonly| environments,
+% |\begin{acks}| and |\end{acls}| should start the
+% line of their own (no leading or trailing spaces).  
+
+%
+% \DescribeMacro{\gsponsor}%
+% \DescribeMacro{\grantnum}%
+% All the financial support \emph{must} be listed using the commands
+% \cs{gsponsor} and \cs{grantnum}.  These commands tell the
+% postprocessing software about the granting organization and the
+% grant.  The format of the command is the following:
+% \begin{quote}
+%   \cs{gsponsor}\marg{sponsorID}\marg{name}\marg{url}\\
+%   \cs{grantnum}\marg{sponsorID}\marg{number}.
+% \end{quote}
+% Here \marg{sponsorID} is the unique ID used to match grants to
+% sponsors, \marg{name} is the name of the sponsor, \marg{url} is its
+% URL, and \marg{number} is the grant number.  The \marg{sponsorID} of
+% the \cs{grantnum} command must correspond to \cs{sponsorID} of a
+% \cs{gsponsor command}.
+%
+% Example:
+% \begin{verbatim}
+% \begin{acks}
+%   The authors would like to thank Dr. Yuhua Li for providing the
+%   matlab code of  the \textit{BEPS} method. 
+%
+%   The authors would also like to thank the anonymous referees for
+%   their valuable comments and helpful suggestions. The work is
+%   supported by the \gsponsor{GS501100001809}{National Natural
+%   Science Foundation of
+%   China}{http://dx.doi.org/10.13039/501100001809} under Grant No.:
+%   \grantnum{GS501100001809}{61273304}.
+% \end{acks}
 % \end{verbatim}
 % 
 %
@@ -3351,7 +3408,7 @@ Computing Machinery]
 % \changes{v1.10}{2016/05/23}{Corrected a bug with doi in manuscript
 % and author vertsion,
 % \url{https://github.com/borisveytsman/acmart/issues/36}} 
-% \changes{v1.12}{2016/05/30}{Moved thankses to copyrightpermission box.}
+% \changes{v1.12}{2016/05/30}{Moved thankses to copyrightpermission box}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %
@@ -4252,13 +4309,22 @@ Computing Machinery]
 %
 % \end{macro}
 %
-%
+% \begin{macro}{\@shortauthors}
+% \changes{v1.15}{2016/07/04}{Introduced macro}
+%   Even if the author redefined \cs{shortauthors}, we do not print
+%   them in the anonymous mode in the headers:
+%    \begin{macrocode}
+\def\@shortauthors{\if@ACM@anonymous Anon.\else\shortauthors\fi}
+%    \end{macrocode}
+%   
+% \end{macro}
 %
 % \begin{macro}{standardpagestyle}
 % \changes{v1.10}{2016/05/22}{Reversed folios location}
 % \changes{v1.13}{2016/06/06}{Suppressed folios if sig}
 % \changes{v1.13}{2016/06/06}{Added headers for sigs}
 % \changes{v1.13}{2016/06/06}{Expanded headers for sigchi-a}
+% \changes{v1.15}{2016/07/04}{Better handling of anonymous mode}
 %   The pagestyle for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
@@ -4269,19 +4335,19 @@ Computing Machinery]
   \relax % manuscript
     \fancyhead[LE]{\ACM@linecount\if@ACM@printfolios\thepage\fi}%
     \fancyhead[RO]{\if@ACM@printfolios\thepage\fi}%
-    \fancyhead[RE]{\shortauthors}%
+    \fancyhead[RE]{\@shortauthors}%
     \fancyhead[LO]{\ACM@linecount\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize Manuscript submitted to ACM}%
   \or % acmsmall
     \fancyhead[LE]{\ACM@linecount\sffamily\@acmArticle\if@ACM@printfolios:\thepage\fi}%
     \fancyhead[RO]{\sffamily\@acmArticle\if@ACM@printfolios:\thepage\fi}%
-    \fancyhead[RE]{\sffamily\shortauthors}%
+    \fancyhead[RE]{\sffamily\@shortauthors}%
     \fancyhead[LO]{\ACM@linecount\sffamily\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmlarge
     \fancyhead[LE]{\ACM@linecount\sffamily
-      \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\shortauthors}%
+      \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\@shortauthors}%
     \fancyhead[LO]{\ACM@linecount}%
     \fancyhead[RO]{\sffamily
       \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
@@ -4289,7 +4355,7 @@ Computing Machinery]
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmtog
     \fancyhead[LE]{\ACM@linecount\sffamily
-      \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\shortauthors}%
+      \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\@shortauthors}%
     \fancyhead[LO]{\ACM@linecount}%
     \fancyhead[RO]{\sffamily
       \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
@@ -4297,8 +4363,8 @@ Computing Machinery]
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \else % Proceedings
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
-    \fancyhead[LO]{\ACM@linecount\sffamily\shortauthors}%
-    \fancyhead[RE]{\sffamily\shortauthors}%
+    \fancyhead[LO]{\ACM@linecount\sffamily\@shortauthors}%
+    \fancyhead[RE]{\sffamily\@shortauthors}%
     \fancyhead[LE]{\ACM@linecount\sffamily\acmConference@shortname,
       \acmConference@date, \acmConference@venue}%
     \fancyhead[RO]{\sffamily\acmConference@shortname,
@@ -4750,6 +4816,39 @@ Computing Machinery]
 % \end{macro}
 %
 %
+%
+%\subsection{Acknowledgments}
+%\label{sec:acks}
+%
+% \begin{macro}{\acks}
+% \changes{v1.15}{2016/07/05}{Added macro}
+%   This is a |comment|-like structure
+%    \begin{macrocode}
+\specialcomment{acks}
+  {\begingroup\section*{Acknowledgments}}{\endgroup}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\gsponsor}
+% \changes{v1.15}{2016/07/05}{Added macro}
+% We just typeset the name of the sponsor
+%    \begin{macrocode}
+\def\gsponsor#1#2#3{#2}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+% \begin{macro}{\grantnum}
+% \changes{v1.15}{2016/07/05}{Added macro}
+%   The grunt number \emph{may} contain underscores etc.  So we
+%   protect against them
+%    \begin{macrocode}
+\def\grantnum#1#2{\nolinkurl{#2}}      
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 % \subsection{Conditional typesetting}
 % \label{sec:conditional}
 %
@@ -4764,11 +4863,11 @@ Computing Machinery]
 \fi
 \if@ACM@anonymous
   \excludecomment{anonsuppress}
+  \excludecomment{acks}
 \else
   \includecomment{anonsuppress}
 \fi
 %    \end{macrocode}
-%
 %
 %\subsection{End of Class}
 %\label{end}
