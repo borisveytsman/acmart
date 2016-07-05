@@ -475,12 +475,14 @@
 %  try to save the space using the format
 % \begin{verbatim}
 % \author{...}
+% \email{...}
 % \author{...}
+% \email{...}
 % \affiliation{...}
 % \end{verbatim}
-%  However, this format does not allow typesetting separate e-mails
-%  for different authors.  It is not generally recommended.
+%  However, this format is not generally recommended.
 %
+%  \DescribeMacro{\position}%
 %  \DescribeMacro{\institution}%
 %  \DescribeMacro{\department}%
 %  \DescribeMacro{\streetaddress}%
@@ -490,7 +492,7 @@
 %  \DescribeMacro{\country}%
 %  The \cs{affiliation} command is further structured to interact with
 %  the metadata extraction tools.  Inside the this command you should
-%  use \cs{institution}, \cs{department}, \cs{city},
+%  use \cs{position}, \cs{institution}, \cs{department}, \cs{city},
 %  \cs{streetaddress}, \cs{state}, \cs{postcode} and \cs{country}
 %  macros to indicate the corresponding parts of the affiliation.
 %  Note that in some cases (for example, journals) these parts are not
@@ -3736,6 +3738,79 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\@ACM@addtoaddress}
+% \changes{v1.15}{2016/07/03}{Added macro}
+%   The macro adds an item to address using the following rules:
+%   \begin{enumerate}
+%   \item If we start a paragraph, add the item
+%   \item Otherwise, add a comma and the item
+%   \item However, the comma is deleted, if it is on the end of the
+%   line.  We use the magic cleaders trick for this.
+%   \end{enumerate}
+%    \begin{macrocode}
+\newbox\@ACM@commabox
+\def\@ACM@addtoaddress#1{%
+  \ifvmode\else
+    \setbox\@ACM@commabox=\hbox{, }%
+    \unskip\cleaders\copy\@ACM@commabox\hskip\wd\@ACM@commabox
+  \fi
+  #1}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\institution}
+% \changes{v1.15}{2016/07/03}{Added macro}
+% \begin{macro}{\position}
+% \changes{v1.15}{2016/07/03}{Added macro}
+% \begin{macro}{\department}
+% \changes{v1.15}{2016/07/03}{Added macro}
+% \begin{macro}{\streetaddress}
+% \changes{v1.15}{2016/07/03}{Added macro}
+% \begin{macro}{\city}
+% \changes{v1.15}{2016/07/03}{Added macro}
+% \begin{macro}{\state}
+% \changes{v1.15}{2016/07/03}{Added macro}
+% \begin{macro}{\postcode}
+% \changes{v1.15}{2016/07/03}{Added macro}
+% \begin{macro}{\country}
+% \changes{v1.15}{2016/07/03}{Added macro}
+%   Theoretically we can define the macros for \cs{affiliation} inside
+%   the \cs{@mkauthors}-style commands.  However, this would lead to a
+%   strange error if an author uses them outside \cs{affiliation}.  Of
+%   course we can make them produce an error message, but\ldots
+%
+%   We follow the strange American tradtion of no comma before zip
+%   code.  
+%    \begin{macrocode}
+\if@ACM@journal
+  \let\position\@gobble
+  \def\institution#1{#1}%
+  \let\department\@gobble
+  \let\streetaddress\@gobble
+  \let\city\@gobble
+  \let\state\@gobble
+  \let\postcode\@gobble
+  \let\country\@gobble
+\else
+  \def\position#1{#1\par}%
+  \def\institution#1{#1\par}%
+  \def\department#1{#1\par}%
+  \def\streetaddress#1{#1\par}%
+  \let\city\@ACM@addtoaddress
+  \let\state\@ACM@addtoaddress
+  \def\postcode#1{\unskip\space#1}%
+  \let\country\@ACM@addtoaddress
+\fi
+%    \end{macrocode}
+%   
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % \begin{macro}{\@mkauthors}
 %   Typesetting authors
@@ -3815,18 +3890,10 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \begin{macro}{\@mkauthors@i}
-% \changes{v1.15}{2016/06/25}{Added structured affiliation command}
 %   This is version used in most formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
 \def\@mkauthors@i{%
-  \def\institution##1{##1\ignorespaces}%
-  \let\department\@gobble
-  \let\streetaddress\@gobble
-  \let\city\@gobble
-  \let\state\@gobble
-  \let\postcode\@gobble
-  \let\country\@gobble
   \def\@currentauthors{}%
   \def\and{%
     \andify\@currentauthors\par\noindent
@@ -3906,9 +3973,25 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\@typeset@author@bx}
+% \changes{v1.15}{2016/07/04}{Moved to separate macro}
+%   Typesetting the box with authors.  Note that in SIGCHI-A the box
+%   is not centered.
+%    \begin{macrocode}
+\def\@typeset@author@bx{\bgroup\hsize=\author@bx@wd\def\and{\par}%
+  \global\setbox\author@bx=\vtop{\if@ACM@sigchiamode\else\centering\fi
+    \@authorfont\@currentauthors\par\@affiliationfont
+    \@currentaffiliation}\egroup
+  \box\author@bx\hspace{\author@bx@sep}%
+  \gdef\@currentauthors{}%
+  \gdef\@currentaffiliation{}}
+%    \end{macrocode}
+%   
+% \end{macro}
 %
 %
 % \begin{macro}{\@mkauthors@iii}
+% \changes{v1.15}{2016/07/04}{New authors system}
 %   The |sigconf| version.  Here we use centered design with each
 %   author in a separate box.
 %    \begin{macrocode}
@@ -3943,8 +4026,9 @@ Computing Machinery]
   \def\@author##1{\ifx\@currentauthors\@empty
     \gdef\@currentauthors{\par##1}%
   \else
-    \g@addto@macro\@currentauthors{\quad##1}%
-  \fi}%
+    \g@addto@macro\@currentauthors{\par##1}%
+  \fi
+  \gdef\and{}}%
   \def\email##1##2{\ifx\@currentaffiliation\@empty
     \gdef\@currentaffiliation{\nolinkurl{##2}}%
   \else
@@ -3954,25 +4038,17 @@ Computing Machinery]
     \gdef\@currentaffiliation{##2}%
   \else
     \g@addto@macro\@currentaffiliation{\par##2}%
-  \fi}%
+  \fi
+  \global\let\and\@typeset@author@bx
+}%
 %    \end{macrocode}
-% Actual typesetting is done by \cs{and} macro
-%    \begin{macrocode}
-  \def\and{\bgroup\hsize=\author@bx@wd\def\and{\quad}%
-    \global\setbox\author@bx=\vtop{\centering
-      \@authorfont\@currentauthors\par\@affiliationfont
-      \@currentaffiliation}\egroup
-    \box\author@bx\hspace{\author@bx@sep}%
-    \gdef\@currentauthors{}%
-    \gdef\@currentaffiliation{}}%
-%    \end{macrocode}
-% And here we use it:
+% Actual typesetting is done by \cs{and} macro:
 %    \begin{macrocode}
   \hsize=\textwidth
   \global\setbox\mktitle@bx=\vbox{\noindent
     \box\mktitle@bx\par\medskip\leavevmode
     \lineskip=1pc\relax\centering\hspace*{-1em}%
-    \addresses\and\par\bigskip}}
+    \addresses\let\and\@typeset@author@bx\and\par\bigskip}}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4007,8 +4083,9 @@ Computing Machinery]
   \def\@author##1{\ifx\@currentauthors\@empty
     \gdef\@currentauthors{\par##1}%
   \else
-    \g@addto@macro\@currentauthors{\quad##1}%
-  \fi}%
+    \g@addto@macro\@currentauthors{\par##1}%
+  \fi
+  \gdef\and{}}%
   \def\email##1##2{\ifx\@currentaffiliation\@empty
     \gdef\@currentaffiliation{\nolinkurl{##2}}%
   \else
@@ -4018,23 +4095,16 @@ Computing Machinery]
     \gdef\@currentaffiliation{##2}%
   \else
     \g@addto@macro\@currentaffiliation{\par##2}%
-  \fi}%
+  \fi
+  \global\let\and\@typeset@author@bx}%
+%
 %    \end{macrocode}
 % Actual typesetting is done by \cs{and} macro
 %    \begin{macrocode}
-  \def\and{\bgroup\hsize=\author@bx@wd\def\and{\quad}%
-    \global\setbox\author@bx=\vtop{\raggedright
-      \@authorfont\@currentauthors\par\@affiliationfont
-      \@currentaffiliation}\egroup
-    \box\author@bx\hskip\author@bx@sep
-    \gdef\@currentauthors{}%
-    \gdef\@currentaffiliation{}}%
-%    \end{macrocode}
-% And here we use it:
-%    \begin{macrocode}
     \bgroup\hsize=\columnwidth
     \par\raggedright\leftskip=\z@
-    \lineskip=1pc\noindent\addresses\and\par\bigskip\egroup}
+    \lineskip=1pc\noindent
+    \addresses\let\and\@typeset@author@bx\and\par\bigskip\egroup}
 %    \end{macrocode}
 %
 % \end{macro}

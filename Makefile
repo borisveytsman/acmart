@@ -11,7 +11,7 @@ PACKAGE=acmart
 SAMPLES = \
 	sample-manuscript.tex \
 	sample-acmsmall.tex \
-#	sample-acmlarge.tex \
+	sample-acmlarge.tex \
 	sample-acmtog.tex \
 	sample-sigconf.tex \
 	sample-siggraph.tex \
