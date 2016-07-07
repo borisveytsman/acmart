@@ -1196,7 +1196,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/06/25 v1.15 Typesetting articles for Association of
+[2016/07/07 v1.17 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1870,6 +1870,7 @@ Computing Machinery]
 %\subsection{Paper size and paragraphing}
 %\label{sec:paper}
 %
+% \changes{v1.17}{2016/07/07}{Slightly decreased margins for sigs}
 % We use |geometry| for dimensions
 %    \begin{macrocode}
 \RequirePackage{geometry}
@@ -1898,13 +1899,13 @@ Computing Machinery]
    \geometry{twoside=true, head=1pc,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
-     top=57pt, bottom=75pt, inner=54pt, outer=57pt
+     top=57pt, bottom=73pt, inner=54pt, outer=54pt
      }%
 \or % siggraph
    \geometry{twoside=true, head=1pc,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
-     top=57pt, bottom=75pt, inner=54pt, outer=57pt
+     top=57pt, bottom=73pt, inner=54pt, outer=54pt
      }%
 \or % sigplan
    \geometry{twoside=true, head=1pc,
@@ -1916,7 +1917,7 @@ Computing Machinery]
    \geometry{twoside=true, head=1pc,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
-     top=66pt, bottom=78pt, inner=54pt, outer=48pt
+     top=66pt, bottom=73pt, inner=54pt, outer=54pt
      }%
 \or % sigchi-a
    \geometry{twoside=false, head=1pc,
@@ -2276,6 +2277,44 @@ Computing Machinery]
 %    \end{macrocode}
 %   
 % \end{macro}
+%
+% \begin{macro}{\leftmargini}
+% \changes{v1.17}{2016/07/07}{Redefined}
+% \begin{macro}{\leftmargin}
+% \changes{v1.17}{2016/07/07}{Redefined}
+% \begin{macro}{\labelwidth}
+% \changes{v1.17}{2016/07/07}{Redefined}%
+%   AMS uses generous margins for the lists.  Frank Mittlebach
+%   recommends deleting parindent for the lists.  Note that |amsart|
+%   defines them at begin document, so we must redefine them in the
+%   same manner.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \settowidth\leftmargini{\labelenumi\hskip\labelsep}%
+  \leftmargin=\leftmargini
+  \labelwidth=\leftmargini \advance\labelwidth-\labelsep
+  \@listi}
+%    \end{macrocode}  
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\description}
+% \changes{v1.17}{2016/07/07}{Decreased indent}
+%   AMS uses additional indent of 6pt.  Again, Frank recommends
+%   dropping it.
+%    \begin{macrocode}
+\renewenvironment{description}{\list{}{%
+    \itemindent-12\p@
+    \labelwidth\z@ \let\makelabel\descriptionlabel}%
+}{
+  \endlist
+}
+\let\enddescription=\endlist % for efficiency
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 %
 %\subsection{Top matter data}
 %\label{sec:top_matter_data}
