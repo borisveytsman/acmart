@@ -1225,6 +1225,7 @@ Computing Machinery]
 % proof environment by Matthew Fluet}
 % \changes{v1.12}{2016/05/30}{Documentation updates}
 % \changes{v1.14}{2016/06/09}{\cs{citestyle} updates (Matthew Fluet)}
+% \changes{v1.16}{2016/07/07}{Formatting header/footer (Matthew Fluet)}
 %
 %
 % And the driver code:
@@ -4319,12 +4320,42 @@ Computing Machinery]
 %   
 % \end{macro}
 %
+% \begin{macro}{\@headfootfont}
+% \changes{v1.16}{2016/07/07}{Added macro}
+%   The font to typeset header and footer text.
+%    \begin{macrocode}
+\def\@headfootfont{%
+  \ifcase\ACM@format@nr
+  \relax % manuscript
+    \sffamily
+  \or % acmsmall
+    \sffamily
+  \or % acmlarge
+    \sffamily
+  \or % acmtog
+    \sffamily
+  \or % sigconf
+    \sffamily
+  \or % siggraph
+    \sffamily
+  \or % sigplan
+    \sffamily
+  \or % sigchi
+    \sffamily
+  \or % sigchi-a
+    \sffamily
+  \fi}
+%    \end{macrocode}
+%
+% \end{macro}
+%
 % \begin{macro}{standardpagestyle}
 % \changes{v1.10}{2016/05/22}{Reversed folios location}
 % \changes{v1.13}{2016/06/06}{Suppressed folios if sig}
 % \changes{v1.13}{2016/06/06}{Added headers for sigs}
 % \changes{v1.13}{2016/06/06}{Expanded headers for sigchi-a}
 % \changes{v1.15}{2016/07/04}{Better handling of anonymous mode}
+% \changes{v1.16}{2016/07/07}{Customize header/footer text font}
 %   The pagestyle for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
@@ -4339,35 +4370,35 @@ Computing Machinery]
     \fancyhead[LO]{\ACM@linecount\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize Manuscript submitted to ACM}%
   \or % acmsmall
-    \fancyhead[LE]{\ACM@linecount\sffamily\@acmArticle\if@ACM@printfolios:\thepage\fi}%
-    \fancyhead[RO]{\sffamily\@acmArticle\if@ACM@printfolios:\thepage\fi}%
-    \fancyhead[RE]{\sffamily\@shortauthors}%
-    \fancyhead[LO]{\ACM@linecount\sffamily\shorttitle}%
+    \fancyhead[LE]{\ACM@linecount\@headfootfont\@acmArticle\if@ACM@printfolios:\thepage\fi}%
+    \fancyhead[RO]{\@headfootfont\@acmArticle\if@ACM@printfolios:\thepage\fi}%
+    \fancyhead[RE]{\@headfootfont\@shortauthors}%
+    \fancyhead[LO]{\ACM@linecount\@headfootfont\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmlarge
-    \fancyhead[LE]{\ACM@linecount\sffamily
+    \fancyhead[LE]{\ACM@linecount\@headfootfont
       \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\@shortauthors}%
     \fancyhead[LO]{\ACM@linecount}%
-    \fancyhead[RO]{\sffamily
+    \fancyhead[RO]{\@headfootfont
       \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmtog
-    \fancyhead[LE]{\ACM@linecount\sffamily
+    \fancyhead[LE]{\ACM@linecount\@headfootfont
       \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\@shortauthors}%
     \fancyhead[LO]{\ACM@linecount}%
-    \fancyhead[RO]{\sffamily
+    \fancyhead[RO]{\@headfootfont
       \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \else % Proceedings
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
-    \fancyhead[LO]{\ACM@linecount\sffamily\@shortauthors}%
-    \fancyhead[RE]{\sffamily\@shortauthors}%
-    \fancyhead[LE]{\ACM@linecount\sffamily\acmConference@shortname,
+    \fancyhead[LO]{\ACM@linecount\@headfootfont\@shortauthors}%
+    \fancyhead[RE]{\@headfootfont\@shortauthors}%
+    \fancyhead[LE]{\ACM@linecount\@headfootfont\acmConference@shortname,
       \acmConference@date, \acmConference@venue}%
-    \fancyhead[RO]{\sffamily\acmConference@shortname,
+    \fancyhead[RO]{\@headfootfont\acmConference@shortname,
       \acmConference@date, \acmConference@venue}%
   \fi
   \if@ACM@sigchiamode
