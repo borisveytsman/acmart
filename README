@@ -26,3 +26,5 @@ version 1.14    Warn about undefined citation styles; move definitions
 
 version 1.15    New structured affiliation command.
                 New commands for acknowledgements.
+
+version 1.16    Formatting header/footer.
