@@ -2056,6 +2056,15 @@ Computing Machinery]
 %   
 % \end{macro}
 % 
+% \begin{macro}{\@makefnmark}
+% \changes{v1.17}{2016/067/09}{Redefined}
+%   AMS classes use a buggy definition of \cs{makefnmark}.  We revert
+%   to the standard one.
+%    \begin{macrocode}
+\def\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
+%    \end{macrocode}
+%   
+% \end{macro}
 %
 %\subsection{Fonts}
 %\label{sec:fonts}
@@ -2821,10 +2830,11 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\acmMonth}
+% \changes{v1.17}{2017/07/09}{The default must be numerical.   Closes \#50.}
 %   The current month
 %    \begin{macrocode}
 \def\acmMonth#1{\def\@acmMonth{#1}}
-\acmMonth{MM}
+\acmMonth{1}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -3910,6 +3920,8 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@mkauthors}
+% \changes{v1.17}{2017/07/09}{TOG now uses the same authors block as
+% other journals}
 %   Typesetting authors
 %    \begin{macrocode}
 \def\@mkauthors{\begingroup
@@ -3922,7 +3934,7 @@ Computing Machinery]
   \or % acmlarge
     \@mkauthors@i
   \or % acmtog
-    \@mkauthors@ii
+    \@mkauthors@i
   \or % sigconf
     \@mkauthors@iii
   \or % siggraph
@@ -4017,31 +4029,8 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@mkauthors@ii}
-%   This is version used in acmtog.  A more vertical design
-%    \begin{macrocode}
-\def\@mkauthors@ii{\par\medskip
-  \def\@currentauthors{}%
-  \def\and{}%
-  \def\@author##1{%
-    \ifx\@currentauthors\@empty
-      \gdef\@currentauthors{\@authorfont
-      \MakeUppercase{##1}}%
-    \else
-      \g@addto@macro{\@currentauthors}{\and\MakeUppercase{##1}}%
-    \fi\def\and{}}%
-  \def\email##1##2{}%
-  \def\affiliation##1##2{%
-    \ifx\@currentauthors\@empty\else
-      \andify\@currentauthors\par\noindent\@currentauthors
-    \fi
-    \def\@currentauthors{}\def\@tempa{##2}\ifx\@tempa\@empty\else
-    \par\noindent{\@affiliationfont##2}\fi
-    \def\and{\par\noindent{\@affiliationfont and}\par
-      \noindent\def\and{}}}%
-  \global\setbox\mktitle@bx=\vbox{\noindent\box\mktitle@bx\par\medskip
-    \noindent\addresses\andify\@currentauthors\par\noindent\@currentauthors\par\medskip}%
-}
-%    \end{macrocode}
+% \changes{v1.17}{2017/07/09}{Deleted}
+%   \cs{@mkauthors@iI} was version used in acmtog.  No longer necessary
 %
 % \end{macro}
 %
