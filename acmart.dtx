@@ -4394,6 +4394,7 @@ Computing Machinery]
 % \changes{v1.13}{2016/06/06}{Expanded headers for sigchi-a}
 % \changes{v1.15}{2016/07/04}{Better handling of anonymous mode}
 % \changes{v1.16}{2016/07/07}{Customize header/footer text font}
+% \changes{v1.17}{2016/07/10}{Added paper title to sigs}
 %   The pagestyle for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
@@ -4432,7 +4433,7 @@ Computing Machinery]
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \else % Proceedings
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
-    \fancyhead[LO]{\ACM@linecount\@headfootfont\@shortauthors}%
+    \fancyhead[LO]{\ACM@linecount\@headfootfont\shorttitle}%
     \fancyhead[RE]{\@headfootfont\@shortauthors}%
     \fancyhead[LE]{\ACM@linecount\@headfootfont\acmConference@shortname,
       \acmConference@date, \acmConference@venue}%
