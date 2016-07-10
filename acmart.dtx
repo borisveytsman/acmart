@@ -808,7 +808,7 @@
 % settings and their meanings are listed in
 % Table~\ref{tab:settopmatter}.  For example,
 % \begin{verbatim}
-% \settopmatter{printbib=false, printccs=true, printfolios=true}
+% \settopmatter{printacmref=false, printccs=true, printfolios=true}
 % \end{verbatim}
 %
 %
@@ -821,7 +821,7 @@
 %     Parameter & Values & Meaning\\
 %     \midrule
 %     printccs & true/false & Whether to print CCS categories\\
-%     printbib & true/false & Whether to print ACM bibliographic
+%     printacmref & true/false & Whether to print ACM bibliographic
 %     entry\\
 %     printfolios & true/false & Whether to print page numbers (folios)\\
 %     \bottomrule
@@ -1052,21 +1052,23 @@
 % line of their own (no leading or trailing spaces).  
 
 %
-% \DescribeMacro{\gsponsor}%
+% \DescribeMacro{\grantsponsor}%
 % \DescribeMacro{\grantnum}%
 % All the financial support \emph{must} be listed using the commands
-% \cs{gsponsor} and \cs{grantnum}.  These commands tell the
+% \cs{grantsponsor} and \cs{grantnum}.  These commands tell the
 % postprocessing software about the granting organization and the
 % grant.  The format of the command is the following:
 % \begin{quote}
-%   \cs{gsponsor}\marg{sponsorID}\marg{name}\marg{url}\\
-%   \cs{grantnum}\marg{sponsorID}\marg{number}.
+%   \cs{grantsponsor}\marg{sponsorID}\marg{name}\marg{url}\\
+%   \cs{grantnum}\oarg{url}\marg{sponsorID}\marg{number}.
 % \end{quote}
 % Here \marg{sponsorID} is the unique ID used to match grants to
 % sponsors, \marg{name} is the name of the sponsor, \marg{url} is its
 % URL, and \marg{number} is the grant number.  The \marg{sponsorID} of
 % the \cs{grantnum} command must correspond to \cs{sponsorID} of a
-% \cs{gsponsor command}.
+% \cs{grantsponsor command}.  Some awards have their own web pages,
+% which you can include using the optional argument of \cs{grantnum}
+% command. 
 %
 % Example:
 % \begin{verbatim}
@@ -1076,10 +1078,12 @@
 %
 %   The authors would also like to thank the anonymous referees for
 %   their valuable comments and helpful suggestions. The work is
-%   supported by the \gsponsor{GS501100001809}{National Natural
+%   supported by the \grantsponsor{GS501100001809}{National Natural
 %   Science Foundation of
-%   China}{http://dx.doi.org/10.13039/501100001809} under Grant No.:
-%   \grantnum{GS501100001809}{61273304}.
+%   China}{http://dx.doi.org/10.13039/501100001809} under Grant
+%   No.:~\grantnum{GS501100001809}{61273304}
+%   and~\grantnum[http://www.nnsf.cn/youngscientsts]{GS501100001809}{Young 
+%   Scientsts' Support Program}.
 % \end{acks}
 % \end{verbatim}
 % 
@@ -1196,7 +1200,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/07/07 v1.17 Typesetting articles for Association of
+[2016/07/10 v1.17 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3017,15 +3021,16 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \end{macro}
-% \begin{macro}{\if@ACM@printbib}
+% \begin{macro}{\if@ACM@printacmref}
+% \changes{v1.17}{2016/07/10}{Renamed from \cs{if@ACM@printbib}}
 %   Whether to print ACM bib
 %    \begin{macrocode}
-\define@boolkey+{@ACM@topmatter@}[@ACM@]{printbib}[true]{%
-  \if@ACM@printbib
+\define@boolkey+{@ACM@topmatter@}[@ACM@]{printacmref}[true]{%
+  \if@ACM@printacmref
     \ClassInfo{\@classname}{Printing bibformat}%
   \else
     \ClassInfo{\@classname}{Suppressing bibformat}%
-  \fi}{\ClassError{\@classname}{printbib must be true or false}}
+  \fi}{\ClassError{\@classname}{printacmref must be true or false}}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -3056,7 +3061,7 @@ Computing Machinery]
 % default for the proceedings}
 % Now the settings
 %    \begin{macrocode}
-\settopmatter{printcss=true, printbib=true}
+\settopmatter{printcss=true, printacmref=true}
 \if@ACM@manuscript
   \settopmatter{printfolios=true}
 \else
@@ -3562,7 +3567,7 @@ Computing Machinery]
   \andify\shortauthors
   \global\let\authors=\authors
   \global\let\shortauthors=\shortauthors
-  \if@ACM@printbib
+  \if@ACM@printacmref
      \@mkbibcitation
   \fi
   \hypersetup{pdfauthor={\authors},
@@ -4889,21 +4894,22 @@ Computing Machinery]
 %   
 % \end{macro}
 %
-% \begin{macro}{\gsponsor}
+% \begin{macro}{\grantsponsor}
 % \changes{v1.15}{2016/07/05}{Added macro}
+% \changes{v1.17}{2016/07/10}{Renamed}
 % We just typeset the name of the sponsor
 %    \begin{macrocode}
-\def\gsponsor#1#2#3{#2}
+\def\grantsponsor#1#2#3{#2}
 %    \end{macrocode}
 % 
 % \end{macro}
 %
 % \begin{macro}{\grantnum}
 % \changes{v1.15}{2016/07/05}{Added macro}
-%   The grunt number \emph{may} contain underscores etc.  So we
-%   protect against them
+% \changes{v1.17}{2016/07/10}{Added url}
 %    \begin{macrocode}
-\def\grantnum#1#2{\nolinkurl{#2}}      
+\newcommand\grantnum[3][]{#3%
+  \def\@tempa{#1}\ifx\@tempa\@empty\else\space(\url{#1})\fi}      
 %    \end{macrocode}
 %   
 % \end{macro}
