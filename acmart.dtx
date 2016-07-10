@@ -4248,11 +4248,12 @@ Computing Machinery]
 %
 % \begin{macro}{\@mkbibcitation}
 % \changes{v1.17}{2016/07/10}{Changed format for sigs}
+% \changes{v1.17}{2016/07/10}{Added \cs{nobreak}}
 %   Print bibcitation format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup
   \def\footnotemark{}%
-  \par\medskip\small\noindent{\bfseries ACM Reference format:}\par
+  \par\medskip\small\noindent{\bfseries ACM Reference format:}\par\nobreak
   \noindent\authors. \@acmYear. \@title. 
   \if@ACM@journal
      \textit{\@journalNameShort}
