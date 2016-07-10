@@ -263,7 +263,7 @@
 %     review & false & A review version: lines are numbered,
 %     hyperlinks are colored\\
 %     screen & false & A screen version: hyperlinks are colored\\
-%     natbib &  & Whether to use |natbib| package (see
+%     natbib & true & Whether to use |natbib| package (see
 %     Section~\ref{sec:ug_bibliography})\\
 %     anonymous & false & Whether to make author(s) anonymous\\
 %     authorversion & false & Whether to generate a special
@@ -1091,44 +1091,23 @@
 %\subsection{Bibliography}
 %\label{sec:ug_bibliography}
 %
-% At present some formats use \textsl{natbib} package by default,
-% while some are not compatible with \textsl{natbib}.  Table
-%
-% \begin{table}
-%   \caption{Bibliography styles used by different formats}
-%   \label{tab:bst}
-%   \begin{tabularx}{\textwidth}{l<{\ttfamily}lX<{\raggedright}l}
-%     \toprule
-%     \normalfont Format & \textsl{natbib} use & Bibliography style &
-%     Citaton format\\
-%     \midrule
-%     manuscript & Yes & ACM-Reference-Format-Journals & Author/year\\
-%     acmsmall & Yes & ACM-Reference-Format-Journals & Author/year\\
-%     acmlarge & Yes & ACM-Reference-Format-Journals & Author/year\\
-%     acmtog & Yes & ACM-Reference-Format-Journals & Author/year\\
-%     sigconf & No & acm-abbrv, acm-alpha, acm-plain or acm-unsrt &
-%     Numeric or alpha \\
-%     siggraph & No & acmsiggraph & Author/year \\
-%     sigplan & Yes & ACM-Reference-Format-Journals & Author/year \\
-%     sigchi & No & SIGCHI-Reference-Format & Numeric\\
-%     sigchi-a & No & SIGCHI-Reference-Format & Numeric \\
-%     \bottomrule
-%   \end{tabularx}
-% \end{table}
-%
-% Usually when you select a format, \LaTeX\ automatically determines
-% whether you need \textsl{natbib} and the required settings.
-% However, you can ovveride these decision by manually setting the
-% option |natbib| to |true| or |false|.  
+% ACM uses \textsl{natbib} package for formatting of referencing ant
+% the style \path{ACM-Reference-Format.bst} for Bib\TeX\
+% processing.  You may disable loading of \textsl{natbib} by using the
+% option |natbib=false| in \cs{documentclass}.  However, it is not
+% recommended, as well as the use of Bib\TeX\ styles other than
+% \path{ACM-Reference-Format.bst}, and may delay the processing of the
+% manuscript.  
+% 
 %
 % \DescribeMacro{\citestyle}%
 % If you use |natbib|, you can select one of two predefined sitation
 % styles: the author-year format |acmauthoryear| or the numeric
 % format |acmnumeric| using the command \cs{sitestyle}, for example,
 % \begin{verbatim}
-% \citestyle{acmnumeric}
+% \citestyle{acmauthoryear}
 % \end{verbatim}
-% 
+% Note that numeric citations are the default mode for most formats.  
 %  
 % \DescribeMacro{\setcitestyle}%
 % You may further customize
@@ -1200,7 +1179,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/07/10 v1.17 Typesetting articles for Association of
+[2016/07/10 v1.18 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1229,7 +1208,10 @@ Computing Machinery]
 % proof environment by Matthew Fluet}
 % \changes{v1.12}{2016/05/30}{Documentation updates}
 % \changes{v1.14}{2016/06/09}{\cs{citestyle} updates (Matthew Fluet)}
-% \changes{v1.16}{2016/07/07}{Formatting header/footer (Matthew Fluet)}
+% \changes{v1.16}{2016/07/07}{Formatting header/footer (Matthew
+% Fluet)}
+% \changes{v1.18}{2016/07/10}{Natbib is now the default for all
+% formats} 
 %
 %
 % And the driver code:
@@ -1465,26 +1447,7 @@ Computing Machinery]
 % overrode format's selection):
 %    \begin{macrocode}
 \if@ACM@natbib@override\else
-  \ifcase\ACM@format@nr
-  \relax % manuscript
     \@ACM@natbibtrue
-  \or % acmsmall
-    \@ACM@natbibtrue
-  \or % acmlarge
-    \@ACM@natbibtrue
-  \or % acmtog
-    \@ACM@natbibtrue
-  \or % sigconf
-    \@ACM@natbibfalse
-  \or % siggraph
-    \@ACM@natbibfalse
-   \or % sigplan
-    \@ACM@natbibtrue
-   \or % sigchi
-    \@ACM@natbibfalse
-  \or % sigchi-a
-    \@ACM@natbibfalse
-  \fi
 \fi
 %    \end{macrocode}
 % 
@@ -1647,7 +1610,7 @@ Computing Machinery]
 % \changes{v1.13}{2016/06/06}{Added macro}
 % \changes{v1.14}{2016/06/09}{Moved def of \cs{bibstyle@numeric}
 %   before use}
-%   The default author-year format:
+%   The default numeric format:
 %    \begin{macrocode}
 \newcommand{\bibstyle@acmnumeric}{%
   \setcitestyle{%
@@ -1658,6 +1621,11 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% The default is numeric:
+%    \begin{macrocode}
+\citestyle{acmnumeric}
+%    \end{macrocode}
+% 
 %
 % Before we call |hyperref|, we redefine \cs{startsection} commands to
 % their \LaTeX\ defaults, since |amsart| ones are too AMS-specific.
@@ -1782,7 +1750,7 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
-% Bibliography mangling.  Siggraph does not want the label.  
+% Bibliography mangling. 
 %    \begin{macrocode}
 \if@ACM@natbib
   \let\citeN\cite
@@ -1797,41 +1765,8 @@ Computing Machinery]
      {\begingroup\NAT@swafalse
        \let\NAT@ctype\@ne\NAT@partrue\NAT@fullfalse\NAT@open\NAT@citetp}%
   \providecommand\newblock{}%
-  \citestyle{acmauthoryear}%
 \else
   \providecommand\citename[1]{#1}
-\fi
-\ifcase\ACM@format@nr
-\relax % manuscript
-\or % acmsmall
-\or % acmlarge
-\or % acmtog
-\or % sigconf
-\or % siggraph
-   \def\@biblabel#1{}
-   \ifx\bibhang\@undefined
-      \newlength\bibhang
-   \fi
-   \setlength{\bibhang}{1em}
-    \renewenvironment{thebibliography}[1]{%
-      \@bibtitlestyle
-      \normalfont\bibliofont\labelsep .5em\relax
-      \renewcommand\theenumiv{\arabic{enumiv}}\let\p@enumiv\@empty
-      \list{\@biblabel{\theenumiv}}{\labelwidth\z@
-        \setlength{\itemindent}{-\bibhang}%
-        \setlength{\leftmargin}{\bibhang}%
-        \labelsep\z@
-        \def\newblock{\hskip .11em plus .33em minus .07em}%
-        \usecounter{enumiv}}%
-      \sloppy \clubpenalty\@M \widowpenalty\clubpenalty
-      \sfcode`\.=\@m
-    }{%
-      \def\@noitemerr{\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist
-    }
-\or % sigplan  
-\or % sigchi
-\or % sigchi-a
 \fi
 %    \end{macrocode}
 %
