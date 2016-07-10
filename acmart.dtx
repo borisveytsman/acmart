@@ -4247,6 +4247,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@mkbibcitation}
+% \changes{v1.17}{2016/07/10}{Changed format for sigs}
 %   Print bibcitation format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup
@@ -4258,8 +4259,11 @@ Computing Machinery]
      \@acmVolume, \@acmNumber, Article~\@acmArticle\ (\@acmPubDate), 
      \ref{TotPages}~pages.
   \else
-     \textit{\acmConference@shortname, \acmConference@venue,
-       \acmConference@date}. 
+     In \textit{Proceedings of \acmConference@name, \acmConference@venue,
+       \acmConference@date
+       \ifx\acmConference@name\acmConference@shortname\else
+         \ (\acmConference@shortname)\fi
+         ,} \ref{TotPages}~pages.
   \fi\par
   \noindent DOI: \nolinkurl{\@acmDOI}
 \par\egroup}
