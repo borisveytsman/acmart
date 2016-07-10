@@ -2291,30 +2291,10 @@ Computing Machinery]
 %   
 % \end{macro}
 %
-% \begin{macro}{\leftmargini}
-% \changes{v1.17}{2016/07/07}{Redefined}
-% \begin{macro}{\leftmargin}
-% \changes{v1.17}{2016/07/07}{Redefined}
-% \begin{macro}{\labelwidth}
-% \changes{v1.17}{2016/07/07}{Redefined}%
-%   AMS uses generous margins for the lists.  Frank Mittlebach
-%   recommends deleting parindent for the lists.  Note that |amsart|
-%   defines them at begin document, so we must redefine them in the
-%   same manner.
-%    \begin{macrocode}
-\AtBeginDocument{%
-  \settowidth\leftmargini{\labelenumi\hskip\labelsep}%
-  \leftmargin=\leftmargini
-  \labelwidth=\leftmargini \advance\labelwidth-\labelsep
-  \@listi}
-%    \end{macrocode}  
-% \end{macro}
-% \end{macro}
-% \end{macro}
 %
 % \begin{macro}{\description}
 % \changes{v1.17}{2016/07/07}{Decreased indent}
-%   AMS uses additional indent of 6pt.  Again, Frank recommends
+%   AMS uses additional indent of 6pt.  Frank recommends
 %   dropping it.
 %    \begin{macrocode}
 \renewenvironment{description}{\list{}{%
