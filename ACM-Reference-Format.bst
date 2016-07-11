@@ -2,19 +2,9 @@
 %%% ====================================================================
 %%%  @BibTeX-style-file{
 %%%     author          = "Nelson H. F. Beebe, Boris Veytsman and Gerald Murray",
-%%%     version         = "1.00",
-%%%     date            = "18 January 2012",
-%%%     time            = "11:48 EST",
-%%%     filename        = "ACM-Reference-Format-Journals.bst",
-%%%     address         = "University of Utah
-%%%                        Department of Mathematics, 110 LCB
-%%%                        155 S 1400 E RM 233
-%%%                        Salt Lake City, UT 84112-0090
-%%%                        USA",
-%%%     telephone       = "+1 801 581 5254",
-%%%     FAX             = "+1 801 581 4148",
-%%%     URL             = "http://www.math.utah.edu/~beebe",
-%%%     checksum        = "available here: http://www.acm.org/publications/latex_style/CRC-journals.txt"
+%%%     version         = "1.18",
+%%%     date            = "10 July 2016",
+%%%     filename        = "ACM-Reference-Format.bst",
 %%%     email           = "beebe@math.utah.edu, beebe@acm.org,
 %%%                        beebe@computer.org, borisv@lk.net, murray@hq.acm.org", 
 %%%     codetable       = "ISO/ASCII",
@@ -22,12 +12,10 @@
 %%%     license         = "public domain",
 %%%     supported       = "yes",
 %%%     abstract        = "",
-%%%     docstring       = "The checksum field, above, is produced by WinMD5Free (v1.20) 
-%%%                        available from http://www.winmd5.com/?rid=winmd5,"
 %%%  }
 %%% ====================================================================
 
-% "ACM Transactions" BibTeX style, ACM-Reference-Format-Journals.bst
+%  ACM BibTeX style, ACM-Reference-Format.bst
 %  for BibTeX version 0.99c, LaTeX version 3.141
 %  ACM extensions with code cleaned up, extended, and debugged 10--15-Nov-2008
 %  Revised 17-APRIL-2008 (Nelson)
@@ -36,6 +24,7 @@
 %  Revised 27-MARCH-2011 (Boris/Gerry)
 %  Revised 15-APRIL-2011 (Boris/Gerry)
 %  Revised 27-SEPTEMBER-2011 (Boris)
+%  Revised 10-JULY-2016 (Boris)
 %
 %
 % History (by Nelson)
@@ -547,7 +536,7 @@ FUNCTION { format.articleno }
           { "articleno field, but no numpages field, in " cite$ * warning$ }
           { }
         if$
-        "Article " articleno *
+        "Article \bibinfo{articleno}{" articleno * "}" *
      }
   if$
 }
@@ -556,10 +545,12 @@ FUNCTION { format.year }
 { % push year string or "????" onto output stack
   %% Because year is a mandatory field, we always force SOMETHING
   %% to be output
+  "\bibinfo{year}{" 
   year empty.or.unknown
     { "????" }
     { year }
   if$
+  *  "}" *
 }
 
 FUNCTION { format.day.month }
@@ -568,13 +559,13 @@ FUNCTION { format.day.month }
     {
       month empty.or.unknown
         { "" }
-        { month " " *}
+        { "\bibinfo{date}{" month * "} " *}
       if$
     }
     {
       month empty.or.unknown
         { "" }
-        { day " " * month * " " *}
+        { "\bibinfo{date}{" day * " " * month * "} " *}
       if$
     }
   if$
@@ -1112,8 +1103,8 @@ FUNCTION { format.names }
     { nameptr #1 =
         %NO: BAD ORDER: {"{" s nameptr "{ff~}{ll}{, jj}{, vv}" format.name$ * "}" * 't := }
         %NO: BAD ORDER: {"{" s nameptr "{ff~}{ll}{, jj}{, vv}" format.name$ * "}" * 't := }
-        {"{" s nameptr "{ff }{vv }{ll}{, jj}" format.name$ * "}" * 't := }
-        {"{" s nameptr "{ff }{vv }{ll}{, jj}" format.name$ * "}" * 't := }
+        {"\bibinfo{person}{" s nameptr "{ff }{vv }{ll}{, jj}" format.name$ * "}" * 't := }
+        {"\bibinfo{person}{" s nameptr "{ff }{vv }{ll}{, jj}" format.name$ * "}" * 't := }
       if$
       nameptr #1 >
         {
@@ -1186,7 +1177,7 @@ FUNCTION { format.names.fml }
     { namesleft #0 > }
 
     {
-      "{" s nameptr "{ff~}{vv~}{ll}{, jj}" format.name$ * "}" * 't :=
+      "\bibinfo{person}{" s nameptr "{ff~}{vv~}{ll}{, jj}" format.name$ * "}" * 't :=
 
       nameptr #1 >
         {
@@ -1216,7 +1207,9 @@ FUNCTION { format.authors }
 {
   author empty.or.unknown
     { "" }
-    { author format.names add.period$} % jtb: add period if none before
+    { 
+      "\bibfield{author}{" 
+      author format.names add.period$ * "}" *} % jtb: add period if none before
   if$
 }
 
@@ -1259,7 +1252,9 @@ FUNCTION { format.editors }
   editor empty.or.unknown
     { "" }
     {
+      "\bibfield{editor}{" 
       editor format.names
+      *  "}" *
       editor num.names$ #1 >
         { " (Eds.)." * }
         { " (Ed.)." * }
@@ -1284,7 +1279,7 @@ FUNCTION { format.title }
   title empty.or.unknown
     { "" }
     % Use this to preserve lettercase in titles:
-    { title }
+    { "\bibinfo{title}{" title * "}" * }
     % Use this for downcase title style:
     % { title "t" change.case$ }
   if$
@@ -1323,6 +1318,7 @@ FUNCTION { n.dashify }
 
 FUNCTION { format.btitle }
 {
+  "\bibinfo{booktitle}{"
   edition empty.or.unknown
   { title emphasize }
   { title empty.or.unknown
@@ -1331,10 +1327,12 @@ FUNCTION { format.btitle }
     if$
   }
   if$
+  * "}" *
 }
 
 FUNCTION { format.emphasize.booktitle }
 { % push "" or "{\em booktitle}" or "{\em booktitle}, (second ed.)" on stack
+  "\bibinfo{booktitle}{"
   edition empty.or.unknown
     { booktitle emphasize }
     { booktitle empty.or.unknown
@@ -1343,6 +1341,7 @@ FUNCTION { format.emphasize.booktitle }
       if$
     }
   if$
+  * "}" *
 }
 
 FUNCTION { format.city }
@@ -1397,11 +1396,13 @@ FUNCTION { format.bvolume }
   volume empty.or.unknown
     { "" }
     {
+      "\bibinfo{volume}{"
       series empty.or.unknown
         { "Vol." volume tie.or.space.connect}
         { series ", " * "Vol." volume tie.or.space.connect *}
       if$
       "volume and number" number either.or.check
+      * "}" *
     }
   if$
 }
@@ -1411,12 +1412,14 @@ FUNCTION { format.bvolume.noseries }
   volume empty.or.unknown
     { "" }
     {
+      "\bibinfo{volume}{" 
       series empty.or.unknown
         { "Vol." volume tie.or.space.connect}
         { "Vol." volume tie.or.space.connect}
 %        { series ", " * "Vol." volume tie.or.space.connect *}
       if$
       "volume and number" number either.or.check
+      * "}" *
     }
   if$
 }
@@ -1425,7 +1428,7 @@ FUNCTION { format.series }
 {
   series empty.or.unknown
     {""}
-    {" {\em (" * series ")}" *}
+    {" \bibinfo{series}{{\em (" * series ")}}" *}
   if$
 }
 
@@ -1440,7 +1443,7 @@ FUNCTION { format.number.series }
           {
             series empty.or.unknown
               { "" }
-              { " (" series * ")" * }
+              { " \bibinfo{series}{(" series * ")}" * }
             if$
           }
           if$
@@ -1452,7 +1455,7 @@ FUNCTION { format.number.series }
           if$
           number tie.or.space.connect series empty.or.unknown
             { "there's a number but no series in " cite$ * warning$ }
-            { " in " * series * }
+            { " in \bibinfo{series}{" * series * "}" * }
           if$
         }
       if$
@@ -1488,11 +1491,12 @@ FUNCTION { format.pages }
 {
   pages empty.or.unknown
     { "" }
-    {
+    { "\bibinfo{pages}{"
       pages multi.page.check
         { pages n.dashify } % gnp - removed () % jtb: removed pp.
         { pages }
       if$
+      * "}" *
     }
   if$
 }
@@ -1621,6 +1625,7 @@ FUNCTION { format.journal.volume.number.day.month.year }
       "" }
 %    { journal emphasize.with.italic.correction }
      {
+       "\bibinfo{journal}{"
            journal "Journal of the ACM" =
        { "{\it J. ACM}" }
        {
@@ -2036,6 +2041,7 @@ FUNCTION { format.journal.volume.number.day.month.year }
      if$
            }
      if$
+     * "}" *
          }
     if$
 
@@ -2043,16 +2049,16 @@ FUNCTION { format.journal.volume.number.day.month.year }
     {
       volume empty.or.unknown
         { "no number and no volume in " cite$ * warning$ "" * }
-        { " " * " {" * volume * "}" * }
+        { " " * " \bibinfo{volume}{" * volume * "}" * }
       if$
     }
     {
       volume empty.or.unknown
         {
           "unusual to have number, but no volume, for " cite$ * warning$
-          " " * number *
+          " \bibinfo{volume}{" * number * "}" *
         }
-        { " " * volume comma " " * number * * }
+        { " \bibinfo{volume}{" * volume comma " " * number * * "}" *}
       if$
     }
   if$
@@ -2089,7 +2095,7 @@ FUNCTION { format.in.booktitle }
 { % jtb: format for proceedings appearing in a journal
   booktitle empty.or.unknown
   { "" }
-  { "In " booktitle * }
+  { "In \bibinfo{booktitle}{" booktitle * "}" * }
   if$
 }
 
@@ -2362,19 +2368,6 @@ FUNCTION { calc.label }
   'label.year :=
 }
 
-%
-% Change by Gerry: use number-like citations for transactions
-% 2011/03/23
-%
-%FUNCTION {output.bibitem}
-%{ newline$
-%  "\bibitem{" write$
-%  cite$ write$
-%  "}" write$
-%  newline$
-%  ""
-%  before.all 'output.state :=
-%}
 
 FUNCTION { output.bibitem }
 {
@@ -3328,6 +3321,10 @@ FUNCTION { begin.bib }
   "\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi" writeln % NB: final period supplied by add.period$ above
   "\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi" writeln
   "\ifx \showURL      \undefined \def \showURL       #1{#1}          \fi" writeln
+  "% The following commands are used for tagged output and should be " writeln
+  "% invisible to TeX" writeln
+  "\providecommand\bibfield[2]{#2}" writeln
+  "\providecommand\bibinfo[2]{#2}" writeln
 }
 
 EXECUTE {begin.bib}
@@ -3345,5 +3342,5 @@ FUNCTION { end.bib }
 
 EXECUTE {end.bib}
 
-%%% End of ACM-Reference-Format-Journals.bst V1.00 - 18 January 2012
+
 
