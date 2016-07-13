@@ -1179,7 +1179,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/07/10 v1.18 Typesetting articles for Association of
+[2016/07/12 v1.18 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3815,7 +3815,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \if@ACM@journal
   \let\position\@gobble
-  \def\institution#1{#1}%
+  \def\institution#1{#1\ignorespaces}%
   \let\department\@gobble
   \let\streetaddress\@gobble
   \let\city\@gobble
@@ -3922,31 +3922,53 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
+% \begin{macro}{\@typeset@author@line}
+% \changes{v1.18}{2017/07/12}{Added macro}
+%   At this point we have \cs{@currentauthors} and
+%   \cs{@currentaffiliations}.  We typeset them in the journal style
+%    \begin{macrocode}
+\def\@typeset@author@line{%
+  \andify\@currentauthors\par\noindent
+  \@currentauthors\def\@currentauthors{}%
+  \ifx\@currentaffiliations\@empty\else
+    \andify\@currentaffiliations
+      \unskip, {\@currentaffiliations}\par
+  \fi
+  \def\@currentaffiliations{}}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+%
 % \begin{macro}{\@mkauthors@i}
+% \changes{v1.18}{2017/07/12}{Now we andify affiliations}
 %   This is version used in most formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
 \def\@mkauthors@i{%
   \def\@currentauthors{}%
-  \def\and{%
-    \andify\@currentauthors\par\noindent
-    \@currentauthors\def\@currentauthors{}}%
+  \def\@currentaffiliations{}%
+  \global\let\and\@typeset@author@line
   \def\@author##1{%
     \ifx\@currentauthors\@empty
       \gdef\@currentauthors{\@authorfont\MakeUppercase{##1}}%
     \else
        \g@addto@macro{\@currentauthors}{\and\MakeUppercase{##1}}%
     \fi
-    \def\and{}}%
+    \gdef\and{}}%
   \def\email##1##2{}%
   \def\affiliation##1##2{%
-    \ifx\@currentauthors\@empty\else
-      \andify\@currentauthors\par\noindent\@currentauthors
+    \def\@tempa{##2}\ifx\@tempa\@empty\else
+       \ifx\@currentaffiliations\@empty
+          \gdef\@currentaffiliations{\@affiliationfont##2}%
+       \else
+         \g@addto@macro{\@currentaffiliations}{\and##2}%
+      \fi
     \fi
-    \def\@currentauthors{}\def\@tempa{##2}\ifx\@tempa\@empty\else
-    \unskip, {\@affiliationfont##2}\fi\def\and{\par\noindent}}%
+     \global\let\and\@typeset@author@line}
   \global\setbox\mktitle@bx=\vbox{\noindent\box\mktitle@bx\par\medskip
-    \noindent\addresses\andify\@currentauthors\par\noindent\@currentauthors\par\medskip}%
+    \noindent\addresses\@typeset@author@line
+   \par\medskip}%
 }
 %    \end{macrocode}
 %
