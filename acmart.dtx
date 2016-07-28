@@ -1212,6 +1212,8 @@ Computing Machinery]
 % Fluet)}
 % \changes{v1.18}{2016/07/10}{Natbib is now the default for all
 % formats} 
+% \changes{v1.19}{2016/07/28}{Include 'Abstract', 'Acknowledgements',
+% and 'References' in PDF bookmarks (Matthew Fluet)}
 %
 %
 % And the driver code:
@@ -1507,6 +1509,8 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
+% \changes{v1.19}{2016/07/28}{Include 'References' in PDF bookmarks
+% (Matthew Fluet)}
 % \changes{v1.14}{2016/06/09}{Patched \cs{citestyle}}
 % Citations.  We patch \cs{setcitestyle} to allow, e.g.,
 % \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|.  We patch
@@ -1514,6 +1518,10 @@ Computing Machinery]
 %    \begin{macrocode}
 \if@ACM@natbib
   \RequirePackage{natbib}
+  \renewcommand{\bibsection}{%
+     \section*{\refname}
+     \phantomsection\addcontentsline{toc}{section}{\refname}
+  }
   \renewcommand{\bibfont}{\bibliofont}
   \renewcommand\setcitestyle[1]{
   \@for\@tempa:=#1\do
@@ -1724,7 +1732,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
-\RequirePackage{hyperref}
+\RequirePackage[bookmarksnumbered]{hyperref}
 \urlstyle{rm}
 \ifcase\ACM@format@nr
 \relax % manuscript
@@ -4172,6 +4180,8 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@mkabstract}
+% \changes{v1.19}{2016/07/28}{Include 'Abstract' in PDF bookmarks
+% (Matthew Fluet)}
 %   Typesetting abstract
 %    \begin{macrocode}
 \def\@mkabstract{\bgroup
@@ -4181,7 +4191,8 @@ Computing Machinery]
     \else
       \section*{Abstract}%
     \fi
-      \@abstract\par}%
+   \phantomsection\addcontentsline{toc}{section}{Abstract}
+   \@abstract\par}%
   \fi\egroup}
 %    \end{macrocode}
 %
@@ -4832,11 +4843,18 @@ Computing Machinery]
 %\label{sec:acks}
 %
 % \begin{macro}{\acks}
+% \changes{v1.19}{2016/07/28}{Include 'Acknowledgements' in PDF bookmarks
+% (Matthew Fluet)}
 % \changes{v1.15}{2016/07/05}{Added macro}
 %   This is a |comment|-like structure
 %    \begin{macrocode}
-\specialcomment{acks}
-  {\begingroup\section*{Acknowledgments}}{\endgroup}
+\specialcomment{acks}{%
+  \begingroup
+  \section*{Acknowledgments}
+  \phantomsection\addcontentsline{toc}{section}{Acknowledgments}
+}{%
+  \endgroup
+}
 %    \end{macrocode}
 %   
 % \end{macro}
