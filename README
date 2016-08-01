@@ -34,5 +34,6 @@ version 1.17    Formatting changes for margins and lists.  Bug fixes.
 version 1.18    Natbib is now the default for all versions.  A unified bib
 		file is used for all styles.  Better treatment
 		of multiple affiliations.
-		
 
+version 1.19    Include 'Abstract', 'Acknowledgements', and 'References'
+                in PDF bookmarks.
