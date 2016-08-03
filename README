@@ -37,3 +37,5 @@ version 1.18    Natbib is now the default for all versions.  A unified bib
 
 version 1.19    Include 'Abstract', 'Acknowledgements', and 'References'
                 in PDF bookmarks.
+
+version 1.20    Bug fixes, documentation updates
