@@ -817,7 +817,8 @@ FUNCTION { output.year.check }
   year empty.or.unknown
      { "empty year in " cite$ * warning$ }
      { write$
-        " " year * extra.label *
+        " \bibinfo{year}{" year * "}"  *
+	"\natexlab{" extra.label * "}" * *
        mid.sentence 'output.state :=
      }
   if$
@@ -1239,7 +1240,10 @@ FUNCTION { format.editors.fml }
   editor empty.or.unknown
     { "" }
     {
-      editor format.names.fml editor num.names$ #1 >
+      "\bibfield{editor}{" 
+      editor format.names.fml 
+      *  "}" *
+      editor num.names$ #1 >
         { " (Eds.)" * }
         { " (Ed.)" * }
       if$
@@ -3325,6 +3329,7 @@ FUNCTION { begin.bib }
   "% invisible to TeX" writeln
   "\providecommand\bibfield[2]{#2}" writeln
   "\providecommand\bibinfo[2]{#2}" writeln
+  "\providecommand\natexlab[1]{#1}" writeln
 }
 
 EXECUTE {begin.bib}

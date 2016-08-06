@@ -39,7 +39,7 @@ all:  ${PDF}
 %.cls:   %.ins %.dtx  
 	pdflatex $<
 
-%.pdf:  %.tex   $(PACKAGE).cls 
+%.pdf:  %.tex   $(PACKAGE).cls ACM-Reference-Format.bst
 	pdflatex $<
 	- bibtex $*
 	pdflatex $<
