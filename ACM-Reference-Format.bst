@@ -160,6 +160,7 @@
 ENTRY
   { address
     advisor
+    archiveprefix
     author
     booktitle
     chapter
@@ -167,6 +168,7 @@ ENTRY
     date        % jtb: added
     edition
     editor
+    eprint
     howpublished
     institution
     journal
@@ -176,6 +178,7 @@ ENTRY
     number
     organization
     pages
+    primaryclass
     publisher
     school
     series
@@ -748,6 +751,27 @@ FUNCTION { output.note.check } % UTAH
     { "\shownote{" note add.period$ * "}" * writeln }
   if$
 }
+
+FUNCTION { output.eprint } % 
+{ % return with stack empty
+  eprint empty.or.unknown
+    { }
+    { "\showeprint" 
+         archiveprefix empty.or.unknown
+           { }
+           { "["  archiveprefix "l" change.case$ "]" * * * }
+         if$
+         "{" *
+         primaryclass empty.or.unknown 
+           { }
+           { primaryclass "/" * *}
+         if$
+         eprint "}" * *    
+         writeln
+    }
+  if$
+}
+
 
 %
 % Changes by BV 2011/04/15.  Do not output
@@ -2388,7 +2412,7 @@ FUNCTION { output.bibitem }
 }
 
 
-FUNCTION { output.issue.doi.coden.isxn.lccn.url }
+FUNCTION { output.issue.doi.coden.isxn.lccn.url.eprint }
 { % enter and return with stack empty
   %% We switch now from buffered output to output of complete lines, so
   %% that the Issue .. URL data have their own lines, and are less likely
@@ -2418,12 +2442,13 @@ FUNCTION { output.issue.doi.coden.isxn.lccn.url }
   output.issn
   output.lccn
   output.doi    % DOI is ALWAYS last according to CrossRef DOI documentation
-  output.url    % but ACM wants URL last
+  output.eprint
+  output.url    % but ACM wants URL last  
 }
 
-FUNCTION { output.issue.doi.coden.isxn.lccn.url.note }
+FUNCTION { output.issue.doi.coden.isxn.lccn.url.eprint.note }
 { % enter with stack empty, return with empty string on stack
-  output.issue.doi.coden.isxn.lccn.url
+  output.issue.doi.coden.isxn.lccn.url.eprint
   note empty.or.unknown
     { }
     {
@@ -2434,9 +2459,9 @@ FUNCTION { output.issue.doi.coden.isxn.lccn.url.note }
   ""
 }
 
-FUNCTION { output.issue.doi.coden.isxn.lccn.url.note.check }
+FUNCTION { output.issue.doi.coden.isxn.lccn.url.eprint.note.check }
 { % enter with stack empty, return with empty string on stack
-  output.issue.doi.coden.isxn.lccn.url
+  output.issue.doi.coden.isxn.lccn.url.eprint
   note empty.or.unknown
     { }
     {
@@ -2480,7 +2505,7 @@ FUNCTION { article }
   format.pages.check.without.articleno output
   format.articleno.numpages output
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2519,7 +2544,7 @@ FUNCTION { book }
     }
   if$
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2535,7 +2560,7 @@ FUNCTION { booklet }
   howpublished output
   address output
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2576,7 +2601,7 @@ FUNCTION { inbook }
     }
   if$
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2608,7 +2633,7 @@ FUNCTION { incollection }
     }
   if$
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2652,7 +2677,7 @@ FUNCTION { inproceedings }
   if$
   format.articleno.numpages output
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2678,7 +2703,7 @@ FUNCTION { manual }
   organization "organization" output.check
   address output
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2697,7 +2722,7 @@ FUNCTION { mastersthesis }
   new.block
   format.advisor output
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2712,11 +2737,16 @@ FUNCTION { misc }
   new.block
   howpublished output
   "" output.nonnull.dot.space
-  output.day.month.year              % Gerry - appears odd if (only) the year is 'repeated' but (appears) 'valuable' if the month/day is _also_ included - 2011/09/28
+  output.day.month.year      
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
+
+FUNCTION { online } { misc }
+
+FUNCTION { game } { misc }
+
 
 FUNCTION { phdthesis }
 {
@@ -2733,7 +2763,7 @@ FUNCTION { phdthesis }
   new.block
   format.advisor output
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2793,15 +2823,10 @@ FUNCTION { periodical }
     { format.editors output.nonnull }
   if$
   new.block
-  title emphasize "title" output.check
-  format.date output
+  output.year.check  
   new.sentence
-  publisher output
-  address output
-  howpublished new.block.checka
-  howpublished output
-  fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  format.articletitle "title" output.check
+  format.journal.volume.number.day.month.year output
   fin.entry
 }
 
@@ -2827,7 +2852,7 @@ FUNCTION { proceedings }
   publisher output
   address output
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2849,7 +2874,7 @@ FUNCTION { techreport }
   % ACM omits year at end in transactions style
   % format.day.month.year output.nonnull.dot.space  % jtb: ... to here (no parens)
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
 
@@ -2865,7 +2890,7 @@ FUNCTION { unpublished }
   fin.sentence
   output.day.month.year                 % UTAH
   fin.block
-  output.issue.doi.coden.isxn.lccn.url.note.check
+  output.issue.doi.coden.isxn.lccn.url.eprint.note.check
   fin.entry
 }
 
@@ -3330,6 +3355,7 @@ FUNCTION { begin.bib }
   "\providecommand\bibfield[2]{#2}" writeln
   "\providecommand\bibinfo[2]{#2}" writeln
   "\providecommand\natexlab[1]{#1}" writeln
+  "\providecommand\showeprint[2][]{arXiv:#2}" writeln
 }
 
 EXECUTE {begin.bib}

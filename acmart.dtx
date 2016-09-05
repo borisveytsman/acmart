@@ -1119,7 +1119,74 @@
 % If you use |natbib|, then commands like \cs{citep} and
 % \cs{citeauthor} are automatically supported.  
 %
+% There are several customized \BibTeX\ entries and fields in ACM
+% style \path{ACM-Reference-Format.bst} you may want to be aware of.
 %
+% The style supports fields \path{doi} and \path{url}, for example,
+% \begin{verbatim}
+%  doi = "10.1145/1188913.1188915",
+%  url = "http://ccrma.stanford.edu/~jos/bayes/bayes.pdf",
+% \end{verbatim}
+% 
+% The style supports arXiv recommended fields \path{eprint} and
+% (optionally) \path{primaryclass}, for example,
+% \begin{verbatim}
+%  eprint      = "960935712",
+%  primaryclass = "cs",
+% \end{verbatim}
+% See the examples at \url{http://arxiv.org/hypertex/bibstyles/}.
+%
+% There are special entries \path{online}  and
+% \path{game} for Web pages and games, for example,
+% \begin{verbatim}
+% @online{Thornburg01,
+%  author = "Harry Thornburg",
+%  year =   "2001",
+%  title =  "Introduction to Bayesian Statistics",
+%  url =    "http://ccrma.stanford.edu/~jos/bayes/bayes.html",
+%  month =   mar,
+%  lastaccessed = "March 2, 2005",
+% }
+% \end{verbatim}
+% For these entries you can use the \path{lastaccessed} field to add
+% the access date to the URL.
+% 
+% There are two ways to enter video and audio sources in the
+% bibliograpy corresponding to two different possibilies.  For
+% standalone sources available on WWW you can use an \path{online}
+% entry, setting there \path{howpublished} field, for example,
+% \begin{verbatim}
+% @online{Obama08,
+%  author = "Barack Obama",
+%  year   = "2008",
+%  title  = "A more perfect union",
+%  howpublished  = "Video",
+%  day 	  = "5",
+%  url    = "http://video.google.com/videoplay?docid=6528042696351994555",
+%  month  = mar,
+%  lastaccessed = "March 21, 2008",
+% }
+% \end{verbatim}
+% 
+% For the sources available as attachments to conference proceedings
+% and similar documents, you can use the usual \path{inproceedings}
+% entry, again setting the \path{howpublished} field:
+% \begin{verbatim}
+% @Inproceedings{Novak03,
+%  author =       "Dave Novak",
+%  title =        "Solder man",
+%  booktitle =    {ACM SIGGRAPH 2003 Video Review on Animation theater 
+%                  Program},
+%  year =         "2003",
+%  publisher = 	 "ACM Press",
+%  address = 	 "New York, NY",
+%  pages =        "4",
+%  month = 	 "March 21, 2008",
+%  doi = 	 "99.9999/woot07-S422",
+%  howpublished = "Video"
+% }
+% \end{verbatim}
+% 
 %
 %\subsection{Colors}
 %\label{sec:ug_colors}
@@ -1187,7 +1254,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/08/06 v1.20 Typesetting articles for Association of
+[2016/09/04 v1.21 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -4908,6 +4975,29 @@ Computing Machinery]
   \includecomment{anonsuppress}
 \fi
 %    \end{macrocode}
+%
+%
+%\subsection{Additional bibliography commands}
+%\label{sec:bibliography}
+%
+% \begin{macro}{\showeprint}
+% \changes{v1.21}{2016/09/04}{Added macro}
+% The command \cs{showeprint} has two arguments: the (optional) prefix
+% and the eprint number.  Right now the only prefix we understand is
+% the (lowercase) word `arxiv' (see
+% \url{http://arxiv.org/hypertex/bibstyles/}.
+%    \begin{macrocode}
+\newcommand\showeprint[2][arxiv]{%
+  \def\@tempa{#1}%
+  \ifx\@tempa\@empty\def\@tempa{arxiv}\fi
+  \def\@tempb{arxiv}%
+  \ifx\@tempa\@tempb
+     arXiv:\href{http://arxiv.org/abs/#2}{#2}\else arXiv:#2%
+  \fi}
+%    \end{macrocode}
+% 
+%   
+% \end{macro}
 %
 %\subsection{End of Class}
 %\label{end}

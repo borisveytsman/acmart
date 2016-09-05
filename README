@@ -39,3 +39,5 @@ version 1.19    Include 'Abstract', 'Acknowledgements', and 'References'
                 in PDF bookmarks.
 
 version 1.20    Bug fixes, documentation updates
+
+version 1.21    Bibliography changes: added arXiv, some cleanup
