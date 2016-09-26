@@ -472,6 +472,16 @@ FUNCTION { output.check }
   if$
 }
 
+FUNCTION { bibinfo.output.check }
+{ % like output.check, adding bibinfo field
+  't :=
+  duplicate$ empty.or.unknown
+    { pop$ "empty " t * " in " * cite$ * warning$ }
+    { "\bibinfo{" t "}{" * * swap$ * "}" *
+      output.nonnull }
+  if$
+}
+
 FUNCTION { output.check.dot.space }
 { % like output.dot.space, but warn if key name on top-of-stack is not set
   't :=
@@ -1351,7 +1361,8 @@ FUNCTION { format.btitle }
   { title emphasize }
   { title empty.or.unknown
     { title emphasize } % jtb: what is this supposed to do ?!?
-    { "{\em " title * "\/} (" * edition "l" change.case$ * " ed.)" * } % jtb: no parens for ed.
+    { "{\em " title * "\/} (\bibinfo{edition}{" * edition "l" change.case$ *
+    "} ed.)" * } % jtb: no parens for ed.
     if$
   }
   if$
@@ -1365,7 +1376,8 @@ FUNCTION { format.emphasize.booktitle }
     { booktitle emphasize }
     { booktitle empty.or.unknown
       { "" }
-      { "{\em " booktitle * "} (" * edition "l" change.case$ * " ed.)" * }
+      { "{\em " booktitle * "} (\bibinfo{edition}{" *
+      edition "l" change.case$ * "} ed.)" * }
       if$
     }
   if$
@@ -1424,13 +1436,12 @@ FUNCTION { format.bvolume }
   volume empty.or.unknown
     { "" }
     {
-      "\bibinfo{volume}{"
       series empty.or.unknown
-        { "Vol." volume tie.or.space.connect}
-        { series ", " * "Vol." volume tie.or.space.connect *}
+        { "Vol.~\bibinfo{volume}{" volume "}" * *}
+        { "\bibinfo{series}{" series "}, " * *
+          "Vol.~\bibinfo{volume}{" volume "}" * * *}
       if$
       "volume and number" number either.or.check
-      * "}" *
     }
   if$
 }
@@ -1439,15 +1450,8 @@ FUNCTION { format.bvolume.noseries }
 {
   volume empty.or.unknown
     { "" }
-    {
-      "\bibinfo{volume}{" 
-      series empty.or.unknown
-        { "Vol." volume tie.or.space.connect}
-        { "Vol." volume tie.or.space.connect}
-%        { series ", " * "Vol." volume tie.or.space.connect *}
-      if$
+    { "Vol.~\bibinfo{volume}{" volume "}" * *
       "volume and number" number either.or.check
-      * "}" *
     }
   if$
 }
@@ -1456,7 +1460,7 @@ FUNCTION { format.series }
 {
   series empty.or.unknown
     {""}
-    {" \bibinfo{series}{{\em (" * series ")}}" *}
+    {" {\em (\bibinfo{series}{" * series "})}" *}
   if$
 }
 
@@ -1471,7 +1475,7 @@ FUNCTION { format.number.series }
           {
             series empty.or.unknown
               { "" }
-              { " \bibinfo{series}{(" series * ")}" * }
+              { " (\bibinfo{series}{" series * "})" * }
             if$
           }
           if$
@@ -1587,7 +1591,7 @@ FUNCTION { format.page.count }
         { "numpages field, but no articleno field, in " cite$ * warning$ }
         { }
       if$
-      page.count "pages" tie.or.space.connect
+      "\bibinfo{numpages}{" page.count * "}~pages" *
     }
   if$
 }
@@ -2084,9 +2088,10 @@ FUNCTION { format.journal.volume.number.day.month.year }
       volume empty.or.unknown
         {
           "unusual to have number, but no volume, for " cite$ * warning$
-          " \bibinfo{volume}{" * number * "}" *
+          " \bibinfo{number}{" * number * "}" *
         }
-        { " \bibinfo{volume}{" * volume comma " " * number * * "}" *}
+        { " \bibinfo{volume}{" * volume  * "}, \bibinfo{number}{" *
+	  number * "}" *}
       if$
     }
   if$
@@ -2154,11 +2159,12 @@ FUNCTION { format.thesis.type }
 
 FUNCTION { format.tr.number }
 {
+  "\bibinfo{type}{"
   type empty.or.unknown
-%    { "Tech. Rep." }     
-    { "{T}echnical {R}eport" }     % ACM wants it explicit (Gerry 9/28)
+    { "{T}echnical {R}eport" }  
     'type
   if$
+  "}" * *
   number empty.or.unknown
     { "t" change.case$ }
     %% LOOKS BAD: { "." * number tie.or.space.connect }
@@ -2491,7 +2497,10 @@ FUNCTION { article }
   new.block
   format.articletitle "title" output.check
   new.block
-  howpublished output
+  howpublished empty.or.unknown
+    { }
+    { "\bibinfo{howpublished}{" howpublished "}" * * output }
+  if$
 
   crossref missing$
     { format.journal.volume.number.day.month.year }
@@ -2530,8 +2539,8 @@ FUNCTION { book }
       new.block
       format.number.series output
       new.sentence
-      publisher "publisher" output.check
-      address "address" output.check    % jtb: require address
+      publisher "publisher" bibinfo.output.check      
+      address "address" bibinfo.output.check    % jtb: require address
       fin.sentence
       pages empty.or.unknown
         { format.bookpages }    % use bookpages when pages empty
@@ -2557,7 +2566,10 @@ FUNCTION { booklet }
   new.block
   format.title "title" output.check
   new.block
-  howpublished output
+    howpublished empty.or.unknown
+    { }
+    { "\bibinfo{howpublished}{" howpublished "}" * * output }
+  if$
   address output
   fin.block
   output.issue.doi.coden.isxn.lccn.url.eprint.note
@@ -2587,8 +2599,8 @@ FUNCTION { inbook }
       new.block
       format.number.series output
       new.sentence
-      publisher "publisher" output.check
-      address "address" output.check    % jtb: require address
+      publisher "publisher" bibinfo.output.check
+      address "address" bibinfo.output.check    % jtb: require address
       format.bookpages output
       format.chapter.pages
       "chapter and pages" output.check  % jtb: moved from before publisher
@@ -2620,8 +2632,8 @@ FUNCTION { incollection }
       format.bvolume output
       format.number.series output
       new.sentence
-      publisher "publisher" output.check
-      address "address" output.check      % jtb: require address
+      publisher "publisher" bibinfo.output.check
+      address "address" bibinfo.output.check      % jtb: require address
       format.bookpages output
       format.chapter.pages output % gnp - was special.output.nonnull
                                   % left out comma before page numbers
@@ -2645,7 +2657,10 @@ FUNCTION { inproceedings }
   output.year.check                   % added
   new.block
   format.articletitle "title" output.check
-  howpublished output.dot.space
+  howpublished empty.or.unknown
+    { }
+    { "\bibinfo{howpublished}{" howpublished "}" * * output.dot.space }
+  if$
   crossref missing$
     {
       journal missing$          % jtb: proceedings appearing in journals
@@ -2655,8 +2670,8 @@ FUNCTION { inproceedings }
           format.bvolume.noseries output
           new.sentence
           organization output
-          publisher "publisher" output.check % jtb: require publisher (?)
-          address "address" output.check  % jtb: require address
+          publisher "publisher" bibinfo.output.check % jtb: require publisher (?)
+          address "address" bibinfo.output.check  % jtb: require address
           format.bookpages output
         }
         {
@@ -2716,9 +2731,13 @@ FUNCTION { mastersthesis }
   new.block
   format.title emphasize "title" output.check  % NB: ACM style requires emphasized thesis title
   new.block
-  "Master's\ thesis" format.thesis.type output new.sentence  % Added dot. BV 2011/09/27
-  school "school" output.check
-  address output
+  "\bibinfo{thesistype}{Master's\ thesis}" format.thesis.type output
+  new.sentence  
+  school "school" bibinfo.output.check
+  address empty.or.unknown
+     { }
+     { "\bibinfo{address}{" address * "}" * output }
+  if$
   new.block
   format.advisor output
   fin.block
@@ -2735,7 +2754,10 @@ FUNCTION { misc }
   title howpublished new.block.checkb
   format.title output
   new.block
-  howpublished output
+  howpublished empty.or.unknown
+    { }
+    { "\bibinfo{howpublished}{" howpublished "}" * * output }
+  if$
   "" output.nonnull.dot.space
   output.day.month.year      
   fin.block
@@ -2757,9 +2779,13 @@ FUNCTION { phdthesis }
   new.block
   format.title emphasize "title" output.check  % NB: ACM style requires emphasized thesis title
   new.block
- "Ph.D. Dissertation" format.thesis.type output new.sentence % Added dot. BV 2011/09/27
-  school "school" output.check
-  address output
+ "\bibinfo{thesistype}{Ph.D. Dissertation}" format.thesis.type output
+ new.sentence 
+  school "school" bibinfo.output.check
+  address empty.or.unknown
+     { }
+     { "\bibinfo{address}{" address * "}" * output }
+  if$
   new.block
   format.advisor output
   fin.block
@@ -2849,8 +2875,14 @@ FUNCTION { proceedings }
   new.sentence
   organization output
   % jtb: normal order: publisher, address
-  publisher output
-  address output
+  publisher empty.or.unknown
+     { }
+     { "\bibinfo{publisher}{" publisher * "}" * output }
+  if$
+  address empty.or.unknown
+     { }
+     { "\bibinfo{address}{" address * "}" * output }
+  if$
   fin.block
   output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
@@ -2867,8 +2899,11 @@ FUNCTION { techreport }
   new.block
 %   format.tr.number output               % jtb: moved month ...
   format.tr.number output new.sentence    % Gerry  - need dot 2011/09/28
-  institution "institution" output.check
-  address output
+  institution "institution" bibinfo.output.check
+  address empty.or.unknown
+    { }
+    { "\bibinfo{address}{" address "}" * * output }
+  if$
   new.sentence
   format.named.pages output
   % ACM omits year at end in transactions style

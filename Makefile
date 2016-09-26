@@ -43,6 +43,7 @@ all:  ${PDF}
 	pdflatex $<
 	- bibtex $*
 	pdflatex $<
+	pdflatex $<
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $*.log) \
 	do pdflatex $<; done
 
