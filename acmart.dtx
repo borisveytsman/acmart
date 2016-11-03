@@ -212,7 +212,7 @@
 %            TOS, TOSEM, TOSN, TRETS,
 %            TSAS, TSC, TSLP, TWEB\@. \\
 %           acmlarge  & Large single column format, used for
-%          JOCCH, TAP \\
+%          JOCCH, PACM:PL, TAP \\
 %            acmtog   & Large double column format, used for
 %          TOG\\
 %           sigconf & Proceedings format for most of ACM
@@ -323,6 +323,7 @@
 %     JERIC & ACM Journal of Educational Resources in Computing\\
 %     JETC & ACM Journal on Emerging Technologies in Computing Systems \\
 %     JOCCH & ACM Journal on Computing and Cultural Heritage \\
+%     PACM:PL & Proceedings of the ACM: Programming Languages \\
 %     TAAS & ACM Transactions on Autonomous and Adaptive Systems\\
 %     TACCESS & ACM Transactions on Accessible Computing\\
 %     TACO & ACM Transactions on Architecture and Code Optimization \\
@@ -2362,6 +2363,7 @@ Computing Machinery]
   JERIC,%
   JETC,%
   JOCCH,%
+  PACM:PL,%
   TAAS,%
   TACCESS,%
   TACO,%
@@ -2434,6 +2436,9 @@ Computing Machinery]
 \or % JOCCH
   \def\@journalName{ACM Journal on Computing and Cultural Heritage}%
   \def\@journalName{ACM J. Comput. Cult. Herit.}%
+\or % PACM:PL
+  \def\@journalName{Proceedings of the ACM: Programming Languages}%
+  \def\@journalName{Proc. ACM: Program. Lang.}%
 \or % TAAS
   \def\@journalName{ACM Transactions on Autonomous and Adaptive Systems}%
   \def\@journalNameShort{ACM Trans. Autonom. Adapt. Syst.}%
@@ -2602,7 +2607,7 @@ Computing Machinery]
 \def\@journalCode@nr{0}
 \def\@journalName{}%
 \def\@journalNameShort{\@journalName}%
-\def\@permissionCodeOne{XXXX-XX}%
+\def\@permissionCodeOne{XXXX-XXXX}%
 \def\@permissionCodeTwo{}%
 %    \end{macrocode}
 %
