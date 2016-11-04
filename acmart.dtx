@@ -212,7 +212,7 @@
 %            TOS, TOSEM, TOSN, TRETS,
 %            TSAS, TSC, TSLP, TWEB\@. \\
 %           acmlarge  & Large single column format, used for
-%          JOCCH, PACM:PL, TAP \\
+%          JOCCH, PACMPL, TAP \\
 %            acmtog   & Large double column format, used for
 %          TOG\\
 %           sigconf & Proceedings format for most of ACM
@@ -323,7 +323,7 @@
 %     JERIC & ACM Journal of Educational Resources in Computing\\
 %     JETC & ACM Journal on Emerging Technologies in Computing Systems \\
 %     JOCCH & ACM Journal on Computing and Cultural Heritage \\
-%     PACM:PL & Proceedings of the ACM: Programming Languages \\
+%     PACMPL & Proceedings of the ACM on Programming Languages \\
 %     TAAS & ACM Transactions on Autonomous and Adaptive Systems\\
 %     TACCESS & ACM Transactions on Accessible Computing\\
 %     TACO & ACM Transactions on Architecture and Code Optimization \\
@@ -1271,7 +1271,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/09/25 v1.22 Typesetting articles for Association of
+[2016/11/04 v1.23 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1308,6 +1308,7 @@ Computing Machinery]
 % and 'References' in PDF bookmarks (Matthew Fluet)}
 % \changes{v1.20}{2016/08/06}{Bug fixes for bst}
 % \changes{v1.22}{2016/09/25}{More bibliography changes for Aptara}
+% \changes{v1.23}{2016/11/04}{Add PACMPL journal option}
 %
 %
 % And the driver code:
@@ -2350,6 +2351,7 @@ Computing Machinery]
 %\label{sec:top_matter_data}
 %
 %
+% \changes{v1.23}{2016/11/04}{Add PACMPL journal option}
 %
 % We use keyval interface to define journal title and relevant
 % information
@@ -2363,7 +2365,7 @@ Computing Machinery]
   JERIC,%
   JETC,%
   JOCCH,%
-  PACM:PL,%
+  PACMPL,%
   TAAS,%
   TACCESS,%
   TACO,%
@@ -2436,9 +2438,9 @@ Computing Machinery]
 \or % JOCCH
   \def\@journalName{ACM Journal on Computing and Cultural Heritage}%
   \def\@journalName{ACM J. Comput. Cult. Herit.}%
-\or % PACM:PL
-  \def\@journalName{Proceedings of the ACM: Programming Languages}%
-  \def\@journalName{Proc. ACM: Program. Lang.}%
+\or % PACMPL
+  \def\@journalName{Proceedings of the ACM on Programming Languages}%
+  \def\@journalName{Proc. ACM Program. Lang.}%
 \or % TAAS
   \def\@journalName{ACM Transactions on Autonomous and Adaptive Systems}%
   \def\@journalNameShort{ACM Trans. Autonom. Adapt. Syst.}%
