@@ -212,7 +212,7 @@
 %            TOS, TOSEM, TOSN, TRETS,
 %            TSAS, TSC, TSLP, TWEB\@. \\
 %           acmlarge  & Large single column format, used for
-%          JOCCH, PACMPL, TAP \\
+%           IMWUT, JOCCH, PACMPL, TAP \\
 %            acmtog   & Large double column format, used for
 %          TOG\\
 %           sigconf & Proceedings format for most of ACM
@@ -317,6 +317,8 @@
 %     \midrule
 %     CIE & ACM Computers in Entertainment \\
 %     CSUR & ACM Computing Surveys\\
+%     IMWUT & PACM on Interactive, Mobile, Wearable and Ubiquitous
+%     Technologies\\ 
 %     JACM &  Journal of the ACM \\
 %     JDIQ & ACM Journal of Data and Information Quality \\
 %     JEA & ACM Journal of Experimental Algorithmics \\
@@ -1271,7 +1273,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/11/04 v1.23 Typesetting articles for Association of
+[2016/11/16 v1.24 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2352,6 +2354,7 @@ Computing Machinery]
 %
 %
 % \changes{v1.23}{2016/11/04}{Add PACMPL journal option}
+% \changes{v1.24}{2016/11/16}{Add IMWUT journal option}
 %
 % We use keyval interface to define journal title and relevant
 % information
@@ -2359,6 +2362,7 @@ Computing Machinery]
 \define@choicekey*+{ACM}{acmJournal}[\@journalCode\@journalCode@nr]{%
   CIE,%
   CSUR,%
+  IMWUT,%
   JACM,%
   JDIQ,%
   JEA,%
@@ -2415,6 +2419,11 @@ Computing Machinery]
   \def\@journalName{ACM Computing Surveys}%
   \def\@journalNameShort{ACM Comput. Surv.}%
   \def\@permissionCodeOne{0360-0300}%
+\or % IMWUT
+  \def\@journalName{PACM on Interactive, Mobile, Wearable and
+    Ubiquitous Technologies}% 
+  \def\@journalNameShort{PACM Interact. Mob. Wearable Ubiquitous Technol.}%
+  \def\@permissionCodeOne{2474-9567}%
 \or % JACM
   \def\@journalName{Journal of the ACM}%
   \def\@journalNameShort{J. ACM}%

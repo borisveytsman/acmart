@@ -46,3 +46,5 @@ version 1.22    Bibliography changes for Aptara backend;  should be
 		invisible for the users.
 
 version 1.23    Add PACM PL journal option.
+
+version 1.24    Add IMWUT journal option.
