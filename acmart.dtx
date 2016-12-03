@@ -325,7 +325,7 @@
 %     JERIC & ACM Journal of Educational Resources in Computing\\
 %     JETC & ACM Journal on Emerging Technologies in Computing Systems \\
 %     JOCCH & ACM Journal on Computing and Cultural Heritage \\
-%     PACMPL & Proceedings of the ACM on Programming Languages \\
+%     PACMPL & PACM on Programming Languages \\
 %     TAAS & ACM Transactions on Autonomous and Adaptive Systems\\
 %     TACCESS & ACM Transactions on Accessible Computing\\
 %     TACO & ACM Transactions on Architecture and Code Optimization \\
@@ -1273,7 +1273,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/11/16 v1.24 Typesetting articles for Association of
+[2016/12/03 v1.25 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2353,8 +2353,8 @@ Computing Machinery]
 %\label{sec:top_matter_data}
 %
 %
-% \changes{v1.23}{2016/11/04}{Add PACMPL journal option}
 % \changes{v1.24}{2016/11/16}{Add IMWUT journal option}
+% \changes{v1.25}{2016/12/03}{Updated PACMPL}
 %
 % We use keyval interface to define journal title and relevant
 % information
@@ -2448,8 +2448,9 @@ Computing Machinery]
   \def\@journalName{ACM Journal on Computing and Cultural Heritage}%
   \def\@journalName{ACM J. Comput. Cult. Herit.}%
 \or % PACMPL
-  \def\@journalName{Proceedings of the ACM on Programming Languages}%
-  \def\@journalName{Proc. ACM Program. Lang.}%
+  \def\@journalName{PACM on Programming Languages}%
+  \def\@journalName{PACM Progr. Lang.}%
+  \def\@permissionCodeOne{2475-1421}%
 \or % TAAS
   \def\@journalName{ACM Transactions on Autonomous and Adaptive Systems}%
   \def\@journalNameShort{ACM Trans. Autonom. Adapt. Syst.}%
