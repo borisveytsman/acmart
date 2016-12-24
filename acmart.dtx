@@ -1120,7 +1120,9 @@
 % \end{verbatim}
 %
 % If you use |natbib|, then commands like \cs{citep} and
-% \cs{citeauthor} are automatically supported.  
+% \cs{citeauthor} are automatically supported.  The command
+% \cs{shortcite} is the same as \cs{cite} in numerical mode, and cites
+% the year in the author-date mode.
 %
 % There are several customized \BibTeX\ entries and fields in ACM
 % style \path{ACM-Reference-Format.bst} you may want to be aware of.
@@ -1273,7 +1275,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/12/03 v1.25 Typesetting articles for Association of
+[2016/12/24 v1.26 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1311,6 +1313,7 @@ Computing Machinery]
 % \changes{v1.20}{2016/08/06}{Bug fixes for bst}
 % \changes{v1.22}{2016/09/25}{More bibliography changes for Aptara}
 % \changes{v1.23}{2016/11/04}{Add PACMPL journal option}
+% \changes{v1.26}{2016/12/24}{Corrected \cs{shortcite} bug}
 %
 %
 % And the driver code:
@@ -1865,7 +1868,7 @@ Computing Machinery]
   \let\citeyearNP\citeyear
   \let\citeyear\citeyearpar
   \let\citeNP\citealt
-  \def\shortcite#1{\citeyear{#1}}
+  \def\shortcite#1{\ifNAT@numbers\cite{#1}\else\citeyear{#1}\fi}
   \DeclareRobustCommand\citeA
      {\begingroup\NAT@swafalse
        \let\NAT@ctype\@ne\NAT@partrue\NAT@fullfalse\NAT@open\NAT@citetp}%
