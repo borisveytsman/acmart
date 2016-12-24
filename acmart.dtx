@@ -232,7 +232,7 @@
 % |=true| can be omitted when setting the Boolean option, so instead of
 % |screen=true| one can write just |screen|, for example,
 % \begin{verbatim}
-% \documentcalss[acmsmall, screen, review]{acmart}
+% \documentclass[acmsmall, screen, review]{acmart}
 % \end{verbatim}
 % The option
 % |review| is useful when combined with the |manuscript| format
@@ -439,7 +439,7 @@
 % his or her own \cs{author} command.
 %
 % Note that some formats do not typset e-mails of ORCID identifiers.
-% Do now worry: metadata tools will get them.  
+% Do not worry: metadata tools will get them.  
 %
 % Sometimes an author has several affiliations.  In this case the
 % \cs{affiliation} command should be repeated:
@@ -606,7 +606,7 @@
 % \cs{acmArticleSeq}\marg{n} can be used to change it:
 % \begin{verbatim}
 % \acmArticle{39}   % The sequence number will be 39 by default
-% \acmArticleSeq{5} % We rededine it to 5
+% \acmArticleSeq{5} % We redefine it to 5
 % \end{verbatim}
 %
 %
@@ -1314,6 +1314,8 @@ Computing Machinery]
 % \changes{v1.22}{2016/09/25}{More bibliography changes for Aptara}
 % \changes{v1.23}{2016/11/04}{Add PACMPL journal option}
 % \changes{v1.26}{2016/12/24}{Corrected \cs{shortcite} bug}
+% \changes{v1.26}{2016/12/24}{Documentation typos fixed (thanks to
+% Stephen Spencer)} 
 %
 %
 % And the driver code:
