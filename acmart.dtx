@@ -1275,7 +1275,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/12/24 v1.26 Typesetting articles for Association of
+[2016/12/29 v1.27 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2139,7 +2139,7 @@ Computing Machinery]
 %   
 % \end{macro}
 % 
-% We use Times throughout.
+% We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
 \RequirePackage[tt=false]{libertine}
@@ -3052,14 +3052,15 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@printccs}
+% \changes{v1.27}{2016/12/29}{Typo corrected}
 %   Whether to print CCS
 %    \begin{macrocode}
-\define@boolkey+{@ACM@topmatter@}[@ACM@]{printcss}[true]{%
-  \if@ACM@printcss
-    \ClassInfo{\@classname}{Printing CSS}%
+\define@boolkey+{@ACM@topmatter@}[@ACM@]{printccs}[true]{%
+  \if@ACM@printccs
+    \ClassInfo{\@classname}{Printing CCS}%
   \else
-    \ClassInfo{\@classname}{Suppressing CSS}%
-  \fi}{\ClassError{\@classname}{printcss must be true or false}}
+    \ClassInfo{\@classname}{Suppressing CCS}%
+  \fi}{\ClassError{\@classname}{printccs must be true or false}}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -3103,7 +3104,7 @@ Computing Machinery]
 % default for the proceedings}
 % Now the settings
 %    \begin{macrocode}
-\settopmatter{printcss=true, printacmref=true}
+\settopmatter{printccs=true, printacmref=true}
 \if@ACM@manuscript
   \settopmatter{printfolios=true}
 \else
@@ -3587,7 +3588,7 @@ Computing Machinery]
   \endgroup
   \setcounter{footnote}{0}%
   \@mkabstract
-  \if@ACM@printcss
+  \if@ACM@printccs
     \ifx\@concepts\@empty\else\bgroup
       {\@specialsection{CCS Concepts}%
          \@concepts\par}\egroup
