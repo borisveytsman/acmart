@@ -855,7 +855,7 @@
 % redefine it if the list of author's name is too long, e.g.,
 % \begin{verbatim}
 % \maketitle
-% \renewcommand{\shortauthors}{Zhou et. al.}
+% \renewcommand{\shortauthors}{Zhou et al.}
 % \end{verbatim}
 %
 %
@@ -1275,7 +1275,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2016/12/29 v1.27 Typesetting articles for Association of
+[2017/01/04 v1.28 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3175,6 +3175,8 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\ccsdesc@parse}
+% \changes{v1.28}{2017/01/04}{Change from \cs{to} to
+% \cs{textrightarrow} (Matteo Riondato)}
 %   The parser of the expression |Significance~General~Specific| (we need
 %   |textcomp| for |\\textrightarrow|:
 %    \begin{macrocode}
