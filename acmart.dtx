@@ -1275,7 +1275,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/01/04 v1.28 Typesetting articles for Association of
+[2017/01/07 v1.28 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1731,9 +1731,12 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \changes{v1.28}{2017/01/07}{Corrected natbib=false behavior}
 % The default is numeric:
 %    \begin{macrocode}
+\if@ACM@natbib
 \citestyle{acmnumeric}
+\fi
 %    \end{macrocode}
 % 
 %
@@ -1870,7 +1873,6 @@ Computing Machinery]
   \let\citeyearNP\citeyear
   \let\citeyear\citeyearpar
   \let\citeNP\citealt
-  \def\shortcite#1{\ifNAT@numbers\cite{#1}\else\citeyear{#1}\fi}
   \DeclareRobustCommand\citeA
      {\begingroup\NAT@swafalse
        \let\NAT@ctype\@ne\NAT@partrue\NAT@fullfalse\NAT@open\NAT@citetp}%
@@ -1878,6 +1880,7 @@ Computing Machinery]
 \else
   \providecommand\citename[1]{#1}
 \fi
+\def\shortcite#1{\ifNAT@numbers\cite{#1}\else\citeyear{#1}\fi}
 %    \end{macrocode}
 %
 %
