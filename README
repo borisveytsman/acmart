@@ -55,3 +55,6 @@ version 1.26    Bug fixes
 
 version 1.27    Bug fixes
 
+version 1.28    Bug fixes: natbib=false now behaves correctly.
+
+
