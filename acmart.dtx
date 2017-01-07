@@ -1834,10 +1834,16 @@ Computing Machinery]
 %
 %
 % And |hyperref|
+% \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
 \RequirePackage[bookmarksnumbered,unicode]{hyperref}
+\pdfstringdefDisableCommands{%
+  \def\unskip{}
+  \def\textbullet{- }
+  \def\textrightarrow{ -> }
+}
 \urlstyle{rm}
 \ifcase\ACM@format@nr
 \relax % manuscript
