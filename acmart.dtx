@@ -39,6 +39,18 @@
 %
 %
 % \MakeShortVerb{|}
+% \def\guide{acmguide}
+% \iffalse
+% From
+% http://tex.stackexchange.com/questions/117892/can-i-convert-a-string-to-catcode-11 by egreg
+% \fi
+% \begingroup
+%  \everyeof{\noexpand}
+%  \endlinechar=-1
+%  \xdef\currentjob{\scantokens\expandafter{\jobname}}
+% \endgroup
+%
+% \ifx\currentjob\guide\OnlyDescription\fi
 % \GetFileInfo{acmart.dtx}
 % \newcommand{\progname}[1]{\textsf{#1}}
 % \title{\LaTeX{} Class for \emph{Association for Computing
@@ -55,7 +67,7 @@
 % \tableofcontents
 %
 % \clearpage
-%
+% 
 %\section{Introduction}
 %\label{sec:intro}
 %

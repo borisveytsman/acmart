@@ -20,7 +20,7 @@ SAMPLES = \
 	sample-sigchi-a.tex 
 
 
-PDF = $(PACKAGE).pdf ${SAMPLES:%.tex=%.pdf}
+PDF = $(PACKAGE).pdf ${SAMPLES:%.tex=%.pdf} acmguide.pdf
 
 all:  ${PDF}
 
@@ -35,6 +35,13 @@ all:  ${PDF}
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $*.log) \
 	do pdflatex $<; done
 
+
+acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
+	pdflatex -jobname acmguide $(PACKAGE).dtx
+	- bibtex acmguide
+	pdflatex -jobname acmguide $(PACKAGE).dtx
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' acmguide.log) \
+	do 	pdflatex -jobname acmguide $(PACKAGE).dtx; done
 
 %.cls:   %.ins %.dtx  
 	pdflatex $<
