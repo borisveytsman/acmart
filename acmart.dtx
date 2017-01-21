@@ -4510,7 +4510,7 @@ Computing Machinery]
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmlarge
     \fancyhead[LE]{\ACM@linecount\@headfootfont
-      \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\@shortauthors}%
+      \@acmArticle\if@ACM@printfolios:\thepage\fi\quad\textbullet\quad\@shortauthors}%
     \fancyhead[LO]{\ACM@linecount}%
     \fancyhead[RO]{\@headfootfont
       \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
@@ -4518,7 +4518,7 @@ Computing Machinery]
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmtog
     \fancyhead[LE]{\ACM@linecount\@headfootfont
-      \@acmArticle:\if@ACM@printfolios\thepage\quad\textbullet\quad\fi\@shortauthors}%
+      \@acmArticle\if@ACM@printfolios:\thepage\fi\quad\textbullet\quad\@shortauthors}%
     \fancyhead[LO]{\ACM@linecount}%
     \fancyhead[RO]{\@headfootfont
       \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
