@@ -228,7 +228,8 @@
 %            acmtog   & Large double column format, used for
 %          TOG\\
 %           sigconf & Proceedings format for most of ACM
-%          conferences (with the exceptions listed below)\\
+%          conferences (with the exceptions listed below) and all ICPS
+%          volumes\\
 %           siggraph & Proceedings format for SIGGRAPH and SIGGRAPH
 %          Asia conferences, published in ACM Transactions on Graphics
 %          journal issues \\
@@ -1084,6 +1085,11 @@
 % \cs{grantsponsor command}.  Some awards have their own web pages,
 % which you can include using the optional argument of \cs{grantnum}
 % command. 
+%
+% At present \marg{sponsorID} is chosen by the authors and can be an
+% arbitrary key, in the same way the label of \cs{cite} is arbitrarily
+% chosen.  There might be a change to this policy if ACM decides to
+% create a global database of sponsoring organization.
 %
 % Example:
 % \begin{verbatim}
