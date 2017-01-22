@@ -3199,17 +3199,19 @@ Computing Machinery]
 % \begin{macro}{\ccsdesc@parse}
 % \changes{v1.28}{2017/01/04}{Change from \cs{to} to
 % \cs{textrightarrow} (Matteo Riondato)}
+% \changes{v1.29}{2017/01/22}{Add spacing after bullet and around
+% rightarrow; semicolon separators no longer in bold/italic (John Wickerson)}
 %   The parser of the expression |Significance~General~Specific| (we need
 %   |textcomp| for |\\textrightarrow|:
 %    \begin{macrocode}
 \RequirePackage{textcomp}
 \def\ccsdesc@parse#1~#2~#3~{%
   \expandafter\ifx\csname CCS@#2\endcsname\relax
-    \expandafter\gdef\csname CCS@#2\endcsname{\textbullet\textbf{#2} \textrightarrow }%
+    \expandafter\gdef\csname CCS@#2\endcsname{\textbullet\ \textbf{#2} \textrightarrow\ }%
   \g@addto@macro{\@concepts}{\csname CCS@#2\endcsname}\fi
   \expandafter\g@addto@macro\expandafter{\csname CCS@#2\endcsname}{%
-    \ifnum#1>499\textbf{#3; }\else
-    \ifnum#1>299\textit{#3; }\else
+    \ifnum#1>499\textbf{#3}; \else
+    \ifnum#1>299\textit{#3}; \else
     #3; \fi\fi}}
 %    \end{macrocode}
 %
@@ -4323,6 +4325,7 @@ Computing Machinery]
 % \changes{v1.19}{2016/07/28}{Include 'Abstract' in PDF bookmarks
 % (Matthew Fluet)}
 % \changes{v1.20}{2016/08/03}{Deleted spurious space}
+% \changes{v1.29}{2017/01/22}{Removed spurious indentation (John Wickerson)}
 %   Typesetting abstract
 %    \begin{macrocode}
 \def\@mkabstract{\bgroup
@@ -4330,9 +4333,9 @@ Computing Machinery]
   {\if@ACM@journal
        \small\noindent
     \else
+      \phantomsection\addcontentsline{toc}{section}{Abstract}%
       \section*{Abstract}%
     \fi
-   \phantomsection\addcontentsline{toc}{section}{Abstract}%
    \ignorespaces\@abstract\par}%
   \fi\egroup}
 %    \end{macrocode}
