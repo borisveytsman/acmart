@@ -4340,10 +4340,10 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\@mkabstract{\bgroup
   \ifx\@abstract\@lempty\else
+  \phantomsection\addcontentsline{toc}{section}{Abstract}%
   {\if@ACM@journal
        \small\noindent
     \else
-      \phantomsection\addcontentsline{toc}{section}{Abstract}%
       \section*{Abstract}%
     \fi
    \ignorespaces\@abstract\par}%
