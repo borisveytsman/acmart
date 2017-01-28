@@ -4125,7 +4125,7 @@ Computing Machinery]
          \g@addto@macro{\@currentaffiliations}{\and##2}%
       \fi
     \fi
-     \global\let\and\@typeset@author@line}
+     \global\let\and\@typeset@author@line}%
   \global\setbox\mktitle@bx=\vbox{\noindent\box\mktitle@bx\par\medskip
     \noindent\addresses\@typeset@author@line
    \par\medskip}%
@@ -4339,9 +4339,9 @@ Computing Machinery]
 %   Typesetting abstract
 %    \begin{macrocode}
 \def\@mkabstract{\bgroup
-  \ifx\@abstract\@lempty\else
-  \phantomsection\addcontentsline{toc}{section}{Abstract}%
-  {\if@ACM@journal
+  \ifx\@abstract\@lempty\else  
+  {\phantomsection\addcontentsline{toc}{section}{Abstract}%
+    \if@ACM@journal
        \small\noindent
     \else
       \section*{Abstract}%
