@@ -4787,15 +4787,6 @@ Computing Machinery]
 %\subsection{TOC Lists}
 %\label{sec:tocs}
 %
-% \begin{macro}{\tableofcontents}
-% Several packages, for example the |todonotes| package, expect something like
-% the \LaTeX\ |article| implementation of  \cs{tableofcontents} and related
-% macros. However, the table of contents does not make too much sense for
-% |acmart|, even in a draft setting. Let's disable it.
-%    \begin{macrocode}
-\let\tableofcontents\@undefined\relax
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\@dotsep}
 % Related to the \cs{tableofcontents} are all the horizontal fillers. Base
 % \LaTeX\ defines \cs{@dottedtocline}, which we should not disable. Yet, this
