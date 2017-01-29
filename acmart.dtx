@@ -4784,6 +4784,19 @@ Computing Machinery]
 %
 % \end{macro}
 %
+%\subsection{TOC Lists}
+%\label{sec:tocs}
+%
+% \begin{macro}{\@dotsep}
+% Related to the \cs{tableofcontents} are all the horizontal fillers. Base
+% \LaTeX\ defines \cs{@dottedtocline}, which we should not disable. Yet, this
+% command expects \cs{@dotsep} to be defined, but leaves this to the class
+% implementation. Since |amsart| does not provide this, we copy the standard
+% variant from |article| here.
+%    \begin{macrocode}
+\providecommand*\@dotsep{4.5}
+%    \end{macrocode}
+% \end{macro}
 %
 %\subsection{Theorems}
 %\label{sec:theorems}
