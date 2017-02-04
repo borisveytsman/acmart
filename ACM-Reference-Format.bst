@@ -25,6 +25,7 @@
 %  Revised 15-APRIL-2011 (Boris/Gerry)
 %  Revised 27-SEPTEMBER-2011 (Boris)
 %  Revised 10-JULY-2016 (Boris)
+%  Revised 04-FEB-2017 (Boris)
 %
 %
 % History (by Nelson)
@@ -620,12 +621,22 @@ FUNCTION { strip.doi } % UTAH
   % lists.
   % The numeric prefix is guaranteed to start with "10.", so we use
   % that as a test.
+  % 2017-02-04 Added stripping of https:// (Boris)
   doi #1 #3 substring$ "10." =
     { doi }
     {
-      doi #1 #7 substring$ "http://" =
+      doi 't :=  % get modifiable copy of DOI
+
+      % Change https:// to http:// to strip both prefixes (BV)
+
+      t #1 #8 substring$ "https://" =
+        { "http://"  t #9 t text.length$ #8 - substring$ * 't := }
+        { }
+      if$
+
+      t #1 #7 substring$ "http://" =
         {
-            doi #8 doi text.length$ #7 - substring$ 't := % get modifiable copy of rest of DOI
+            t #8 t text.length$ #7 - substring$ 't := 
 
             "INTERNAL STYLE-FILE ERROR" 's :=
 

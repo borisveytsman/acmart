@@ -60,3 +60,5 @@ version 1.28    Bug fixes: natbib=false now behaves correctly.
 version 1.29	Documentation changes.  Head height increased from 12pt to 13pt.
 		Removed spurious indent at start of abstract.
 		Improved kerning in CCS description list.
+
+version 1.30    Bibtex style now recognizes https:// in doi.
