@@ -517,6 +517,7 @@
 %  \emph{not} put commas or |\\| between the elements of
 %  \cs{affiliation}: they will be provided automatically.
 %
+%
 % An example of the author block:
 % \begin{verbatim}
 % \author{A. U. Thor}
@@ -554,6 +555,28 @@
 % authors and required some efforts from the authors to achieve
 % alignment.  The new format is much better in this.
 %
+%  Sometimes an author works in several departments within the same
+%  insitution.  There could be two situations: the departments are
+%  independent, or one department is within another.  In the first
+%  case just repeat the command \cs{department} several times.  To
+%  handle the second case the command has an optional numerical
+%  parameter.  The departments with higher numbers are higher in the
+%  organizational chart.  Compare
+% \begin{verbatim}
+%  \affiliation{%
+% \department[0]{Department of Lunar Studies} % 0 is the default
+% \department[1]{John Doe Institute} % higher than 0
+% \institution{University of San Serriffe}
+% \country{San Serriffe}}
+% \end{verbatim}
+%  and
+% \begin{verbatim}
+%  \affiliation{%
+% \department{Department of Lunar Studies} % Not within JD Inst!
+% \department{John Doe Institute} 
+% \institution{University of San Serriffe}
+% \country{San Serriffe}}
+% \end{verbatim}
 %
 %
 % It is expected that these commands are inserted by the author of the
@@ -3956,6 +3979,7 @@ Computing Machinery]
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \begin{macro}{\department}
 % \changes{v1.15}{2016/07/03}{Added macro}
+% \changes{v1.30}{2017/02/10}{Added optional parameter}
 % \begin{macro}{\streetaddress}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \begin{macro}{\city}
@@ -3977,7 +4001,7 @@ Computing Machinery]
 \if@ACM@journal
   \let\position\@gobble
   \def\institution#1{#1\ignorespaces}%
-  \let\department\@gobble
+  \newcommand\department[2][0]{}%
   \let\streetaddress\@gobble
   \let\city\@gobble
   \let\state\@gobble
@@ -3986,7 +4010,7 @@ Computing Machinery]
 \else
   \def\position#1{#1\par}%
   \def\institution#1{#1\par}%
-  \def\department#1{#1\par}%
+  \newcommand\department[2][0]{#2\par}%
   \def\streetaddress#1{#1\par}%
   \let\city\@ACM@addtoaddress
   \let\state\@ACM@addtoaddress
