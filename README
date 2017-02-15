@@ -64,4 +64,4 @@ version 1.29	Documentation changes.  Head height increased from 12pt to 13pt.
 version 1.30    Bibtex style now recognizes https:// in doi.
 	        Added \frenchspacing.
 		\department now has an optional hierarchy level.
-		
+		Switched to T1 encoding
