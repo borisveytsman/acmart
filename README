@@ -65,3 +65,4 @@ version 1.30    Bibtex style now recognizes https:// in doi.
 	        Added \frenchspacing.
 		\department now has an optional hierarchy level.
 		Switched to T1 encoding
+		Updated IMWUT and PACMPL
