@@ -1316,7 +1316,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/02/15 v1.30 Typesetting articles for Association of
+[2017/03/04 v1.31 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2925,6 +2925,8 @@ Computing Machinery]
 %
 % \begin{macro}{\acmYear}
 % \changes{v1.17}{2016/07/10}{The default is now numerical}
+% \changes{v1.31}{2017/03/04}{The default now is the current year
+% (Matteo Riondato)} 
 %   The current year
 %    \begin{macrocode}
 \def\acmYear#1{\def\@acmYear{#1}}
@@ -2935,6 +2937,8 @@ Computing Machinery]
 %
 % \begin{macro}{\acmMonth}
 % \changes{v1.17}{2016/07/09}{The default must be numerical.   Closes \#50.}
+% \changes{v1.31}{2017/03/04}{The default now is the current month
+% (Matteo Riondato)} 
 %   The current month
 %    \begin{macrocode}
 \def\acmMonth#1{\def\@acmMonth{#1}}
