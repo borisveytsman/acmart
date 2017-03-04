@@ -1781,7 +1781,8 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 % 
-%
+% \begin{macro}{\@startsection}
+% \changes{v1.31}{2017/03/04}{Added \cs{tochangmeasure}} 
 % Before we call |hyperref|, we redefine \cs{startsection} commands to
 % their \LaTeX\ defaults, since |amsart| ones are too AMS-specific.
 % We need to do this early since we want |hyperref| to have a chance
@@ -1804,6 +1805,7 @@ Computing Machinery]
     {\@ssect{#3}{#4}{#5}{#6}}%
     {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
 \def\@sect#1#2#3#4#5#6[#7]#8{%
+  \edef\@toclevel{\ifnum#2=\@m 0\else\number#2\fi}%
   \ifnum #2>\c@secnumdepth
     \let\@svsec\@empty
   \else
@@ -1818,6 +1820,9 @@ Computing Machinery]
           \interlinepenalty \@M #8\@@par}%
     \endgroup
     \csname #1mark\endcsname{#7}%
+    \ifnum #2>\c@secnumdepth \else
+        \@tochangmeasure{\csname the#1\endcsname}%
+    \fi
     \addcontentsline{toc}{#1}{%
       \ifnum #2>\c@secnumdepth \else
         \protect\numberline{\csname the#1\endcsname}%
@@ -1828,6 +1833,9 @@ Computing Machinery]
       #6{\hskip #3\relax
       \@svsec #8}%
       \csname #1mark\endcsname{#7}%
+      \ifnum #2>\c@secnumdepth \else
+        \@tochangmeasure{\csname the#1\endcsname\space}%
+      \fi
       \addcontentsline{toc}{#1}{%
         \ifnum #2>\c@secnumdepth \else
           \protect\numberline{\csname the#1\endcsname}%
@@ -1874,6 +1882,46 @@ Computing Machinery]
   \@xsect{#3}}
 %    \end{macrocode}
 %
+% \end{macro}
+%
+% \begin{macro}{\@startsection}
+% \changes{v1.31}{2017/03/04}{Rededined macro} 
+%   Amsart redefines \cs{startsection}.  Here we redefine it again to
+%   make TOC working
+%    \begin{macrocode}
+\def\@starttoc#1#2{\begingroup
+  \setTrue{#1}%
+  \par\removelastskip\vskip\z@skip
+  \@startsection{section}\@M\z@{\linespacing\@plus\linespacing}%
+    {.5\linespacing}{\centering\contentsnamefont}{#2}%
+  \@input{\jobname.#1}%
+  \if@filesw
+    \@xp\newwrite\csname tf@#1\endcsname
+    \immediate\@xp\openout\csname tf@#1\endcsname \jobname.#1\relax
+  \fi
+  \global\@nobreakfalse \endgroup
+  \addvspace{32\p@\@plus14\p@}%
+}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\l@subsection}
+% \changes{v1.31}{2017/03/04}{Rededined macro} 
+%   Amsart has too large spacing
+%    \begin{macrocode}
+\def\l@subsection{\@tocline{2}{0pt}{1pc}{3pc}{}}
+%    \end{macrocode}
+%   
+% \end{macro}
+% \begin{macro}{\l@subsubsection}
+% \changes{v1.31}{2017/03/04}{Rededined macro} 
+%   Amsart has too large spacing
+%    \begin{macrocode}
+\def\l@subsubsection{\@tocline{2}{0pt}{1pc}{5pc}{}}
+%    \end{macrocode}
+%   
+% \end{macro}
 %
 % And |hyperref|
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
@@ -4830,6 +4878,8 @@ Computing Machinery]
 \providecommand*\@dotsep{4.5}
 %    \end{macrocode}
 % \end{macro}
+%
+% 
 %
 %\subsection{Theorems}
 %\label{sec:theorems}
