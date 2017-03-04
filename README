@@ -70,3 +70,4 @@ version 1.30    Bibtex style now recognizes https:// in doi.
 version 1.31    Changed default year and month to the current ones
 		(Matteo Riondato)
 		Table of contents now works
+		Marginalia now work in all formats

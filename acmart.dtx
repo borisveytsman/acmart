@@ -2029,48 +2029,56 @@ Computing Machinery]
 \RequirePackage{geometry}
 \ifcase\ACM@format@nr
 \relax % manuscript
-   \geometry{letterpaper,head=13pt}%
+   \geometry{letterpaper,head=13pt,
+   marginparwidth=6pc}%
 \or % acmsmall
    \geometry{twoside=true,
      includeheadfoot, head=13pt, foot=2pc,
      paperwidth=6.75in, paperheight=10in,
-     top=58pt, bottom=44pt, inner=46pt, outer=46pt
+     top=58pt, bottom=44pt, inner=46pt, outer=46pt,
+     marginparwidth=2pc
    }%
 \or % acmlarge
    \geometry{twoside=true, head=13pt, foot=2pc,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot,
-     top=78pt, bottom=114pt, inner=81pt, outer=81pt
+     top=78pt, bottom=114pt, inner=81pt, outer=81pt,
+     marginparwidth=4pc
      }%
 \or % acmtog
    \geometry{twoside=true, head=13pt, foot=2pc,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=24pt,
-     top=52pt, bottom=75pt, inner=52pt, outer=52pt
+     top=52pt, bottom=75pt, inner=52pt, outer=52pt,
+     marginparwidth=2pc
      }%
 \or % sigconf
    \geometry{twoside=true, head=13pt,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
-     top=57pt, bottom=73pt, inner=54pt, outer=54pt
+     top=57pt, bottom=73pt, inner=54pt, outer=54pt,
+     marginparwidth=2pc
      }%
 \or % siggraph
    \geometry{twoside=true, head=13pt,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
-     top=57pt, bottom=73pt, inner=54pt, outer=54pt
+     top=57pt, bottom=73pt, inner=54pt, outer=54pt,
+     marginparwidth=2pc
      }%
 \or % sigplan
    \geometry{twoside=true, head=13pt,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot=false, columnsep=2pc,
-     top=1in, bottom=1in, inner=0.75in, outer=0.75in
+     top=1in, bottom=1in, inner=0.75in, outer=0.75in,
+     marginparwidth=2pc
      }%
 \or % sigchi
    \geometry{twoside=true, head=13pt,
      paperwidth=8.5in, paperheight=11in,
      includeheadfoot, columnsep=2pc,
-     top=66pt, bottom=73pt, inner=54pt, outer=54pt
+     top=66pt, bottom=73pt, inner=54pt, outer=54pt,
+     marginparwidth=2pc
      }%
 \or % sigchi-a
    \geometry{twoside=false, head=13pt,
