@@ -2219,6 +2219,17 @@ Computing Machinery]
 %   
 % \end{macro}
 %
+%
+% \begin{macro}{\@textbottom}
+% \changes{v1.31}{2017/03/04}{Redefined} 
+%   Added some stretch according to David Carlisle's advice at
+%   http://tex.stackexchange.com/a/62318/5522
+%    \begin{macrocode}
+\def\@textbottom{\vskip \z@ \@plus 1pt}
+\let\@texttop\relax
+%    \end{macrocode}
+%   
+% \end{macro}
 %\subsection{Fonts}
 %\label{sec:fonts}
 %
