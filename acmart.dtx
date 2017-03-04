@@ -616,6 +616,9 @@
 % \authornote{This is an authornote}
 % \end{verbatim}
 %
+% Please never use \cs{footnotes} inside \cs{author} or \cs{title}
+% commands, since this confuses metadata extraction software (actually
+% these commands now produce errors).
 %
 % \DescribeMacro{\acmVolume}%
 % \DescribeMacro{\acmNumber}%
@@ -4455,10 +4458,15 @@ Computing Machinery]
 % \begin{macro}{\@mkbibcitation}
 % \changes{v1.17}{2016/07/10}{Changed format for sigs}
 % \changes{v1.17}{2016/07/10}{Added \cs{nobreak}}
+% \changes{v1.31}{2017/03/04}{Disabled linebreak}
 %   Print bibcitation format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup
   \def\footnotemark{}%
+  \def\\{\unskip{} \ignorespaces}%
+  \def\footnote{\ClassError{\@classname}{Please do note use footnotes
+      inside \string\title{} or \string\author{} command! Use
+      \string\titlenote{} or \string\authornote{} instead!}}%
   \par\medskip\small\noindent{\bfseries ACM Reference format:}\par\nobreak
   \noindent\authors. \@acmYear. \@title. 
   \if@ACM@journal
