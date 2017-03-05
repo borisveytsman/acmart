@@ -68,6 +68,7 @@ version 1.30    Bibtex style now recognizes https:// in doi.
 		Updated IMWUT and PACMPL
 
 version 1.31    Changed default year and month to the current ones
-		(Matteo Riondato)
+		(thanks to Matteo Riondato)
 		Table of contents now works
 		Marginalia now work in all formats
+		New command \additionalaffiliation
