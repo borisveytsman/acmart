@@ -230,7 +230,7 @@
 %            TOS, TOSEM, TOSN, TRETS,
 %            TSAS, TSC, TSLP, TWEB\@. \\
 %           acmlarge  & Large single column format, used for
-%           IMWUT, JOCCH, PACMPL, TAP \\
+%           IMWUT, JOCCH, PACMPL, POMACS, TAP \\
 %            acmtog   & Large double column format, used for
 %          TOG\\
 %           sigconf & Proceedings format for most of ACM
@@ -344,6 +344,7 @@
 %     JETC & ACM Journal on Emerging Technologies in Computing Systems \\
 %     JOCCH & ACM Journal on Computing and Cultural Heritage \\
 %     PACMPL & PACM on Programming Languages \\
+%     POMACS & PACM on Measurement and Analysis of Computing Systems \\
 %     TAAS & ACM Transactions on Autonomous and Adaptive Systems\\
 %     TACCESS & ACM Transactions on Accessible Computing\\
 %     TACO & ACM Transactions on Architecture and Code Optimization \\
@@ -1296,6 +1297,39 @@
 % |ACMPurple|, |ACMDarkBlue|.  You can use them in the color
 % assignments.
 %
+% ACM provides the following recommendation on color use.
+%
+% The most accessible approach would be to ensure that your article is
+% still readable when printed in greyscale. The most notable reasons
+% for this are: 
+% \begin{enumerate}
+% \item The most common type of inherited Color Vision Deficiency
+% (CVD) is red-green (in which similar-brightness colors that only
+% differ in their amounts of red or green are often confused), and it
+% affects up to 8\% of males and 0.5\% of females of Northern European
+% descent. 
+% \item The most common type of acquired Color Vision Deficiency (CVD)
+% is blue-yellow (including mild cases for many older adults).
+% \item Most printing is in Black \& White.
+% \item Situational impairments (e.g., bright sunlight shining on a
+% mobile screen) tend to reduce the entire color gamut, reducing color
+% discriminability.
+% \end{enumerate}
+% 
+% \textbf{Note:} It is \emph{not} safe to encode information using
+% only variations in color (i.e., only differences in hue and/or
+% saturation), as there is bound to be someone affected! 
+%
+% To ensure that you are using the most accessible colors, ACM
+% recommends that you choose sets of colors to help ensure suitable
+% variations in Black \& White using either of the following tools: 
+% \begin{enumerate}
+%  \item ColourBrewer: \url{http://colorbrewer2.org/}
+%  \item ACE: The Accessible Colour Evaluator:
+%    \url{http://daprlab.com/ace/} for designing WCAG 2.0 compliant
+%    palettes.
+%  \end{enumerate}
+%  
 %
 %\subsection{Other notable packages and typographic remarks}
 %\label{sec:ug_other}
@@ -1397,6 +1431,7 @@ Computing Machinery]
 % doi} 
 % \changes{v1.31}{2017/03/04}{Documentation changes} 
 % \changes{v1.32}{2017/03/07}{Format siggraph is now obsolete} 
+% \changes{v1.32}{2017/03/07}{Added POMACS journal option} 
 %
 %
 % And the driver code:
@@ -2544,6 +2579,7 @@ Computing Machinery]
   JETC,%
   JOCCH,%
   PACMPL,%
+  POMACS,%
   TAAS,%
   TACCESS,%
   TACO,%
@@ -2625,6 +2661,10 @@ Computing Machinery]
   \def\@journalName{Proceedings of the ACM on Programming Languages}%
   \def\@journalName{Proc. ACM Program. Lang.}%
   \def\@permissionCodeOne{2475-1421}%
+\or % POMACS
+  \def\@journalName{Proceedings of the ACM on Measurement and Analysis of Computing Systems}%
+  \def\@journalName{Proc. ACM Meas. Anal. Comput. Syst.}%
+  \def\@permissionCodeOne{2476-1249}%
 \or % TAAS
   \def\@journalName{ACM Transactions on Autonomous and Adaptive Systems}%
   \def\@journalNameShort{ACM Trans. Autonom. Adapt. Syst.}%
