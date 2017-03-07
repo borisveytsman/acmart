@@ -14,7 +14,6 @@ SAMPLES = \
 	sample-acmlarge.tex \
 	sample-acmtog.tex \
 	sample-sigconf.tex \
-	sample-siggraph.tex \
 	sample-sigplan.tex \
 	sample-sigchi.tex \
 	sample-sigchi-a.tex 

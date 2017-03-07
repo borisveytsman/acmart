@@ -211,7 +211,7 @@
 % The possible formats are listed in
 % Table~\ref{tab:opts_format}.  Note that formats starting with |acm|
 % are intended for journals and transactions, while formats starting
-% with |sig| are intended for proceedings published as books.
+% with |sig| are intended for proceedings published as books.  
 %
 % \begin{table}
 %   \centering
@@ -236,9 +236,8 @@
 %           sigconf & Proceedings format for most of ACM
 %          conferences (with the exceptions listed below) and all ICPS
 %          volumes\\
-%           siggraph & Proceedings format for SIGGRAPH and SIGGRAPH
-%          Asia conferences, published in ACM Transactions on Graphics
-%          journal issues \\
+%           siggraph & As of March 2017, this format is no longer
+%           used.  Please use sigconf for SIGGRAPH conferences. \\
 %            sigplan & Proceedings format for SIGPLAN conferences\\
 %            sigchi  & Proceedings format for SIGCHI conferences\\
 %           sigchi-a & Format for SIGCHI extended abstract\\
@@ -1397,6 +1396,7 @@ Computing Machinery]
 % \changes{v1.30}{2017/02/04}{Bibtex style now recognizes https:// in
 % doi} 
 % \changes{v1.31}{2017/03/04}{Documentation changes} 
+% \changes{v1.32}{2017/03/07}{Format siggraph is now obsolete} 
 %
 %
 % And the driver code:
@@ -1598,6 +1598,11 @@ Computing Machinery]
 %
 % Setting up switches
 %    \begin{macrocode}
+\ifnum\ACM@format@nr=5\relax % siggraph
+  \ClassWarning{\@classname}{The format `siggraph' is now obsolete.
+    I am switching to sigconf.}
+  \setkeys{acmart.cls}{format=sigconf}
+\fi
 \ifnum\ACM@format@nr=0\relax
   \@ACM@manuscripttrue
 \else

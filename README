@@ -74,4 +74,6 @@ version 1.31    Changed default year and month to the current ones
 		New command \additionalaffiliation
 		Documentation changes
 
-version 1.32    New DOI formatting
+version 1.32    New DOI formatting.
+		Format siggraph is now obsolete, and sigconf
+		is used instead.
