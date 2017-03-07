@@ -1161,7 +1161,7 @@
 %   their valuable comments and helpful suggestions. The work is
 %   supported by the \grantsponsor{GS501100001809}{National Natural
 %   Science Foundation of
-%   China}{http://dx.doi.org/10.13039/501100001809} under Grant
+%   China}{https://doi.org/10.13039/501100001809} under Grant
 %   No.:~\grantnum{GS501100001809}{61273304}
 %   and~\grantnum[http://www.nnsf.cn/youngscientsts]{GS501100001809}{Young 
 %   Scientsts' Support Program}.
@@ -1353,7 +1353,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/03/04 v1.31 Typesetting articles for Association of
+[2017/03/07 v1.32 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3515,9 +3515,10 @@ Computing Machinery]
 %
 % \begin{macro}{\@formatdoi}
 % \changes{v1.03}{2016/04/22}{Added macro}
+% \changes{v1.32}{2017/04/07}{New doi format}
 %   Print a clickable doi
 %    \begin{macrocode}
-\def\@formatdoi#1{\url{http://dx.doi.org/#1}}
+\def\@formatdoi#1{\url{https://doi.org/#1}}
 %    \end{macrocode}
 %   
 % \end{macro}

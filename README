@@ -73,3 +73,5 @@ version 1.31    Changed default year and month to the current ones
 		Marginalia now work in all formats
 		New command \additionalaffiliation
 		Documentation changes
+
+version 1.32    New DOI formatting

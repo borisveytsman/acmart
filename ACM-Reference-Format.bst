@@ -613,7 +613,7 @@ FUNCTION { strip.doi } % UTAH
   % "10.1145/1534530.1534545".  That is later typeset and displayed as
   % doi:10.1145/1534530.1534545 as the LAST item in the reference list
   % entry.  Publisher Web sites wrap this with a suitable link to a real
-  % URL to resolve the DOI, and the master http://dx.doi.org/ address is
+  % URL to resolve the DOI, and the master https://doi.org/ address is
   % preferred, since publisher-specific URLs can disappear in response
   % to economic events.  All journals are encouraged by the DOI
   % authorities to use that typeset format and link procedures for
@@ -691,7 +691,7 @@ FUNCTION { output.doi } % UTAH
       %% the presence of the line wrapping, but \path|...| and
       %% \verb|...| do not.
       "\showDOI{%" writeln
-      "\url{http://dx.doi.org/" strip.doi * "}}" * writeln
+      "\url{https://doi.org/" strip.doi * "}}" * writeln
     }
   if$
 }
