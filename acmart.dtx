@@ -268,7 +268,12 @@
 %
 % The option |anonymous| is used
 % for anonymous review process: all author information becomes
-% obscured.  
+% obscured.
+%
+% The option |timestamp| is used to include a time stamp in the
+% footer of each page.  When preparing a document, this can help avoid
+% confusing different revisions.  The footer also include the page range of
+% the document.  This helps detect missing pages in hard copies.
 %
 % \begin{table}
 %   \centering
@@ -286,7 +291,9 @@
 %     anonymous & false & Whether to make author(s) anonymous\\
 %     authorversion & false & Whether to generate a special
 %     version for authors' personal use or posting (see
-%     Section~\ref{sec:ug_topmatter})\\ 
+%     Section~\ref{sec:ug_topmatter})\\
+%     timestamp & false & Whether to put a time stamp in the
+%     footer of each page\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1573,6 +1580,22 @@ Computing Machinery]
   \fi}{\PackageError{\@classname}{Option anonymous can be either true or
     false}}
 \ExecuteOptionsX{anonymous=false}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
+% \begin{macro}{\if@ACM@timestamp}
+%   Whether we use timestamp mode
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{timestamp}[true]{%
+  \if@ACM@timestamp
+    \PackageInfo{\@classname}{Using timestamp mode}%
+  \else
+    \PackageInfo{\@classname}{Not using timestamp mode}%
+  \fi}{\PackageError{\@classname}{Option timestamp can be either true or
+    false}}
+\ExecuteOptionsX{timestamp=false}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4767,6 +4790,27 @@ Computing Machinery]
   \if@ACM@sigchiamode
      \fancyheadoffset[L]{\dimexpr(\marginparsep+\marginparwidth)}%
   \fi
+  \if@ACM@timestamp
+     \newcount\ACM@time@hours
+     % This should be:
+     %   \ACM@time@minutes=\numexpr \time / 60 \relax
+     % But \numexpr rounds-to-nearest instead of truncates.
+     % This is also why we use \newcount instead of \newcounter.
+     \ACM@time@hours=\the\time
+     \divide\ACM@time@hours by 60
+
+     \newcount\ACM@time@minutes
+     \ACM@time@minutes=\numexpr \time - \ACM@time@hours * 60 \relax
+
+     \newcommand\ACM@timestamp{%
+       \footnotesize%
+       \the\year-\two@digits{\the\month}-\two@digits{\the\day}{ }%
+       \two@digits{\the\ACM@time@hours}:\two@digits{\the\ACM@time@minutes}{ }%
+       (pp. \@startPage-\pageref*{TotPages})%
+     }
+
+     \fancyfoot[LO,RE]{\ACM@timestamp}
+  \fi
 }
 \pagestyle{standardpagestyle}
 %    \end{macrocode}
@@ -4875,6 +4919,9 @@ Computing Machinery]
   \else % Conference proceedings
     \fancyhead[L]{\ACM@linecount}%
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
+  \fi
+  \if@ACM@timestamp
+    \fancyfoot[LO,RE]{\ACM@timestamp}
   \fi
 }
 %    \end{macrocode}
