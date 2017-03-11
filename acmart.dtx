@@ -1392,7 +1392,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/03/07 v1.32 Typesetting articles for Association of
+[2017/03/11 v1.33 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1585,6 +1585,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\if@ACM@timestamp}
+% \changes{v1.33}{2017/03/10}{Added macro (Michael D.~Adams}
 %   Whether we use timestamp mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{timestamp}[true]{%
@@ -4693,6 +4694,30 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\ACM@timestamp}
+% \changes{v1.33}{2017/03/10}{Added macro (Michael D.~Adams}
+%  The timestamp system
+%    \begin{macrocode}
+\if@ACM@timestamp
+  \newcount\ACM@time@hours
+  % This should be:
+  % \ACM@time@minutes=\numexpr \time / 60 \relax
+  % But \numexpr rounds-to-nearest instead of truncates.
+  % This is also why we use \newcount instead of \newcounter.
+  \ACM@time@hours=\the\time
+  \divide\ACM@time@hours by 60  
+  \newcount\ACM@time@minutes
+  \ACM@time@minutes=\numexpr \time - \ACM@time@hours * 60 \relax
+  \newcommand\ACM@timestamp{%
+    \footnotesize%
+    \the\year-\two@digits{\the\month}-\two@digits{\the\day}{ }%
+    \two@digits{\the\ACM@time@hours}:\two@digits{\the\ACM@time@minutes}{ }%
+    (pp. \@startPage-\pageref*{TotPages})%
+  }
+\fi
+%    \end{macrocode}
+% \end{macro}
+% 
 % \begin{macro}{\@shortauthors}
 % \changes{v1.15}{2016/07/04}{Introduced macro}
 %   Even if the author redefined \cs{shortauthors}, we do not print
@@ -4741,6 +4766,7 @@ Computing Machinery]
 % \changes{v1.16}{2016/07/07}{Customize header/footer text font}
 % \changes{v1.17}{2016/07/10}{Added paper title to sigs}
 % \changes{v1.29}{2017/01/22}{Corrected printfolios (Matthew Fluet)}
+% \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams}
 %   The pagestyle for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
@@ -4790,24 +4816,6 @@ Computing Machinery]
      \fancyheadoffset[L]{\dimexpr(\marginparsep+\marginparwidth)}%
   \fi
   \if@ACM@timestamp
-     \newcount\ACM@time@hours
-     % This should be:
-     %   \ACM@time@minutes=\numexpr \time / 60 \relax
-     % But \numexpr rounds-to-nearest instead of truncates.
-     % This is also why we use \newcount instead of \newcounter.
-     \ACM@time@hours=\the\time
-     \divide\ACM@time@hours by 60
-
-     \newcount\ACM@time@minutes
-     \ACM@time@minutes=\numexpr \time - \ACM@time@hours * 60 \relax
-
-     \newcommand\ACM@timestamp{%
-       \footnotesize%
-       \the\year-\two@digits{\the\month}-\two@digits{\the\day}{ }%
-       \two@digits{\the\ACM@time@hours}:\two@digits{\the\ACM@time@minutes}{ }%
-       (pp. \@startPage-\pageref*{TotPages})%
-     }
-
      \fancyfoot[LO,RE]{\ACM@timestamp}
   \fi
 }
@@ -4883,6 +4891,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{firstpagestyle}
+% \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams}
 %   The pagestyle for the first page only.
 %    \begin{macrocode}
 \fancypagestyle{firstpagestyle}{%
@@ -4920,7 +4929,12 @@ Computing Machinery]
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
   \fi
   \if@ACM@timestamp
+    \ifnum\ACM@format@nr=0\relax % Manuscript
+    \fancyfoot[LO,RE]{\ACM@timestamp\quad
+      \footnotesize Manuscript submitted to ACM}
+    \else
     \fancyfoot[LO,RE]{\ACM@timestamp}
+    \fi
   \fi
 }
 %    \end{macrocode}

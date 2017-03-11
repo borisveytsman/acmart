@@ -78,3 +78,7 @@ version 1.32    New DOI formatting.
 		Format siggraph is now obsolete, and sigconf
 		is used instead.
 		New proceedings title: POMACS.
+
+version 1.33    New option `timestamp' (Michael D. Adams)
+                Documentation updates
+		
