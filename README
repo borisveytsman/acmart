@@ -81,4 +81,5 @@ version 1.32    New DOI formatting.
 
 version 1.33    New option `timestamp' (Michael D. Adams)
                 Documentation updates
+		Bug fixes
 		

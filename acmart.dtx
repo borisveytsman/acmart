@@ -1392,7 +1392,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/03/11 v1.33 Typesetting articles for Association of
+[2017/03/12 v1.33 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -4036,9 +4036,10 @@ Computing Machinery]
 %
 % \begin{macro}{\@subtitlefont}
 % \changes{v1.06}{2016/05/01}{Added macro}
+% \changes{v1.33}{2017/03/12}{Added \cs{normalsize}}
 %   The font to typeset title
 %    \begin{macrocode}
-\def\@subtitlefont{%
+\def\@subtitlefont{\normalsize
   \ifcase\ACM@format@nr
   \relax % manuscript
     \mdseries
