@@ -1448,7 +1448,7 @@ Computing Machinery]
 %<*gobble>
 \documentclass{ltxdoc}
 \usepackage{array,booktabs,amsmath,graphicx,fancyvrb,tabularx}
-\usepackage[tt=false]{libertine}
+\usepackage[tt=false, type1=true]{libertine}
 \usepackage[varqu]{zi4}
 \usepackage[libertine]{newtxmath}
 \usepackage[tableposition=top]{caption}
@@ -2369,10 +2369,12 @@ Computing Machinery]
 % 
 % \changes{v1.30}{2017/02/15}{Switched to T1: looks like libertine has
 % problems with \cs{l} in OT1}%
+% \changes{v1.33}{2017/03/12}{Switched to Type~1 fonts for libertine
+% even if OTF-capable engine is used (Kai Mindermann)} 
 % We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
-\RequirePackage[tt=false]{libertine}
+\RequirePackage[tt=false, type1=true]{libertine}
 \RequirePackage[varqu]{zi4}
 \RequirePackage[libertine]{newtxmath}
 \RequirePackage[T1]{fontenc}
