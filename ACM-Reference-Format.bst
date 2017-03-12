@@ -2514,13 +2514,12 @@ FUNCTION { article }
   if$
 
   crossref missing$
-    { format.journal.volume.number.day.month.year }
+    { format.journal.volume.number.day.month.year output}
     {
       "cross reference in @Article{...} is unusual" warning$
       format.article.crossref output.nonnull
     }
   if$
-  output
 
   format.pages.check.without.articleno output
   format.articleno.numpages output
