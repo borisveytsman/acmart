@@ -592,7 +592,11 @@ FUNCTION { format.day.month.year }     % UTAH
   % ", Article nnn "
   articleno empty.or.unknown
     { "" }
-    { ", " format.articleno * }
+    { output.state after.block =
+       {", " format.articleno * }
+       { format.articleno  }
+      if$
+    }
   if$
   " (" * format.day.month * format.year * ")" *
 }
