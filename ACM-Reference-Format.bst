@@ -1660,6 +1660,22 @@ FUNCTION { format.articleno.numpages }
   if$
 }
 
+FUNCTION {calc.format.page.count}
+{
+  numpages empty.or.unknown
+   {
+     pages empty.or.unknown
+        {
+        "" 'page.count :=
+        }
+        { reduce.pages.to.page.count }
+     if$
+   }
+   { numpages 'page.count := }
+  if$
+  format.page.count  
+}
+
 FUNCTION { format.journal.volume.number.day.month.year }
 {
   % By Young (and Spencer)
@@ -2110,7 +2126,8 @@ FUNCTION { format.journal.volume.number.day.month.year }
       if$
     }
   if$
-
+  after.block 'output.state :=
+  
   format.day.month.year *
 }
 
@@ -2773,7 +2790,8 @@ FUNCTION { misc }
     { "\bibinfo{howpublished}{" howpublished "}" * * output }
   if$
   "" output.nonnull.dot.space
-  output.day.month.year      
+  output.day.month.year
+  calc.format.page.count output
   fin.block
   output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
@@ -2867,6 +2885,7 @@ FUNCTION { periodical }
   new.sentence
   format.articletitle "title" output.check
   format.journal.volume.number.day.month.year output
+  calc.format.page.count output
   fin.entry
 }
 
@@ -2938,6 +2957,7 @@ FUNCTION { unpublished }
   format.title "title" output.check
   fin.sentence
   output.day.month.year                 % UTAH
+  calc.format.page.count output
   fin.block
   output.issue.doi.coden.isxn.lccn.url.eprint.note.check
   fin.entry
