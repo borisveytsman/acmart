@@ -4707,19 +4707,16 @@ Computing Machinery]
 %  The timestamp system
 %    \begin{macrocode}
 \if@ACM@timestamp
-  \newcount\ACM@time@hours
-  % This should be:
-  % \ACM@time@minutes=\numexpr \time / 60 \relax
-  % But \numexpr rounds-to-nearest instead of truncates.
-  % This is also why we use \newcount instead of \newcounter.
-  \ACM@time@hours=\the\time
-  \divide\ACM@time@hours by 60  
-  \newcount\ACM@time@minutes
-  \ACM@time@minutes=\numexpr \time - \ACM@time@hours * 60 \relax
+  % Subtracting 30 from \time gives us the effect of rounding-down despite
+  % \numexpr rounding to nearest
+  \newcounter{ACM@time@hours}
+  \setcounter{ACM@time@hours}{\numexpr (\time - 30) / 60 \relax}
+  \newcounter{ACM@time@minutes}
+  \setcounter{ACM@time@minutes}{\numexpr \time - \theACM@time@hours * 60 \relax}
   \newcommand\ACM@timestamp{%
     \footnotesize%
     \the\year-\two@digits{\the\month}-\two@digits{\the\day}{ }%
-    \two@digits{\the\ACM@time@hours}:\two@digits{\the\ACM@time@minutes}{ }%
+    \two@digits{\theACM@time@hours}:\two@digits{\theACM@time@minutes}{ }%
     (pp. \@startPage-\pageref*{TotPages})%
   }
 \fi
