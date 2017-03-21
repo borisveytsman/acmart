@@ -156,6 +156,7 @@
 % \item \textsl{caption}, \url{http://www.ctan.org/pkg/caption}
 % \item \textsl{comment}, \url{http://www.ctan.org/pkg/comment}
 % \item \textsl{environ}, \url{http://www.ctan.org/pkg/environ}
+% \item \textsl{etoolbox}, \url{http://www.ctan.org/pkg/etoolbox}
 % \item \textsl{fancyhdr}, \url{http://www.ctan.org/pkg/fancyhdr}
 % \item \textsl{float}, \url{http://www.ctan.org/pkg/float}
 % \item \textsl{fontaxes}, \url{http://www.ctan.org/pkg/fontaxes}
@@ -177,6 +178,7 @@
 % \item \textsl{oberdiek}, \url{http://www.ctan.org/pkg/oberdiek}
 % \item \textsl{pdftex-def}, \url{http://www.ctan.org/pkg/pdftex-def}
 % \item \textsl{setspace}, \url{http://www.ctan.org/pkg/setspace}
+% \item \textsl{scrlfile}, \url{http://www.ctan.org/pkg/scrlfile}
 % \item \textsl{totpages}, \url{http://www.ctan.org/pkg/totpages}
 % \item \textsl{trimspaces}, \url{http://www.ctan.org/pkg/trimspaces}
 % \item \textsl{upquote}, \url{http://www.ctan.org/pkg/upquote}
@@ -1760,6 +1762,23 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
+% We use |etoolbox| and |scrlfile|  to delay-load some packages such that
+% \begin{enumerate}
+% \renewcommand{\theenumi}{\alph{enumi}}
+% \item they are surely loaded before the document begin,
+% \item macros depending on such package are executed once it is loaded, but \emph{also}
+% \item users can customize options (if permissible) and load such package directly.
+% \end{enumerate}
+% The pattern goes as follows:
+% \begin{verbatim}
+% \PassOptionsToPackage{optionA,optionB}{package}
+% \AtEndPreamble{\RequirePackage{package}}
+% \AfterPackage+{package}{\MacroFromPackage}
+% \end{verbatim}
+%    \begin{macrocode}
+\RequirePackage{etoolbox,scrlfile}
+%    \end{macrocode}
+%
 % \changes{v1.19}{2016/07/28}{Include 'References' in PDF bookmarks
 % (Matthew Fluet)}
 % \changes{v1.14}{2016/06/09}{Patched \cs{citestyle}}
@@ -2057,11 +2076,12 @@ Computing Machinery]
   \urlstyle{sf}
 \fi
 \if@ACM@screen
-  \hypersetup{colorlinks,
-    linkcolor=ACMRed,
-    citecolor=ACMPurple,
-    urlcolor=ACMDarkBlue,
-    filecolor=ACMDarkBlue}
+  \AfterPackage+{xcolor}{
+    \hypersetup{colorlinks,
+      linkcolor=ACMRed,
+      citecolor=ACMPurple,
+      urlcolor=ACMDarkBlue,
+      filecolor=ACMDarkBlue}}
 \else
   \hypersetup{hidelinks}
 \fi
@@ -2105,21 +2125,24 @@ Computing Machinery]
 % \end{macro}
 %
 %
-% Graphics and color
+% Graphics and color (delay-loaded)
 %    \begin{macrocode}
-\RequirePackage{graphicx, xcolor}
+\RequirePackage{graphicx}
+\AtEndPreamble{\RequirePackage{xcolor}}
 %    \end{macrocode}
 %
 % We define ACM colors according to~\cite{ACMIdentityStandards}:
 %    \begin{macrocode}
-\definecolor[named]{ACMBlue}{cmyk}{1,0.1,0,0.1}
-\definecolor[named]{ACMYellow}{cmyk}{0,0.16,1,0}
-\definecolor[named]{ACMOrange}{cmyk}{0,0.42,1,0.01}
-\definecolor[named]{ACMRed}{cmyk}{0,0.90,0.86,0}
-\definecolor[named]{ACMLightBlue}{cmyk}{0.49,0.01,0,0}
-\definecolor[named]{ACMGreen}{cmyk}{0.20,0,1,0.19}
-\definecolor[named]{ACMPurple}{cmyk}{0.55,1,0,0.15}
-\definecolor[named]{ACMDarkBlue}{cmyk}{1,0.58,0,0.21}
+\AfterPackage+{xcolor}{%
+  \definecolor[named]{ACMBlue}{cmyk}{1,0.1,0,0.1}
+  \definecolor[named]{ACMYellow}{cmyk}{0,0.16,1,0}
+  \definecolor[named]{ACMOrange}{cmyk}{0,0.42,1,0.01}
+  \definecolor[named]{ACMRed}{cmyk}{0,0.90,0.86,0}
+  \definecolor[named]{ACMLightBlue}{cmyk}{0.49,0.01,0,0}
+  \definecolor[named]{ACMGreen}{cmyk}{0.20,0,1,0.19}
+  \definecolor[named]{ACMPurple}{cmyk}{0.55,1,0,0.15}
+  \definecolor[named]{ACMDarkBlue}{cmyk}{1,0.58,0,0.21}
+}
 %    \end{macrocode}
 % 
 %
@@ -2261,18 +2284,19 @@ Computing Machinery]
 % \begin{macro}{\endminipage}
 %   We do not use footnote rules in minipages
 %    \begin{macrocode}
-\def\endminipage{%
-    \par
-    \unskip
-    \ifvoid\@mpfootins\else
-      \vskip\skip\@mpfootins
-      \normalcolor
-      \unvbox\@mpfootins
-    \fi
-    \@minipagefalse   %% added 24 May 89
-  \color@endgroup
+\AfterPackage+{xcolor}{%
+  \def\endminipage{%
+      \par
+      \unskip
+      \ifvoid\@mpfootins\else
+        \vskip\skip\@mpfootins
+        \normalcolor
+        \unvbox\@mpfootins
+      \fi
+      \@minipagefalse   %% added 24 May 89
+    \color@endgroup
   \egroup
-  \expandafter\@iiiparbox\@mpargs{\unvbox\@tempboxa}}
+  \expandafter\@iiiparbox\@mpargs{\unvbox\@tempboxa}}}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2289,16 +2313,17 @@ Computing Machinery]
 %   In sigchi-a mode our footnotes are on the margins!
 %    \begin{macrocode}
 \if@ACM@sigchiamode
-\long\def\@footnotetext#1{\marginpar{%
-    \reset@font\small
-    \interlinepenalty\interfootnotelinepenalty
-    \protected@edef\@currentlabel{%
-       \csname p@footnote\endcsname\@thefnmark
-    }%
-    \color@begingroup
-      \@makefntext{%
-        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
-    \color@endgroup}}%
+\AfterPackage+{xcolor}{%
+  \long\def\@footnotetext#1{\marginpar{%
+      \reset@font\small
+      \interlinepenalty\interfootnotelinepenalty
+      \protected@edef\@currentlabel{%
+         \csname p@footnote\endcsname\@thefnmark
+      }%
+      \color@begingroup
+        \@makefntext{%
+          \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+      \color@endgroup}}}%
 \fi
 %    \end{macrocode}
 %
@@ -2308,18 +2333,19 @@ Computing Machinery]
 % \changes{v1.13}{2016/06/06}{Made minipage footnotes centered}
 %   We want the footnotes in minipages centered:
 %    \begin{macrocode}
-\long\def\@mpfootnotetext#1{%
-  \global\setbox\@mpfootins\vbox{%
-    \unvbox\@mpfootins
-    \reset@font\footnotesize
-    \hsize\columnwidth
-    \@parboxrestore
-    \protected@edef\@currentlabel
-         {\csname p@mpfootnote\endcsname\@thefnmark}%
-    \color@begingroup\centering
-      \@makefntext{%
-        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
-    \color@endgroup}}
+\AfterPackage+{xcolor}{%
+  \long\def\@mpfootnotetext#1{%
+    \global\setbox\@mpfootins\vbox{%
+      \unvbox\@mpfootins
+      \reset@font\footnotesize
+      \hsize\columnwidth
+      \@parboxrestore
+      \protected@edef\@currentlabel
+           {\csname p@mpfootnote\endcsname\@thefnmark}%
+      \color@begingroup\centering
+        \@makefntext{%
+          \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+      \color@endgroup}}}
 %    \end{macrocode}
 %   
 % \end{macro}
@@ -2523,16 +2549,17 @@ Computing Machinery]
 %   This is the end of a wide box - we basically move everything
 %   to the left
 %    \begin{macrocode}
-\def\@endwidefloatbox{%
-  \par\vskip\z@skip
-  \@minipagefalse
-  \outer@nobreak
-  \egroup
-  \color@endbox
-  \global\setbox\@currbox=\vbox{\moveleft
-    \dimexpr(\fulltextwidth-\textwidth)\box\@currbox}%
-  \wd\@currbox=\textwidth
-}
+\AfterPackage+{xcolor}{%
+  \def\@endwidefloatbox{%
+    \par\vskip\z@skip
+    \@minipagefalse
+    \outer@nobreak
+    \egroup
+    \color@endbox
+    \global\setbox\@currbox=\vbox{\moveleft
+      \dimexpr(\fulltextwidth-\textwidth)\box\@currbox}%
+    \wd\@currbox=\textwidth
+  }}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4677,13 +4704,14 @@ Computing Machinery]
 %    \begin{macrocode}
 \if@ACM@review
   \newsavebox{\ACM@linecount@bx}
-  \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
-      \newlength\ACM@linecount@bxht\setlength{\ACM@linecount@bxht}{-\baselineskip}
-      \@tempcnta\@ne\relax
-      \loop{\color{ACMRed}\scriptsize\the\@tempcnta}\\
-      \advance\@tempcnta by \@ne
-      \addtolength{\ACM@linecount@bxht}{\baselineskip}
-      \ifdim\ACM@linecount@bxht<\textheight\repeat}}
+  \AfterPackage+{xcolor}{%
+    \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
+        \newlength\ACM@linecount@bxht\setlength{\ACM@linecount@bxht}{-\baselineskip}
+        \@tempcnta\@ne\relax
+        \loop{\color{ACMRed}\scriptsize\the\@tempcnta}\\
+        \advance\@tempcnta by \@ne
+        \addtolength{\ACM@linecount@bxht}{\baselineskip}
+        \ifdim\ACM@linecount@bxht<\textheight\repeat}}}
 \fi
 %    \end{macrocode}
 %
@@ -4865,31 +4893,31 @@ Computing Machinery]
 % \begin{macro}{\@folioblob}
 %   The macro to typeset the folio blob.
 %    \begin{macrocode}
-\def\@folioblob{\@tempcnta=\@acmArticleSeq\relax
+\AfterPackage+{xcolor}{%
+  \def\@folioblob{\@tempcnta=\@acmArticleSeq\relax
 %    \end{macrocode}
 % First, we calculate \cs{@acmArticleSeq} modulo \cs{@folio@max}
 %    \begin{macrocode}
-  \loop
-     \ifnum\@tempcnta>\@folio@max\relax
-      \advance\@tempcnta by - \@folio@max
-   \repeat
+   \loop
+      \ifnum\@tempcnta>\@folio@max\relax
+       \advance\@tempcnta by - \@folio@max
+    \repeat
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-    \advance\@tempcnta by -1\relax
-    \@tempdima=\@folio@ht\relax
-    \multiply\@tempdima by \the\@tempcnta\relax
-    \advance\@tempdima by -\@folio@voffset\relax
-    \begin{picture}(0,0)
-    \makebox[\z@]{\raisebox{-\@tempdima}{%
-        \rlap{%
-          \raisebox{-0.45\@folio@ht}[\z@][\z@]{%
-            \rule{\@folio@wd}{\@folio@ht}}}%
-        \parbox{\@folio@wd}{%
-          \centering
-          \textcolor{white}{\LARGE\bfseries\sffamily\@acmArticle}}}}
-  \end{picture}}
-
+      \advance\@tempcnta by -1\relax
+      \@tempdima=\@folio@ht\relax
+      \multiply\@tempdima by \the\@tempcnta\relax
+      \advance\@tempdima by -\@folio@voffset\relax
+      \begin{picture}(0,0)
+      \makebox[\z@]{\raisebox{-\@tempdima}{%
+          \rlap{%
+            \raisebox{-0.45\@folio@ht}[\z@][\z@]{%
+              \rule{\@folio@wd}{\@folio@ht}}}%
+          \parbox{\@folio@wd}{%
+            \centering
+            \textcolor{white}{\LARGE\bfseries\sffamily\@acmArticle}}}}
+    \end{picture}}}
 %    \end{macrocode}
 %
 %
