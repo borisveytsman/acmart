@@ -2375,14 +2375,8 @@ FUNCTION { author.editor.key.label }
   if$
 }
 
-FUNCTION { calc.label }
+FUNCTION { calc.basic.label }
 {
-  % Changed - GNP. See also author.organization.sort, editor.organization.sort
-  % Form label for BibTeX entry. The classification of which fields are used
-  % for which type of entry (book, inbook, etc.) are taken from alpha.bst.
-  % The change here from newapa is to also include organization as a
-  % citation label if author or editor is missing.
-
   type$ "book" =
   type$ "inbook" =
   or
@@ -2399,6 +2393,17 @@ FUNCTION { calc.label }
       if$
     }
   if$
+}
+
+FUNCTION { calc.label }
+{
+  % Changed - GNP. See also author.organization.sort, editor.organization.sort
+  % Form label for BibTeX entry. The classification of which fields are used
+  % for which type of entry (book, inbook, etc.) are taken from alpha.bst.
+  % The change here from newapa is to also include organization as a
+  % citation label if author or editor is missing.
+
+  calc.basic.label
 
   author empty.or.unknown  % generate the full label citation information.
     {
@@ -3308,7 +3313,7 @@ FUNCTION { forward.pass }
   last.label
   % OLD:calc.label year field.or.null purify$ #-1 #4 substring$ * % add year
   % NEW:
-  author.key.label year field.or.null purify$ #-1 #4 substring$ * % add year
+  calc.basic.label year field.or.null purify$ #-1 #4 substring$ * % add year
   #1 entry.max$ substring$ =     % are they equal?
      { last.extra.num #1 + 'last.extra.num :=
        last.extra.num int.to.chr$ 'extra.label :=
@@ -3317,7 +3322,7 @@ FUNCTION { forward.pass }
        "" 'extra.label :=
        % OLD: calc.label year field.or.null purify$ #-1 #4 substring$ * % add year
        % NEW:
-       author.key.label year field.or.null purify$ #-1 #4 substring$ * % add year
+       calc.basic.label year field.or.null purify$ #-1 #4 substring$ * % add year
        #1 entry.max$ substring$ 'last.label := % assign to last.label
      }
   if$
