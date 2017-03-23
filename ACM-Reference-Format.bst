@@ -1676,6 +1676,8 @@ FUNCTION {calc.format.page.count}
   format.page.count  
 }
 
+
+
 FUNCTION { format.journal.volume.number.day.month.year }
 {
   % By Young (and Spencer)
@@ -2127,8 +2129,14 @@ FUNCTION { format.journal.volume.number.day.month.year }
     }
   if$
   after.block 'output.state :=
-  
-  format.day.month.year *
+
+  % Sometimes proceedings are published in journals
+  % In this case we do not want to put year, day and month here
+
+  type$ "inproceedings" =
+    { }
+    {format.day.month.year * }
+  if$
 }
 
 FUNCTION { format.chapter.pages }
