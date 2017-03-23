@@ -2332,23 +2332,6 @@ FUNCTION { author.key.label }
   if$
 }
 
-FUNCTION { author.key.organization.label }
-{ % added - gnp. Provide label formatting by organization if author is null.
-  author empty.or.unknown
-    { organization empty.or.unknown
-        { key empty.or.unknown
-            { "no key, author or organization in " cite$ * warning$
-              cite$ #1 #3 substring$ }
-            'key
-          if$
-        }
-        { organization }
-      if$
-    }
-    { author format.lab.names }
-  if$
-}
-
 FUNCTION { editor.key.organization.label }
 { % added - gnp. Provide label formatting by organization if editor is null.
   editor empty.or.unknown
@@ -2383,14 +2366,29 @@ FUNCTION { author.editor.key.label }
   if$
 }
 
-FUNCTION { calc.label }
-{
-  % Changed - GNP. See also author.organization.sort, editor.organization.sort
-  % Form label for BibTeX entry. The classification of which fields are used
-  % for which type of entry (book, inbook, etc.) are taken from alpha.bst.
-  % The change here from newapa is to also include organization as a
-  % citation label if author or editor is missing.
+FUNCTION { author.editor.key.organization.label }
+{ % added - gnp. Provide label formatting by organization if author is null.
+  author empty.or.unknown
+    { editor empty.or.unknown
+        { organization empty.or.unknown
+            { key empty.or.unknown
+               { "no key, author, editor or organization in " cite$ * warning$
+                 cite$ #1 #3 substring$ }
+               'key
+              if$
+            }
+            { organization }
+          if$
+        }
+        { editor format.lab.names }
+      if$
+    }
+    { author format.lab.names }
+  if$
+}
 
+FUNCTION { calc.basic.label }
+{
   type$ "book" =
   type$ "inbook" =
   or
@@ -2400,13 +2398,24 @@ FUNCTION { calc.label }
     { type$ "proceedings" =
         'editor.key.organization.label
         { type$ "manual" =
-            'author.key.organization.label
+            'author.editor.key.organization.label
             'author.key.label
           if$
         }
       if$
     }
   if$
+}
+
+FUNCTION { calc.label }
+{
+  % Changed - GNP. See also author.editor.organization.sort, editor.organization.sort
+  % Form label for BibTeX entry. The classification of which fields are used
+  % for which type of entry (book, inbook, etc.) are taken from alpha.bst.
+  % The change here from newapa is to also include organization as a
+  % citation label if author or editor is missing.
+
+  calc.basic.label
 
   author empty.or.unknown  % generate the full label citation information.
     {
@@ -3215,27 +3224,6 @@ FUNCTION { author.editor.sort }
   if$
 }
 
-FUNCTION { author.organization.sort }
-{
-  % added - GNP. Stack author or organization for sorting (from alpha.bst).
-  % Unlike alpha.bst, we need entire names, not abbreviations
-
-  author empty.or.unknown
-    { organization empty.or.unknown
-        { key empty.or.unknown
-            { "to sort, need author, organization, or key in " cite$ * warning$
-              ""
-            }
-            { key sortify }
-          if$
-        }
-        { organization sortify }
-      if$
-    }
-    { author sort.format.names }
-  if$
-}
-
 FUNCTION { editor.organization.sort }
 {
   % added - GNP. Stack editor or organization for sorting (from alpha.bst).
@@ -3257,6 +3245,32 @@ FUNCTION { editor.organization.sort }
   if$
 }
 
+FUNCTION { author.editor.organization.sort }
+{
+  % added - GNP. Stack author or organization for sorting (from alpha.bst).
+  % Unlike alpha.bst, we need entire names, not abbreviations
+
+  author empty.or.unknown
+    {
+      editor empty.or.unknown
+        { organization empty.or.unknown
+            { key empty.or.unknown
+                { "to sort, need author, editor, or key in " cite$ * warning$
+                ""
+                }
+                { key sortify }
+              if$
+            }
+            { organization sortify }
+          if$
+        }
+        { editor sort.format.names }
+      if$
+    }
+    { author sort.format.names }
+  if$
+}
+
 FUNCTION { presort }
 {
   % Presort creates the bibentry's label via a call to calc.label, and then
@@ -3271,11 +3285,13 @@ FUNCTION { presort }
   type$ "book" =
   type$ "inbook" =
   or
+  type$ "periodical" =
+  or
     'author.editor.sort
     { type$ "proceedings" =
         'editor.organization.sort
         { type$ "manual" =
-            'author.organization.sort
+            'author.editor.organization.sort
             'author.sort
           if$
         }
@@ -3314,7 +3330,7 @@ FUNCTION { forward.pass }
   last.label
   % OLD:calc.label year field.or.null purify$ #-1 #4 substring$ * % add year
   % NEW:
-  author.key.label year field.or.null purify$ #-1 #4 substring$ * % add year
+  calc.basic.label year field.or.null purify$ #-1 #4 substring$ * % add year
   #1 entry.max$ substring$ =     % are they equal?
      { last.extra.num #1 + 'last.extra.num :=
        last.extra.num int.to.chr$ 'extra.label :=
@@ -3323,7 +3339,7 @@ FUNCTION { forward.pass }
        "" 'extra.label :=
        % OLD: calc.label year field.or.null purify$ #-1 #4 substring$ * % add year
        % NEW:
-       author.key.label year field.or.null purify$ #-1 #4 substring$ * % add year
+       calc.basic.label year field.or.null purify$ #-1 #4 substring$ * % add year
        #1 entry.max$ substring$ 'last.label := % assign to last.label
      }
   if$
