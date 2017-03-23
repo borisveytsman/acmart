@@ -2324,23 +2324,6 @@ FUNCTION { author.key.label }
   if$
 }
 
-FUNCTION { author.key.organization.label }
-{ % added - gnp. Provide label formatting by organization if author is null.
-  author empty.or.unknown
-    { organization empty.or.unknown
-        { key empty.or.unknown
-            { "no key, author or organization in " cite$ * warning$
-              cite$ #1 #3 substring$ }
-            'key
-          if$
-        }
-        { organization }
-      if$
-    }
-    { author format.lab.names }
-  if$
-}
-
 FUNCTION { editor.key.organization.label }
 { % added - gnp. Provide label formatting by organization if editor is null.
   editor empty.or.unknown
@@ -2375,6 +2358,27 @@ FUNCTION { author.editor.key.label }
   if$
 }
 
+FUNCTION { author.editor.key.organization.label }
+{ % added - gnp. Provide label formatting by organization if author is null.
+  author empty.or.unknown
+    { editor empty.or.unknown
+        { organization empty.or.unknown
+            { key empty.or.unknown
+               { "no key, author, editor or organization in " cite$ * warning$
+                 cite$ #1 #3 substring$ }
+               'key
+              if$
+            }
+            { organization }
+          if$
+        }
+        { editor format.lab.names }
+      if$
+    }
+    { author format.lab.names }
+  if$
+}
+
 FUNCTION { calc.basic.label }
 {
   type$ "book" =
@@ -2386,7 +2390,7 @@ FUNCTION { calc.basic.label }
     { type$ "proceedings" =
         'editor.key.organization.label
         { type$ "manual" =
-            'author.key.organization.label
+            'author.editor.key.organization.label
             'author.key.label
           if$
         }
@@ -2397,7 +2401,7 @@ FUNCTION { calc.basic.label }
 
 FUNCTION { calc.label }
 {
-  % Changed - GNP. See also author.organization.sort, editor.organization.sort
+  % Changed - GNP. See also author.editor.organization.sort, editor.organization.sort
   % Form label for BibTeX entry. The classification of which fields are used
   % for which type of entry (book, inbook, etc.) are taken from alpha.bst.
   % The change here from newapa is to also include organization as a
@@ -3212,27 +3216,6 @@ FUNCTION { author.editor.sort }
   if$
 }
 
-FUNCTION { author.organization.sort }
-{
-  % added - GNP. Stack author or organization for sorting (from alpha.bst).
-  % Unlike alpha.bst, we need entire names, not abbreviations
-
-  author empty.or.unknown
-    { organization empty.or.unknown
-        { key empty.or.unknown
-            { "to sort, need author, organization, or key in " cite$ * warning$
-              ""
-            }
-            { key sortify }
-          if$
-        }
-        { organization sortify }
-      if$
-    }
-    { author sort.format.names }
-  if$
-}
-
 FUNCTION { editor.organization.sort }
 {
   % added - GNP. Stack editor or organization for sorting (from alpha.bst).
@@ -3251,6 +3234,32 @@ FUNCTION { editor.organization.sort }
       if$
     }
     { editor sort.format.names }
+  if$
+}
+
+FUNCTION { author.editor.organization.sort }
+{
+  % added - GNP. Stack author or organization for sorting (from alpha.bst).
+  % Unlike alpha.bst, we need entire names, not abbreviations
+
+  author empty.or.unknown
+    {
+      editor empty.or.unknown
+        { organization empty.or.unknown
+            { key empty.or.unknown
+                { "to sort, need author, editor, or key in " cite$ * warning$
+                ""
+                }
+                { key sortify }
+              if$
+            }
+            { organization sortify }
+          if$
+        }
+        { editor sort.format.names }
+      if$
+    }
+    { author sort.format.names }
   if$
 }
 
@@ -3274,7 +3283,7 @@ FUNCTION { presort }
     { type$ "proceedings" =
         'editor.organization.sort
         { type$ "manual" =
-            'author.organization.sort
+            'author.editor.organization.sort
             'author.sort
           if$
         }
