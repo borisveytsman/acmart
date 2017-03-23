@@ -3263,6 +3263,8 @@ FUNCTION { presort }
   type$ "book" =
   type$ "inbook" =
   or
+  type$ "periodical" =
+  or
     'author.editor.sort
     { type$ "proceedings" =
         'editor.organization.sort
