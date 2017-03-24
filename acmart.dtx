@@ -1394,7 +1394,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/03/18 v1.33 Typesetting articles for Association of
+[2017/03/23 v1.33 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2069,6 +2069,8 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % Bibliography mangling. 
+% \changes{v1.33}{2017/03/23}{Moved \cs{citename} definition for
+% non-natbib bibliography, so a package may redefine it} 
 %    \begin{macrocode}
 \if@ACM@natbib
   \let\citeN\cite
@@ -2083,7 +2085,9 @@ Computing Machinery]
        \let\NAT@ctype\@ne\NAT@partrue\NAT@fullfalse\NAT@open\NAT@citetp}%
   \providecommand\newblock{}%
 \else
-  \providecommand\citename[1]{#1}
+  \AtBeginDocument{%
+    \def\shortcite#1{\cite{#1}}%
+    \providecommand\citename[1]{#1}}
 \fi
 \def\shortcite#1{\ifNAT@numbers\cite{#1}\else\citeyear{#1}\fi}
 %    \end{macrocode}
