@@ -2392,10 +2392,12 @@ FUNCTION { calc.basic.label }
   type$ "book" =
   type$ "inbook" =
   or
-  type$ "periodical" =
+  type$ "article" =
   or
     'author.editor.key.label
     { type$ "proceedings" =
+      type$ "periodical" =
+      or
         'editor.key.organization.label
         { type$ "manual" =
             'author.editor.key.organization.label
@@ -3285,10 +3287,12 @@ FUNCTION { presort }
   type$ "book" =
   type$ "inbook" =
   or
-  type$ "periodical" =
+  type$ "article" =
   or
     'author.editor.sort
     { type$ "proceedings" =
+      type$ "periodical" =
+      or
         'editor.organization.sort
         { type$ "manual" =
             'author.editor.organization.sort
