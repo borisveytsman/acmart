@@ -1601,13 +1601,7 @@ FUNCTION { format.page.count }
 {
   page.count empty.or.unknown
     { "" }
-    {
-      articleno empty.or.unknown
-        { "numpages field, but no articleno field, in " cite$ * warning$ }
-        { }
-      if$
-      "\bibinfo{numpages}{" page.count * "}~pages" *
-    }
+    { "\bibinfo{numpages}{" page.count * "}~pages" * }
   if$
 }
 
@@ -1633,7 +1627,7 @@ FUNCTION { format.articleno.numpages }
     {
       numpages empty.or.unknown
         { }
-        { "require articleno with numpages field in " cite$ * warning$ }
+        { "numpages field, but no articleno field, in " cite$ * warning$ }
       if$
       ""
     }
@@ -1642,7 +1636,7 @@ FUNCTION { format.articleno.numpages }
         {
           pages empty.or.unknown
             {
-              "require pages or numpages fields with articleno field in " cite$ * warning$
+              "articleno, but no pages or numpages field in " cite$ * warning$
               "" 'page.count :=
             }
             { reduce.pages.to.page.count }
