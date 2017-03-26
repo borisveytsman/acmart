@@ -6,7 +6,7 @@
 %%%     date            = "10 July 2016",
 %%%     filename        = "ACM-Reference-Format.bst",
 %%%     email           = "beebe@math.utah.edu, beebe@acm.org,
-%%%                        beebe@computer.org, borisv@lk.net, murray@hq.acm.org", 
+%%%                        beebe@computer.org, borisv@lk.net, murray@hq.acm.org",
 %%%     codetable       = "ISO/ASCII",
 %%%     keywords        = "ACM Transactions bibliography style; BibTeX",
 %%%     license         = "public domain",
@@ -153,10 +153,10 @@
 %
 % Start of ACM-Reference-Format-Journals.bst
 %
-% Note: Many of the new bibentry 'fields' will only work with the 
+% Note: Many of the new bibentry 'fields' will only work with the
 % 'ACM-Reference-Format-Journals.bst' file. Legacy .bib files (which will, in all probability,
 % NOT contain these new fields) will _still_ work with the ACM-Reference-Format-Journals.bst.
-% 
+%
 %
 ENTRY
   { address
@@ -187,7 +187,7 @@ ENTRY
     type
     volume
     year
-        % New keys recognized 
+        % New keys recognized
         issue         % UTAH: used in, e.g., ACM SIGSAM Bulletin and ACM Communications in Computer Algebra
         articleno
         day           % UTAH: needed for newspapers, weeklies, bi-weeklies
@@ -559,7 +559,7 @@ FUNCTION { format.year }
 { % push year string or "????" onto output stack
   %% Because year is a mandatory field, we always force SOMETHING
   %% to be output
-  "\bibinfo{year}{" 
+  "\bibinfo{year}{"
   year empty.or.unknown
     { "????" }
     { year }
@@ -640,7 +640,7 @@ FUNCTION { strip.doi } % UTAH
 
       t #1 #7 substring$ "http://" =
         {
-            t #8 t text.length$ #7 - substring$ 't := 
+            t #8 t text.length$ #7 - substring$ 't :=
 
             "INTERNAL STYLE-FILE ERROR" 's :=
 
@@ -777,21 +777,21 @@ FUNCTION { output.note.check } % UTAH
   if$
 }
 
-FUNCTION { output.eprint } % 
+FUNCTION { output.eprint } %
 { % return with stack empty
   eprint empty.or.unknown
     { }
-    { "\showeprint" 
+    { "\showeprint"
          archiveprefix empty.or.unknown
            { }
            { "["  archiveprefix "l" change.case$ "]" * * * }
          if$
          "{" *
-         primaryclass empty.or.unknown 
+         primaryclass empty.or.unknown
            { }
            { primaryclass "/" * *}
          if$
-         eprint "}" * *    
+         eprint "}" * *
          writeln
     }
   if$
@@ -866,8 +866,8 @@ FUNCTION { output.year.check }
   year empty.or.unknown
      { "empty year in " cite$ * warning$ }
      { write$
-        " \bibinfo{year}{" year * "}"  *
-	"\natexlab{" extra.label * "}" * *
+       " \bibinfo{year}{" year * "}"  *
+       "\natexlab{" extra.label * "}" * *
        mid.sentence 'output.state :=
      }
   if$
@@ -1257,8 +1257,8 @@ FUNCTION { format.authors }
 {
   author empty.or.unknown
     { "" }
-    { 
-      "\bibfield{author}{" 
+    {
+      "\bibfield{author}{"
       author format.names add.period$ * "}" *} % jtb: add period if none before
   if$
 }
@@ -1289,8 +1289,8 @@ FUNCTION { format.editors.fml }
   editor empty.or.unknown
     { "" }
     {
-      "\bibfield{editor}{" 
-      editor format.names.fml 
+      "\bibfield{editor}{"
+      editor format.names.fml
       *  "}" *
       editor num.names$ #1 >
         { " (Eds.)" * }
@@ -1305,7 +1305,7 @@ FUNCTION { format.editors }
   editor empty.or.unknown
     { "" }
     {
-      "\bibfield{editor}{" 
+      "\bibfield{editor}{"
       editor format.names
       *  "}" *
       editor num.names$ #1 >
@@ -1667,7 +1667,7 @@ FUNCTION {calc.format.page.count}
    }
    { numpages 'page.count := }
   if$
-  format.page.count  
+  format.page.count
 }
 
 
@@ -2118,7 +2118,7 @@ FUNCTION { format.journal.volume.number.day.month.year }
           " \bibinfo{number}{" * number * "}" *
         }
         { " \bibinfo{volume}{" * volume  * "}, \bibinfo{number}{" *
-	  number * "}" *}
+          number * "}" *}
       if$
     }
   if$
@@ -2195,7 +2195,7 @@ FUNCTION { format.tr.number }
 {
   "\bibinfo{type}{"
   type empty.or.unknown
-    { "{T}echnical {R}eport" }  
+    { "{T}echnical {R}eport" }
     'type
   if$
   "}" * *
@@ -2494,7 +2494,7 @@ FUNCTION { output.issue.doi.coden.isxn.lccn.url.eprint }
   output.lccn
   output.doi    % DOI is ALWAYS last according to CrossRef DOI documentation
   output.eprint
-  output.url    % but ACM wants URL last  
+  output.url    % but ACM wants URL last
 }
 
 FUNCTION { output.issue.doi.coden.isxn.lccn.url.eprint.note }
@@ -2583,7 +2583,7 @@ FUNCTION { book }
       new.block
       format.number.series output
       new.sentence
-      publisher "publisher" bibinfo.output.check      
+      publisher "publisher" bibinfo.output.check
       address "address" bibinfo.output.check    % jtb: require address
       fin.sentence
       pages empty.or.unknown
@@ -2776,7 +2776,7 @@ FUNCTION { mastersthesis }
   format.title emphasize "title" output.check  % NB: ACM style requires emphasized thesis title
   new.block
   "\bibinfo{thesistype}{Master's\ thesis}" format.thesis.type output
-  new.sentence  
+  new.sentence
   school "school" bibinfo.output.check
   address empty.or.unknown
      { }
@@ -2824,8 +2824,8 @@ FUNCTION { phdthesis }
   new.block
   format.title emphasize "title" output.check  % NB: ACM style requires emphasized thesis title
   new.block
- "\bibinfo{thesistype}{Ph.D. Dissertation}" format.thesis.type output
- new.sentence 
+  "\bibinfo{thesistype}{Ph.D. Dissertation}" format.thesis.type output
+  new.sentence
   school "school" bibinfo.output.check
   address empty.or.unknown
      { }
@@ -2894,7 +2894,7 @@ FUNCTION { periodical }
     { format.editors output.nonnull }
   if$
   new.block
-  output.year.check  
+  output.year.check
   new.sentence
   format.articletitle "title" output.check
   format.journal.volume.number.day.month.year output
@@ -3463,6 +3463,3 @@ FUNCTION { end.bib }
 }
 
 EXECUTE {end.bib}
-
-
-
