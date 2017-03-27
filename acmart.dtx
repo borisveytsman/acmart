@@ -1394,7 +1394,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/03/23 v1.33 Typesetting articles for Association of
+[2017/03/27 v1.33 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3789,6 +3789,8 @@ Computing Machinery]
 % and author vertsion,
 % \url{https://github.com/borisveytsman/acmart/issues/36}} 
 % \changes{v1.12}{2016/05/30}{Moved thankses to copyrightpermission box}
+% \changes{v1.33}{2017/03/27}{Fixed the bug with figures on top and
+% bottom of the title page, thanks to David Epstein}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %
@@ -3806,8 +3808,9 @@ Computing Machinery]
   \let\@footnotemark\@footnotemark@nolink
   \let\@footnotetext\@footnotetext@nolink
   \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
-  \@topnum\z@ % this prevents figures from falling at the top of page
-              % 1
+  \global\@topnum\z@ % this prevents floats from falling 
+                     % at the top of page 1
+  \global\@botnum\z@ % we do not want them to be on bottom either
   \hsize=\textwidth
   \def\@makefnmark{\hbox{\@textsuperscript{\@thefnmark}}}%
   \@mktitle\if@ACM@sigchiamode\else\@mkauthors\fi\@mkteasers
