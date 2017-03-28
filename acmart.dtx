@@ -278,6 +278,15 @@
 % confusing different revisions.  The footer also include the page range of
 % the document.  This helps detect missing pages in hard copies.
 %
+% The option |authordraft| is intended for the authors' drafts, not
+% intended for distribution.  It typesets copyright block to give the
+% authors the idea of its size and overall size of the paper, but
+% overprints it with the phrase ``Unpublished working draft. Not for
+% distribution'', which also is used as a watermark.  This option sets
+% |timestamp| and |review| to |true|, but these decisions can be
+% overriden by setting these options to |false| \emph{after}
+% |authordraft|.  
+%
 % \begin{table}
 %   \centering
 %   \caption{Boolean options}
@@ -297,6 +306,7 @@
 %     Section~\ref{sec:ug_topmatter})\\
 %     timestamp & false & Whether to put a time stamp in the
 %     footer of each page\\
+%     authordraft & false & Whether author's draft mode is enabled\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1394,7 +1404,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/03/27 v1.33 Typesetting articles for Association of
+[2017/03/28 v1.33 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1550,25 +1560,20 @@ Computing Machinery]
 %
 % \begin{macro}{\if@ACM@natbib@override}
 % \changes{v1.12}{2016/05/30}{Added macro}
-%   Whether to override the format decision about \textsl{natbib}
-%    \begin{macrocode}
-\newif\if@ACM@natbib@override
-\@ACM@natbib@overridefalse
-%    \end{macrocode}
-%   
+% \changes{v1.33}{2017/03/28}{Deleted macro}
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@natbib}
 %   Whether we use natbib mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{natbib}[true]{%
-  \@ACM@natbib@overridetrue
   \if@ACM@natbib
     \PackageInfo{\@classname}{Explicitly selecting natbib mode}%
   \else
     \PackageInfo{\@classname}{Explicitly deselecting natbib mode}%
   \fi}{\PackageError{\@classname}{Option natbib can be either true or
     false}}
+\ExecuteOptionsX{natbib=true}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -1591,7 +1596,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\if@ACM@timestamp}
-% \changes{v1.33}{2017/03/10}{Added macro (Michael D.~Adams}
+% \changes{v1.33}{2017/03/10}{Added macro (Michael D.~Adams)}
 %   Whether we use timestamp mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{timestamp}[true]{%
@@ -1605,6 +1610,26 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \end{macro}
+%
+%
+% \begin{macro}{\if@ACM@authordraft}
+% \changes{v1.33}{2017/03/28}{Added macro}
+%   Whether we use authordraft mode
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{authordraft}[true]{%
+  \if@ACM@authordraft
+    \PackageInfo{\@classname}{Using authordraft mode}%
+    \@ACM@timestamptrue
+    \@ACM@reviewtrue
+  \else
+    \PackageInfo{\@classname}{Not using authordraft mode}%
+  \fi}{\PackageError{\@classname}{Option authordraft can be either true or
+    false}}
+\ExecuteOptionsX{timestamp=false}
+%    \end{macrocode}
+%
+% \end{macro}
+%
 %
 % \begin{macro}{\ACM@fontsize}
 %   The font size to pass to the base class
@@ -1696,14 +1721,6 @@ Computing Machinery]
 \fi
 %    \end{macrocode}
 %
-% A format sets up \cs{if@ACM@natbib} only if
-% \cs{@ACM@natbib@override} is false (i.e. user did \emph{not}
-% overrode format's selection):
-%    \begin{macrocode}
-\if@ACM@natbib@override\else
-    \@ACM@natbibtrue
-\fi
-%    \end{macrocode}
 % 
 %
 %\subsection{Loading base class and package}
@@ -2125,6 +2142,19 @@ Computing Machinery]
 \definecolor[named]{ACMGreen}{cmyk}{0.20,0,1,0.19}
 \definecolor[named]{ACMPurple}{cmyk}{0.55,1,0,0.15}
 \definecolor[named]{ACMDarkBlue}{cmyk}{1,0.58,0,0.21}
+%    \end{macrocode}
+% 
+%
+% Author draft mode
+%    \begin{macrocode}
+\if@ACM@authordraft
+  \RequirePackage{draftwatermark}
+  \SetWatermarkFontSize{0.5in}
+  \SetWatermarkColor[gray]{.9}
+  \SetWatermarkText{\parbox{12em}{\centering
+      Unpublished working draft\\ 
+      Not for distribution}}
+\fi
 %    \end{macrocode}
 % 
 %
@@ -3827,49 +3857,56 @@ Computing Machinery]
     \footnotetextcopyrightpermission{%
       \def\par{\let\par\@par}\parindent\z@\@setthanks}%
   \fi
-  \footnotetextcopyrightpermission{\parindent\z@\parskip0.1\baselineskip
-  \if@ACM@authorversion\else
-    \if@printpermission\@copyrightpermission\par\fi
-  \fi
-  \if@ACM@manuscript\else
-    \if@ACM@journal\else % Print the conference short name
-      {\itshape \acmConference@shortname, \acmConference@venue}\par
+  \footnotetextcopyrightpermission{%
+    \if@ACM@authordraft
+        \raisebox{-2ex}[\z@][\z@]{\makebox[0pt][l]{\large\bfseries 
+            Unpublished
+            working draft. Not for distribution}}% 
+       \color[gray]{0.9}%
     \fi
-  \fi
-  \if@printcopyright
-    \copyright\ \@copyrightyear\ \@copyrightowner\
-  \else
-    \@copyrightyear.\
-  \fi
-  \if@ACM@manuscript
-    Manuscript submitted to ACM\\
-  \else
-    \if@ACM@authorversion
-        This is the author's version of the work. It is posted here for
-        your personal use. Not for redistribution. The definitive Version
-        of Record was published in 
-        \if@ACM@journal
-          \emph{\@journalName}%
+    \parindent\z@\parskip0.1\baselineskip
+    \if@ACM@authorversion\else
+      \if@printpermission\@copyrightpermission\par\fi
+    \fi
+    \if@ACM@manuscript\else
+       \if@ACM@journal\else % Print the conference short name
+         {\itshape \acmConference@shortname, \acmConference@venue}\par
+       \fi
+    \fi
+    \if@printcopyright
+      \copyright\ \@copyrightyear\ \@copyrightowner\
+    \else
+     \@copyrightyear.\
+    \fi
+    \if@ACM@manuscript
+      Manuscript submitted to ACM\\
+    \else
+      \if@ACM@authorversion
+          This is the author's version of the work. It is posted here for
+          your personal use. Not for redistribution. The definitive Version
+          of Record was published in 
+          \if@ACM@journal
+            \emph{\@journalName}%
+          \else
+            \emph{Proceedings of \acmConference@name, \acmConference@date}%
+          \fi
+          \ifx\@acmDOI\@empty
+          .
+          \else
+            , \@formatdoi{\@acmDOI}.
+          \fi\\
         \else
-          \emph{Proceedings of \acmConference@name, \acmConference@date}%
+          \if@ACM@journal
+            \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
+            \$\@acmPrice\\
+            DOI: \nolinkurl{\@acmDOI}%
+          \else % Conference
+             \@acmISBN
+             \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
+             DOI: \nolinkurl{\@acmDOI}%
+          \fi
         \fi
-        \ifx\@acmDOI\@empty
-        .
-        \else
-          , \@formatdoi{\@acmDOI}.
-        \fi\\
-      \else
-        \if@ACM@journal
-          \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
-          \$\@acmPrice\\
-          DOI: \nolinkurl{\@acmDOI}%
-        \else % Conference
-           \@acmISBN
-           \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
-           DOI: \nolinkurl{\@acmDOI}%
-        \fi
-      \fi
-    \fi}%
+      \fi}
   \endgroup
   \setcounter{footnote}{0}%
   \@mkabstract
@@ -4711,7 +4748,8 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\ACM@timestamp}
-% \changes{v1.33}{2017/03/10}{Added macro (Michael D.~Adams}
+% \changes{v1.33}{2017/03/10}{Added macro (Michael D.~Adams)}
+% \changes{v1.33}{2017/03/28}{Added current page number}
 %  The timestamp system
 %    \begin{macrocode}
 \if@ACM@timestamp
@@ -4725,7 +4763,7 @@ Computing Machinery]
     \footnotesize%
     \the\year-\two@digits{\the\month}-\two@digits{\the\day}{ }%
     \two@digits{\theACM@time@hours}:\two@digits{\theACM@time@minutes}{ }%
-    (pp. \@startPage-\pageref*{TotPages})%
+    page~\thepage\ (pp. \@startPage-\pageref*{TotPages})%
   }
 \fi
 %    \end{macrocode}
@@ -4779,7 +4817,7 @@ Computing Machinery]
 % \changes{v1.16}{2016/07/07}{Customize header/footer text font}
 % \changes{v1.17}{2016/07/10}{Added paper title to sigs}
 % \changes{v1.29}{2017/01/22}{Corrected printfolios (Matthew Fluet)}
-% \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams}
+% \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams)}
 %   The pagestyle for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
@@ -4904,7 +4942,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{firstpagestyle}
-% \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams}
+% \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams)}
 %   The pagestyle for the first page only.
 %    \begin{macrocode}
 \fancypagestyle{firstpagestyle}{%

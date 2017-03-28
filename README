@@ -84,7 +84,9 @@ version 1.32    New DOI formatting.
 		New proceedings title: POMACS.
 
 version 1.33    New option `timestamp' (Michael D. Adams)
+		New option `authordraft'
                 Documentation updates
 		Bug fixes
 		We now use Type 1 versions of Libertine fonts even with
 		XeTeX.
+		

@@ -14,6 +14,7 @@ SAMPLES = \
 	sample-acmlarge.tex \
 	sample-acmtog.tex \
 	sample-sigconf.tex \
+	sample-sigconf-authordraft.tex \
 	sample-sigplan.tex \
 	sample-sigchi.tex \
 	sample-sigchi-a.tex 
@@ -59,7 +60,7 @@ sample-acmlarge.pdf \
 sample-acmtog.pdf: samplebody-journals.tex
 
 sample-sigconf.pdf \
-sample-siggraph.pdf \
+sample-sigconf-authordraft.pdf \
 sample-sigplan.pdf \
 sample-sigchi.pdf: samplebody-conf.tex
 
