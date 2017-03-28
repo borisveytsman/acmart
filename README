@@ -87,6 +87,5 @@ version 1.33    New option `timestamp' (Michael D. Adams)
 		New option `authordraft'
                 Documentation updates
 		Bug fixes
-		We now use Type 1 versions of Libertine fonts even with
-		XeTeX.
-		
+		We now use Type 1 versions of Libertine fonts even with XeTeX.
+		New hook acmart-preload-hook.tex (wizards only!)

@@ -156,6 +156,7 @@
 % \item \textsl{caption}, \url{http://www.ctan.org/pkg/caption}
 % \item \textsl{comment}, \url{http://www.ctan.org/pkg/comment}
 % \item \textsl{cm-super}, \url{http://www.ctan.org/pkg/cm-super}
+% \item \textsl{draftwatermark}, \url{http://www.ctan.org/pkg/draftwatermark}
 % \item \textsl{environ}, \url{http://www.ctan.org/pkg/environ}
 % \item \textsl{fancyhdr}, \url{http://www.ctan.org/pkg/fancyhdr}
 % \item \textsl{float}, \url{http://www.ctan.org/pkg/float}
@@ -1381,6 +1382,48 @@
 %
 %
 %
+%\subsection{A note for wizards: \texttt{acmart-preload-hook.tex}}
+%\label{sec:ug_preload}
+%
+% Sometimes you need to change the behavior of |acmart|.  The
+% usual way to do this is to redefine commands in the preamble.
+% However, these definitions are executed \emph{after} |acmart| is
+% loaded, and certain decisions are made.  This presents a number of
+% problems.  
+%
+% For example, one may want to use  |titletoc| package with |acmart|.
+% This package should be loaded before |hyperref|.  However, since
+% |acmart| loads |hyperref| itself, the line |\usepackage{titletoc}|
+% in the preamble will lead to grief (see
+% \url{http://tex.stackexchange.com/questions/357265/using-titletoc-with-acm-acmart-style}). 
+%
+% Another example is passing options to package.  Suppose you want to
+% use |dvipsnames| option of |xcolor| package.  Normally you cannot do
+% this because |acmart| loads this package itself without options.
+%
+% The file |acmart-preload-hook.tex| may be used to solve these
+% problems.  If this file exists, it will be processed before any other
+% package.  You can use this file to load packages or pass options to
+% them.  For example, if you put in this file
+% \begin{verbatim}
+% \let\LoadClassOrig\LoadClass
+% \renewcommand\LoadClass[2][]{\LoadClassOrig[#1]{#2}%
+% \usepackage{titletoc}}
+% \end{verbatim}
+% then |titletoc| will be loaded before |hyperref|.  If you put in
+% this file
+% \begin{verbatim}
+% \PassOptionsToPackage{dvipsnames}{xcolor}
+% \end{verbatim}
+% you will pass |dvipsnames| to |xcolor|.
+%
+% \textbf{Important note.}  This hook makes it too easy to create a
+% manuscript which is not acceptable by ACM.  Even easier it is to
+% create a file which cannot be compiled.  So please do not use it
+% \emph{unless you know what you are doing.}  And if you use it,
+% \emph{do not ask for support.}  If you decided to use this hook, you
+% are on your own.
+%
 % \StopEventually{
 % \clearpage
 % \bibliography{acmart}
@@ -1454,6 +1497,7 @@ Computing Machinery]
 % \changes{v1.33}{2017/03/18}{BibTeX comma before articleno bug
 % corrected} 
 % \changes{v1.33}{2017/03/18}{BibTeX numpages bug corrected} 
+% \changes{v1.33}{2017/03/28}{Added acmart-preload-hook} 
 %
 %
 % And the driver code:
@@ -1478,6 +1522,19 @@ Computing Machinery]
 \def\@classname{acmart}
 %    \end{macrocode}
 %
+%
+%
+%\subsection{Preload}
+%\label{sec:preload}
+%
+% We preload |acmart-preload-hook|:
+%    \begin{macrocode}
+\InputIfFileExists{acmart-preload-hook.tex}{%
+  \ClassWarning{\@classname}{%
+    I am loading acmart-preload-hook.tex. You are fully responsible
+    for any problems from now on.}}{}
+%    \end{macrocode}
+% 
 % \subsection{Options}
 % \label{sec:options}
 %
@@ -1485,6 +1542,8 @@ Computing Machinery]
 %    \begin{macrocode}
 \RequirePackage{xkeyval}
 %    \end{macrocode}
+%
+%
 %
 % \begin{macro}{format}
 %   The possible formats
