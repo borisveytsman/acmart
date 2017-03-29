@@ -748,7 +748,13 @@
 % \acmArticleSeq{5} % We redefine it to 5
 % \end{verbatim}
 %
-%
+% \DescribeMacro{\acmSubmissionID}%
+% If you paper got a Submission~ID from the Conference Management
+% System, put it here:
+% \begin{verbatim}
+% \acmSubmissionID{123-A56-BU3}
+% \end{verbatim}
+% 
 %
 % \DescribeMacro{\acmPrice}%
 % The macro \cs{acmPrice}\marg{price} sets the price for the article
@@ -1492,7 +1498,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/03/28 v1.33 Typesetting articles for Association of
+[2017/03/29 v1.33 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3328,6 +3334,18 @@ Computing Machinery]
 %
 % \end{macro}
 %
+%
+% \begin{macro}{\acmSubmissionID}
+% \changes{v1.33}{2017/03/29}{Added macro}
+%   The submission id
+%    \begin{macrocode}
+\def\acmSubmissionID#1{\def\@acmSubmissionID{#1}}
+\acmSubmissionID{}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+%
 % \begin{macro}{\acmISBN}
 % \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
 %   The book isbn
@@ -4878,10 +4896,11 @@ Computing Machinery]
 %
 % \end{macro}
 %
-% \begin{macro}{\ACM@linecount}
-%   How to display the box
+% \begin{macro}{\ACM@linecountL}
+% \changes{v1.33}{2017/03/29}{Renamed macro}
+%   How to display the box on the left
 %    \begin{macrocode}
-\def\ACM@linecount{%
+\def\ACM@linecountL{%
   \if@ACM@review
   \begin{picture}(0,0)%
     \put(-26,-22){\usebox{\ACM@linecount@bx}}%
@@ -4891,9 +4910,24 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\ACM@linecountR}
+% \changes{v1.33}{2017/03/29}{Added macro}
+%   How to display the box on the right
+%    \begin{macrocode}
+\def\ACM@linecountR{%
+  \if@ACM@review
+  \begin{picture}(0,0)%
+    \put(20,-22){\usebox{\ACM@linecount@bx}}%
+  \end{picture}%
+  \fi}
+%    \end{macrocode}
+%
+% \end{macro}
+%
 % \begin{macro}{\ACM@timestamp}
 % \changes{v1.33}{2017/03/10}{Added macro (Michael D.~Adams)}
 % \changes{v1.33}{2017/03/28}{Added current page number}
+% \changes{v1.33}{2017/03/29}{Added submission id}
 %  The timestamp system
 %    \begin{macrocode}
 \if@ACM@timestamp
@@ -4908,6 +4942,9 @@ Computing Machinery]
     \the\year-\two@digits{\the\month}-\two@digits{\the\day}{ }%
     \two@digits{\theACM@time@hours}:\two@digits{\theACM@time@minutes}{ }%
     page~\thepage\ (pp. \@startPage-\pageref*{TotPages})%
+    \ifx\@acmSubmissionID\@empty\relax\else
+    ~Submission~ID: \@acmSubmissionID
+    \fi
   }
 \fi
 %    \end{macrocode}
@@ -4962,6 +4999,7 @@ Computing Machinery]
 % \changes{v1.17}{2016/07/10}{Added paper title to sigs}
 % \changes{v1.29}{2017/01/22}{Corrected printfolios (Matthew Fluet)}
 % \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams)}
+% \changes{v1.33}{2017/03/29}{Added right linecount for two column formats}
 %   The pagestyle for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
@@ -4970,42 +5008,43 @@ Computing Machinery]
   \renewcommand{\footrulewidth}{\z@}%
   \ifcase\ACM@format@nr
   \relax % manuscript
-    \fancyhead[LE]{\ACM@linecount\if@ACM@printfolios\thepage\fi}%
+    \fancyhead[LE]{\ACM@linecountL\if@ACM@printfolios\thepage\fi}%
     \fancyhead[RO]{\if@ACM@printfolios\thepage\fi}%
     \fancyhead[RE]{\@shortauthors}%
-    \fancyhead[LO]{\ACM@linecount\shorttitle}%
+    \fancyhead[LO]{\ACM@linecountL\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize Manuscript submitted to ACM}%
   \or % acmsmall
-    \fancyhead[LE]{\ACM@linecount\@headfootfont\@acmArticle\if@ACM@printfolios:\thepage\fi}%
+    \fancyhead[LE]{\ACM@linecountL\@headfootfont\@acmArticle\if@ACM@printfolios:\thepage\fi}%
     \fancyhead[RO]{\@headfootfont\@acmArticle\if@ACM@printfolios:\thepage\fi}%
     \fancyhead[RE]{\@headfootfont\@shortauthors}%
-    \fancyhead[LO]{\ACM@linecount\@headfootfont\shorttitle}%
+    \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmlarge
-    \fancyhead[LE]{\ACM@linecount\@headfootfont
+    \fancyhead[LE]{\ACM@linecountL\@headfootfont
       \@acmArticle\if@ACM@printfolios:\thepage\fi\quad\textbullet\quad\@shortauthors}%
-    \fancyhead[LO]{\ACM@linecount}%
+    \fancyhead[LO]{\ACM@linecountL}%
     \fancyhead[RO]{\@headfootfont
       \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \or % acmtog
-    \fancyhead[LE]{\ACM@linecount\@headfootfont
+    \fancyhead[LE]{\ACM@linecountL\@headfootfont
       \@acmArticle\if@ACM@printfolios:\thepage\fi\quad\textbullet\quad\@shortauthors}%
-    \fancyhead[LO]{\ACM@linecount}%
+    \fancyhead[LO]{\ACM@linecountL}%
+    \fancyhead[RE]{\ACM@linecountR}%
     \fancyhead[RO]{\@headfootfont
-      \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
+      \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi\ACM@linecountR}%
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
   \else % Proceedings
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
-    \fancyhead[LO]{\ACM@linecount\@headfootfont\shorttitle}%
-    \fancyhead[RE]{\@headfootfont\@shortauthors}%
-    \fancyhead[LE]{\ACM@linecount\@headfootfont\acmConference@shortname,
+    \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
+    \fancyhead[RE]{\@headfootfont\@shortauthors\ACM@linecountR}%
+    \fancyhead[LE]{\ACM@linecountL\@headfootfont\acmConference@shortname,
       \acmConference@date, \acmConference@venue}%
     \fancyhead[RO]{\@headfootfont\acmConference@shortname,
-      \acmConference@date, \acmConference@venue}%
+      \acmConference@date, \acmConference@venue\ACM@linecountR}%
   \fi
   \if@ACM@sigchiamode
      \fancyheadoffset[L]{\dimexpr(\marginparsep+\marginparwidth)}%
@@ -5087,6 +5126,7 @@ Computing Machinery]
 %
 % \begin{macro}{firstpagestyle}
 % \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams)}
+% \changes{v1.33}{2017/03/29}{Added right linecount for two column formats}
 %   The pagestyle for the first page only.
 %    \begin{macrocode}
 \fancypagestyle{firstpagestyle}{%
@@ -5095,15 +5135,15 @@ Computing Machinery]
   \renewcommand{\footrulewidth}{\z@}%
   \ifcase\ACM@format@nr
   \relax % manuscript
-    \fancyhead[L]{\ACM@linecount}%
+    \fancyhead[L]{\ACM@linecountL}%
     \fancyfoot[RO,LE]{\if@ACM@printfolios\small\thepage\fi}%
     \fancyfoot[RE,LO]{\footnotesize Manuscript submitted to ACM}%
   \or % acmsmall
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date:
     \@acmPubDate.}%
-    \fancyhead[LE]{\ACM@linecount\@folioblob}%
-    \fancyhead[LO]{\ACM@linecount}%
+    \fancyhead[LE]{\ACM@linecountL\@folioblob}%
+    \fancyhead[LO]{\ACM@linecountL}%
     \fancyhead[RO]{\@folioblob}%
     \fancyheadoffset[RO,LE]{0.6\@folio@wd}%
   \or % acmlarge
@@ -5111,16 +5151,18 @@ Computing Machinery]
     \@acmNumber, Article \@acmArticle.  Publication date:
     \@acmPubDate.}%
     \fancyhead[RO]{\@folioblob}%
-    \fancyhead[LE]{\ACM@linecount\@folioblob}%
-    \fancyhead[LO]{\ACM@linecount}%
+    \fancyhead[LE]{\ACM@linecountL\@folioblob}%
+    \fancyhead[LO]{\ACM@linecountL}%
     \fancyheadoffset[RO,LE]{1.4\@folio@wd}%
   \or % acmtog
     \fancyfoot[RO,LE]{\footnotesize \@journalName, Vol. \@acmVolume, No.
     \@acmNumber, Article \@acmArticle.  Publication date:
     \@acmPubDate.}%
-    \fancyhead[L]{\ACM@linecount}%
+    \fancyhead[L]{\ACM@linecountL}%
+    \fancyhead[R]{\ACM@linecountR}%
   \else % Conference proceedings
-    \fancyhead[L]{\ACM@linecount}%
+    \fancyhead[L]{\ACM@linecountL}%
+    \fancyhead[R]{\ACM@linecountR}%
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
   \fi
   \if@ACM@timestamp
