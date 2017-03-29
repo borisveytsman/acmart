@@ -89,3 +89,5 @@ version 1.33    New option `timestamp' (Michael D. Adams)
 		Bug fixes
 		We now use Type 1 versions of Libertine fonts even with XeTeX.
 		New hook acmart-preload-hook.tex (wizards only!)
+		Added new options `obeypunctuation' for \affiliation command
+		

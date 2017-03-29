@@ -634,6 +634,51 @@
 % \end{verbatim}
 %
 %
+% The command \cs{affiliation} formats the output according to
+% American conventions.  This might be wrong for some cases.
+% Consider, for example, a German address.  In Germany postcode is put
+% before city and is not separated by a comma.  We can handle this
+% order using
+% \begin{verbatim}
+% \affiliation{%
+%   \institution{Fluginstitut}
+%   \streetaddress{Sonnenallee 17}
+%   \postcode{123456}
+%   \city{Helm}
+%   \country{Germany}
+% }
+% \end{verbatim}
+% However, the comma after postcode is unfortunate:  the address will
+% be typeset (with a SIG format) as
+% \begin{verbatim}
+% Fluginstitut
+% Sonenallee 17
+% 123456, Helm, Germany
+% \end{verbatim}
+% 
+%
+% To overcome this problem, the command \cs{affiliation} has an
+% optional parameter |obeypunctuation|, which can be |false| (the
+% default) or |true|.  If this parameter is |true|, \cs{afffiliation}
+% obeys the author's command.  Thus 
+% \begin{verbatim}
+% \affiliation[obeypuctuation=true]{%
+%   \institution{Fluginstitut}\\
+%   \streetaddress{Sonnenallee 17}\\
+%   \postcode{123456},
+%   \city{Helm},
+%   \country{Germany}
+% }
+% \end{verbatim}
+% will be typeset as
+% \begin{verbatim}
+% Fluginstitut
+% Sonenallee 17
+% 123456 Helm, Germany
+% \end{verbatim}
+%
+% Note that you should \emph{not} use this option for journals.  
+%
 % It is expected that these commands are inserted by the author of the
 % manuscript.
 %
@@ -3058,8 +3103,8 @@ Computing Machinery]
 % \begin{macro}{\affiliation}
 % \changes{v1.15}{2016/06/25}{Added code for author groups}
 %   The macro \cs{affiliation} mimics \cs{address} from |amsart|.
-%   Note that it has an optional argument we do not currently need,
-%   but keep for the possible future use.
+%   Note that it has an optional argument, which we use differently
+%   from |amsart|.
 %    \begin{macrocode}
 \newcommand{\affiliation}[2][]{%
   \global\@insideauthorgroupfalse
@@ -3069,6 +3114,18 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \end{macro}
+%
+% \begin{macro}{\if@ACM@affiliation@obeypunctuation}
+% \changes{v1.33}{2017/03/28}{Added macro}
+%   Whether to print CCS
+%    \begin{macrocode}
+\define@boolkey+{@ACM@affiliation@}[@ACM@affiliation@]{obeypunctuation}%
+[true]{}{\ClassError{\@classname}{obeypunctuation must be true or false}}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
 %
 % \begin{macro}{\additionalaffiliation}
 % \changes{v1.31}{2017/03/04}{Added macro}
@@ -4277,6 +4334,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@ACM@addtoaddress}
 % \changes{v1.15}{2016/07/03}{Added macro}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 %   The macro adds an item to address using the following rules:
 %   \begin{enumerate}
 %   \item If we start a paragraph, add the item
@@ -4288,30 +4346,39 @@ Computing Machinery]
 \newbox\@ACM@commabox
 \def\@ACM@addtoaddress#1{%
   \ifvmode\else
+    \if@ACM@affiliation@obeypunctuation\else
     \setbox\@ACM@commabox=\hbox{, }%
     \unskip\cleaders\copy\@ACM@commabox\hskip\wd\@ACM@commabox
-  \fi
+  \fi\fi
   #1}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\institution}
 % \changes{v1.15}{2016/07/03}{Added macro}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \begin{macro}{\position}
 % \changes{v1.15}{2016/07/03}{Added macro}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \begin{macro}{\department}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.30}{2017/02/10}{Added optional parameter}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \begin{macro}{\streetaddress}
 % \changes{v1.15}{2016/07/03}{Added macro}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \begin{macro}{\city}
 % \changes{v1.15}{2016/07/03}{Added macro}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \begin{macro}{\state}
 % \changes{v1.15}{2016/07/03}{Added macro}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \begin{macro}{\postcode}
 % \changes{v1.15}{2016/07/03}{Added macro}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \begin{macro}{\country}
 % \changes{v1.15}{2016/07/03}{Added macro}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 %   Theoretically we can define the macros for \cs{affiliation} inside
 %   the \cs{@mkauthors}-style commands.  However, this would lead to a
 %   strange error if an author uses them outside \cs{affiliation}.  Of
@@ -4330,13 +4397,14 @@ Computing Machinery]
   \let\postcode\@gobble
   \let\country\@gobble
 \else
-  \def\position#1{#1\par}%
-  \def\institution#1{#1\par}%
-  \newcommand\department[2][0]{#2\par}%
-  \def\streetaddress#1{#1\par}%
+  \def\position#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
+  \def\institution#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
+  \newcommand\department[2][0]{\if@ACM@affiliation@obeypunctuation
+    #2\else#2\par\fi}%
+  \def\streetaddress#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
   \let\city\@ACM@addtoaddress
   \let\state\@ACM@addtoaddress
-  \def\postcode#1{\unskip\space#1}%
+  \def\postcode#1{\if@ACM@affiliation@obeypunctuation#1\else\unskip\space#1\fi}%
   \let\country\@ACM@addtoaddress
 \fi
 %    \end{macrocode}
@@ -4449,7 +4517,8 @@ Computing Machinery]
 %
 % \begin{macro}{\@mkauthors@i}
 % \changes{v1.18}{2016/07/12}{Now we andify affiliations}
-%   This is version used in most formats.  Note that \cs{and} between
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
+%   This is version used in most journal formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
 \def\@mkauthors@i{%
@@ -4467,9 +4536,14 @@ Computing Machinery]
   \def\affiliation##1##2{%
     \def\@tempa{##2}\ifx\@tempa\@empty\else
        \ifx\@currentaffiliations\@empty
-          \gdef\@currentaffiliations{\@affiliationfont##2}%
+          \gdef\@currentaffiliations{%
+            \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
+            \setkeys{@ACM@affiliation@}{##1}%
+            \@affiliationfont##2}%
        \else
-         \g@addto@macro{\@currentaffiliations}{\and##2}%
+         \g@addto@macro{\@currentaffiliations}{\and
+           \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
+           \setkeys{@ACM@affiliation@}{##1}##2}%
       \fi
     \fi
      \global\let\and\@typeset@author@line}%
@@ -4531,6 +4605,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@mkauthors@iii}
 % \changes{v1.15}{2016/07/04}{New authors system}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 %   The |sigconf| version.  Here we use centered design with each
 %   author in a separate box.
 %    \begin{macrocode}
@@ -4574,9 +4649,13 @@ Computing Machinery]
     \g@addto@macro\@currentaffiliation{\par\nolinkurl{##2}}%
   \fi}%
   \def\affiliation##1##2{\ifx\@currentaffiliation\@empty
-    \gdef\@currentaffiliation{##2}%
+    \gdef\@currentaffiliation{%
+      \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
+      \setkeys{@ACM@affiliation@}{##1}##2}%
   \else
-    \g@addto@macro\@currentaffiliation{\par##2}%
+    \g@addto@macro\@currentaffiliation{\par
+      \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
+      \setkeys{@ACM@affiliation@}{##1}##2}%
   \fi
   \global\let\and\@typeset@author@bx
 }%
@@ -4594,6 +4673,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\@mkauthors@iv}
+% \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 %   The |sigchia| version.  Now we put
 %   authors in the main text, and no more than 2 authors per line.
 %    \begin{macrocode}
@@ -4631,9 +4711,13 @@ Computing Machinery]
     \g@addto@macro\@currentaffiliation{\par\nolinkurl{##2}}%
   \fi}%
   \def\affiliation##1##2{\ifx\@currentaffiliation\@empty
-    \gdef\@currentaffiliation{##2}%
+    \gdef\@currentaffiliation{%
+      \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
+           \setkeys{@ACM@affiliation@}{##1}##2}%
   \else
-    \g@addto@macro\@currentaffiliation{\par##2}%
+    \g@addto@macro\@currentaffiliation{\par
+      \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
+      \setkeys{@ACM@affiliation@}{##1}##2}%
   \fi
   \global\let\and\@typeset@author@bx}%
 %
