@@ -3440,7 +3440,7 @@ FUNCTION { begin.bib }
   "\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi" writeln
   "\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi" writeln % NB: final period supplied by add.period$ above
   "\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi" writeln
-  "\ifx \showURL      \undefined \def \showURL       #1{#1}          \fi" writeln
+  "\ifx \showURL      \undefined \def \showURL       {\relax}        \fi" writeln
   "% The following commands are used for tagged output and should be " writeln
   "% invisible to TeX" writeln
   "\providecommand\bibfield[2]{#2}" writeln

@@ -156,6 +156,7 @@
 % \item \textsl{caption}, \url{http://www.ctan.org/pkg/caption}
 % \item \textsl{comment}, \url{http://www.ctan.org/pkg/comment}
 % \item \textsl{cm-super}, \url{http://www.ctan.org/pkg/cm-super}
+% \item \textsl{cmap}, \url{http://www.ctan.org/pkg/cmap}
 % \item \textsl{draftwatermark}, \url{http://www.ctan.org/pkg/draftwatermark}
 % \item \textsl{environ}, \url{http://www.ctan.org/pkg/environ}
 % \item \textsl{fancyhdr}, \url{http://www.ctan.org/pkg/fancyhdr}
@@ -171,6 +172,7 @@
 % \item \textsl{libertine}, \url{http://www.ctan.org/pkg/libertine}
 % \item \textsl{manyfoot}, \url{http://www.ctan.org/pkg/manyfoot}
 % \item \textsl{microtype}, \url{http://www.ctan.org/pkg/microtype}
+% \item \textsl{mmap}, \url{http://www.ctan.org/pkg/mmap}
 % \item \textsl{ms}, \url{http://www.ctan.org/pkg/ms}
 % \item \textsl{mweights}, \url{http://www.ctan.org/pkg/mweights}
 % \item \textsl{natbib}, \url{http://www.ctan.org/pkg/natbib}
@@ -217,6 +219,11 @@
 % are intended for journals and transactions, while formats starting
 % with |sig| are intended for proceedings published as books.  
 %
+% Note that sometimes conference proceedings are published as a
+% special issue (or issues) of an ACM journal.  In this case you
+% should use the journal format for a conference paper.  Please
+% contact your conference committee if in doubt.  
+%
 % \begin{table}
 %   \centering
 %   \caption{The possible values for the \texttt{format} option}
@@ -232,19 +239,19 @@
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
 %            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS,
 %            TOS, TOSEM, TOSN, TRETS,
-%            TSAS, TSC, TSLP, TWEB\@. \\
+%            TSAS, TSC, TSLP, TWEB, including special issues. \\
 %           acmlarge  & Large single column format, used for
-%           IMWUT, JOCCH, PACMPL, POMACS, TAP \\
+%           IMWUT, JOCCH, PACMPL, POMACS, TAP, including special issues. \\
 %            acmtog   & Large double column format, used for
-%          TOG\\
+%          TOG, including special issues.\\
 %           sigconf & Proceedings format for most of ACM
 %          conferences (with the exceptions listed below) and all ICPS
-%          volumes\\
+%          volumes.\\
 %           siggraph & As of March 2017, this format is no longer
 %           used.  Please use sigconf for SIGGRAPH conferences. \\
-%            sigplan & Proceedings format for SIGPLAN conferences\\
-%            sigchi  & Proceedings format for SIGCHI conferences\\
-%           sigchi-a & Format for SIGCHI extended abstract\\
+%            sigplan & Proceedings format for SIGPLAN conferences.\\
+%            sigchi  & Proceedings format for SIGCHI conferences.\\
+%           sigchi-a & Format for SIGCHI extended abstract.\\
 %   \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1498,7 +1505,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/03/29 v1.33 Typesetting articles for Association of
+[2017/03/30 v1.33 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1549,6 +1556,7 @@ Computing Machinery]
 % corrected} 
 % \changes{v1.33}{2017/03/18}{BibTeX numpages bug corrected} 
 % \changes{v1.33}{2017/03/28}{Added acmart-preload-hook} 
+% \changes{v1.33}{2017/03/33}{Documentation updates} 
 %
 %
 % And the driver code:
@@ -2213,10 +2221,11 @@ Computing Machinery]
   \providecommand\newblock{}%
 \else
   \AtBeginDocument{%
-    \def\shortcite#1{\cite{#1}}%
+    \let\shortcite\cite%
     \providecommand\citename[1]{#1}}
 \fi
-\def\shortcite#1{\ifNAT@numbers\cite{#1}\else\citeyear{#1}\fi}
+\newcommand\shortcite[2][]{%
+  \ifNAT@numbers\cite[#1]{#2}\else\citeyear[#1]{#2}\fi}
 %    \end{macrocode}
 %
 %
@@ -2494,7 +2503,20 @@ Computing Machinery]
 %\label{sec:fonts}
 %
 % \changes{v1.12}{2016/05/30}{Added graceful behavior when libertine
-% fonts are absent}%
+% fonts are absent}
+% \changes{v1.33}{2017/03/29}{Added cmap and glyphtounicode}
+%
+% Somehow PDFTeX and XeTeX require different incantations to make PDF
+% compliant with the current Acrobat bugs.  Xpdf is much better.
+%    \begin{macrocode}
+\RequirePackage{iftex}
+\ifPDFTeX
+\input{glyphtounicode}
+\pdfgentounicode=1
+\fi
+\RequirePackage{cmap}
+%    \end{macrocode}
+% 
 %
 % \begin{macro}{\if@ACM@newfonts}
 % \changes{v1.12}{2016/05/30}{Added macro}%
