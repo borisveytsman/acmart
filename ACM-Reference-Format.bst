@@ -190,6 +190,7 @@ ENTRY
         % New keys recognized
         issue         % UTAH: used in, e.g., ACM SIGSAM Bulletin and ACM Communications in Computer Algebra
         articleno
+	eid           
         day           % UTAH: needed for newspapers, weeklies, bi-weeklies
         doi           % UTAH
         url           % UTAH
@@ -222,6 +223,28 @@ STRINGS { s t t.org u }
 STRINGS { last.label next.extra }
 
 STRINGS { p1 p2 p3 page.count }
+
+FUNCTION { not }
+{
+    { #0 }
+    { #1 }
+  if$
+}
+
+FUNCTION { and }
+{
+    'skip$
+    { pop$ #0 }
+  if$
+}
+
+FUNCTION { or }
+{
+   { pop$ #1 }
+    'skip$
+  if$
+}
+
 
 FUNCTION { dump.stack.1 }
 {
@@ -543,14 +566,22 @@ FUNCTION { output.coden }       % UTAH
 
 FUNCTION { format.articleno }
 {
-  articleno empty.or.unknown
+  articleno empty.or.unknown not eid empty.or.unknown not and
+     { "Both articleno and eid are defined for " cite$ * warning$ }
+     'skip$
+  if$
+  articleno empty.or.unknown eid empty.or.unknown and
      { "" }
      {
         numpages empty.or.unknown
-          { "articleno field, but no numpages field, in " cite$ * warning$ }
+          { "articleno or eid field, but no numpages field, in " 
+            cite$ * warning$ }
           { }
         if$
-        "Article \bibinfo{articleno}{" articleno * "}" *
+        eid empty.or.unknown 
+          { "Article \bibinfo{articleno}{" articleno * "}" * }
+          { "Article \bibinfo{articleno}{" eid * "}" * }
+        if$
      }
   if$
 }
@@ -590,7 +621,7 @@ FUNCTION { format.day.month.year }     % UTAH
   % Needed for frequent periodicals: 2008. ... New York Times C-1, C-2, C-17 (23 Oct.)
   % acm-*.bst addition: prefix parenthesized date string with
   % ", Article nnn "
-  articleno empty.or.unknown
+  articleno empty.or.unknown eid empty.or.unknown and
     { "" }
     { output.state after.block =
        {", " format.articleno * }
@@ -873,26 +904,6 @@ FUNCTION { output.year.check }
   if$
 }
 
-FUNCTION { not }
-{
-    { #0 }
-    { #1 }
-  if$
-}
-
-FUNCTION { and }
-{
-    'skip$
-    { pop$ #0 }
-  if$
-}
-
-FUNCTION { or }
-{
-   { pop$ #1 }
-    'skip$
-  if$
-}
 
 FUNCTION { le }
 {
@@ -1556,7 +1567,7 @@ FUNCTION { format.pages.check.without.articleno }
     { }
   if$
 
-  articleno empty.or.unknown
+  articleno empty.or.unknown eid empty.or.unknown and
     {
       pages missing$
         { numpages }
@@ -1623,11 +1634,12 @@ FUNCTION { format.articleno.numpages }
   %%     numpages                       -> "numpages-value"
   %%     pages                          -> "pages-value"
 
-  articleno empty.or.unknown
+  articleno empty.or.unknown eid empty.or.unknown and
     {
       numpages empty.or.unknown
         { }
-        { "numpages field, but no articleno field, in " cite$ * warning$ }
+        { "numpages field, but no articleno or eid field, in "
+	  cite$ * warning$ }
       if$
       ""
     }
@@ -1636,7 +1648,8 @@ FUNCTION { format.articleno.numpages }
         {
           pages empty.or.unknown
             {
-              "articleno, but no pages or numpages field in " cite$ * warning$
+              "articleno or eid, but no pages or numpages field in "
+	         cite$ * warning$
               "" 'page.count :=
             }
             { reduce.pages.to.page.count }
