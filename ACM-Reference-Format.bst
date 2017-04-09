@@ -3444,7 +3444,7 @@ FUNCTION { begin.bib }
   %%         \newcommand{\showLCCN}[1]{LCCN #1.}
 
   "\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi" writeln
-  "\ifx \showDOI      \undefined \def \showDOI       #1{{\tt DOI:}\penalty0{#1}\ } \fi" writeln
+  "\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi" writeln
   % ACM styles omit ISBNs, but they can be included by suitable definitions of
   % \showISBNx and \showISBNxiii before the .bbl file is read
   "\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi" writeln

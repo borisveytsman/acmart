@@ -1506,7 +1506,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/03/30 v1.33 Typesetting articles for Association of
+[2017/04/09 v1.34 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3979,6 +3979,7 @@ Computing Machinery]
 % \changes{v1.12}{2016/05/30}{Moved thankses to copyrightpermission box}
 % \changes{v1.33}{2017/03/27}{Fixed the bug with figures on top and
 % bottom of the title page, thanks to David Epstein}
+% \changes{v1.34}{2017/04/10}{Deleted `DOI' from doi numbers}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %
@@ -4057,11 +4058,11 @@ Computing Machinery]
           \if@ACM@journal
             \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
             \$\@acmPrice\\
-            DOI: \nolinkurl{\@acmDOI}%
+            \@formatdoi{\@acmDOI}%
           \else % Conference
              \@acmISBN
              \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
-             DOI: \nolinkurl{\@acmDOI}%
+             \@formatdoi{\@acmDOI}%
           \fi
         \fi
       \fi}
@@ -4829,6 +4830,7 @@ Computing Machinery]
 % \changes{v1.17}{2016/07/10}{Changed format for sigs}
 % \changes{v1.17}{2016/07/10}{Added \cs{nobreak}}
 % \changes{v1.31}{2017/03/04}{Disabled linebreak}
+% \changes{v1.34}{2017/04/10}{Deleted DOI from doi numbers}
 %   Print bibcitation format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup
@@ -4850,7 +4852,7 @@ Computing Machinery]
          \ (\acmConference@shortname)\fi
          ,} \ref{TotPages}~pages.
   \fi\par
-  \noindent DOI: \nolinkurl{\@acmDOI}
+  \noindent\@formatdoi{\@acmDOI}
 \par\egroup}
 %    \end{macrocode}
 %
