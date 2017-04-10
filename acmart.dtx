@@ -819,12 +819,11 @@
 %
 % \DescribeMacro{\terms}%
 % \DescribeMacro{\keywords}%
-% The macros \cs{terms}\marg{term, term,\ldots} and
-% \cs{keywords}\marg{keyword, keyword,\ldots} set the main terms and
-% the additional keywords for the article.  Term and keywords must be
+% The command
+% \cs{keywords}\marg{keyword, keyword,\ldots} sets keywords for the
+% article.  They must be 
 % separated by commas, for example,
 % \begin{verbatim}
-% \terms{wireless, interference}
 % \keywords{wireless sensor networks, media access control,
 % multi-channel, radio interference, time synchronization}
 % \end{verbatim}
@@ -3468,11 +3467,12 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\terms}
-%   Terms are mostly obsolete, we use CCS now.  Still it makes
-%   sense to keep them for compatibility.
+% \changes{v1.34}{2017/04/09}{The \cs{terms} command now just produces
+% a warning} 
+%   Terms are obsolete, we use CCS now. 
 %    \begin{macrocode}
-\def\terms#1{\def\@terms{#1}}
-\terms{}
+\def\terms#1{\ClassWarning{\@classname}{The command \string\terms{} is
+    obsolete.  I am going to ignore it}}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -3981,6 +3981,7 @@ Computing Machinery]
 % bottom of the title page, thanks to David Epstein}
 % \changes{v1.34}{2017/04/09}{Deleted `DOI' from doi numbers}
 % \changes{v1.34}{2017/04/09}{Added date to the bibstrip in conf proceedings}
+% \changes{v1.34}{2017/04/09}{The \cs{terms} command is now obsolete}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %
@@ -4075,10 +4076,6 @@ Computing Machinery]
       {\@specialsection{CCS Concepts}%
          \@concepts\par}\egroup
      \fi
-   \fi
-   \if\@terms\@empty\else\bgroup
-      {\@specialsection{General Terms}%
-         \@terms\par}\egroup
    \fi
    \ifx\@keywords\@empty\else\bgroup
       {\if@ACM@journal
