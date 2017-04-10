@@ -3979,7 +3979,8 @@ Computing Machinery]
 % \changes{v1.12}{2016/05/30}{Moved thankses to copyrightpermission box}
 % \changes{v1.33}{2017/03/27}{Fixed the bug with figures on top and
 % bottom of the title page, thanks to David Epstein}
-% \changes{v1.34}{2017/04/10}{Deleted `DOI' from doi numbers}
+% \changes{v1.34}{2017/04/09}{Deleted `DOI' from doi numbers}
+% \changes{v1.34}{2017/04/09}{Added date to the bibstrip in conf proceedings}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %
@@ -4028,8 +4029,8 @@ Computing Machinery]
       \if@printpermission\@copyrightpermission\par\fi
     \fi
     \if@ACM@manuscript\else
-       \if@ACM@journal\else % Print the conference short name
-         {\itshape \acmConference@shortname, \acmConference@venue}\par
+       \if@ACM@journal\else % Print the conference information
+         {\itshape \acmConference@shortname, \acmConference@date, \acmConference@venue}\par
        \fi
     \fi
     \if@printcopyright
@@ -4830,7 +4831,7 @@ Computing Machinery]
 % \changes{v1.17}{2016/07/10}{Changed format for sigs}
 % \changes{v1.17}{2016/07/10}{Added \cs{nobreak}}
 % \changes{v1.31}{2017/03/04}{Disabled linebreak}
-% \changes{v1.34}{2017/04/10}{Deleted DOI from doi numbers}
+% \changes{v1.34}{2017/04/09}{Deleted DOI from doi numbers}
 %   Print bibcitation format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup
