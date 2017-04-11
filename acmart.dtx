@@ -3982,6 +3982,7 @@ Computing Machinery]
 % \changes{v1.34}{2017/04/09}{Deleted `DOI' from doi numbers}
 % \changes{v1.34}{2017/04/09}{Added date to the bibstrip in conf proceedings}
 % \changes{v1.34}{2017/04/09}{The \cs{terms} command is now obsolete}
+% \changes{v1.34}{2017/04/11}{Rearranged bibstrip}
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %
@@ -4062,7 +4063,7 @@ Computing Machinery]
             \$\@acmPrice\\
             \@formatdoi{\@acmDOI}%
           \else % Conference
-             ISBN~\@acmISBN
+             ACM~ISBN~\@acmISBN
              \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
              \@formatdoi{\@acmDOI}%
           \fi
