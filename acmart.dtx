@@ -4903,17 +4903,21 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \begin{macro}{\ACM@linecount@bx}
+% \changes{v1.34}{2017/04/10}{Rulers now are continuous}
 %   This is the box displayed in the review mode
 %    \begin{macrocode}
 \if@ACM@review
   \newsavebox{\ACM@linecount@bx}
-  \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
-      \newlength\ACM@linecount@bxht\setlength{\ACM@linecount@bxht}{-\baselineskip}
-      \@tempcnta\@ne\relax
-      \loop{\color{ACMRed}\scriptsize\the\@tempcnta}\\
-      \advance\@tempcnta by \@ne
-      \addtolength{\ACM@linecount@bxht}{\baselineskip}
-      \ifdim\ACM@linecount@bxht<\textheight\repeat}}
+  \newlength\ACM@linecount@bxht
+  \newcount\ACM@linecount
+  \ACM@linecount\@ne\relax
+  \def\ACM@mk@linecount{%
+    \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
+        \setlength{\ACM@linecount@bxht}{-\baselineskip}%
+        \loop{\color{ACMRed}\scriptsize\the\ACM@linecount}\\
+        \global\advance\ACM@linecount by \@ne
+        \addtolength{\ACM@linecount@bxht}{\baselineskip}%
+        \ifdim\ACM@linecount@bxht<\textheight\repeat}}}
 \fi
 %    \end{macrocode}
 %
@@ -4921,10 +4925,12 @@ Computing Machinery]
 %
 % \begin{macro}{\ACM@linecountL}
 % \changes{v1.33}{2017/03/29}{Renamed macro}
+% \changes{v1.34}{2017/04/10}{Rulers now are continuous}
 %   How to display the box on the left
 %    \begin{macrocode}
 \def\ACM@linecountL{%
   \if@ACM@review
+  \ACM@mk@linecount
   \begin{picture}(0,0)%
     \put(-26,-22){\usebox{\ACM@linecount@bx}}%
   \end{picture}%
@@ -4935,10 +4941,12 @@ Computing Machinery]
 %
 % \begin{macro}{\ACM@linecountR}
 % \changes{v1.33}{2017/03/29}{Added macro}
+% \changes{v1.34}{2017/04/10}{Rulers now are continuous}
 %   How to display the box on the right
 %    \begin{macrocode}
 \def\ACM@linecountR{%
   \if@ACM@review
+  \ACM@mk@linecount
   \begin{picture}(0,0)%
     \put(20,-22){\usebox{\ACM@linecount@bx}}%
   \end{picture}%

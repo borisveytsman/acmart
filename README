@@ -98,4 +98,4 @@ version 1.33    New option `timestamp' (Michael D. Adams)
 version 1.34    Deleted DOI from doi numbers
 		Changed bibstrip formatting
 		The command \terms is now obsolete
-		
+		The rulers in review mode now have continuous numbering
