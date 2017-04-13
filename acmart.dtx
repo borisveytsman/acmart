@@ -1505,7 +1505,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/04/09 v1.34 Typesetting articles for Association of
+[2017/04/13 v1.35 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1989,12 +1989,13 @@ Computing Machinery]
 % \changes{v1.13}{2016/06/06}{Added macro}
 % \changes{v1.14}{2016/06/09}{Moved def of \cs{bibstyle@acmauthoryear}
 %   before use}
+% \changes{v1.35}{2017/04/13}{Square brackets for author-year style}
 %   The default author-year format:
 %    \begin{macrocode}
 \newcommand{\bibstyle@acmauthoryear}{%
   \setcitestyle{%
     authoryear,%
-    open={(},close={)},citesep={;},%
+    open={[},close={]},citesep={;},%
     aysep={},yysep={,},%
     notesep={, }}}
 %    \end{macrocode}
