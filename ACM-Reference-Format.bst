@@ -1176,7 +1176,7 @@ FUNCTION { format.names }
                 { "," * }
                 'skip$
               if$
-              t "{\sc others}" =
+              t "\bibinfo{person}{others}" =
                 { " {et~al\mbox{.}}" * } % jrh: avoid spacing problems
                 { " {and} " * t * } % from Chicago Manual of Style
               if$
@@ -1249,7 +1249,7 @@ FUNCTION { format.names.fml }
                 { "," * }
                 'skip$
               if$
-              t "{others}" =
+              t "\bibinfo{person}{others}" =
                 { " {et~al\mbox{.}}" * }
                 { " {and} " * t * }
               if$
