@@ -765,11 +765,15 @@
 %
 % \DescribeMacro{\acmPrice}%
 % The macro \cs{acmPrice}\marg{price} sets the price for the article
-% (by default 15.00), for example,
 % \begin{verbatim}
 % \acmPrice{25.00}
 % \end{verbatim}
-%
+% Note that you do not need to put the dollar sign here, just the
+% amount.  By default the price is \$15.00, unless the copyright is
+% set to |usgov| or |rightsretained|, when it is suppressed  Note that to
+% override the defaults you need to set the price \emph{after} the
+% \cs{setcopyright} command to override the default.  Also, the
+% command |\acmPrice{}| suppresses the printing of the price.
 %
 % \DescribeMacro{\acmISBN}%
 % Book-like volumes have ISBN numbers attached to them.  The macro
@@ -1505,7 +1509,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/04/13 v1.35 Typesetting articles for Association of
+[2017/04/22 v1.35 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3695,6 +3699,8 @@ Computing Machinery]
 % \end{macro}
 %
 % \changes{v1.10}{2016/05/22}{Changes of `licensedothergov' wording}
+% \changes{v1.35}{2017/04/22}{If the copyright is set to usgov or
+% rigtsretained, the price is suppressed}
 % Keys:
 %    \begin{macrocode}
 \define@choicekey*{ACM@}{acmcopyrightmode}[%
@@ -3714,11 +3720,13 @@ Computing Machinery]
   \fi
   \ifnum\acm@copyrightmode=3\relax % rightsretained
    \@acmownedfalse
+   \acmPrice{}%
   \fi
   \ifnum\acm@copyrightmode=4\relax % usgov
    \@printpermissiontrue
    \@printcopyrightfalse
    \@acmownedfalse
+   \acmPrice{}%
   \fi
   \ifnum\acm@copyrightmode=6\relax % cagov
    \@acmownedfalse
@@ -4060,8 +4068,8 @@ Computing Machinery]
           \fi\\
         \else
           \if@ACM@journal
-            \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\
-            \$\@acmPrice\\
+            \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle
+            \ifx\@acmPrice\@empty\else\ \$\@acmPrice\fi\\
             \@formatdoi{\@acmDOI}%
           \else % Conference
              ACM~ISBN~\@acmISBN
