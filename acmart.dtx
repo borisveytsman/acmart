@@ -1748,7 +1748,41 @@ Computing Machinery]
     \PackageInfo{\@classname}{Not using authordraft mode}%
   \fi}{\PackageError{\@classname}{Option authordraft can be either true or
     false}}
-\ExecuteOptionsX{timestamp=false}
+\ExecuteOptionsX{authordraft=false}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
+% \begin{macro}{\if@ACM@oldfonts}
+% \changes{v1.33}{2017/04/26}{Added macro}
+%   Whether we use old fonts
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{oldfonts}[true]{%
+  \if@ACM@oldfonts
+    \PackageInfo{\@classname}{Using old fonts}%
+  \else
+    \PackageInfo{\@classname}{Using new fonts}%
+  \fi}{\PackageError{\@classname}{Option oldfonts can be either true or
+    false}}
+\ExecuteOptionsX{oldfonts=false}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
+% \begin{macro}{\if@ACM@boldparagraph}
+% \changes{v1.33}{2017/04/26}{Added macro}
+%   Whether we use bold paragraph and subsubsection headings
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{boldparagraph}[true]{%
+  \if@ACM@oldfonts
+    \PackageInfo{\@classname}{Using bold paragraph and subsubsections headings}%
+  \else
+    \PackageInfo{\@classname}{Using italic paragraph and subsubsection headings}%
+  \fi}{\PackageError{\@classname}{Option boldparagraph can be either true or
+    false}}
+\ExecuteOptionsX{boldparagraph=false}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -2549,10 +2583,13 @@ Computing Machinery]
 % We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
+\if@ACM@oldfonts
+\else
 \RequirePackage[tt=false, type1=true]{libertine}
 \RequirePackage[varqu]{zi4}
 \RequirePackage[libertine]{newtxmath}
 \RequirePackage[T1]{fontenc}
+\fi
 \fi
 %    \end{macrocode}
 %
@@ -5239,10 +5276,17 @@ Computing Machinery]
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\@subsubsecfont\@adddotafter}}
+\if@ACM@boldparagraph
+\newcommand\basicsubsubsection{\@startsection{subsubsection}{3}{0pt}%
+  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {-3.5\p@}%
+  {\@subsubsecfont\@adddotafter}}
+\renewcommand\subsubsection[1]{\basicsubsubsection{\hspace{-.625em}#1}}
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\@parfont\@adddotafter}}
+\fi
 \renewcommand\part{\@startsection{part}{9}{\z@}%
   {-10\p@ \@plus -4\p@ \@minus -2\p@}%
   {4\p@}%
@@ -5274,6 +5318,10 @@ Computing Machinery]
 \def\@subsecfont{\sffamily\bfseries\section@raggedright}
 \def\@subsubsecfont{\sffamily\itshape}
 \def\@parfont{\itshape}
+\if@ACM@boldparagraph
+\def\@subsubsecfont{\sffamily\bfseries}
+\def\@parfont{\bfseries}
+\fi
 \setcounter{secnumdepth}{3}
 \ifcase\ACM@format@nr
 \relax % manuscript
