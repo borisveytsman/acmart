@@ -621,6 +621,7 @@ FUNCTION { format.day.month.year }     % UTAH
   % Needed for frequent periodicals: 2008. ... New York Times C-1, C-2, C-17 (23 Oct.)
   % acm-*.bst addition: prefix parenthesized date string with
   % ", Article nnn "
+
   articleno empty.or.unknown eid empty.or.unknown and
     { "" }
     { output.state after.block =
@@ -629,7 +630,7 @@ FUNCTION { format.day.month.year }     % UTAH
       if$
     }
   if$
-  " (" * format.day.month * format.year * ")" *
+  %" (" * format.day.month * format.year * ")" * % stop printing the year twice (old SIGGRAPH format would print the month, I think its unnecessary
 }
 
 FUNCTION { output.day.month.year }     % UTAH
@@ -1164,8 +1165,10 @@ FUNCTION { format.names }
     { nameptr #1 =
         %NO: BAD ORDER: {"{" s nameptr "{ff~}{ll}{, jj}{, vv}" format.name$ * "}" * 't := }
         %NO: BAD ORDER: {"{" s nameptr "{ff~}{ll}{, jj}{, vv}" format.name$ * "}" * 't := }
-        {"\bibinfo{person}{" s nameptr "{ff }{vv }{ll}{, jj}" format.name$ * "}" * 't := }
-        {"\bibinfo{person}{" s nameptr "{ff }{vv }{ll}{, jj}" format.name$ * "}" * 't := }
+    { s nameptr "{vv~}{ll}{, jj}{, f.}" format.name$ 't :=} % Last name first, abbreviate first and middle names.
+    { s nameptr "{vv~}{ll}{, jj}{, f.}" format.name$ 't :=} %
+        %{"\bibinfo{person}{" s nameptr "{ff }{vv }{ll}{, jj}" format.name$ * "}" * 't := }
+        %{"\bibinfo{person}{" s nameptr "{vv }{ff }{ll}{, jj}" format.name$ * "}" * 't := }
       if$
       nameptr #1 >
         {
