@@ -2831,23 +2831,25 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\descriptionlabel}
+% \changes{v1.37}{2017/05/13}{Reduce list indentation (Matthew Fluet)}%
 % \changes{v1.12}{2016/05/30}{Redefined}
 %   We do not use default colon as \cs{amsart} does:
 %    \begin{macrocode}
-\renewcommand{\descriptionlabel}[1]{\hspace\labelsep \upshape\bfseries #1}
+\renewcommand{\descriptionlabel}[1]{\upshape\bfseries #1}
 %    \end{macrocode}
 %   
 % \end{macro}
 %
 %
 % \begin{macro}{\description}
+% \changes{v1.37}{2017/05/13}{Reduce list indentation (Matthew Fluet)}%
 % \changes{v1.17}{2016/07/07}{Decreased indent}
-%   AMS uses additional indent of 6pt.  Frank recommends
-%   dropping it.
+%   Make |description| environment indentation consistent with that of
+%   |itemize| and |enumerate| environments.
 %    \begin{macrocode}
 \renewenvironment{description}{\list{}{%
-    \itemindent-12\p@
-    \labelwidth\z@ \let\makelabel\descriptionlabel}%
+    \labelwidth\@ACM@labelwidth
+    \let\makelabel\descriptionlabel}%
 }{
   \endlist
 }
