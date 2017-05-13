@@ -108,3 +108,6 @@ version 1.35    Author-year bib style now uses square brackets.
 Version 1.36    Bug fixes
 		Moved PACMPL to acmlarge format
 		New journal: PACMHCI
+		Added the possibility to adjust number of author boxes per row
+		in conference formats
+		

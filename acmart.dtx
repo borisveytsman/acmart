@@ -192,6 +192,7 @@
 % \item \textsl{url}, \url{http://www.ctan.org/pkg/url}
 % \item \textsl{xcolor}, \url{http://www.ctan.org/pkg/xcolor}
 % \item \textsl{xkeyval}, \url{http://www.ctan.org/pkg/xkeyval}
+% \item \textsl{xstring}, \url{http://www.ctan.org/pkg/xstring}
 % \end{itemize}
 % 
 %
@@ -974,7 +975,18 @@
 % \begin{verbatim}
 % \settopmatter{printacmref=false, printccs=true, printfolios=true}
 % \end{verbatim}
-%
+% The parameter |authorsperrow| requires some explanation.  In
+% conference proceedings authors' information is typeset in boxes,
+% several boxes per row (see |sample-sigconf.pdf|,
+% |sample-sigplan.pdf| etc.).  The number of the boxes per row is
+% determined automatically.  If you want to override this decision,
+% you may do it using this parameter, for example,
+% \begin{verbatim}
+% \settopmatter{authorsperrow=4}
+% \end{verbatim}
+% However, in most cases you should \emph{not} do this and use the
+% default settings.  Setting |authorsperrow| to $0$ will revert to
+% default settings.
 %
 % \begin{table}
 %   \centering
@@ -987,7 +999,11 @@
 %     printccs & true/false & Whether to print CCS categories\\
 %     printacmref & true/false & Whether to print ACM bibliographic
 %     entry\\
-%     printfolios & true/false & Whether to print page numbers (folios)\\
+%     printfolios & true/false & Whether to print page numbers
+%     (folios)\\
+%     authorsperrow & numeric & Number of authors per row for title
+%     page in
+%     conference proceedings formats\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1568,6 +1584,8 @@ Computing Machinery]
 % \changes{v1.33}{2017/03/28}{Added acmart-preload-hook} 
 % \changes{v1.33}{2017/03/33}{Documentation updates} 
 % \changes{v1.35}{2017/04/23}{BibTeX bug fixed: et al.}
+% \changes{v1.36}{2017/05/12}{Added the possibility to adjust number of
+% author boxes per row in conference formats}
 %
 %
 % And the driver code:
@@ -1613,7 +1631,11 @@ Computing Machinery]
 \RequirePackage{xkeyval}
 %    \end{macrocode}
 %
-%
+% We use |xstring| to check whether user input is integer
+%    \begin{macrocode}
+\RequirePackage{xstring}
+%    \end{macrocode}
+% 
 %
 % \begin{macro}{format}
 %   The possible formats
@@ -3573,6 +3595,18 @@ Computing Machinery]
 %    \end{macrocode}
 % \end{macro}
 % 
+% \begin{macro}{\@ACM@authorsperrow}
+% \changes{v1.36}{2017/05/13}{Added macro}
+%   The number of authors per row.  0 means use default algorithm.
+%    \begin{macrocode}
+\define@cmdkey{@ACM@topmatter@}[@ACM@]{authorsperrow}[0]{%
+  \IfInteger{#1}{\ClassInfo{\@classname}{Setting authorsperrow to
+      #1}}{\ClassWarning{\@classname}{Parameter authorsperrow must be
+      numerical. Ignoring the input #1}\gdef\@ACM@authorsperrow{0}}}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 % \begin{macro}{\settopmatter}
 %   The usual syntactic sugar
 %    \begin{macrocode}
@@ -3596,6 +3630,7 @@ Computing Machinery]
     \settopmatter{printfolios=false}
   \fi
 \fi
+\settopmatter{authorsperrow=0}
 %    \end{macrocode}
 %
 % \begin{macro}{\@received}
@@ -4671,6 +4706,7 @@ Computing Machinery]
 % \begin{macro}{\@mkauthors@iii}
 % \changes{v1.15}{2016/07/04}{New authors system}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
+% \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
 %   The |sigconf| version.  Here we use centered design with each
 %   author in a separate box.
 %    \begin{macrocode}
@@ -4684,17 +4720,21 @@ Computing Machinery]
 %    \begin{macrocode}
   \author@bx@wd=\textwidth\relax
   \advance\author@bx@wd by -\author@bx@sep\relax
-  \ifcase\num@authorgroups
-  \relax % 0?
-  \or  % 1=one author per row
-  \or  % 2=two authors per row
-     \divide\author@bx@wd by \num@authorgroups\relax
-  \or  % 3=three authors per row
-     \divide\author@bx@wd by \num@authorgroups\relax
-  \or  % 4=two authors per row (!)
-     \divide\author@bx@wd by 2\relax
-  \else % three authors per row
-     \divide\author@bx@wd by 3\relax
+  \ifnum\@ACM@authorsperrow>0\relax
+    \divide\author@bx@wd by \@ACM@authorsperrow\relax
+  \else
+    \ifcase\num@authorgroups
+    \relax % 0?
+    \or  % 1=one author per row
+    \or  % 2=two authors per row
+       \divide\author@bx@wd by \num@authorgroups\relax
+    \or  % 3=three authors per row
+       \divide\author@bx@wd by \num@authorgroups\relax
+    \or  % 4=two authors per row (!)
+       \divide\author@bx@wd by 2\relax
+    \else % three authors per row
+       \divide\author@bx@wd by 3\relax
+    \fi
   \fi
   \advance\author@bx@wd by -\author@bx@sep\relax
 %    \end{macrocode}
@@ -4739,8 +4779,10 @@ Computing Machinery]
 %
 % \begin{macro}{\@mkauthors@iv}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
+% \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
 %   The |sigchia| version.  Now we put
-%   authors in the main text, and no more than 2 authors per line.
+%   authors in the main text, and no more than 2 authors per line,
+%   unless overriden.
 %    \begin{macrocode}
 \def\@mkauthors@iv{%
 %    \end{macrocode}
@@ -4752,11 +4794,15 @@ Computing Machinery]
 %    \begin{macrocode}
   \author@bx@wd=\columnwidth\relax
   \advance\author@bx@wd by -\author@bx@sep\relax
-  \ifcase\num@authorgroups
-  \relax % 0?
-  \or  % 1=one author per row
-  \else  % 2=two authors per row
-     \divide\author@bx@wd by 2\relax
+  \ifnum\@ACM@authorsperrow>0\relax
+    \divide\author@bx@wd by \@ACM@authorsperrow\relax
+  \else
+    \ifcase\num@authorgroups
+    \relax % 0?
+    \or  % 1=one author per row
+    \else  % 2=two authors per row
+       \divide\author@bx@wd by 2\relax
+    \fi
   \fi
   \advance\author@bx@wd by -\author@bx@sep\relax
 %    \end{macrocode}
