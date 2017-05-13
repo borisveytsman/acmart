@@ -1509,7 +1509,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/04/23 v1.35 Typesetting articles for Association of
+[2017/05/13 v1.36 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1737,6 +1737,7 @@ Computing Machinery]
 %
 % \begin{macro}{\if@ACM@authordraft}
 % \changes{v1.33}{2017/03/28}{Added macro}
+% \changes{v1.36}{2017/05/13}{Corrected typo, thanks to bargteil}
 %   Whether we use authordraft mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{authordraft}[true]{%
@@ -1748,7 +1749,7 @@ Computing Machinery]
     \PackageInfo{\@classname}{Not using authordraft mode}%
   \fi}{\PackageError{\@classname}{Option authordraft can be either true or
     false}}
-\ExecuteOptionsX{timestamp=false}
+\ExecuteOptionsX{authordraft=false}
 %    \end{macrocode}
 %
 % \end{macro}

@@ -104,3 +104,5 @@ version 1.35    Author-year bib style now uses square brackets.
 		Changed defaults for TOG sample
 		Price is suppressed for usgov and rightsretained modes.
 		Bugs fixed
+
+Version 1.36    Bug fixes
