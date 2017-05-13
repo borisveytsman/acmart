@@ -2412,6 +2412,20 @@ Computing Machinery]
 % \end{macro}
 % \end{macro}
 %
+% \begin{macro}{\normalparindent}
+% \changes{v1.37}{2017/05/13}{Set \cs{normalparindent} (Matthew Fluet)}%
+%   |amsart| defines the \cs{normalparindent} length and initializes it
+%   to 12pt (the value of \cs{parindent} in |amsart|).  It is later used
+%   to set the \cs{listparindent} length in the |quotation| environment
+%   and the \cs{parindent} length in the \cs{@footnotetext} command.  We
+%   set \cs{normalparindent} to the value of \cs{parindent} as selected
+%   by |acmart| for consistent paragraph indents.
+%    \begin{macrocode}
+\setlength\normalparindent{\parindent}
+%    \end{macrocode}
+%
+% \end{macro}
+%
 % Footnotes require some consideration.  We have several layers of
 % footnotes:  frontmatter footnotes, ``regular'' footnotes and the
 % special insert for bibstrip.  In the old ACM classes bibstrip was a
