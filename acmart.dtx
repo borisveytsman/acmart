@@ -1586,6 +1586,8 @@ Computing Machinery]
 % \changes{v1.35}{2017/04/23}{BibTeX bug fixed: et al.}
 % \changes{v1.36}{2017/05/12}{Added the possibility to adjust number of
 % author boxes per row in conference formats}
+% \changes{v1.37}{2017/05/13}{Set \cs{normalparindent}; Reduce list
+% indentation (Matthew Fluet)}%
 %
 %
 % And the driver code:
@@ -2412,6 +2414,20 @@ Computing Machinery]
 % \end{macro}
 % \end{macro}
 %
+% \begin{macro}{\normalparindent}
+% \changes{v1.37}{2017/05/13}{Set \cs{normalparindent} (Matthew Fluet)}%
+%   |amsart| defines the \cs{normalparindent} length and initializes it
+%   to 12pt (the value of \cs{parindent} in |amsart|).  It is later used
+%   to set the \cs{listparindent} length in the |quotation| environment
+%   and the \cs{parindent} length in the \cs{@footnotetext} command.  We
+%   set \cs{normalparindent} to the value of \cs{parindent} as selected
+%   by |acmart| for consistent paragraph indents.
+%    \begin{macrocode}
+\setlength\normalparindent{\parindent}
+%    \end{macrocode}
+%
+% \end{macro}
+%
 % Footnotes require some consideration.  We have several layers of
 % footnotes:  frontmatter footnotes, ``regular'' footnotes and the
 % special insert for bibstrip.  In the old ACM classes bibstrip was a
@@ -2762,24 +2778,78 @@ Computing Machinery]
 %    \end{macrocode}
 %
 %
+% \changes{v1.37}{2017/05/13}{Reduce list indentation (Matthew Fluet)}%
+% AMS uses generous margins for the lists.  Note that |amsart| defines
+% \cs{leftmargin} values for list levels at begin document, so we must
+% redefine them in the same manner.  Also, note that |amsart|
+% redefines |enumerate| and |itemize| environments with a
+% \cs{makelabel} command that uses \cs{llap}, so the \cs{labelwidth}
+% value is (effectively) irrelevant; nonetheless, we follow |amsart|
+% and set \cs{labelwidth} to \cs{leftmargin} minus \cs{labelsep}.
+%    \begin{macrocode}
+\newdimen\@ACM@labelwidth
+\AtBeginDocument{%
+  \setlength\labelsep{4pt}
+  \setlength{\@ACM@labelwidth}{6.5pt}
+
+  %% First-level list: when beginning after the first line of an
+  %% indented paragraph or ending before an indented paragraph, labels
+  %% should not hang to the left of the preceding/following text.
+  \setlength\leftmargini{\z@}
+  \addtolength\leftmargini{\parindent}
+  \addtolength\leftmargini{2\labelsep}
+  \addtolength\leftmargini{\@ACM@labelwidth}
+
+  %% Second-level and higher lists.
+  \setlength\leftmarginii{\z@}
+  \addtolength\leftmarginii{0.5\labelsep}
+  \addtolength\leftmarginii{\@ACM@labelwidth}
+  \setlength\leftmarginiii{\leftmarginii}
+  \setlength\leftmarginiv{\leftmarginiii}
+  \setlength\leftmarginv{\leftmarginiv}
+  \setlength\leftmarginvi{\leftmarginv}
+  \@listi}
+\newskip\listisep
+\listisep\smallskipamount
+\def\@listI{\leftmargin\leftmargini
+  \labelwidth\leftmargini \advance\labelwidth-\labelsep
+  \listparindent\z@
+  \topsep\listisep}
+\let\@listi\@listI
+\def\@listii{\leftmargin\leftmarginii
+  \labelwidth\leftmarginii \advance\labelwidth-\labelsep
+  \topsep\z@skip}
+\def\@listiii{\leftmargin\leftmarginiii
+  \labelwidth\leftmarginiii \advance\labelwidth-\labelsep}
+\def\@listiv{\leftmargin\leftmarginiv
+  \labelwidth\leftmarginiv \advance\labelwidth-\labelsep}
+\def\@listv{\leftmargin\leftmarginv
+  \labelwidth\leftmarginv \advance\labelwidth-\labelsep}
+\def\@listvi{\leftmargin\leftmarginvi
+  \labelwidth\leftmarginvi \advance\labelwidth-\labelsep}
+%    \end{macrocode}
+%
+%
 % \begin{macro}{\descriptionlabel}
+% \changes{v1.37}{2017/05/13}{Reduce list indentation (Matthew Fluet)}%
 % \changes{v1.12}{2016/05/30}{Redefined}
 %   We do not use default colon as \cs{amsart} does:
 %    \begin{macrocode}
-\renewcommand{\descriptionlabel}[1]{\hspace\labelsep \upshape\bfseries #1}
+\renewcommand{\descriptionlabel}[1]{\upshape\bfseries #1}
 %    \end{macrocode}
 %   
 % \end{macro}
 %
 %
 % \begin{macro}{\description}
+% \changes{v1.37}{2017/05/13}{Reduce list indentation (Matthew Fluet)}%
 % \changes{v1.17}{2016/07/07}{Decreased indent}
-%   AMS uses additional indent of 6pt.  Frank recommends
-%   dropping it.
+%   Make |description| environment indentation consistent with that of
+%   |itemize| and |enumerate| environments.
 %    \begin{macrocode}
 \renewenvironment{description}{\list{}{%
-    \itemindent-12\p@
-    \labelwidth\z@ \let\makelabel\descriptionlabel}%
+    \labelwidth\@ACM@labelwidth
+    \let\makelabel\descriptionlabel}%
 }{
   \endlist
 }

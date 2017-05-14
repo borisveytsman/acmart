@@ -111,3 +111,4 @@ Version 1.36    Bug fixes
 		Added the possibility to adjust number of author boxes per row
 		in conference formats
 		
+Version 1.37    Reduce list indentation (Matthew Fluet)
