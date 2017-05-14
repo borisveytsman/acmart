@@ -112,3 +112,5 @@ Version 1.36    Bug fixes
 		in conference formats
 		
 Version 1.37    Reduce list indentation (Matthew Fluet)
+
+Version 1.38    Increase default font size for SIGPLAN
