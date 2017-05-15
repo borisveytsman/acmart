@@ -734,6 +734,20 @@
 % commands, since this confuses metadata extraction software (actually
 % these commands now produce errors).
 %
+% \DescribeMacro{\authornotemark}%
+% Sometimes one may need to have the same footnote connected to
+% several authors.  The command \cs{authornotemark}\oarg{number} adds
+% just the footnote mark, for example
+% \begin{verbatim}
+% \author{A. U. Thor}
+% \authornote{Both authors contributed equally to the paper}
+% ...
+% \author{A. N. Other}
+% \authornotemark[1]
+% \end{verbatim}
+% The correct numbering of these marks is the responsibility of the
+% user. 
+%
 % \DescribeMacro{\acmVolume}%
 % \DescribeMacro{\acmNumber}%
 % \DescribeMacro{\acmArticle}%
@@ -1531,7 +1545,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/05/13 v1.36 Typesetting articles for Association of
+[2017/05/14 v1.39 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3376,12 +3390,26 @@ Computing Machinery]
 %    \begin{macrocode}
 \def\authornote#1{%
   \if@ACM@anonymous\else
-    \g@addto@macro\addresses{\@authornotemark}
+    \g@addto@macro\addresses{\@authornotemark}%
     \g@addto@macro\@authornotes{%
       \stepcounter{footnote}\footnotetext{#1}}%
   \fi}
 %    \end{macrocode}
 %
+% \end{macro}
+%
+% \begin{macro}{\authornotemark}
+% \changes{v1.39}{2017/05/14}{Added macro}
+% Adding footnotemark to authors
+%    \begin{macrocode}
+\newcommand\authornotemark[1][\relax]{%
+  \ifx#1\relax\relax\relax
+  \g@addto@macro\addresses{\@authornotemark}%
+  \else
+  \g@addto@macro\addresses{\@@authornotemark{#1}}%
+  \fi}
+%    \end{macrocode}
+% 
 % \end{macro}
 %
 % \begin{macro}{\acmVolume}
@@ -4916,11 +4944,21 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@authornotemark}
-%   Adding footnotemark to authors
+% Adding footnotemark to authors.  This version adds ``normal''
+% footnotemark.
 %    \begin{macrocode}
-\def\@authornotemark{\g@addto@macro\@currentauthors{\footnotemark}}
+\def\@authornotemark{\g@addto@macro\@currentauthors{\footnotemark\relax}}
 %    \end{macrocode}
 %
+% \end{macro}
+%
+% \begin{macro}{\@@authornotemark}
+% \changes{v1.39}{2017/05/14}{Added macro}
+% Adding footnotemark to authors with the given number
+%    \begin{macrocode}
+\def\@@authornotemark#1{\g@addto@macro\@currentauthors{\footnotemark[#1]}}
+%    \end{macrocode}
+% 
 % \end{macro}
 %
 % \begin{macro}{\@mkteasers}
