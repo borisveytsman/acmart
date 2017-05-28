@@ -118,5 +118,6 @@ Version 1.38    Increase default font size for SIGPLAN
 Version 1.39    Added \authornotemark commmand
 
 Version 1.40    Bibliography changes
+		Added processing of one-compoment ccsdesc nodes
 		Bug fixes
-		
+				

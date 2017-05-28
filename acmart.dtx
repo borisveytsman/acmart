@@ -3809,11 +3809,12 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\ccsdesc}
+% \changes{v1.40}{2017/05/27}{Now we can parse |Significance~General| nodes}
 %   The first argument is the significance, the second is the
 %   concept(s)
 %    \begin{macrocode}
 \newcommand\ccsdesc[2][100]{%
-  \ccsdesc@parse#1~#2~}
+  \ccsdesc@parse#1~#2~~\ccsdesc@parse@end}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -3823,22 +3824,42 @@ Computing Machinery]
 % \cs{textrightarrow} (Matteo Riondato)}
 % \changes{v1.29}{2017/01/22}{Add spacing after bullet and around
 % rightarrow; semicolon separators no longer in bold/italic (John Wickerson)}
+% \changes{v1.40}{2017/05/27}{Now we can parse |Significance~General| nodes}
 %   The parser of the expression |Significance~General~Specific| (we need
-%   |textcomp| for |\\textrightarrow|):
+%   |textcomp| for |\textrightarrow|).  Note that |Specific| can be empty!
 %    \begin{macrocode}
 \RequirePackage{textcomp}
 \def\ccsdesc@parse#1~#2~#3~{%
-  \expandafter\ifx\csname CCS@#2\endcsname\relax
-    \expandafter\gdef\csname CCS@#2\endcsname{\textbullet\ \textbf{#2} \textrightarrow\ }%
-  \g@addto@macro{\@concepts}{\csname CCS@#2\endcsname}\fi
-  \expandafter\g@addto@macro\expandafter{\csname CCS@#2\endcsname}{%
-    \ifnum#1>499\textbf{#3}; \else
-    \ifnum#1>299\textit{#3}; \else
-    #3; \fi\fi}}
+  \expandafter\ifx\csname CCS@General@#2\endcsname\relax
+    \expandafter\gdef\csname CCS@General@#2\endcsname{\textbullet\
+      \textbf{#2}}%
+    \expandafter\gdef\csname CCS@Punctuation@#2\endcsname{; }%   
+    \expandafter\gdef\csname CCS@Specific@#2\endcsname{}%   
+  \g@addto@macro{\@concepts}{\csname CCS@General@#2\endcsname
+    \csname CCS@Punctuation@#2\endcsname
+    \csname CCS@Specific@#2\endcsname}%
+  \fi
+  \ifx#3\relax\relax\else
+    \expandafter\gdef\csname CCS@Punctuation@#2\endcsname{
+      \textrightarrow\ }%   
+    \expandafter\g@addto@macro\expandafter{\csname CCS@Specific@#2\endcsname}{%
+     \ifnum#1>499\textbf{#3}; \else
+     \ifnum#1>299\textit{#3}; \else
+     #3; \fi\fi}%
+  \fi
+\ccsdesc@parse@finish}
 %    \end{macrocode}
 %
 % \end{macro}
 %
+% \begin{macro}{\ccdesc@parse@finish}
+% \changes{v1.40}{2017/05/27}{Added macro}
+%   Gobble everything to |\ccsdesc@parse@end|
+%    \begin{macrocode}
+\def\ccsdesc@parse@finish#1\ccsdesc@parse@end{}
+%    \end{macrocode}
+%
+% \end{macro}
 %
 %\subsection{Copyright system}
 %\label{sec:copyright}
