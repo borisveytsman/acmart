@@ -587,12 +587,12 @@ FUNCTION { format.articleno }
 }
 
 FUNCTION { format.year }
-{ % push year string or "????" onto output stack
+{ % push year string or "[n. d.]" onto output stack
   %% Because year is a mandatory field, we always force SOMETHING
   %% to be output
   "\bibinfo{year}{"
   year empty.or.unknown
-    { "????" }
+    { "[n. d.]" }
     { year }
   if$
   *  "}" *
@@ -893,9 +893,14 @@ FUNCTION { output.url } % UTAH
 }
 
 FUNCTION { output.year.check }
-{ % warn if year empty, else output top string and leave " YEAR<label>" on stack in mid-sentence
+{ % warn if year empty, output top string and leave " YEAR<label>" on stack in mid-sentence
   year empty.or.unknown
-     { "empty year in " cite$ * warning$ }
+     { "empty year in " cite$ * warning$ 
+       write$
+       " \bibinfo{year}{[n. d.]}"  
+       "\natexlab{" extra.label * "}" * *
+       mid.sentence 'output.state :=
+     }
      { write$
        " \bibinfo{year}{" year * "}"  *
        "\natexlab{" extra.label * "}" * *
@@ -1125,6 +1130,8 @@ FUNCTION { field.or.null }
     'skip$
   if$
 }
+
+
 
 FUNCTION { emphasize }
 { % emphasize a non-empty top string on the stack (WITHOUT italic correction)
@@ -2456,7 +2463,10 @@ FUNCTION { calc.label }
   %
   % save the year for sort processing afterwards (adding a, b, c, etc.)
   %
-  year field.or.null purify$ #-1 #4 substring$
+  year empty.or.unknown 
+    { "[n. d.]" }
+    { year field.or.null purify$ #-1 #4 substring$}
+  if$
   'label.year :=
 }
 
@@ -2805,7 +2815,7 @@ FUNCTION { mastersthesis }
 FUNCTION { misc }
 {
   output.bibitem
-  format.authors output
+  format.authors "author" output.check
   author format.key output            % added
   output.year.check                   % added
   title howpublished new.block.checkb

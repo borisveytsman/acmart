@@ -1402,6 +1402,22 @@
 % }
 % \end{verbatim}
 %
+% If you do not know the year of publication, the style will add
+% ``[n. d.]'' (for ``no date'') entry.
+%
+% If you do not know the author (this is often the case for online
+% entries), use |key| field to add a key for sorting and citations,
+% for example,
+% \begin{verbatim}
+% @online{TUGInstmem,
+%  key =          {TUG},
+%  year  =        2017,
+%  title =        "Institutional members of the {\TeX} Users Group",
+%  url =           "http://wwtug.org/instmem.html",
+%  lastaccessed = "May 27, 2017",
+% }
+% \end{verbatim}
+% 
 % 
 %
 %\subsection{Colors}
@@ -1545,7 +1561,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/05/14 v1.39 Typesetting articles for Association of
+[2017/05/27 v1.40 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1603,6 +1619,7 @@ Computing Machinery]
 % \changes{v1.37}{2017/05/13}{Set \cs{normalparindent}; Reduce list
 % indentation (Matthew Fluet)}%
 % \changes{v1.38}{2017/05/13}{Increase default font size for SIGPLAN}
+% \changes{v1.40}{2017/05/27}{Bibliography changes}
 %
 %
 % And the driver code:
