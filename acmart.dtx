@@ -1669,6 +1669,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \RequirePackage{xstring}
 %    \end{macrocode}
+%
 % 
 %
 % \begin{macro}{format}
@@ -2597,13 +2598,23 @@ Computing Machinery]
 % \changes{v1.12}{2016/05/30}{Added graceful behavior when libertine
 % fonts are absent}
 % \changes{v1.33}{2017/03/29}{Added cmap and glyphtounicode}
+% \changes{v1.40}{2017/05/27}{Added Ross Moore code for glyphtounicode}
 %
 % Somehow PDFTeX and XeTeX require different incantations to make PDF
 % compliant with the current Acrobat bugs.  Xpdf is much better.
+%
+% The code below is by Ross Moore.
 %    \begin{macrocode}
 \RequirePackage{iftex}
 \ifPDFTeX
 \input{glyphtounicode}
+\pdfglyphtounicode{f_f}{FB00}
+\pdfglyphtounicode{f_f_i}{FB03}
+\pdfglyphtounicode{f_f_l}{FB04}
+\pdfglyphtounicode{f_i}{FB01}
+\pdfglyphtounicode{t_t}{00740074}
+\pdfglyphtounicode{f_t}{00660074}
+\pdfglyphtounicode{T_h}{00540068}
 \pdfgentounicode=1
 \fi
 \RequirePackage{cmap}
