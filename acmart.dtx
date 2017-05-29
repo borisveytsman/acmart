@@ -3351,7 +3351,7 @@ Computing Machinery]
 % \begin{macro}{\orcid}
 % \changes{v1.15}{2016/06/25}{Introduced macro}
 %   Right now we do not typeset orcids
-\let\orcid\@gobble
+\def\orcid#1{\unskip\ignorespaces}
 % \end{macro}
 % 
 % \begin{macro}{\@titlenotes}
@@ -4625,6 +4625,7 @@ Computing Machinery]
 % \begin{macro}{\country}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
+% \changes{v1.40}{2017/05/27}{Fixed bugs with extra spaces}
 %   Theoretically we can define the macros for \cs{affiliation} inside
 %   the \cs{@mkauthors}-style commands.  However, this would lead to a
 %   strange error if an author uses them outside \cs{affiliation}.  Of
@@ -4634,14 +4635,14 @@ Computing Machinery]
 %   code.  
 %    \begin{macrocode}
 \if@ACM@journal
-  \let\position\@gobble
-  \def\institution#1{#1\ignorespaces}%
-  \newcommand\department[2][0]{}%
-  \let\streetaddress\@gobble
-  \let\city\@gobble
-  \let\state\@gobble
-  \let\postcode\@gobble
-  \let\country\@gobble
+  \def\position#1{\unskip\ignorespaces}
+  \def\institution#1{#1\ignorespaces}
+  \newcommand\department[2][0]{}
+  \def\streetaddress#1{\unskip\ignorespaces}
+  \def\city#1{\unskip\ignorespaces}
+  \def\state#1{\unskip\ignorespaces}
+  \def\postcode#1{\unskip\ignorespaces}
+  \def\country#1{\unskip\ignorespaces}
 \else
   \def\position#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
   \def\institution#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
