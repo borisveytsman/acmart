@@ -5131,6 +5131,8 @@ Computing Machinery]
 %
 % \begin{macro}{\ACM@linecount@bx}
 % \changes{v1.34}{2017/04/10}{Rulers now are continuous}
+% \changes{v1.40}{2017/05/27}{Work around a bug in xcolor: looks like
+% cmyk colors in boxes do not work}
 %   This is the box displayed in the review mode
 %    \begin{macrocode}
 \if@ACM@review
@@ -5141,7 +5143,7 @@ Computing Machinery]
   \def\ACM@mk@linecount{%
     \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
         \setlength{\ACM@linecount@bxht}{-\baselineskip}%
-        \loop{\color{ACMRed}\scriptsize\the\ACM@linecount}\\
+        \loop{\color{red}\scriptsize\the\ACM@linecount}\\
         \global\advance\ACM@linecount by \@ne
         \addtolength{\ACM@linecount@bxht}{\baselineskip}%
         \ifdim\ACM@linecount@bxht<\textheight\repeat}}}
