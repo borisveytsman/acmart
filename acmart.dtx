@@ -185,6 +185,7 @@
 % \item \textsl{oberdiek}, \url{http://www.ctan.org/pkg/oberdiek}
 % \item \textsl{pdftex-def}, \url{http://www.ctan.org/pkg/pdftex-def}
 % \item \textsl{setspace}, \url{http://www.ctan.org/pkg/setspace}
+% \item \textsl{textcase}, \url{http://www.ctan.org/pkg/textcase}
 % \item \textsl{totpages}, \url{http://www.ctan.org/pkg/totpages}
 % \item \textsl{trimspaces}, \url{http://www.ctan.org/pkg/trimspaces}
 % \item \textsl{upquote}, \url{http://www.ctan.org/pkg/upquote}
@@ -1493,7 +1494,10 @@
 % problematic paragraph inside \texttt{sloppypar} environment might
 % help---but beware the results might be, well, sloppy.
 %
-%
+% Note that the uppercasing in section titles is done using
+% \textsl{textcase} package~\cite{Carlisle04:Textcase}, so command
+% \cs{NoCaseChange} inside title may help to prevent extraneous
+% uppercasing.  
 %
 %\subsection{A note for wizards: \texttt{acmart-preload-hook.tex}}
 %\label{sec:ug_preload}
@@ -1560,7 +1564,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/05/27 v1.40 Typesetting articles for Association of
+[2017/06/04 v1.40 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1964,6 +1968,13 @@ Computing Machinery]
 \onehalfspacing
 \fi
 %    \end{macrocode}
+%
+% \changes{v1.40}{2017/06/05}{Added `textcase' package}
+% We need \textsl{textcase} for better upcasing
+%    \begin{macrocode}
+\RequirePackage{textcase}      
+%    \end{macrocode}
+% 
 %
 % \changes{v1.19}{2016/07/28}{Include 'References' in PDF bookmarks
 % (Matthew Fluet)}
@@ -4775,6 +4786,7 @@ Computing Machinery]
 % \begin{macro}{\@mkauthors@i}
 % \changes{v1.18}{2016/07/12}{Now we andify affiliations}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
+% \changes{v1.40}{2017/06/04}{Switched to MakeTextUppercase}
 %   This is version used in most journal formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
@@ -4784,9 +4796,9 @@ Computing Machinery]
   \global\let\and\@typeset@author@line
   \def\@author##1{%
     \ifx\@currentauthors\@empty
-      \gdef\@currentauthors{\@authorfont\MakeUppercase{##1}}%
+      \gdef\@currentauthors{\@authorfont\MakeTextUppercase{##1}}%
     \else
-       \g@addto@macro{\@currentauthors}{\and\MakeUppercase{##1}}%
+       \g@addto@macro{\@currentauthors}{\and\MakeTextUppercase{##1}}%
     \fi
     \gdef\and{}}%
   \def\email##1##2{}%
@@ -5496,9 +5508,10 @@ Computing Machinery]
 % \begin{macro}{\@subsubsecfont}
 % \begin{macro}{\@parfont}
 %   \changes{v1.12}{2016/05/30}{Moved to \cs{section@raggedright}}%
+% \changes{v1.40}{2017/06/04}{Switched to MakeTextUppercase}
 % Fonts for sections etc. are different for different formats. 
 %    \begin{macrocode}
-\def\@secfont{\sffamily\bfseries\section@raggedright\MakeUppercase}
+\def\@secfont{\sffamily\bfseries\section@raggedright\MakeTextUppercase}
 \def\@subsecfont{\sffamily\bfseries\section@raggedright}
 \def\@subsubsecfont{\sffamily\itshape}
 \def\@parfont{\itshape}
@@ -5507,16 +5520,16 @@ Computing Machinery]
 \relax % manuscript
 \or % acmsmall
 \or % acmlarge
- \def\@secfont{\sffamily\large\section@raggedright\MakeUppercase}
+ \def\@secfont{\sffamily\large\section@raggedright\MakeTextUppercase}
  \def\@subsecfont{\sffamily\large\section@raggedright}
 \or % acmtog
- \def\@secfont{\sffamily\large\section@raggedright\MakeUppercase}
+ \def\@secfont{\sffamily\large\section@raggedright\MakeTextUppercase}
  \def\@subsecfont{\sffamily\large\section@raggedright}
 \or % sigconf
- \def\@secfont{\bfseries\Large\section@raggedright\MakeUppercase}
+ \def\@secfont{\bfseries\Large\section@raggedright\MakeTextUppercase}
  \def\@subsecfont{\bfseries\Large\section@raggedright}
 \or % siggraph
- \def\@secfont{\bfseries\sffamily\Large\section@raggedright\MakeUppercase}
+ \def\@secfont{\bfseries\sffamily\Large\section@raggedright\MakeTextUppercase}
  \def\@subsecfont{\bfseries\sffamily\Large\section@raggedright}
 \or % sigplan
  \def\@secfont{\bfseries\Large\section@raggedright}
@@ -5538,11 +5551,11 @@ Computing Machinery]
  \def\@subparfont{\itshape}
 \or % sigchi
  \setcounter{secnumdepth}{1}
- \def\@secfont{\bfseries\sffamily\section@raggedright\MakeUppercase}
+ \def\@secfont{\bfseries\sffamily\section@raggedright\MakeTextUppercase}
  \def\@subsecfont{\bfseries\sffamily\section@raggedright}
 \or % sigchi-a
  \setcounter{secnumdepth}{0}
- \def\@secfont{\bfseries\sffamily\section@raggedright\MakeUppercase}
+ \def\@secfont{\bfseries\sffamily\section@raggedright\MakeTextUppercase}
  \def\@subsecfont{\bfseries\sffamily\section@raggedright}
 \fi
 %    \end{macrocode}
