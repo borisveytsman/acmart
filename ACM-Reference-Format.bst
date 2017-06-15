@@ -62,7 +62,7 @@ ENTRY
         lccn          % UTAH
   }
   {}
-  { label.year extra.label sort.year sort.label }
+  { label.year extra.label sort.year sort.label basic.label.year}
 
 INTEGERS { output.state before.all mid.sentence after.sentence after.block }
 
@@ -81,6 +81,7 @@ STRINGS { s t t.org u }
 STRINGS { last.label next.extra }
 
 STRINGS { p1 p2 p3 page.count }
+
 
 FUNCTION { not }
 {
@@ -2259,6 +2260,7 @@ FUNCTION { author.editor.key.organization.label }
   if$
 }
 
+% Calculate label and leave it on stack
 FUNCTION { calc.basic.label }
 {
   type$ "book" =
@@ -2279,6 +2281,13 @@ FUNCTION { calc.basic.label }
       if$
     }
   if$
+  duplicate$
+  year empty.or.unknown 
+    { "[n. d.]" }
+    { year field.or.null purify$ #-1 #4 substring$}
+  if$
+  *
+  'basic.label.year :=
 }
 
 FUNCTION { calc.label }
@@ -3028,7 +3037,15 @@ FUNCTION { presort }
   % including organizations as the sort key; the following is stolen from
   % alpha.bst.
 
-  calc.label sortify % recalculate bibitem label
+  calc.label 
+  basic.label.year 
+  swap$
+  "    " 
+  swap$
+  * *
+  "    " 
+  *
+  sortify
   year field.or.null purify$ #-1 #4 substring$ * % add year
   "    "
   *
@@ -3062,6 +3079,8 @@ FUNCTION { presort }
   #1 entry.max$ substring$
   'sort.key$ :=
 }
+
+
 
 ITERATE { presort }
 
