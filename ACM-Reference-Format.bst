@@ -2,11 +2,10 @@
 %%% ====================================================================
 %%%  @BibTeX-style-file{
 %%%     author          = "Nelson H. F. Beebe, Boris Veytsman and Gerald Murray",
-%%%     version         = "1.18",
-%%%     date            = "10 July 2016",
+%%%     version         = "2.1",
+%%%     date            = "14 June 2017",
 %%%     filename        = "ACM-Reference-Format.bst",
-%%%     email           = "beebe@math.utah.edu, beebe@acm.org,
-%%%                        beebe@computer.org, borisv@lk.net, murray@hq.acm.org",
+%%%     email           = "borisv@lk.net, boris@varphi.com",
 %%%     codetable       = "ISO/ASCII",
 %%%     keywords        = "ACM Transactions bibliography style; BibTeX",
 %%%     license         = "public domain",
@@ -15,149 +14,8 @@
 %%%  }
 %%% ====================================================================
 
-%  ACM BibTeX style, ACM-Reference-Format.bst
-%  for BibTeX version 0.99c, LaTeX version 3.141
-%  ACM extensions with code cleaned up, extended, and debugged 10--15-Nov-2008
-%  Revised 17-APRIL-2008 (Nelson)
-%  Revised 13-MARCH-2011 (Boris/Gerry)
-%  Revised 23-MARCH-2011 (Boris/Gerry)
-%  Revised 27-MARCH-2011 (Boris/Gerry)
-%  Revised 15-APRIL-2011 (Boris/Gerry)
-%  Revised 27-SEPTEMBER-2011 (Boris)
-%  Revised 10-JULY-2016 (Boris)
-%  Revised 04-FEB-2017 (Boris)
-%
-%
-% History (by Nelson)
-%
-% Based on 'acmtrans' (for ACM Journals)
-% Date: 28th April 2008
-%
-% 1. Avoid 'repeating' the 'month' values.
-% 2. Avoid incorrectly italicizing the volume number.
-% 3. Avoid non italicizing certain titles (book, inproceedings etc).
-% 4. NO series if there is NO volume.
-% 5. Sorting of reference with first surname.
-% 6. Article no added for Inproceedings.
-%
-% Date: 07th May 2008
-%
-% 1. Abbreviation list added
-%
-%   Citation format: [author-last-name year]
-%             [author-last-name and author-last-name year]
-%             [author-last-name, author-last-name, and author-last-name year]
-%             [author-last-name et al. year]
-%             [author-last-name]
-%             author-last-name [year]
-%             [author-last-name and author-last-name]
-%             [author-last-name et al.]
-%             [year] or [year,year]
-%             year or year,year
-%
-%   Reference list ordering: alphabetical by author or whatever passes
-%    for author in the absence of one.
-%
-% Features of the old acmtrans.bst:
-% =================================
-%
-% - all authors appear last name first.
-% - all pages are listed xx-xx, (no pp.) and are at the end of the reference
-% - publishers are identified as publisher, address
-% - conferences papers (inproceedings) may give city of conference,
-%   date of conference, and journal that the proceedings appear in.
-% - months abbreviated to max four letters (eg. Mar.)
-% - volume of a series indicated after the title of the series
-% - editors appear after edited title and are identified by a trailing "Eds."
-%   not in parentheses.  Editor names are not given in small caps.
-%   (unless there is no author line)
-% - names terminated with a period even if there is no first name.
-% - editions are indicated trailing after the work, not in parentheses.
-% - "et al." citations have a protected period to avoid bad spacing (jrh)
-% - "address" required when publisher given
-% - series (roman) and volume are in a sentence separate from (book-)title
-%
-%
-% Features of chicago.bst:
-% =======================
-%
-% - full names used in citations, but abbreviated citations are available
-%   (see above)
-% - if an entry has a "month", then the month and year are also printed
-%   as part of that bibitem.
-% - all conjunctions use "and" instead of "\&"
-% - major modification from Chicago Manual of Style (13th ed.) is that
-%   only the first author in a reference appears last name first-
-%   additional authors appear as J. Q. Public.
-% - pages are listed as "pp. xx-xx" in all entry types except
-%   article entries.
-% - book, inbook, and manual use "location: publisher" (or organization)
-%   for address and publisher. All other types list publishers separately.
-% - "pp." are used to identify page numbers for all entry types except
-%   articles.
-% - organization is used as a citation label if neither author nor editor
-%   is present (for manuals).
-% - "et al." is used for long author and editor lists, or when "others"
-%   is used.
-%
-% Modifications and bug fixes from newapa.bst:
-% ===========================================
-%
-%   - added month, year to bib entries if month is present
-%   - fixed bug with In proceedings, added necessary comma after title
-%   - all conjunctions changed to "and" from "\&"
-%   - fixed bug with author labels in my.full.label: "et al." now is
-%        generated when "others" is an author name
-%   - major modification from Chicago Manual of Style (13th ed.) is that
-%     only the first author in a reference appears last name first-
-%     additional authors appear as J. Q. Public.
-%   - pages are listed as "pp. xx-xx" in all entry types except
-%     article entries. Unnecessary (IMHO) "()" around page numbers
-%     were removed, and page numbers now don't end with a period.
-%   - created chicago.sty for use with this bibstyle (required).
-%   - fixed bugs in FUNCTION {format.vol.num.pages} for missing volume,
-%     number, and /or pages. Renamed to format.journal.volume.number.
-%   - fixed bug in formatting booktitles: additional period an error if
-%     book has a volume.
-%   - fixed bug: editors usually given redundant period before next clause
-%     (format.editors.dot) removed.
-%   - added label support for organizations, if both author and editor
-%     are missing (from alpha.bst). If organization is too long, then
-%     the key field is used for abbreviated citations.
-%   - In proceedings or books of several volumes, no comma was written
-%     between the "Volume x" and the page numbers (this was intentional
-%     in newapa.bst). Fixed.
-%   - Some journals may not have volumes/numbers, only month/year (eg.
-%     IEEE Computer). Fixed bug in article style that assumed volume/number
-%     was always present.
-%
-% Original documentation for newapa.sty:
-% =====================================
-%
-% This version was made by modifying the master file made by
-% Oren Patashnik (PATASHNIK@SCORE.STANFORD.EDU), and the 'named' BibTeX
-% style of Peter F. Patel-Schneider.
-%
-% Copyright (C) 1985, all rights reserved.
-% Copying of this file is authorized only if either
-% (1) you make absolutely no changes to your copy, including name, or
-% (2) if you do make changes, you name it something other than 'newapa.bst'.
-% There are undoubtably bugs in this style.  If you make bug fixes,
-% improvements, etc.  please let me know.  My e-mail address is:
-%    spencer@cgrg.ohio.state.edu or 71160.3141@compuserve.com
-%
-% This style was made from 'plain.bst', 'named.bst', and 'apalike.bst',
-% with lots of tweaking to make it look like APA style, along with tips
-% from Young Ryu and Brian Reiser's modifications of 'apalike.bst'.
-%
-%
-% Start of ACM-Reference-Format-Journals.bst
-%
-% Note: Many of the new bibentry 'fields' will only work with the
-% 'ACM-Reference-Format-Journals.bst' file. Legacy .bib files (which will, in all probability,
-% NOT contain these new fields) will _still_ work with the ACM-Reference-Format-Journals.bst.
-%
-%
+%%% Revision history:  see source in git
+
 ENTRY
   { address
     advisor
@@ -165,8 +23,8 @@ ENTRY
     author
     booktitle
     chapter
-    city        % jtb: added
-    date        % jtb: added
+    city     
+    date     
     edition
     editor
     eprint
@@ -3029,132 +2887,6 @@ MACRO {nov}             {"Nov."}
 MACRO {dec}             {"Dec."}
 
 
-%%% ====================================================================
-%%%                 I M P O R T A N T   C H A N G E
-%%%
-%%% For the 2009 release of the official acm-*.bst files, there are to
-%%% be NO predefined journal abbreviations in those style files.
-%%%
-%%% ACM may later develop an official list of mappings of full journal
-%%% names of commonly-cited journals to ACM-preferred abbreviations, but
-%%% authors should consider that use of any of these commented-out
-%%% abbreviations is DEPRECATED unless the BibTeX file itself provides
-%%% its own @String{name = "value"} definitions.
-%%%
-%%% Use of journal (and publisher and address) @String{...}
-%%% abbreviations, as opposed to explicit value assignments such as
-%%% journal = "J. ACM" and publisher = "IEEE", is preferred in
-%%% bibliographic databases, because it makes it easier for journal
-%%% production staff to replace those definitions by publisher-preferred
-%%% abbreviations when articles are typeset for publication.
-%%%
-%%% For historical reasons, and because some of these abbreviations are
-%%% used in other (non-ACM) bibliography style files, they are preserved
-%%% here in comments.  Future releases of the acm*-.bst files are likely
-%%% to remove them entirely.
-%%% ====================================================================
-%%%
-%%% DEPRECATED: MACRO {acmcs}           {"ACM Comput. Surv."}                   % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {acmlett}         {"ACM Lett. Program. Lang. Syst."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {acta}            {"Acta Inf."}                           % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ai}              {"Artificial Intelligence"}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {al}              {"Ada Lett."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {acr}             {"Adv. Comput. Res."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {bit}             {"Bit"}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {cacm}            {"Commun. ACM"}                         % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {cj}              {"Comput. J."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {cn}              {"Comput. Netw."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {cl}              {"Comput. Lang."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ibmjrd}          {"IBM J. Res. and Development"}         % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ibmsj}           {"IBM Systems Journal"}                 % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ict}             {"Inf. Contr."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ieebcs}          {"IEE/BCS Softw. Eng. J."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ieees}           {"IEEE Softw."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ieeese}          {"IEEE Trans. Softw. Eng."}             % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ieeetc}          {"IEEE Trans. Comput."}                 % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ieeetcad}        {"IEEE Transactions on Computer-Aided Design of Integrated Circuits"} % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ieeetpds}        {"IEEE Trans. Parall. Distrib. Syst."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ieeetit}         {"IEEE Trans. Inf. Theory"}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ipl}             {"Inf. Process. Lett."}                 % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {icp}             {"Inf. Comput."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ist}             {"Inf. Softw. Tech."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ijsa}            {"Int. J. Supercomput. Appl."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ijpp}            {"Int. J. Parallel Program."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {jacm}            {"J. ACM"}                              % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: % MACRO {jcss}          {"Journal of Computer and System Sciences"} % original BibTeX
-%%% DEPRECATED: MACRO {jcss}            {"J. Comput. Syst. Sci."}               % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {jlp}             {"J. Logic Program."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {jfp}             {"J. Funct. Program."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {jsmrp}           {"J. Softw. Maint. Res. Pract."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {jss}             {"J. Syst. Softw."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {jlc}             {"J. Logic and Comput."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {jlsc}            {"J. Lisp Symb. Comput."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {lpls}            {"Lett. Program. Lang. Syst."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {mor}             {"Math. Oper. Res."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {mscs}            {"Math. Struct. Comput. Sci."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {mst}             {"Math. Syst. Theor."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {ngc}             {"New Gen. Comput."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {scp}             {"Sci. Comput. Program."}               % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {sicomp}          {"SIAM J. Comput."}                     % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {spe}             {"Softw. Pract. Exper."}
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {tocs}            {"ACM Trans. Comput. Syst."}            % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {tods}            {"ACM Trans. Database Syst."}           % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {tog}             {"ACM Trans. Graphics"}                 % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {toms}            {"ACM Trans. Math. Softw."}             % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {toois}           {"ACM Trans. Office Inf. Syst."}        % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {toplas}          {"ACM Trans. Program. Lang. Syst."}     % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {tcs}             {"Theor. Comput. Sci."}                 % original BibTeX
-%%% DEPRECATED:
-%%% DEPRECATED: MACRO {tr}              {"Tech. Rep."}
-%%% ====================================================================
 
 READ
 
@@ -3186,7 +2918,6 @@ FUNCTION { sort.format.names }
           { "   " * }
          'skip$
       if$
-  %      s nameptr "{ff{ } }{ll{ }}{  vv{ }}{  jj{ }}" format.name$ 't :=
       s nameptr "{vv{ } }{ll{ }}{  f{ }}{  jj{ }}" format.name$ 't :=
       nameptr numnames = t "others" = and
           { " et~al" * }
