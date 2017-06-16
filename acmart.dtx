@@ -934,6 +934,18 @@
 %     Government. \\
 %     \texttt{cagovmixed} & Some  authors are employees of the Canadian
 %     Government. \\
+%     \texttt{licensedusgovmixed} & Some  authors are employees of the US
+%     Government, and the publication rights are licensed to ACM\@. \\
+%     \texttt{licensedcagov} & All the authors are employees of the Canadian
+%     Government, and the publication rights are licensed to ACM\@. \\
+%     \texttt{licensedcagovmixed} & Some  authors are employees of the
+%     Canadian 
+%     Government, and the publication rights are licensed to ACM\@. \\
+%     \texttt{othergov} & Authors are employees of a
+%     Government other than US or Canada. \\
+%     \texttt{licensedothergov} & Authors are employees of a
+%     Government other than US or Canada, and the publication rights
+%     are licensed to ACM\@. \\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1625,6 +1637,7 @@ Computing Machinery]
 % \changes{v1.38}{2017/05/13}{Increase default font size for SIGPLAN}
 % \changes{v1.40}{2017/05/27}{Bibliography changes}
 % \changes{v1.40}{2017/06/15}{Added package cleveref}
+% \changes{v1.40}{2017/06/16}{Added new copyright version: licensedcagov}
 %
 %
 % And the driver code:
@@ -3924,9 +3937,11 @@ Computing Machinery]
 % Keys:
 %    \begin{macrocode}
 \define@choicekey*{ACM@}{acmcopyrightmode}[%
-  \acm@copyrightinput\acm@copyrightmode]{none,acmcopyright,acmlicensed,%
-  rightsretained,usgov,usgovmixed,cagov,cagovmixed,%
-  licensedusgovmixed,licensedcagovmixed,othergov,licensedothergov}{%
+  \acm@copyrightinput\acm@copyrightmode]{none,%
+    acmcopyright,acmlicensed,rightsretained,%
+    usgov,usgovmixed,cagov,cagovmixed,%
+    licensedusgovmixed,%
+    licensedcagov,licensedcagovmixed,othergov,licensedothergov}{%
   \@printpermissiontrue
   \@printcopyrighttrue
   \@acmownedtrue
@@ -3954,13 +3969,16 @@ Computing Machinery]
   \ifnum\acm@copyrightmode=8\relax % licensedusgovmixed
    \@acmownedfalse
   \fi
-  \ifnum\acm@copyrightmode=9\relax % licensedcagovmixed
+  \ifnum\acm@copyrightmode=9\relax % licensedcagov
    \@acmownedfalse
   \fi
-  \ifnum\acm@copyrightmode=10\relax % othergov
+  \ifnum\acm@copyrightmode=10\relax % licensedcagovmixed
+   \@acmownedfalse
+  \fi
+  \ifnum\acm@copyrightmode=11\relax % othergov
    \@acmownedtrue
   \fi
-  \ifnum\acm@copyrightmode=11\relax % licensedothergov
+  \ifnum\acm@copyrightmode=12\relax % licensedothergov
    \@acmownedfalse
   \fi}
 %    \end{macrocode}
@@ -3976,6 +3994,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\@copyrightowner}
+% \changes{v1.40}{2017/06/16}{Added new copyright version: licensedcagov}
 %   Here is the owner of the copyright
 %    \begin{macrocode}
 \def\@copyrightowner{%
@@ -3996,6 +4015,9 @@ Computing Machinery]
   Association for Computing Machinery.
   \or %licensedusgovmixed
   Copyright held by the owner/author(s). Publication rights licensed to
+  Association for Computing Machinery.
+  \or % licensedcagov
+  Crown in Right of Canada. Publication rights licensed to
   Association for Computing Machinery.
   \or %licensedcagovmixed
   Copyright held by the owner/author(s). Publication rights licensed to
@@ -4021,6 +4043,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@copyrightpermission}
+% \changes{v1.40}{2017/06/16}{Added new copyright version: licensedcagov}
 %   The canned permission block.
 %    \begin{macrocode}
 \def\@copyrightpermission{%
@@ -4083,7 +4106,7 @@ Computing Machinery]
    Permission to make digital or hard copies for personal or classroom
    use is granted. Copies must bear this notice and the full citation
    on the first page.  Copyrights for components of this work owned by
-   others than the Canadain Government must be honored. To copy
+   others than the Canadian Government must be honored. To copy
    otherwise, distribute, republish, or post, requires prior specific
    permission and\hspace*{.5pt}/or a fee. Request permissions from
    permissions@acm.org.
@@ -4106,6 +4129,20 @@ Computing Machinery]
    Government retains a nonexclusive, royalty-free right to publish or
    reproduce this article, or to allow others to do so, for Government
    purposes only.
+  \or % licensedcagov
+   This article was authored by employees of the Government of Canada.
+   As such, the Canadian government retains all interest in the
+   copyright to this work and grants to ACM a nonexclusive,
+   royalty-free right to publish or reproduce this article, or to allow
+   others to do so, provided that clear attribution is given both to
+   the authors and the Canadian government agency employing them.
+   Permission to make digital or hard copies for personal or classroom
+   use is granted. Copies must bear this notice and the full citation
+   on the first page.  Copyrights for components of this work owned by
+   others than the Canadian Government must be honored. To copy
+   otherwise, distribute, republish, or post, requires prior specific
+   permission and\hspace*{.5pt}/or a fee. Request permissions from
+   permissions@acm.org.
   \or % licensedcagovmixed
    Publication rights licensed to ACM\@. ACM acknowledges that this
    contribution was authored or co-authored by an employee, contractor
