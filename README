@@ -122,4 +122,5 @@ Version 1.40    Bibliography changes
 		Bug fixes.
 		Made the height a multiple of \baselineskip + \topskip
 		Added cleveref
-				
+		We no longer print street address in SIGs
+		
