@@ -162,6 +162,7 @@
 % \item \textsl{comment}, \url{http://www.ctan.org/pkg/comment}
 % \item \textsl{cm-super}, \url{http://www.ctan.org/pkg/cm-super}
 % \item \textsl{cmap}, \url{http://www.ctan.org/pkg/cmap}
+% \item \textsl{cleveref}, \url{http://www.ctan.org/pkg/cleveref}
 % \item \textsl{draftwatermark}, \url{http://www.ctan.org/pkg/draftwatermark}
 % \item \textsl{environ}, \url{http://www.ctan.org/pkg/environ}
 % \item \textsl{fancyhdr}, \url{http://www.ctan.org/pkg/fancyhdr}
@@ -1623,6 +1624,7 @@ Computing Machinery]
 % indentation (Matthew Fluet)}%
 % \changes{v1.38}{2017/05/13}{Increase default font size for SIGPLAN}
 % \changes{v1.40}{2017/05/27}{Bibliography changes}
+% \changes{v1.40}{2017/06/15}{Added package cleveref}
 %
 %
 % And the driver code:
@@ -2290,6 +2292,7 @@ Computing Machinery]
 \else
   \hypersetup{hidelinks}
 \fi
+\RequirePackage{cleveref}
 %    \end{macrocode}
 %
 % Bibliography mangling. 
