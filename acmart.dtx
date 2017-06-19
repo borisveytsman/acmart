@@ -4701,12 +4701,12 @@ Computing Machinery]
 %   code.  
 %    \begin{macrocode}
 \def\streetaddress#1{\unskip\ignorespaces}
-\def\city#1{\unskip\ignorespaces}
-\def\state#1{\unskip\ignorespaces}
-\def\postcode#1{\unskip\ignorespaces}
 \if@ACM@journal
   \def\position#1{\unskip\ignorespaces}
   \def\institution#1{#1\ignorespaces}
+  \def\city#1{\unskip\ignorespaces}
+  \def\state#1{\unskip\ignorespaces}
+  \def\postcode#1{\unskip\ignorespaces}
   \newcommand\department[2][0]{}
   \def\country#1{\unskip\ignorespaces}
 \else
@@ -4715,9 +4715,9 @@ Computing Machinery]
   \newcommand\department[2][0]{\if@ACM@affiliation@obeypunctuation
     #2\else#2\par\fi}%
 %  \def\streetaddress#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
-%  \let\city\@ACM@addtoaddress
-%  \let\state\@ACM@addtoaddress
-%  \def\postcode#1{\if@ACM@affiliation@obeypunctuation#1\else\unskip\space#1\fi}%
+  \let\city\@ACM@addtoaddress
+  \let\state\@ACM@addtoaddress
+  \def\postcode#1{\if@ACM@affiliation@obeypunctuation#1\else\unskip\space#1\fi}%
   \let\country\@ACM@addtoaddress
 \fi
 %    \end{macrocode}
