@@ -792,7 +792,7 @@
 % \end{verbatim}
 % Note that you do not need to put the dollar sign here, just the
 % amount.  By default the price is \$15.00, unless the copyright is
-% set to |usgov| or |rightsretained|, when it is suppressed  Note that to
+% set to |usgov| or |rightsretained|, when it is suppressed.  Note that to
 % override the defaults you need to set the price \emph{after} the
 % \cs{setcopyright} command to override the default.  Also, the
 % command |\acmPrice{}| suppresses the printing of the price.
@@ -4089,16 +4089,10 @@ Computing Machinery]
    source.
   \or % usgovmixed
    ACM acknowledges that this contribution was authored or co-authored
-   by an employee, or contractor of the national government. As such,
-   the Government retains a nonexclusive, royalty-free right to
+   by an employee, contractor, or affiliate of the United States government. As such,
+   the United States government retains a nonexclusive, royalty-free right to
    publish or reproduce this article, or to allow others to do so, for
-   Government purposes only. Permission to make digital or hard copies
-   for personal or classroom use is granted. Copies must bear this
-   notice and the full citation on the first page. Copyrights for
-   components of this work owned by others than ACM must be
-   honored. To copy otherwise, distribute, republish, or post,
-   requires prior specific permission and\hspace*{.5pt}/or a
-   fee. Request permissions from permissions@acm.org.
+   government purposes only.
   \or % cagov
    This article was authored by employees of the Government of Canada.
    As such, the Canadian government retains all interest in the
@@ -4713,7 +4707,7 @@ Computing Machinery]
   \def\city#1{\unskip\ignorespaces}
   \def\state#1{\unskip\ignorespaces}
   \newcommand\department[2][0]{}
-  \def\country#1{\unskip\ignorespaces}
+  \def\country#1{#1\ignorespaces}
 \else
   \def\position#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
   \def\institution#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
@@ -5136,7 +5130,7 @@ Computing Machinery]
   \def\footnote{\ClassError{\@classname}{Please do note use footnotes
       inside \string\title{} or \string\author{} command! Use
       \string\titlenote{} or \string\authornote{} instead!}}%
-  \par\medskip\small\noindent{\bfseries ACM Reference format:}\par\nobreak
+  \par\medskip\small\noindent{\bfseries ACM Reference Format:}\par\nobreak
   \noindent\authors. \@acmYear. \@title. 
   \if@ACM@journal
      \textit{\@journalNameShort}
