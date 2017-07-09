@@ -1577,7 +1577,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/07/02 v1.42 Typesetting articles for Association of
+[2017/07/09 v1.43 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2228,10 +2228,11 @@ Computing Machinery]
 %
 % \begin{macro}{\@startsection}
 % \changes{v1.31}{2017/03/04}{Rededined macro} 
+% \changes{v1.43}{2017/07/09}{Added \cs{makeatletter}} 
 %   Amsart redefines \cs{startsection}.  Here we redefine it again to
 %   make TOC working
 %    \begin{macrocode}
-\def\@starttoc#1#2{\begingroup
+\def\@starttoc#1#2{\begingroup\makeatletter
   \setTrue{#1}%
   \par\removelastskip\vskip\z@skip
   \@startsection{section}\@M\z@{\linespacing\@plus\linespacing}%
