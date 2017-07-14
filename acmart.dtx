@@ -4327,9 +4327,9 @@ Computing Machinery]
             \ifx\@acmPrice\@empty\else\ \$\@acmPrice\fi\\
             \@formatdoi{\@acmDOI}%
           \else % Conference
-             ACM~ISBN~\@acmISBN
-             \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\
-             \@formatdoi{\@acmDOI}%
+            \ifx\@acmISBN\@empty\else ACM~ISBN~\@acmISBN
+            \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\\fi
+            \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi%
           \fi
         \fi
       \fi}
