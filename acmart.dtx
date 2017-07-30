@@ -185,6 +185,7 @@
 % \item \textsl{newtx}, \url{http://www.ctan.org/pkg/newtx}
 % \item \textsl{oberdiek}, \url{http://www.ctan.org/pkg/oberdiek}
 % \item \textsl{pdftex-def}, \url{http://www.ctan.org/pkg/pdftex-def}
+% \item \textsl{refcount}, \url{http://www.ctan.org/pkg/refcount}
 % \item \textsl{setspace}, \url{http://www.ctan.org/pkg/setspace}
 % \item \textsl{textcase}, \url{http://www.ctan.org/pkg/textcase}
 % \item \textsl{totpages}, \url{http://www.ctan.org/pkg/totpages}
@@ -1970,8 +1971,10 @@ Computing Machinery]
 %    \end{macrocode}
 %
 %
-% We need |totpages| package to calculate the number of pages
+% We need |totpages| package to calculate the number of pages and
+% |refcount| to use the number
 %    \begin{macrocode}
+\RequirePackage{refcount}
 \RequirePackage{totpages}
 %    \end{macrocode}
 %
@@ -5125,9 +5128,12 @@ Computing Machinery]
 % \changes{v1.17}{2016/07/10}{Added \cs{nobreak}}
 % \changes{v1.31}{2017/03/04}{Disabled linebreak}
 % \changes{v1.34}{2017/04/09}{Deleted DOI from doi numbers}
+% \changes{v1.44}{2017/07/30}{If the paper has just one page, use
+% `page' instead of `pages'}
 %   Print bibcitation format
 %    \begin{macrocode}
-\def\@mkbibcitation{\bgroup
+\def\@mkbibcitation{\bgroup  
+  \def\@pages@word{\ifnum\getrefnumber{TotPages}=1\relax page\else pages\fi}%
   \def\footnotemark{}%
   \def\\{\unskip{} \ignorespaces}%
   \def\footnote{\ClassError{\@classname}{Please do note use footnotes
@@ -5138,13 +5144,13 @@ Computing Machinery]
   \if@ACM@journal
      \textit{\@journalNameShort}
      \@acmVolume, \@acmNumber, Article~\@acmArticle\ (\@acmPubDate), 
-     \ref{TotPages}~pages.
+     \ref{TotPages}~\@pages@word.
   \else
      In \textit{Proceedings of \acmConference@name, \acmConference@venue,
        \acmConference@date
        \ifx\acmConference@name\acmConference@shortname\else
          \ (\acmConference@shortname)\fi
-         ,} \ref{TotPages}~pages.
+         ,} \ref{TotPages}~\@pages@word.
   \fi\par
   \noindent\@formatdoi{\@acmDOI}
 \par\egroup}
