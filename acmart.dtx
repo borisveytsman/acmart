@@ -804,7 +804,8 @@
 % \begin{verbatim}
 % \acmISBN{978-1-4503-3916-2}
 % \end{verbatim}
-%
+% Setting it to empty string, as |\acmISBN{}|, suppresses printing of
+% ISBN.  
 %
 % \DescribeMacro{\acmDOI}%
 % The macro \cs{acmDOI}\marg{DOI} sets the DOI number of the article, for
@@ -812,7 +813,8 @@
 % \begin{verbatim}
 % \acmDOI{10.1145/9999997.9999999}
 % \end{verbatim}
-% It is normally set by the typesetter.
+% It is normally set by the typesetter.  Setting it to empty
+% string, |\acmDOI{}| suppresses DOI.
 %
 %
 % \DescribeMacro{\acmBadgeR}%
@@ -1577,7 +1579,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/07/09 v1.43 Typesetting articles for Association of
+[2017/07/30 v1.44 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -4247,6 +4249,8 @@ Computing Machinery]
 % \changes{v1.34}{2017/04/09}{Added date to the bibstrip in conf proceedings}
 % \changes{v1.34}{2017/04/09}{The \cs{terms} command is now obsolete}
 % \changes{v1.34}{2017/04/11}{Rearranged bibstrip}
+% \changes{v1.44}{2017/07/30}{Empty DOI or ISBN are not printed (by
+% Michael Ekstrand)} 
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %
