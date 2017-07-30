@@ -15,8 +15,8 @@
 % The Current Maintainer of this work is Boris Veytsman,
 % <borisv@lk.net>
 %
-% This work consists of the file acmart.dtx, the derived file
-% acmart.cls, the files ACM-Reference-Format.bst, and templates
+% This work consists of the file acmart.dtx, the derived files
+% acmart.cls, acmthm.sty, the files ACM-Reference-Format.bst, and templates
 % sample-acmlarge.tex, sample-acmsmall.tex, sample-acmtog.tex,
 % samplebody-conf.tex, samplebody-journals.tex, sample-manuscript.tex,
 % sample-sigchi-a.tex, sample-sigchi.tex,
@@ -133,9 +133,10 @@
 % and rather rely on their \TeX\ distributions to provide it.  If you
 % decide to install the package yourself, follow the standard rules:
 % \begin{enumerate}
-% \item Run \progname{latex} on |acmart.ins|.  This will produce the file
-% |acmart.cls|.
-% \item Put the file |acmart.cls| and the bibliography files |*.bst|
+% \item Run \progname{latex} on |acmart.ins|.  This will produce the files
+% |acmart.cls| and |acmthm.sty|
+% \item Put the files |acmart.cls|, |acmthm.sty| 
+%   and the bibliography files |*.bst|
 %   to the places where \LaTeX{} can find them (see \cite{TeXFAQ} or
 %   the documentation for your \TeX{} system).\label{item:install}
 % \item Update the database of file names.  Again, see \cite{TeXFAQ}
@@ -323,6 +324,8 @@
 %     timestamp & false & Whether to put a time stamp in the
 %     footer of each page\\
 %     authordraft & false & Whether author's draft mode is enabled\\
+%     acmthm & true & Whether to load |acmthm.sty|, see
+%     Section~\ref{sec:ug_theorems}\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1191,7 +1194,17 @@
 % \end{description}
 %
 %
-%
+% These definitions are in the separate style file |acmthm.sty|, which
+% is loaded by default.  However, sometimes the user might want to
+% delay loading this package, for example, if she wants for load
+% package like |cleveref| first.  In this case use the option
+% |acmthm=false| in the preamble, for example,
+% \begin{verbatim}
+% \documentclass[acmsmall, acmthm=false]{acmart}
+% \usepackage{cleveref}
+% \usepackage{acmthm}
+% \end{verbatim}
+% 
 %
 %
 %\subsection{Online-only and offline-only material}
@@ -1580,6 +1593,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
+%<acmthm>\ProvidesPackage{acmthm}
 [2017/07/30 v1.44 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
@@ -1644,6 +1658,9 @@ Computing Machinery]
 % licensedcagov}
 % \changes{v1.41}{2017/06/25}{Added new badges}
 % \changes{v1.42}{2017/07/02}{Deleted ACM badges}
+% \changes{v1.44}{2017/07/30}{Added package refcount}
+% \changes{v1.44}{2017/07/30}{Deleted package cleveref}
+% \changes{v1.44}{2017/07/30}{Put theorem defs in a separate style}
 %
 %
 % And the driver code:
@@ -1731,6 +1748,22 @@ Computing Machinery]
   \fi}{\PackageError{\@classname}{Option screen can be either true or
     false}}
 \ExecuteOptionsX{screen=false}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\if@ACM@acmthm}
+% \changes{v1.44}{2017/07/30}{Added macro}
+%   Whether we load |acmthm|
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{acmthm}[true]{%
+  \if@ACM@acmthm
+    \PackageInfo{\@classname}{Requiring acmthm}%
+  \else
+    \PackageInfo{\@classname}{Suppressing acmthm}%
+  \fi}{\PackageError{\@classname}{Option acmthm can be either true or
+    false}}
+\ExecuteOptionsX{acmthm=true}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -5653,10 +5686,18 @@ Computing Machinery]
 %\subsection{Theorems}
 %\label{sec:theorems}
 %
-%
+% The conditional loading
+%    \begin{macrocode}
+\if@ACM@acmthm
+  \RequirePackage{acmthm}
+\fi
+%    \end{macrocode}
+% 
 % \begin{macro}{\@acmplainbodyfont}
 %   The font to typeset the |acmplain| theorem style body.
 %    \begin{macrocode}
+%</class>
+%<*acmthm>
 \def\@acmplainbodyfont{\itshape}
 %    \end{macrocode}
 %
@@ -5853,10 +5894,11 @@ Computing Machinery]
 }{%
   \popQED\endtrivlist\@endpefalse
 }
+%</acmthm>
+%<*class>
 %    \end{macrocode}
 %
 % \end{macro}
-%
 %
 %
 %\subsection{Acknowledgments}

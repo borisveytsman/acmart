@@ -134,4 +134,4 @@ Version 1.43    Bug fixes
 
 Version 1.44    Bug fixes.
 		Empty DOI and ISBN suppress printing DOI or ISBN lines
-		
+		Separated theorem code into acmthm.sty, loaded by defualt.  
