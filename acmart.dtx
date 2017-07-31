@@ -5546,6 +5546,24 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\ACM@restore@pagestyle}
+% \changes{v1.44}{2017/07/30}{Added macro}
+% The following code by Ross Moore protects against changes by
+% |totpages| package:
+%    \begin{macrocode}
+\let\ACM@ps@plain\ps@plain
+\let\ACM@ps@myheadings\ps@myheadings
+\let\ACM@ps@headings\ps@headings
+\def\ACM@restore@pagestyle{%
+  \let\ps@plain\ACM@ps@plain
+  \let\ps@myheadings\ACM@ps@myheadings
+  \let\ps@headings\ACM@ps@headings}
+\AtBeginDocument{\ACM@restore@pagestyle}
+%    \end{macrocode}
+% 
+%   
+% \end{macro}
+%
 %
 %\subsection{Sectioning}
 %\label{sec:sectioninng}
