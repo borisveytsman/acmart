@@ -98,6 +98,7 @@
 % package.
 %
 %  I am grateful to
+%  Michael D.~Adams,
 %  Leif Andersen, 
 %  Dirk Beyer,
 %  Michael Ekstrand,
@@ -454,8 +455,7 @@
 % arguments are the following:
 % \begin{description}
 % \item[short name:] the abbreviated name of the conference (optional).
-% \item[name:] the name of the conference \emph{or} the name of the
-% book as set by the editor.
+% \item[name:] the name of the conference.
 % \item[date:] the date(s) of the conference.
 % \item[venue:] the place of the conference.
 % \end{description}
@@ -466,10 +466,30 @@
 % \acmConference{SA'15 Art Papers}{November 02--06, 2015}{Kobe, Japan}
 % \end{verbatim}
 %
+% \DescribeMacro{\acmBooktitle}%
+% By default we assume that the conference proceedings are published
+% in the book named \emph{Proceedings of \textsc{CONFERENCE}}, where
+% \textsc{CONFERENCE} is the name of the conference inferred from the
+% command \cs{acmConference} above.  However, sometimes the book title
+% is different.  The command \cs{acmBooktitle} may be used to set this
+% title, for example,
+% \begin{verbatim}
+% \acmBooktitle{Companion to the first International Conference on the
+% Art, Science and Engineering of Programming (Programming '17)} 
+% \end{verbatim}
+% 
+% \DescribeMacro{\editor}%
+% In most cases conference proceedings are edited.  You can use the
+% command \cs{editor}\oarg{editor} to set the editor of the volume.
+% This command can be repeated, for example,
+% \begin{verbatim}
+% \editor{Jennifer B. Sartor}
+% \editor{Theo D'Hondt}
+% \editor{Wolfgang De Meuter}
+% \end{verbatim}
+% 
 %
-% Normally this command is entered either by the editor or by the typesetter.
-%
-% \DescribeMacro{\title}
+% \DescribeMacro{\title}%
 % The command |\title|, as in \progname{amsart} class, has two arguments:  one
 % optional, and one mandatory:
 % \begin{flushleft}
@@ -782,6 +802,8 @@
 % \acmYear{2010}
 % \acmMonth{3}
 % \end{verbatim}
+% Note that \cs{acmArticle} is used not only for journals, but also
+% for some conference proceedings.
 %
 % \DescribeMacro{\acmArticleSeq}%
 % The articles in the same issue of a journal have a \emph{sequential
@@ -792,6 +814,7 @@
 % \acmArticle{39}   % The sequence number will be 39 by default
 % \acmArticleSeq{5} % We redefine it to 5
 % \end{verbatim}
+% Setting this number to zero suppresses the blob.
 %
 % \DescribeMacro{\acmSubmissionID}%
 % If you paper got a Submission~ID from the Conference Management
@@ -3295,6 +3318,50 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\acmBooktitle}
+% \changes{v1.44}{2017/08/11}{Added macro}
+% \begin{macro}{\@acmBooktitle}
+% \changes{v1.44}{2017/08/11}{Added macro}
+%   The book title of the conference:
+%    \begin{macrocode}
+\def\acmBooktitle#1{\gdef\@acmBooktitle{#1}}
+\acmBooktitle{Proceedings of \acmConference@name
+       \ifx\acmConference@name\acmConference@shortname\else
+         \ (\acmConference@shortname)\fi}
+%    \end{macrocode}
+%   
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\@editorsAbbrev}
+% \changes{v1.44}{2017/08/11}{Added macro}
+%   How to abbreviate editors
+%    \begin{macrocode}
+\def\@editorsAbbrev{(Ed.)}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
+% \begin{macro}{\@acmEditors}
+% \changes{v1.44}{2017/08/11}{Added macro}
+%   The list of editors
+\def\@acmEditors{}
+% \end{macro}
+%
+% \begin{macro}{\editor}
+% \changes{v1.44}{2017/08/11}{Added macro}
+%   Add new editor to the list
+%    \begin{macrocode}
+\def\editor#1{\ifx\@acmEditors\@empty
+    \gdef\@acmEditors{#1}%
+  \else
+    \gdef\@editorsAbbrev{(Eds.)}%
+    \g@addto@macro\@acmEditors{\and#1}%
+\fi}
+%    \end{macrocode}
+%   
+% \end{macro}
+%
 % \begin{macro}{\subtitle}
 %   The subtitle macro
 %    \begin{macrocode}
@@ -3550,16 +3617,18 @@ Computing Machinery]
 %
 % \begin{macro}{\acmArticle}
 % \changes{v1.17}{2016/07/10}{The default is now numerical}
+% \changes{v1.44}{2017/08/111}{The default is now empty}
 %   The current article
 %    \begin{macrocode}
 \def\acmArticle#1{\def\@acmArticle{#1}}
-\acmArticle{1}
+\acmArticle{}
 %    \end{macrocode}
 %
 % \end{macro}
 %
 % \begin{macro}{\acmArticleSeq}
 % \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
+% \changes{v1.44}{2017/08/11}{Now acmArticle might be empty}
 %   The sequence number
 %    \begin{macrocode}
 \def\acmArticleSeq#1{\def\@acmArticleSeq{#1}}
@@ -4365,7 +4434,7 @@ Computing Machinery]
           \if@ACM@journal
             \emph{\@journalName}%
           \else
-            \emph{Proceedings of \acmConference@name, \acmConference@date}%
+            \emph{\@acmBooktitle}%
           \fi
           \ifx\@acmDOI\@empty
           .
@@ -5183,18 +5252,21 @@ Computing Machinery]
   \def\footnote{\ClassError{\@classname}{Please do note use footnotes
       inside \string\title{} or \string\author{} command! Use
       \string\titlenote{} or \string\authornote{} instead!}}%
+  \def\@article@string{\ifx\@acmArticle\@empty{\ }\else,
+    Article~\@acmArticle\ \fi}%
   \par\medskip\small\noindent{\bfseries ACM Reference Format:}\par\nobreak
   \noindent\authors. \@acmYear. \@title. 
   \if@ACM@journal
      \textit{\@journalNameShort}
-     \@acmVolume, \@acmNumber, Article~\@acmArticle\ (\@acmPubDate), 
+     \@acmVolume, \@acmNumber \@article@string (\@acmPubDate), 
      \ref{TotPages}~\@pages@word.
   \else
-     In \textit{Proceedings of \acmConference@name, \acmConference@venue,
-       \acmConference@date
-       \ifx\acmConference@name\acmConference@shortname\else
-         \ (\acmConference@shortname)\fi
-         ,} \ref{TotPages}~\@pages@word.
+     In \textit{\@acmBooktitle}%
+     \ifx\@acmEditors\@empty\textit{.}\else
+       \andify\@acmEditors\textit{, }\@acmEditors~\@editorsAbbrev.%
+     \fi\ 
+     ACM, New York, NY, USA%
+       \@article@string\unskip, \ref{TotPages}~\@pages@word.
   \fi\par
   \noindent\@formatdoi{\@acmDOI}
 \par\egroup}
@@ -5471,9 +5543,11 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@folioblob}
+% \changes{v1.44}{2017/08/11}{Suppress the blob if acmArticleSeq is empty}
 %   The macro to typeset the folio blob.
 %    \begin{macrocode}
-\def\@folioblob{\@tempcnta=\@acmArticleSeq\relax
+\def\@folioblob{\@tempcnta=0\@acmArticleSeq\relax
+  \ifnum\@tempcnta=0\relax\else
 %    \end{macrocode}
 % First, we calculate \cs{@acmArticleSeq} modulo \cs{@folio@max}
 %    \begin{macrocode}
@@ -5496,7 +5570,7 @@ Computing Machinery]
         \parbox{\@folio@wd}{%
           \centering
           \textcolor{white}{\LARGE\bfseries\sffamily\@acmArticle}}}}
-  \end{picture}}
+  \end{picture}\fi}
 
 %    \end{macrocode}
 %
