@@ -105,6 +105,7 @@
 %  Matthew Fluet,
 %  Paolo G.~Giarrusso,
 %  Ben Greenman,
+%  LianTze Lim,
 %  Ben Liblit,
 %  Frank Mittelbach, 
 %  Ross Moore,
@@ -1629,7 +1630,7 @@
 %</gobble>
 %<class>\ProvidesClass{acmart}
 %<acmthm>\ProvidesPackage{acmthm}
-[2017/08/12 v1.44 Typesetting articles for Association of
+[2017/08/15 v1.45 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -4603,16 +4604,18 @@ Computing Machinery]
 %
 % \begin{macro}{\@titlefont}
 % \changes{v1.06}{2016/05/01}{Added macro}
+% \changes{v1.45}{2017/08/15}{Switched \cs{bfeseries}\cs{sffamily} to
+% \cs{sffamily}\cs{bfseries}} 
 %   The font to typeset title
 %    \begin{macrocode}
 \def\@titlefont{%
   \ifcase\ACM@format@nr
   \relax % manuscript
-    \LARGE\bfseries\sffamily
+    \LARGE\sffamily\bfseries
   \or % acmsmall
-    \LARGE\bfseries\sffamily
+    \LARGE\sffamily\bfseries
   \or % acmlarge
-    \LARGE\bfseries\sffamily
+    \LARGE\sffamily\bfseries
   \or % acmtog
     \Huge\sffamily
   \or % sigconf
@@ -5544,6 +5547,8 @@ Computing Machinery]
 %
 % \begin{macro}{\@folioblob}
 % \changes{v1.44}{2017/08/11}{Suppress the blob if acmArticleSeq is empty}
+% \changes{v1.45}{2017/08/15}{Switched \cs{bfeseries}\cs{sffamily} to
+% \cs{sffamily}\cs{bfseries}} 
 %   The macro to typeset the folio blob.
 %    \begin{macrocode}
 \def\@folioblob{\@tempcnta=0\@acmArticleSeq\relax
@@ -5569,7 +5574,7 @@ Computing Machinery]
             \rule{\@folio@wd}{\@folio@ht}}}%
         \parbox{\@folio@wd}{%
           \centering
-          \textcolor{white}{\LARGE\bfseries\sffamily\@acmArticle}}}}
+          \textcolor{white}{\LARGE\sffamily\bfseries\@acmArticle}}}}
   \end{picture}\fi}
 
 %    \end{macrocode}
@@ -5696,8 +5701,10 @@ Computing Machinery]
 % \begin{macro}{\@subsecfont}
 % \begin{macro}{\@subsubsecfont}
 % \begin{macro}{\@parfont}
-%   \changes{v1.12}{2016/05/30}{Moved to \cs{section@raggedright}}%
+%  \changes{v1.12}{2016/05/30}{Moved to \cs{section@raggedright}}%
 % \changes{v1.40}{2017/06/04}{Switched to MakeTextUppercase}
+% \changes{v1.45}{2017/08/15}{Switched \cs{bfeseries}\cs{sffamily} to
+% \cs{sffamily}\cs{bfseries}} 
 % Fonts for sections etc. are different for different formats. 
 %    \begin{macrocode}
 \def\@secfont{\sffamily\bfseries\section@raggedright\MakeTextUppercase}
@@ -5718,8 +5725,8 @@ Computing Machinery]
  \def\@secfont{\bfseries\Large\section@raggedright\MakeTextUppercase}
  \def\@subsecfont{\bfseries\Large\section@raggedright}
 \or % siggraph
- \def\@secfont{\bfseries\sffamily\Large\section@raggedright\MakeTextUppercase}
- \def\@subsecfont{\bfseries\sffamily\Large\section@raggedright}
+ \def\@secfont{\sffamily\bfseries\Large\section@raggedright\MakeTextUppercase}
+ \def\@subsecfont{\sffamily\bfseries\Large\section@raggedright}
 \or % sigplan
  \def\@secfont{\bfseries\Large\section@raggedright}
  \def\@subsecfont{\bfseries\section@raggedright}
@@ -5740,12 +5747,12 @@ Computing Machinery]
  \def\@subparfont{\itshape}
 \or % sigchi
  \setcounter{secnumdepth}{1}
- \def\@secfont{\bfseries\sffamily\section@raggedright\MakeTextUppercase}
- \def\@subsecfont{\bfseries\sffamily\section@raggedright}
+ \def\@secfont{\sffamily\bfseries\section@raggedright\MakeTextUppercase}
+ \def\@subsecfont{\sffamily\bfseries\section@raggedright}
 \or % sigchi-a
  \setcounter{secnumdepth}{0}
- \def\@secfont{\bfseries\sffamily\section@raggedright\MakeTextUppercase}
- \def\@subsecfont{\bfseries\sffamily\section@raggedright}
+ \def\@secfont{\sffamily\bfseries\section@raggedright\MakeTextUppercase}
+ \def\@subsecfont{\sffamily\bfseries\section@raggedright}
 \fi
 %    \end{macrocode}
 %

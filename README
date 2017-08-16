@@ -138,3 +138,6 @@ Version 1.44    Bug fixes.
 		Article number can be set for proceedings.
 		New commands: \acmBooktile, \editor.
 		Reference citation format updated.
+
+Version 1.45    Workaround for a Libertine bug.  Thanks to LianTze Lim
+		from Overleaf
