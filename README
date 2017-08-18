@@ -141,3 +141,6 @@ Version 1.44    Bug fixes.
 
 Version 1.45    Workaround for a Libertine bug.  Thanks to LianTze Lim
 		from Overleaf
+
+Version 1.46    Bug fixes for bibliography:  label width is now calculated
+		correctly.

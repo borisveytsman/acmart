@@ -3086,6 +3086,22 @@ ITERATE { presort }
 
 SORT             % by label, year, author/editor, title
 
+% From plainnat.bst
+STRINGS { longest.label }
+
+INTEGERS { longest.label.width number.label }
+
+FUNCTION {initialize.longest.label}
+{ "" 'longest.label :=
+  #0 int.to.chr$ 'last.label :=
+  "" 'next.extra :=
+  #0 'longest.label.width :=
+  #0 'last.extra.num :=
+  #0 'number.label :=
+}
+
+
+
 FUNCTION { initialize.extra.label.stuff }
 { #0 int.to.chr$ 'last.label :=
   "" 'next.extra :=
@@ -3099,8 +3115,6 @@ FUNCTION { forward.pass }
   % if two entries are the same (see presort)
 
   last.label
-  % OLD:calc.label year field.or.null purify$ #-1 #4 substring$ * % add year
-  % NEW:
   calc.basic.label year field.or.null purify$ #-1 #4 substring$ * % add year
   #1 entry.max$ substring$ =     % are they equal?
      { last.extra.num #1 + 'last.extra.num :=
@@ -3108,12 +3122,11 @@ FUNCTION { forward.pass }
      }
      { "a" chr.to.int$ 'last.extra.num :=
        "" 'extra.label :=
-       % OLD: calc.label year field.or.null purify$ #-1 #4 substring$ * % add year
-       % NEW:
        calc.basic.label year field.or.null purify$ #-1 #4 substring$ * % add year
        #1 entry.max$ substring$ 'last.label := % assign to last.label
      }
   if$
+  number.label #1 + 'number.label :=
 }
 
 FUNCTION { reverse.pass }
@@ -3127,6 +3140,8 @@ FUNCTION { reverse.pass }
 }
 
 EXECUTE {initialize.extra.label.stuff}
+EXECUTE {initialize.longest.label}
+
 
 ITERATE {forward.pass}
 
@@ -3167,7 +3182,7 @@ FUNCTION { begin.bib }
     'skip$
     { preamble$ writeln }
   if$
-  "\begin{thebibliography}{00}" writeln
+  "\begin{thebibliography}{" number.label int.to.str$ * "}" * writeln
   ""                                                                         writeln
   "%%% ====================================================================" writeln
   "%%% NOTE TO THE USER: you can override these defaults by providing"       writeln
