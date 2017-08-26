@@ -180,6 +180,7 @@
 % \item \textsl{cmap}, \url{http://www.ctan.org/pkg/cmap}
 % \item \textsl{draftwatermark}, \url{http://www.ctan.org/pkg/draftwatermark}
 % \item \textsl{environ}, \url{http://www.ctan.org/pkg/environ}
+% \item \textsl{etoolbox}, \url{http://www.ctan.org/pkg/etoolbox}
 % \item \textsl{fancyhdr}, \url{http://www.ctan.org/pkg/fancyhdr}
 % \item \textsl{float}, \url{http://www.ctan.org/pkg/float}
 % \item \textsl{fontaxes}, \url{http://www.ctan.org/pkg/fontaxes}
@@ -291,9 +292,12 @@
 % option: it provides a version suitable for reviewers and
 % copyeditors.  
 %
-% The option |screen| may in the future involve
-% additional features  suitable for on-screen versions of the
-% articles.  
+% The default for the option |screen| depends on the publication.  At
+% present it is |false| for all publications \emph{but} PACM, since
+% PACM is now electronic-only.  Thus PACM titles (see
+% Table~\ref{tab:pubs} set this option to |true|.  This option may in
+% the future involve additional features suitable for on-screen
+% versions of the articles.
 % 
 % The option |natbib| is used when the corresponding
 % \BibTeX\ style is based on |natbib|.  In most cases you do not need
@@ -328,7 +332,8 @@
 %     \midrule
 %     review & false & A review version: lines are numbered,
 %     hyperlinks are colored\\
-%     screen & false & A screen version: hyperlinks are colored\\
+%     screen & {\rmfamily see text} & A screen version:
+%     hyperlinks are colored\\ 
 %     natbib & true & Whether to use |natbib| package (see
 %     Section~\ref{sec:ug_bibliography})\\
 %     anonymous & false & Whether to make author(s) anonymous\\
@@ -1630,7 +1635,7 @@
 %</gobble>
 %<class>\ProvidesClass{acmart}
 %<acmthm>\ProvidesPackage{acmthm}
-[2017/08/17 v1.46 Typesetting articles for Association of
+[2017/08/25 v1.46 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1699,6 +1704,7 @@ Computing Machinery]
 % \changes{v1.44}{2017/07/30}{Put theorem defs in a separate style}
 % \changes{v1.46}{2017/08/17}{Bst file bug fixes: label width is
 % calculated correctly}
+% \changes{v1.46}{2017/08/25}{Added etoolbox}
 %
 %
 % And the driver code:
@@ -2041,6 +2047,11 @@ Computing Machinery]
 \RequirePackage{microtype}
 %    \end{macrocode}
 %
+% We need |etoolbox| for delayed code
+%    \begin{macrocode}
+\RequirePackage{etoolbox}
+%    \end{macrocode}
+% 
 %
 % We need |totpages| package to calculate the number of pages and
 % |refcount| to use the number
@@ -2352,6 +2363,8 @@ Computing Machinery]
 %
 % And |hyperref|
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
+% \changes{v1.46}{2017/08/25}{Delayed hypersetup since journal options
+% may change screen mode}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
@@ -2376,15 +2389,16 @@ Computing Machinery]
 \or % sigchi-a
   \urlstyle{sf}
 \fi
-\if@ACM@screen
-  \hypersetup{colorlinks,
-    linkcolor=ACMRed,
-    citecolor=ACMPurple,
-    urlcolor=ACMDarkBlue,
-    filecolor=ACMDarkBlue}
-\else
-  \hypersetup{hidelinks}
-\fi
+\AtEndPreamble{%
+  \if@ACM@screen
+    \hypersetup{colorlinks,
+      linkcolor=ACMRed,
+      citecolor=ACMPurple,
+      urlcolor=ACMDarkBlue,
+      filecolor=ACMDarkBlue}
+    \else
+    \hypersetup{hidelinks}
+  \fi}
 %    \end{macrocode}
 %
 % Bibliography mangling. 
@@ -3025,6 +3039,7 @@ Computing Machinery]
 % \changes{v1.25}{2016/12/03}{Updated PACMPL}
 % \changes{v1.30}{2017/02/15}{Updated IMWUT and PACMPL}
 % \changes{v1.36}{2017/05/13}{Added PACMHCI journal options}
+% \changes{v1.46}{2017/08/25}{PACM now set screen to true}
 %
 % We use keyval interface to define journal title and relevant
 % information
@@ -3096,6 +3111,7 @@ Computing Machinery]
     Wearable and Ubiquitous Technologies}%  
   \def\@journalNameShort{Proc. ACM Interact. Mob. Wearable Ubiquitous Technol.}%
   \def\@permissionCodeOne{2474-9567}%
+  \global\@ACM@screentrue
 \or % JACM
   \def\@journalName{Journal of the ACM}%
   \def\@journalNameShort{J. ACM}%
@@ -3123,14 +3139,17 @@ Computing Machinery]
   \def\@journalName{Proceedings of the ACM on Human-Computer Interaction}%
   \def\@journalName{Proc. ACM Hum.-Comput. Interact.}%
   \def\@permissionCodeOne{2573-0142}%
+  \global\@ACM@screentrue
 \or % PACMPL
   \def\@journalName{Proceedings of the ACM on Programming Languages}%
   \def\@journalName{Proc. ACM Program. Lang.}%
   \def\@permissionCodeOne{2475-1421}%
+  \global\@ACM@screentrue
 \or % POMACS
   \def\@journalName{Proceedings of the ACM on Measurement and Analysis of Computing Systems}%
   \def\@journalName{Proc. ACM Meas. Anal. Comput. Syst.}%
   \def\@permissionCodeOne{2476-1249}%
+  \global\@ACM@screentrue
 \or % TAAS
   \def\@journalName{ACM Transactions on Autonomous and Adaptive Systems}%
   \def\@journalNameShort{ACM Trans. Autonom. Adapt. Syst.}%
@@ -6058,6 +6077,7 @@ Computing Machinery]
 %
 % We use the |comment| package for conditional typesetting:
 %    \begin{macrocode}
+\AtEndPreamble{%
 \if@ACM@screen
   \includecomment{screenonly}
   \excludecomment{printonly}
@@ -6070,7 +6090,7 @@ Computing Machinery]
   \excludecomment{acks}
 \else
   \includecomment{anonsuppress}
-\fi
+\fi}
 %    \end{macrocode}
 %
 %
