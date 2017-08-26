@@ -5373,11 +5373,13 @@ Computing Machinery]
   \ACM@linecount\@ne\relax
   \def\ACM@mk@linecount{%
     \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
-        \setlength{\ACM@linecount@bxht}{-\baselineskip}%
+        \setlength{\ACM@linecount@bxht}{0pt}%
         \loop{\color{red}\scriptsize\the\ACM@linecount}\\
         \global\advance\ACM@linecount by \@ne
         \addtolength{\ACM@linecount@bxht}{\baselineskip}%
-        \ifdim\ACM@linecount@bxht<\textheight\repeat}}}
+        \ifdim\ACM@linecount@bxht<\textheight\repeat
+        {\color{red}\scriptsize\the\ACM@linecount}\hfill
+        \global\advance\ACM@linecount by \@ne}}}
 \fi
 %    \end{macrocode}
 %
