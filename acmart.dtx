@@ -5267,6 +5267,7 @@ Computing Machinery]
 % \changes{v1.34}{2017/04/09}{Deleted DOI from doi numbers}
 % \changes{v1.44}{2017/07/30}{If the paper has just one page, use
 % `page' instead of `pages'}
+% \changes{v1.46}{2017/08/25}{Added subtitle}
 %   Print bibcitation format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup  
@@ -5279,7 +5280,8 @@ Computing Machinery]
   \def\@article@string{\ifx\@acmArticle\@empty{\ }\else,
     Article~\@acmArticle\ \fi}%
   \par\medskip\small\noindent{\bfseries ACM Reference Format:}\par\nobreak
-  \noindent\authors. \@acmYear. \@title. 
+  \noindent\authors. \@acmYear. \@title
+  \ifx\@subtitle\@empty. \else: \@subtitle. \fi
   \if@ACM@journal
      \textit{\@journalNameShort}
      \@acmVolume, \@acmNumber \@article@string (\@acmPubDate), 
