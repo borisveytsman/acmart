@@ -107,6 +107,7 @@
 %  Ben Greenman,
 %  LianTze Lim,
 %  Ben Liblit,
+%  Kai Mindermann,
 %  Frank Mittelbach, 
 %  Ross Moore,
 %  John Owens,
@@ -2772,6 +2773,19 @@ Computing Machinery]
 \RequirePackage[T1]{fontenc}
 \fi
 %    \end{macrocode}
+%
+% \begin{macro}{\liningnums}
+% \changes{v1.46}{2017/08/28}{Workaround for compatibility with fontspec} 
+% Libertine defines \cs{liningnums}, which makes fontspec unhappy.
+% While we do not use fontspec, some users do\dots
+%    \begin{macrocode}
+\let\liningnums\@undefined
+\AtEndPreamble{%
+  \DeclareTextFontCommand{\liningnums}{\libertineLF}}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
 %
 % The SIGCHI extended abstracts are sans serif:
 %    \begin{macrocode}

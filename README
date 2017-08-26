@@ -145,4 +145,5 @@ Version 1.45    Workaround for a Libertine bug.  Thanks to LianTze Lim
 Version 1.46    Bug fixes for bibliography:  label width is now calculated
 		correctly.
 		All PACM now use screen option.  This requires etoolbox.
-		Added subtitle to ACM reference format.		
+		Added subtitle to ACM reference format.
+		Now acmart is compatible with fontspec
