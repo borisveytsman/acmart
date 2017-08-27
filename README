@@ -147,3 +147,6 @@ Version 1.46    Bug fixes for bibliography:  label width is now calculated
 		All PACM now use screen option.  This requires etoolbox.
 		Added subtitle to ACM reference format.
 		Now acmart is compatible with fontspec
+		\thanks is now obsolete.  The addresses are automatically
+		added to the journal version;  this can be overriden with
+		\authorsaddresses command

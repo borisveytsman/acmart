@@ -760,6 +760,27 @@
 % put this information in the |acks| environment (see
 % Section~\ref{sec:ug_acks}).
 %
+% \DescribeMacro{\authorsaddresses}%
+% In some formats the addresses are printed as a footnote on the first
+% page.  By default \LaTeX\ typesets them itself using the information
+% you give it.  However, you can override its choice using the
+% commmand \cs{authorsaddresses}\marg{contact addresses}, for example,
+% \begin{verbatim}
+% \authorsaddresses{%
+%  Authors' addresses: G.~Zhou, Computer Science Department, College of
+%  William and Mary, 104 Jameson Rd, Williamsburg, PA 23185, US;
+%  V.~B\'eranger, Inria Paris-Rocquencourt, Rocquencourt, France;
+%  A.~Patel, Rajiv Gandhi University, Rono-Hills, Doimukh, Arunachal
+%  Pradesh, India; H.~Chan, Tsinghua University, 30 Shuangqing Rd,
+%  Haidian Qu, Beijing Shi, China; T.~Yan, Eaton Innovation Center,
+%  Prague, Czech Republic; T.~He, C.~Huang, J.~A.~Stankovic University
+%  of Virginia, School of Engineering Charlottesville, VA 22903, USA;
+%  T. F. Abdelzaher, (Current address) NASA Ames Research Center,
+%  Moffett Field, California 94035.}
+% \end{verbatim}
+% You can \emph{suppress} printing authors' addresses by setting them
+% to an empty string:  |\authorsaddresses{}|.   
+%
 % \DescribeMacro{\titlenote}%
 % \DescribeMacro{\subtitlenote}%
 % \DescribeMacro{\authornote}%
@@ -3425,6 +3446,19 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\num@authors}
+% \changes{v1.46}{2017/08/27}{Introduced macro}
+%   The total number of authors.
+%    \begin{macrocode}
+\newcount\num@authors
+\num@authors=0\relax
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
+%
+%
 % \begin{macro}{\if@insideauthorgroup}
 % \changes{v1.15}{2016/06/25}{Introduced macro}
 %  Whether we are continuing an author group
@@ -3434,9 +3468,11 @@ Computing Machinery]
 %
 % \begin{macro}{\author}
 % \changes{v1.15}{2016/06/25}{Added code for author groups}
+% \changes{v1.46}{2017/08/27}{Started counting authors}
 %   Adding an author to the list of authors and addresses
 %    \begin{macrocode}
 \renewcommand\author[2][]{%
+  \global\advance\num@authors by 1\relax
   \if@insideauthorgroup\else
     \global\advance\num@authorgroups by 1\relax
     \global\@insideauthorgrouptrue
@@ -3553,7 +3589,15 @@ Computing Machinery]
 %   Right now we do not typeset orcids
 \def\orcid#1{\unskip\ignorespaces}
 % \end{macro}
-% 
+%
+% \begin{macro}{\authorsaddresses}
+% \changes{v1.46}{2017/08/27}{Introduced macro}
+% Setting up authors' addresses
+\def\authorsaddresses#1{\def\@authorsaddresses{#1}}
+\authorsaddresses{\@mkauthorsaddresses}
+% \end{macro}
+%
+%
 % \begin{macro}{\@titlenotes}
 %   The titlenotes
 %    \begin{macrocode}
@@ -4409,6 +4453,7 @@ Computing Machinery]
 % \changes{v1.34}{2017/04/11}{Rearranged bibstrip}
 % \changes{v1.44}{2017/07/30}{Empty DOI or ISBN are not printed (by
 % Michael Ekstrand)} 
+% \changes{v1.46}{2017/08/27}{Added authors' addresses} 
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %
@@ -4441,6 +4486,14 @@ Computing Machinery]
   \@authornotes
   \let\@makefnmark\relax  \let\@thefnmark\relax
   \let\@makefntext\noindent
+  \ifx\@empty\@authorsaddresses\else
+     \if@ACM@anonymous\else
+       \if@ACM@journal
+         \footnotetextcopyrightpermission{%
+           \def\par{\let\par\@par}\parindent\z@\@setauthorsaddresses}%
+       \fi
+     \fi
+  \fi
   \ifx\@empty\thankses\else
     \footnotetextcopyrightpermission{%
       \def\par{\let\par\@par}\parindent\z@\@setthanks}%
@@ -5219,6 +5272,39 @@ Computing Machinery]
 %
 % \end{macro}
 %
+% \begin{macro}{\@mkauthorsaddresses}
+% \changes{v1.46}{2017/08/27}{Introduced macro}
+% Typesetting authors' addresses in the footnote style
+\def\@mkauthorsaddresses{%
+  \ifnum\num@authors>1\relax
+  Authors' \else Author's \fi
+  \ifnum\num@authorgroups>1\relax
+  addresses: \else address: \fi
+  \bgroup
+  \def\streetaddress##1{\unskip\@addpunct, ##1}%
+  \def\postcode##1{\unskip\@addpunct, ##1}%
+  \def\position##1{\unskip\ignorespace}%
+  \def\institution##1{\unskip\@addpunct, ##1}%
+  \def\city##1{\unskip\@addpunct, ##1}%
+  \def\state##1{\unskip\@addpunct, ##1}%
+  \renewcommand\department[2][0]{\unskip\@addpunct, ##2}%
+  \def\country##1{\unskip\@addpunct, ##1}%
+  \def\and{\unskip\@addpunct; }%
+  \def\@author##1{##1}%
+  \def\email##1##2{\unskip\@addpunct, \nolinkurl{##2}}%
+  \addresses
+  \egroup}
+% \end{macro}
+%
+% \begin{macro}{\@setaddresses}
+%   This is an |amsart| macro, which we do not need.
+%    \begin{macrocode}
+\def\@setaddresses{}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
 % \begin{macro}{\@authornotemark}
 % Adding footnotemark to authors.  This version adds ``normal''
 % footnotemark.
@@ -5247,14 +5333,6 @@ Computing Machinery]
     \global\setbox\mktitle@bx=\vbox{\noindent\box\mktitle@bx\par
     \noindent\@teaserfigures\par\medskip}%
   \fi}
-%    \end{macrocode}
-%
-% \end{macro}
-%
-% \begin{macro}{\@setaddresses}
-%   This is an |amsart| macro, which we do not need.
-%    \begin{macrocode}
-\def\@setaddresses{}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -5352,6 +5430,14 @@ Computing Machinery]
 %   We redefine \cs{\@setthanks} using \cs{long}
 %    \begin{macrocode}
 \def\@setthanks{\long\def\thanks##1{\par##1\@addpunct.}\thankses}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@setauthorsaddresses}
+% \changes{v1.46}{2018/08/25}{Introduced macro}
+%    \begin{macrocode}
+\def\@setauthorsaddresses{\@authorsaddresses\unskip\@addpunct.}
 %    \end{macrocode}
 %
 % \end{macro}
