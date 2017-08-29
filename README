@@ -134,7 +134,7 @@ Version 1.43    Bug fixes
 
 Version 1.44    Bug fixes.
 		Empty DOI and ISBN suppress printing DOI or ISBN lines
-		Separated theorem code into acmthm.sty, loaded by defualt.
+		Separated theorem code into acmthm.sty, loaded by default.
 		Article number can be set for proceedings.
 		New commands: \acmBooktile, \editor.
 		Reference citation format updated.
@@ -152,4 +152,5 @@ Version 1.46    Bug fixes for bibliography:  label width is now calculated
 		\authorsaddresses command.
 		Deleted the rule at the end of frontmatter for all formats.
 		Deleted new line before doi in the reference format.
-		
+
+Version 1.47    Reintegrated theorem code into acmart.dtx.
