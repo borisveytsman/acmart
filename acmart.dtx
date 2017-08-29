@@ -4611,6 +4611,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@printtopmatter}
 % \changes{v1.06}{2016/05/01}{Added processing badges}
+% \changes{v1.46}{2017/08/29}{Deleted rule}
 %   The printing of top matter starts the new page, and uses the given
 %   title box.  Note that for sigchi-a we print badges here rather
 %   than in \cs{mktitle} since we want them on the margins.
@@ -4626,13 +4627,10 @@ Computing Machinery]
   \ifcase\ACM@format@nr
   \relax % manuscript
     \box\mktitle@bx\par
-    \noindent\hrulefill\par
   \or % acmsmall
     \box\mktitle@bx\par
-    \noindent\hrulefill\par
   \or % acmlarge
     \box\mktitle@bx\par
-    \noindent\hrulefill\par
   \or % acmtog
     \twocolumn[\box\mktitle@bx]%
   \or % sigconf
