@@ -5394,37 +5394,18 @@ Computing Machinery]
      \fi\ 
      ACM, New York, NY, USA%
        \@article@string\unskip, \ref{TotPages}~\@pages@word.
-  \fi\par
-  \noindent\@formatdoi{\@acmDOI}
+  \fi
+  \@formatdoi{\@acmDOI}
 \par\egroup}
 %    \end{macrocode}
 %
 % \end{macro}
 %
 % \begin{macro}{\@printendtopmatter}
+% \changes{v1.46}{2017/08/28}{Made it \cs{par}\cs{bigskip} uniformly}
 %   End the top matter
 %    \begin{macrocode}
-\def\@printendtopmatter{\par\medskip
-  \ifcase\ACM@format@nr
-  \relax % manuscript
-    \noindent\hrulefill\par\medskip
-  \or % acmsmall
-    \noindent\hrulefill\par\medskip
-  \or % acmlarge
-    \noindent\hrulefill\par\medskip
-  \or % acmtog
-    \par\bigskip
-  \or % sigconf
-    \par\bigskip
-  \or % siggraph
-    \par\bigskip
-  \or % sigplan
-    \par\bigskip
-  \or % sigchi
-    \par\bigskip
-  \or % sigchi-a
-  \fi
-}
+\def\@printendtopmatter{\par\bigskip}
 %    \end{macrocode}
 %
 % \end{macro}
