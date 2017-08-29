@@ -15,8 +15,8 @@
 % The Current Maintainer of this work is Boris Veytsman,
 % <borisv@lk.net>
 %
-% This work consists of the file acmart.dtx, the derived files
-% acmart.cls, acmthm.sty, the files ACM-Reference-Format.bst, and templates
+% This work consists of the file acmart.dtx, the derived file
+% acmart.cls, the files ACM-Reference-Format.bst, and templates
 % sample-acmlarge.tex, sample-acmsmall.tex, sample-acmtog.tex,
 % samplebody-conf.tex, samplebody-journals.tex, sample-manuscript.tex,
 % sample-sigchi-a.tex, sample-sigchi.tex,
@@ -161,9 +161,9 @@
 % and rather rely on their \TeX\ distributions to provide it.  If you
 % decide to install the package yourself, follow the standard rules:
 % \begin{enumerate}
-% \item Run \progname{latex} on |acmart.ins|.  This will produce the files
-% |acmart.cls| and |acmthm.sty|
-% \item Put the files |acmart.cls|, |acmthm.sty| 
+% \item Run \progname{latex} on |acmart.ins|.  This will produce the file
+% |acmart.cls|
+% \item Put the file |acmart.cls|
 %   and the bibliography files |*.bst|
 %   to the places where \LaTeX{} can find them (see \cite{TeXFAQ} or
 %   the documentation for your \TeX{} system).\label{item:install}
@@ -356,7 +356,7 @@
 %     timestamp & false & Whether to put a time stamp in the
 %     footer of each page\\
 %     authordraft & false & Whether author's draft mode is enabled\\
-%     acmthm & true & Whether to load |acmthm.sty|, see
+%     acmthm & true & Whether to define theorem-like environments, see
 %     Section~\ref{sec:ug_theorems}\\
 %     \bottomrule
 %   \end{tabularx}
@@ -1259,18 +1259,10 @@
 % \end{description}
 %
 %
-% These definitions are in the separate style file |acmthm.sty|, which
-% is loaded by default.  However, sometimes the user might want to
-% delay loading this package, for example, if she wants for load
-% package like |cleveref| first.  In this case use the option
-% |acmthm=false| in the preamble, for example,
-% \begin{verbatim}
-% \documentclass[acmsmall, acmthm=false]{acmart}
-% \usepackage{cleveref}
-% \usepackage{acmthm}
-% \end{verbatim}
-% 
-%
+% These environments are defined by default.  In the unusual
+% circumstance that a user does not wish to have these environments
+% defined, the option |acmthm=false| in the preamble will suppress
+% them.
 %
 %\subsection{Online-only and offline-only material}
 %\label{sec:ug_screen}
@@ -1658,8 +1650,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-%<acmthm>\ProvidesPackage{acmthm}
-[2017/08/26 v1.46 Typesetting articles for Association of
+[2017/08/29 v1.47 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1729,6 +1720,7 @@ Computing Machinery]
 % \changes{v1.46}{2017/08/17}{Bst file bug fixes: label width is
 % calculated correctly}
 % \changes{v1.46}{2017/08/25}{Added etoolbox}
+% \changes{v1.47}{2017/08/29}{Restore theorem defs to class file}
 %
 %
 % And the driver code:
@@ -1822,7 +1814,8 @@ Computing Machinery]
 %
 % \begin{macro}{\if@ACM@acmthm}
 % \changes{v1.44}{2017/07/30}{Added macro}
-%   Whether we load |acmthm|
+% \changes{v1.47}{2017/08/29}{Modified description}
+%   Whether we define theorem-like environments.
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{acmthm}[true]{%
   \if@ACM@acmthm
@@ -5913,18 +5906,9 @@ Computing Machinery]
 %\subsection{Theorems}
 %\label{sec:theorems}
 %
-% The conditional loading
-%    \begin{macrocode}
-\if@ACM@acmthm
-  \RequirePackage{acmthm}
-\fi
-%    \end{macrocode}
-% 
 % \begin{macro}{\@acmplainbodyfont}
 %   The font to typeset the |acmplain| theorem style body.
 %    \begin{macrocode}
-%</class>
-%<*acmthm>
 \def\@acmplainbodyfont{\itshape}
 %    \end{macrocode}
 %
@@ -6061,18 +6045,49 @@ Computing Machinery]
 %
 % \end{macro}
 %
-% The definitions for theorems:
+% Make |acmplain| the default theorem style.
 %    \begin{macrocode}
 \theoremstyle{acmplain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{conjecture}[theorem]{Conjecture}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\theoremstyle{acmdefinition}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{definition}[theorem]{Definition}
-\theoremstyle{acmplain}
+%    \end{macrocode}
+%
+% Delay defining the theorem environments until after other packages
+% have been loaded.  In particular, the |cleveref| package must be
+% loaded before the theorem environments are defined in order to show
+% the correct environment name (see
+% https://github.com/borisveytsman/acmart/issues/138).  The |acmthm|
+% option is used to suppress the definition of any theorem
+% environments.  Also, to avoid obscure errors arising from these
+% environment definitions conflicting with environments defined by the
+% user or by user-loaded packages, we only define environments that
+% have not yet been defined.
+%    \begin{macrocode}
+\AtEndPreamble{%
+  \if@ACM@acmthm
+  \theoremstyle{acmplain}
+  \@ifundefined{theorem}{%
+  \newtheorem{theorem}{Theorem}[section]
+  }{}
+  \@ifundefined{conjecture}{%
+  \newtheorem{conjecture}[theorem]{Conjecture}
+  }{}
+  \@ifundefined{proposition}{%
+  \newtheorem{proposition}[theorem]{Proposition}
+  }{}
+  \newtheorem{lemma}[theorem]{Lemma}
+  \@ifundefined{lemma}{}{}
+  \@ifundefined{corollary}{%
+  \newtheorem{corollary}[theorem]{Corollary}
+  }{}
+  \theoremstyle{acmdefinition}
+  \@ifundefined{example}{%
+  \newtheorem{example}[theorem]{Example}
+  }{}
+  \@ifundefined{definition}{%
+  \newtheorem{definition}[theorem]{Definition}
+  }{}
+  \fi
+  \theoremstyle{acmplain}
+}
 %    \end{macrocode}
 %
 %
@@ -6121,8 +6136,6 @@ Computing Machinery]
 }{%
   \popQED\endtrivlist\@endpefalse
 }
-%</acmthm>
-%<*class>
 %    \end{macrocode}
 %
 % \end{macro}
