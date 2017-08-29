@@ -152,5 +152,4 @@ Version 1.46    Bug fixes for bibliography:  label width is now calculated
 		\authorsaddresses command.
 		Deleted the rule at the end of frontmatter for all formats.
 		Deleted new line before doi in the reference format.
-
-Version 1.47    Reintegrated theorem code into acmart.dtx.
+		Reintegrated theorem code into acmart.dtx (Matthew Fluet)
