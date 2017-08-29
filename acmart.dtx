@@ -2635,6 +2635,8 @@ Computing Machinery]
 %    \begin{macrocode}
 \RequirePackage{manyfoot}
 \SelectFootnoteRule[2]{copyrightpermission}
+\DeclareNewFootnote{authorsaddresses}
+\SelectFootnoteRule[2]{copyrightpermission}
 \DeclareNewFootnote{copyrightpermission}
 %    \end{macrocode}
 % 
@@ -4454,6 +4456,7 @@ Computing Machinery]
 % \changes{v1.44}{2017/07/30}{Empty DOI or ISBN are not printed (by
 % Michael Ekstrand)} 
 % \changes{v1.46}{2017/08/27}{Added authors' addresses} 
+% \changes{v1.46}{2017/08/28}{Thankses go before authors' addresses} 
 %   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
 %   are \emph{not} in the title box.
 %
@@ -4486,17 +4489,17 @@ Computing Machinery]
   \@authornotes
   \let\@makefnmark\relax  \let\@thefnmark\relax
   \let\@makefntext\noindent
+  \ifx\@empty\thankses\else
+    \footnotetextauthorsaddresses{%
+      \def\par{\let\par\@par}\parindent\z@\@setthanks}%
+  \fi
   \ifx\@empty\@authorsaddresses\else
      \if@ACM@anonymous\else
        \if@ACM@journal
-         \footnotetextcopyrightpermission{%
+         \footnotetextauthorsaddresses{%
            \def\par{\let\par\@par}\parindent\z@\@setauthorsaddresses}%
        \fi
      \fi
-  \fi
-  \ifx\@empty\thankses\else
-    \footnotetextcopyrightpermission{%
-      \def\par{\let\par\@par}\parindent\z@\@setthanks}%
   \fi
   \footnotetextcopyrightpermission{%
     \if@ACM@authordraft
