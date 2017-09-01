@@ -153,3 +153,5 @@ Version 1.46    Bug fixes for bibliography:  label width is now calculated
 		Deleted the rule at the end of frontmatter for all formats.
 		Deleted new line before doi in the reference format.
 		Reintegrated theorem code into acmart.dtx (Matthew Fluet)
+
+Version 1.47    New journal:  THRI
