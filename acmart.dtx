@@ -272,7 +272,7 @@
 %     manuscript  & A manuscript. This is the default \\
 %   acmsmall & Small single column format, used for CIE, CSUR, JACM, JDIQ, JEA, JERIC,
 %            JETC, PACMHCI, PACMPL, TAAS, TACCESS, TACO, TALG, TALLIP (formerly TALIP), TCPS,
-%            TEAC, TECS, TIIS, TISSEC, TIST, TKDD, TMIS, TOCE, TOCHI, TOCL,
+%            TEAC, TECS, THRI, TIIS, TISSEC, TIST, TKDD, TMIS, TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
 %            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS,
 %            TOS, TOSEM, TOSN, TRETS,
@@ -427,6 +427,7 @@
 %     TCPS & ACM Transactions on Cyber-Physical Systems\\
 %     TEAC & ACM Transactions on Economics and Computation\\
 %     TECS & ACM Transactions on Embedded Computing Systems \\
+%     THRI & ACM Transactions on Human-Robot Interaction\\  
 %     TIIS & ACM Transactions on Interactive Intelligent Systems\\
 %     TISSEC & ACM Transactions on Information and System Security\\
 %     TIST & ACM Transactions on Intelligent Systems and Technology \\
@@ -1650,7 +1651,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/08/29 v1.46 Typesetting articles for Association of
+[2017/08/31 v1.47 Typesetting articles for Association of
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3098,6 +3099,7 @@ Computing Machinery]
   TCPS,%
   TEAC,%
   TECS,%
+  THRI,%
   TIIS,%
   TISSEC,%
   TIST,%
@@ -3214,6 +3216,10 @@ Computing Machinery]
   \def\@journalName{ACM Transactions on Embedded Computing Systems}%
   \def\@journalNameShort{ACM Trans. Embedd. Comput. Syst.}%
   \def\@permissionCodeOne{1539-9087}%
+\or % THRI
+  \def\@journalName{ACM Transactions on Human-Robot Interaction}%
+  \def\@journalNameShort{ACM Trans. Hum.-Robot Interact.}%
+  \def\@permissionCodeOne{2573-9522}%  
 \or % TIIS
   \def\@journalName{ACM Transactions on Interactive Intelligent Systems}%
   \def\@journalNameShort{ACM Trans. Interact. Intell. Syst.}%
