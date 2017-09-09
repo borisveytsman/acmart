@@ -155,3 +155,5 @@ Version 1.46    Bug fixes for bibliography:  label width is now calculated
 		Reintegrated theorem code into acmart.dtx (Matthew Fluet)
 
 Version 1.47    New journal:  THRI
+
+Version 1.48    Bug fixes
