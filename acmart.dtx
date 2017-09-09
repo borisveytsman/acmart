@@ -1835,11 +1835,13 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\if@ACM@review}
+% \changes{v1.48}{2017/09/09}{Review mode now switches on folios}
 %   Whether we use review mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{review}[true]{%
   \if@ACM@review
     \PackageInfo{\@classname}{Using review mode}%
+    \AtBeginDocument{\@ACM@printfoliostrue}%
   \else
     \PackageInfo{\@classname}{Not using review mode}%
   \fi}{\PackageError{\@classname}{Option review can be either true or

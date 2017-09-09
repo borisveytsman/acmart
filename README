@@ -157,3 +157,4 @@ Version 1.46    Bug fixes for bibliography:  label width is now calculated
 Version 1.47    New journal:  THRI
 
 Version 1.48    Bug fixes
+		Review mode now switches on folios
