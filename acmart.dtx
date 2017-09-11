@@ -5509,12 +5509,12 @@ Computing Machinery]
   \setcounter{ACM@time@minutes}{\numexpr \time - \theACM@time@hours * 60 \relax}
   \newcommand\ACM@timestamp{%
     \footnotesize%
-    \the\year-\two@digits{\the\month}-\two@digits{\the\day}{ }%
-    \two@digits{\theACM@time@hours}:\two@digits{\theACM@time@minutes}{ }%
-    page~\thepage\ (pp. \@startPage-\pageref*{TotPages})%
     \ifx\@acmSubmissionID\@empty\relax\else
-    ~Submission~ID: \@acmSubmissionID
+    Submission ID: \@acmSubmissionID.{ }%
     \fi
+    \the\year-\two@digits{\the\month}-\two@digits{\the\day}{ }%
+    \two@digits{\theACM@time@hours}:\two@digits{\theACM@time@minutes}{. }%
+    Page \thepage\ of \@startPage--\pageref*{TotPages}.%
   }
 \fi
 %    \end{macrocode}
