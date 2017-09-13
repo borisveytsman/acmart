@@ -5538,27 +5538,7 @@ Computing Machinery]
 % \changes{v1.16}{2016/07/07}{Added macro}
 %   The font to typeset header and footer text.
 %    \begin{macrocode}
-\def\@headfootfont{%
-  \ifcase\ACM@format@nr
-  \relax % manuscript
-    \sffamily
-  \or % acmsmall
-    \sffamily
-  \or % acmlarge
-    \sffamily
-  \or % acmtog
-    \sffamily
-  \or % sigconf
-    \sffamily
-  \or % siggraph
-    \sffamily
-  \or % sigplan
-    \sffamily
-  \or % sigchi
-    \sffamily
-  \or % sigchi-a
-    \sffamily
-  \fi}
+\def\@headfootfont{\sffamily}
 %    \end{macrocode}
 %
 % \end{macro}
