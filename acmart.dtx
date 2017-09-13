@@ -2828,7 +2828,7 @@ Computing Machinery]
 \captionsetup[table]{position=top}
 \if@ACM@journal
   \captionsetup{labelfont={sf, small},
-    textfont={sf, small},  margin=\z@}
+    textfont={sf, small}, margin=\z@}
   \captionsetup[figure]{name={Fig.}}
 \else
   \captionsetup{labelfont={bf},
@@ -4153,8 +4153,7 @@ Computing Machinery]
 \define@choicekey*{ACM@}{acmcopyrightmode}[%
   \acm@copyrightinput\acm@copyrightmode]{none,%
     acmcopyright,acmlicensed,rightsretained,%
-    usgov,usgovmixed,cagov,cagovmixed,%
-    licensedusgovmixed,%
+    usgov,usgovmixed,cagov,cagovmixed,licensedusgovmixed,%
     licensedcagov,licensedcagovmixed,othergov,licensedothergov}{%
   \@printpermissiontrue
   \@printcopyrighttrue
@@ -4491,7 +4490,8 @@ Computing Machinery]
   \@titlenotes
   \@subtitlenotes
   \@authornotes
-  \let\@makefnmark\relax  \let\@thefnmark\relax
+  \let\@makefnmark\relax
+  \let\@thefnmark\relax
   \let\@makefntext\noindent
   \ifx\@empty\thankses\else
     \footnotetextauthorsaddresses{%
