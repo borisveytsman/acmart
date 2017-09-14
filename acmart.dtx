@@ -500,7 +500,7 @@
 % 
 % \DescribeMacro{\editor}%
 % In most cases, conference proceedings are edited.  You can use the
-% command \cs{editor}\oarg{editor} to set the editor of the volume.
+% command \cs{editor}\marg{editor} to set the editor of the volume.
 % This command can be repeated, for example,
 % \begin{verbatim}
 % \editor{Jennifer B. Sartor}
@@ -1641,9 +1641,9 @@
 %\subsection{Identification}
 %\label{sec:ident}
 %
-% We start with the declaration who we are.  Most |.dtx| files put
-% driver code in a separate driver file |.drv|.  We roll this code into the
-% main file, and use the pseudo-guard |<gobble>| for it.
+% We start with a declaration of who we are.  Most |.dtx| files put
+% driver code in a separate~|.drv| driver file.  We roll this code into the
+% main file and use the pseudo-guard |<gobble>| for it.
 %    \begin{macrocode}
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*gobble>
@@ -1750,7 +1750,7 @@ Computing Machinery]
 %
 %
 %
-%\subsection{Preload}
+%\subsection{Preload hook}
 %\label{sec:preload}
 %
 % We preload |acmart-preload-hook|:
@@ -1852,7 +1852,7 @@ Computing Machinery]
 %
 % \begin{macro}{\if@ACM@authorversion}
 % \changes{v1.03}{2016/04/22}{Added macro}
-%   Whether we use author's version
+%   Whether we use author's-version mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{authorversion}[true]{%
   \if@ACM@authorversion
@@ -1874,7 +1874,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@natbib}
-%   Whether we use natbib mode
+%   Whether we use |natbib| mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{natbib}[true]{%
   \if@ACM@natbib
@@ -1925,7 +1925,7 @@ Computing Machinery]
 % \begin{macro}{\if@ACM@authordraft}
 % \changes{v1.33}{2017/03/28}{Added macro}
 % \changes{v1.36}{2017/05/13}{Corrected typo, thanks to bargteil}
-%   Whether we use authordraft mode
+%   Whether we use author-draft mode
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{authordraft}[true]{%
   \if@ACM@authordraft
@@ -1987,7 +1987,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@sigchiamode}
-%   The formatting of SIGCHI abstracts is quite unusual.  We have a
+%   The formatting of SIGCHI extended abstracts is quite unusual.  We have a
 %   special switch for them.
 %    \begin{macrocode}
 \newif\if@ACM@sigchiamode
@@ -2034,7 +2034,7 @@ Computing Machinery]
 %
 % 
 %
-%\subsection{Loading base class and package}
+%\subsection{Loading the base class and package}
 %\label{sec:loading}
 %
 % \changes{v1.13}{2016/06/06}{Increased font size for ACM Large}
@@ -2042,7 +2042,7 @@ Computing Machinery]
 % \changes{v1.48}{2017/09/16}{Added flushend for two-column formatting}
 %
 %
-% At this point we either have \cs{ACM@fontsize}, or use defaults
+% At this point we either have \cs{ACM@fontsize} or use defaults
 %    \begin{macrocode}
 \ifx\ACM@fontsize\@empty
   \ifcase\ACM@format@nr
@@ -2098,20 +2098,20 @@ Computing Machinery]
 %    \end{macrocode}
 % 
 %
-% We need |totpages| package to calculate the number of pages and
-% |refcount| to use the number
+% We need |totpages| to calculate the number of pages and
+% |refcount| to use that number
 %    \begin{macrocode}
 \RequirePackage{refcount}
 \RequirePackage{totpages}
 %    \end{macrocode}
 %
-% The |amsmath| \cs{collect@body} is defined using \cs{def}.  We load
-% |environ| to access the \cs{long} version of the command
+% The \cs{collect@body} macro in |amsmath| is defined using \cs{def}.  We load
+% |environ| to access the \cs{long} version of this command
 %    \begin{macrocode}
 \RequirePackage{environ}
 %    \end{macrocode}
 %
-% We use |setspace| for doublespacing
+% We use |setspace| for double spacing
 %    \begin{macrocode}
 \if@ACM@manuscript
 \RequirePackage{setspace}
@@ -2120,16 +2120,17 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.40}{2017/06/05}{Added `textcase' package}
-% We need \textsl{textcase} for better upcasing
+% We need |textcase| for better upcasing
 %    \begin{macrocode}
 \RequirePackage{textcase}      
 %    \end{macrocode}
 % 
 %
+%\subsection{Citations}
 % \changes{v1.19}{2016/07/28}{Include 'References' in PDF bookmarks
 % (Matthew Fluet)}
 % \changes{v1.14}{2016/06/09}{Patched \cs{citestyle}}
-% Citations.  We patch \cs{setcitestyle} to allow, e.g.,
+% We patch \cs{setcitestyle} to allow, for example,
 % \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|.  We patch
 % \cs{citestyle} to warn about undefined citation styles.
 %    \begin{macrocode}
@@ -2258,7 +2259,7 @@ Computing Machinery]
 % \begin{macro}{\@startsection}
 % \changes{v1.31}{2017/03/04}{Added \cs{tochangmeasure}} 
 % Before we call |hyperref|, we redefine \cs{startsection} commands to
-% their \LaTeX\ defaults, since |amsart| ones are too AMS-specific.
+% their \LaTeX\ defaults since the |amsart| ones are too AMS-specific.
 % We need to do this early since we want |hyperref| to have a chance
 % to redefine them again:
 %    \begin{macrocode}
@@ -2361,8 +2362,8 @@ Computing Machinery]
 % \begin{macro}{\@startsection}
 % \changes{v1.31}{2017/03/04}{Rededined macro} 
 % \changes{v1.43}{2017/07/09}{Added \cs{makeatletter}} 
-%   Amsart redefines \cs{startsection}.  Here we redefine it again to
-%   make TOC working
+%   The |amsart| package redefines \cs{startsection}.  Here we redefine
+%   it again to make the table of contents work.
 %    \begin{macrocode}
 \def\@starttoc#1#2{\begingroup\makeatletter
   \setTrue{#1}%
@@ -2383,7 +2384,7 @@ Computing Machinery]
 %
 % \begin{macro}{\l@subsection}
 % \changes{v1.40}{2017/05/27}{Redefined macro} 
-%   Section spacing is more generous than for amsart
+%   Section spacing is more generous than for |amsart|
 %    \begin{macrocode}
 \def\l@section{\@tocline{1}{0pt}{1pc}{2pc}{}}
 %    \end{macrocode}
@@ -2391,7 +2392,7 @@ Computing Machinery]
 % 
 % \begin{macro}{\l@subsection}
 % \changes{v1.31}{2017/03/04}{Redefined macro} 
-%   Amsart has too large spacing
+%   The spacing in |amsart| is too large
 %    \begin{macrocode}
 \def\l@subsection{\@tocline{2}{0pt}{1pc}{3pc}{}}
 %    \end{macrocode}
@@ -2399,7 +2400,7 @@ Computing Machinery]
 % \end{macro}
 % \begin{macro}{\l@subsubsection}
 % \changes{v1.31}{2017/03/04}{Redefined macro} 
-%   Amsart has too large spacing
+%   The spacing in |amsart| is too large
 %    \begin{macrocode}
 \def\l@subsubsection{\@tocline{2}{0pt}{1pc}{5pc}{}}
 %    \end{macrocode}
@@ -2474,8 +2475,9 @@ Computing Machinery]
 %
 % \begin{macro}{\bibliographystyle}
 % \changes{v1.13}{2016/06/06}{Redefined macro}
-%   Amsart redefines \cs{bibliographystyle} since it prefers AMS
-%   bibliography.  We turn it back to \LaTeX\ definition:
+%   The |amsart| package redefines \cs{bibliographystyle} since it
+%   prefers the AMS bibliography style.  We turn it back to the
+%   \LaTeX\ definition:
 %    \begin{macrocode}
 \def\bibliographystyle#1{%
   \ifx\@begindocumenthook\@undefined\else
@@ -2507,7 +2509,7 @@ Computing Machinery]
 %    \end{macrocode}
 % 
 %
-% Author draft mode
+% Author-draft mode
 %    \begin{macrocode}
 \if@ACM@authordraft
   \RequirePackage{draftwatermark}
@@ -2526,10 +2528,9 @@ Computing Machinery]
 % \changes{v1.17}{2016/07/07}{Slightly decreased margins for sigs}
 % \changes{v1.29}{2017/01/22}{Increased head to 13pt}
 % \changes{v1.40}{2017/07/15}{Added heightrounded to geometry}
-% We use |geometry| for dimensions.  Note the presently margins do not
-% depend on the font size option - maybe we will need to change this.
-% See
-% \url{https://github.com/borisveytsman/acmart/issues/5#issuecomment-272881329}. 
+% We use |geometry| for dimensions.  Note that the present margins do not
+% depend on the font size option---we might need to change this.
+% See \url{https://github.com/borisveytsman/acmart/issues/5#issuecomment-272881329}.
 %    \begin{macrocode}
 \RequirePackage{geometry}
 \ifcase\ACM@format@nr
@@ -2623,12 +2624,12 @@ Computing Machinery]
 %
 % \begin{macro}{\normalparindent}
 % \changes{v1.37}{2017/05/13}{Set \cs{normalparindent} (Matthew Fluet)}%
-%   |amsart| defines the \cs{normalparindent} length and initializes it
-%   to 12pt (the value of \cs{parindent} in |amsart|).  It is later used
-%   to set the \cs{listparindent} length in the |quotation| environment
-%   and the \cs{parindent} length in the \cs{@footnotetext} command.  We
-%   set \cs{normalparindent} to the value of \cs{parindent} as selected
-%   by |acmart| for consistent paragraph indents.
+%   The |amsart| package defines the \cs{normalparindent} length and
+%   initializes it to 12pt (the value of \cs{parindent} in |amsart|).  It
+%   is later used to set the \cs{listparindent} length in the |quotation|
+%   environment and the \cs{parindent} length in the \cs{@footnotetext}
+%   command.  We set \cs{normalparindent} to the value of \cs{parindent}
+%   as selected by |acmart| for consistent paragraph indents.
 %    \begin{macrocode}
 \setlength\normalparindent{\parindent}
 %    \end{macrocode}
@@ -2637,15 +2638,15 @@ Computing Machinery]
 %
 % Footnotes require some consideration.  We have several layers of
 % footnotes:  frontmatter footnotes, ``regular'' footnotes and the
-% special insert for bibstrip.  In the old ACM classes bibstrip was a
-% \cs{@float}.  The problem with floats is that they tend to, well,
+% special insert for the bibstrip.  In the old ACM classes, the bibstrip
+% was a \cs{@float}.  The problem with floats is that they tend to, well,
 % float---and we want the guarantee they stay.  
 %
-% We use \textsl{manyfoot} for layered footnotes instead.
+% We use |manyfoot| for layered footnotes instead.
 %
 % \begin{macro}{\copyrightpermissionfootnoterule}
 % \changes{v1.12}{2016/05/30}{Added macro}
-%   This is the footnote rule that separates bibstrip from the rest of
+%   This is the footnote rule that separates the bibstrip from the rest of
 %   the paper.  It is a full width rule.
 %    \begin{macrocode}
 \def\copyrightpermissionfootnoterule{\kern-3\p@
@@ -2692,7 +2693,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@makefntext}
-%   We do note use indentation for footnotes
+%   We do not use indentation for footnotes
 %    \begin{macrocode}
 \def\@makefntext{\noindent\@makefnmark}
 %    \end{macrocode}
@@ -2700,7 +2701,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@footnotetext}
-%   In sigchi-a mode our footnotes are on the margins!
+%   In |sigchi-a| mode our footnotes are in the margin!
 %    \begin{macrocode}
 \if@ACM@sigchiamode
 \long\def\@footnotetext#1{\marginpar{%
@@ -2751,8 +2752,8 @@ Computing Machinery]
 %
 % \begin{macro}{\@textbottom}
 % \changes{v1.31}{2017/03/04}{Redefined} 
-%   Added some stretch according to David Carlisle's advice at
-%   http://tex.stackexchange.com/a/62318/5522
+%   Add some stretch according to David Carlisle's advice at
+%   \url{http://tex.stackexchange.com/a/62318/5522}
 %    \begin{macrocode}
 \def\@textbottom{\vskip \z@ \@plus 1pt}
 \let\@texttop\relax
@@ -2767,7 +2768,7 @@ Computing Machinery]
 % \changes{v1.33}{2017/03/29}{Added cmap and glyphtounicode}
 % \changes{v1.40}{2017/05/27}{Added Ross Moore code for glyphtounicode}
 %
-% Somehow PDFTeX and XeTeX require different incantations to make PDF
+% Somehow PDFTeX and XeTeX require different incantations to make a PDF
 % compliant with the current Acrobat bugs.  Xpdf is much better.
 %
 % The code below is by Ross Moore.
@@ -2823,8 +2824,8 @@ Computing Machinery]
 %
 % \begin{macro}{\liningnums}
 % \changes{v1.46}{2017/08/28}{Workaround for compatibility with fontspec} 
-% Libertine defines \cs{liningnums}, which makes fontspec unhappy.
-% While we do not use fontspec, some users do\dots
+% Libertine defines \cs{liningnums}, which makes |fontspec| unhappy.
+% While we do not use |fontspec|, some users do.
 %    \begin{macrocode}
 \let\liningnums\@undefined
 \AtEndPreamble{%
@@ -2845,7 +2846,7 @@ Computing Machinery]
 %\subsection{Floats}
 %\label{sec:floats}
 %
-% We use |caption| package
+% We use the |caption| package
 %    \begin{macrocode}
 \RequirePackage{caption, float}
 \captionsetup[table]{position=top}
@@ -2878,7 +2879,7 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \begin{macro}{sidebar}
-%   The sidebar environment:
+%   The |sidebar| environment:
 %    \begin{macrocode}
 \newfloat{sidebar}{}{sbar}
 \floatname{sidebar}{Sidebar}
@@ -2897,7 +2898,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{marginfigure}
-%   The marginfigure environment:
+%   The |marginfigure| environment:
 %    \begin{macrocode}
 \newenvironment{marginfigure}{\Collect@Body\@marginfigure}{}
 %    \end{macrocode}
@@ -2915,7 +2916,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{margintable}
-%   The margintable environment:
+%   The |margintable| environment:
 %    \begin{macrocode}
 \newenvironment{margintable}{\Collect@Body\@margintable}{}
 %    \end{macrocode}
@@ -2933,7 +2934,7 @@ Computing Machinery]
 % \end{macro}
 %
 %
-% SIGCHI extended abstract provides an interesting possibility to push
+% SIGCHI extended abstracts provide an interesting possibility to push
 % into the margin.  Here we use |figure*| and |table*| for this.
 % \begin{macro}{\fulltextwidth}
 %   We define the width of the boxes as
@@ -2945,7 +2946,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@dblfloat}
-%   We redefine the double float command.  First, we make the size
+%   We redefine the double-float command.  First, we make the size
 %   bigger.  Second, our default position is going to be |tp| (to give
 %   marginalia a chance)
 %    \begin{macrocode}
@@ -2971,7 +2972,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@endwidefloatbox}
-%   This is the end of a wide box - we basically move everything
+%   This is the end of a wide box---we basically move everything
 %   to the left
 %    \begin{macrocode}
 \def\@endwidefloatbox{%
@@ -3012,12 +3013,12 @@ Computing Machinery]
 %
 %
 % \changes{v1.37}{2017/05/13}{Reduce list indentation (Matthew Fluet)}%
-% AMS uses generous margins for the lists.  Note that |amsart| defines
-% \cs{leftmargin} values for list levels at begin document, so we must
-% redefine them in the same manner.  Also, note that |amsart|
-% redefines |enumerate| and |itemize| environments with a
+% The AMS uses generous margins for lists.  Note that |amsart| defines
+% \cs{leftmargin} values for list levels at the beginning of the
+% document, so we must redefine them in the same manner.  Also, note that
+% |amsart| redefines the |enumerate| and |itemize| environments with a
 % \cs{makelabel} command that uses \cs{llap}, so the \cs{labelwidth}
-% value is (effectively) irrelevant; nonetheless, we follow |amsart|
+% value is~(effectively) irrelevant; nonetheless, we follow |amsart|
 % and set \cs{labelwidth} to \cs{leftmargin} minus \cs{labelsep}.
 %    \begin{macrocode}
 \newdimen\@ACM@labelwidth
@@ -3066,7 +3067,7 @@ Computing Machinery]
 % \begin{macro}{\descriptionlabel}
 % \changes{v1.37}{2017/05/13}{Reduce list indentation (Matthew Fluet)}%
 % \changes{v1.12}{2016/05/30}{Redefined}
-%   We do not use default colon as \cs{amsart} does:
+%   We do not use a colon by default like |amsart| does:
 %    \begin{macrocode}
 \renewcommand{\descriptionlabel}[1]{\upshape\bfseries #1}
 %    \end{macrocode}
@@ -3077,8 +3078,8 @@ Computing Machinery]
 % \begin{macro}{\description}
 % \changes{v1.37}{2017/05/13}{Reduce list indentation (Matthew Fluet)}%
 % \changes{v1.17}{2016/07/07}{Decreased indent}
-%   Make |description| environment indentation consistent with that of
-%   |itemize| and |enumerate| environments.
+%   Make the |description| environment indentation consistent with that of
+%   the |itemize| and |enumerate| environments.
 %    \begin{macrocode}
 \renewenvironment{description}{\list{}{%
     \labelwidth\@ACM@labelwidth
@@ -3092,7 +3093,7 @@ Computing Machinery]
 % \end{macro}
 %
 %
-%\subsection{Top matter data}
+%\subsection{Top-matter data}
 %\label{sec:top_matter_data}
 %
 %
@@ -3102,7 +3103,7 @@ Computing Machinery]
 % \changes{v1.36}{2017/05/13}{Added PACMHCI journal options}
 % \changes{v1.46}{2017/08/25}{PACM now set screen to true}
 %
-% We use keyval interface to define journal title and relevant
+% We use the |xkeyval| interface to define journal titles and the relevant
 % information
 %    \begin{macrocode}
 \define@choicekey*+{ACM}{acmJournal}[\@journalCode\@journalCode@nr]{%
@@ -3444,7 +3445,7 @@ Computing Machinery]
 %
 % \begin{macro}{\editor}
 % \changes{v1.44}{2017/08/11}{Added macro}
-%   Add new editor to the list
+%   Add a new editor to the list
 %    \begin{macrocode}
 \def\editor#1{\ifx\@acmEditors\@empty
     \gdef\@acmEditors{#1}%
@@ -3479,7 +3480,7 @@ Computing Machinery]
 %
 % \begin{macro}{\num@authors}
 % \changes{v1.46}{2017/08/27}{Introduced macro}
-%   The total number of authors.
+%   The total number of authors
 %    \begin{macrocode}
 \newcount\num@authors
 \num@authors=0\relax
@@ -3567,8 +3568,8 @@ Computing Machinery]
 %
 % \begin{macro}{\if@ACM@affiliation@obeypunctuation}
 % \changes{v1.33}{2017/03/28}{Added macro}
-%   Whether to use author's punctuation (by default false = add
-%   American punctuation)
+%   Whether to use the author's punctuation (false by default, which adds
+%   American-style address punctuation)
 %    \begin{macrocode}
 \define@boolkey+{@ACM@affiliation@}[@ACM@affiliation@]{obeypunctuation}%
 [true]{}{\ClassError{\@classname}{The option obeypunctuation can be either true or false}}
@@ -3589,7 +3590,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@additionalaffiliation}
 % \changes{v1.31}{2017/03/04}{Added macro}
-%   Process additionalaffiliation inside \cs{authornote}
+%   Process \cs{additionalaffiliation} inside \cs{authornote}
 %    \begin{macrocode}
 \def\@additionalaffiliation#1{\bgroup
   \def\position##1{\ignorespaces}%
@@ -3607,8 +3608,8 @@ Computing Machinery]
 %
 % \begin{macro}{\email}
 %   The macro \cs{email} mimics \cs{email} from |amsart|.
-%   Agian it has an optional argument we do not currently need,
-%   but keep for the possible future use.
+%   Again, it has an optional argument that we do not currently need
+%   but keep for possible future use.
 %    \begin{macrocode}
 \renewcommand{\email}[2][]{%
   \if@ACM@anonymous\else
@@ -3620,7 +3621,7 @@ Computing Machinery]
 %
 % \begin{macro}{\orcid}
 % \changes{v1.15}{2016/06/25}{Introduced macro}
-%   Right now we do not typeset orcids
+%   Right now we do not typeset ORCIDs
 %    \begin{macrocode}
 \def\orcid#1{\unskip\ignorespaces}
 %    \end{macrocode}
@@ -3639,7 +3640,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\@titlenotes}
-%   The titlenotes
+%   The title notes
 %    \begin{macrocode}
 \def\@titlenotes{}
 %    \end{macrocode}
@@ -3647,7 +3648,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\titlenote}
-%   Adding note to the title
+%   Adding a note to the title
 %    \begin{macrocode}
 \def\titlenote#1{%
   \g@addto@macro\@title{\footnotemark}%
@@ -3662,7 +3663,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@subtitlenotes}
-%   The subtitlenotes
+%   The subtitle notes
 %    \begin{macrocode}
 \def\@subtitlenotes{}
 %    \end{macrocode}
@@ -3670,7 +3671,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\subtitlenote}
-%   Adding note to the subtitle
+%   Adding a note to the subtitle
 %    \begin{macrocode}
 \def\subtitlenote#1{%
   \g@addto@macro\@subtitle{\footnotemark}%
@@ -3686,7 +3687,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@authornotes}
-%   The authornotes
+%   The author notes
 %    \begin{macrocode}
 \def\@authornotes{}
 %    \end{macrocode}
@@ -3695,7 +3696,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\authornote}
-%   Adding note to the author
+%   Adding a note to the author
 %    \begin{macrocode}
 \def\authornote#1{%
   \if@ACM@anonymous\else
@@ -3709,7 +3710,7 @@ Computing Machinery]
 %
 % \begin{macro}{\authornotemark}
 % \changes{v1.39}{2017/05/14}{Added macro}
-% Adding footnotemark to authors
+% Adding a footnote mark to the authors
 %    \begin{macrocode}
 \newcommand\authornotemark[1][\relax]{%
   \ifx#1\relax\relax\relax
@@ -3811,7 +3812,7 @@ Computing Machinery]
 %
 % \begin{macro}{\acmSubmissionID}
 % \changes{v1.33}{2017/03/29}{Added macro}
-%   The submission id
+%   The submission ID
 %    \begin{macrocode}
 \def\acmSubmissionID#1{\def\@acmSubmissionID{#1}}
 \acmSubmissionID{}
@@ -3822,7 +3823,7 @@ Computing Machinery]
 %
 % \begin{macro}{\acmISBN}
 % \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
-%   The book isbn
+%   The book ISBN
 %    \begin{macrocode}
 \def\acmISBN#1{\def\@acmISBN{#1}}
 \acmISBN{978-x-xxxx-xxxx-x/YY/MM}
@@ -3832,7 +3833,7 @@ Computing Machinery]
 %
 % \begin{macro}{\acmDOI}
 % \changes{v1.04}{2016/04/26}{Name change by Matthew Fluet}
-%   The paper doi
+%   The paper DOI
 %    \begin{macrocode}
 \def\acmDOI#1{\def\@acmDOI{#1}}
 \acmDOI{10.1145/nnnnnnn.nnnnnnn}
@@ -3842,7 +3843,7 @@ Computing Machinery]
 %
 % \begin{macro}{\if@ACM@badge}
 % \changes{v1.06}{2016/05/01}{Added macro}
-%   Whether to print badge.  Note that either left or right badge
+%   Whether to print a badge.  Note that either a left or right badge
 %   triggers it:
 %    \begin{macrocode}
 \newif\if@ACM@badge
@@ -3921,7 +3922,7 @@ Computing Machinery]
 % \begin{macro}{\terms}
 % \changes{v1.34}{2017/04/09}{The \cs{terms} command now just produces
 % a warning} 
-%   Terms are obsolete, we use CCS now. 
+%   Terms are obsolete.  We use CCS now.
 %    \begin{macrocode}
 \def\terms#1{\ClassWarning{\@classname}{The command \string\terms{} is
     obsolete.  I am going to ignore it}}
@@ -3930,7 +3931,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\keywords}
-%   Keywords are mostly obsolete, we use CCS now.  Still it makes
+%   Keywords are mostly obsolete.  We use CCS now.  Still it makes
 %   sense to keep them for compatibility.
 %    \begin{macrocode}
 \def\keywords#1{\def\@keywords{#1}}
@@ -3941,8 +3942,8 @@ Computing Machinery]
 %
 %
 % \begin{macro}{abstract}
-%   Amsart puts |abstract| in the box.  Since we do not know whether
-%   we will use two column mode, we prefer to save the text
+%   The |amsart| package puts |abstract| in a box.  Since we do not
+%   know whether we will use two-column mode, we prefer to save the text
 %    \begin{macrocode}
 \renewenvironment{abstract}{\Collect@Body\@saveabstract}{}
 %    \end{macrocode}
@@ -3981,7 +3982,7 @@ Computing Machinery]
 % \end{macro}
 % \begin{macro}{\if@ACM@printacmref}
 % \changes{v1.17}{2016/07/10}{Renamed from \cs{if@ACM@printbib}}
-%   Whether to print ACM bib
+%   Whether to print the ACM bibstrip
 %    \begin{macrocode}
 \define@boolkey+{@ACM@topmatter@}[@ACM@]{printacmref}[true]{%
   \if@ACM@printacmref
@@ -4008,7 +4009,7 @@ Computing Machinery]
 % 
 % \begin{macro}{\@ACM@authorsperrow}
 % \changes{v1.36}{2017/05/13}{Added macro}
-%   The number of authors per row.  0 means use default algorithm.
+%   The number of authors per row.  0 means use the default algorithm.
 %    \begin{macrocode}
 \define@cmdkey{@ACM@topmatter@}[@ACM@]{authorsperrow}[0]{%
   \IfInteger{#1}{\ClassInfo{\@classname}{Setting authorsperrow to
@@ -4153,7 +4154,7 @@ Computing Machinery]
 % This is from |acmcopyright.sty|
 %
 % \begin{macro}{\if@printcopyright}
-%   A flag whether to print copyright symbol
+%   Whether to print a copyright symbol
 %    \begin{macrocode}
 \newif\if@printcopyright
 \@printcopyrighttrue
@@ -4162,7 +4163,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\if@printpermission}
-%   Whether to print permission block
+%   Whether to print the permission block
 %    \begin{macrocode}
 \newif\if@printpermission
 \@printpermissiontrue
@@ -4171,7 +4172,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\if@acmowned}
-%   Whether ACM ownes the rights to the paper
+%   Whether the ACM owns the rights to the paper
 %    \begin{macrocode}
 \newif\if@acmowned
 \@acmownedtrue
@@ -4282,7 +4283,7 @@ Computing Machinery]
 % \begin{macro}{\@formatdoi}
 % \changes{v1.03}{2016/04/22}{Added macro}
 % \changes{v1.32}{2017/04/07}{New doi format}
-%   Print a clickable doi
+%   Print a clickable DOI
 %    \begin{macrocode}
 \def\@formatdoi#1{\url{https://doi.org/#1}}
 %    \end{macrocode}
@@ -4447,7 +4448,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\thanks}
-%   We redefine |amsart| \cs{thanks}, so the |anonymous| key works
+%   We redefine |amsart| \cs{thanks} so the |anonymous| key works
 %    \begin{macrocode}
 \renewcommand{\thanks}[1]{%
   \@ifnotempty{#1}{%
@@ -4464,9 +4465,9 @@ Computing Machinery]
 % \label{sec:makefile}
 %
 % \begin{macro}{\mktitle@bx}
-%   Some of our formats use two column design, some use one column
-%   one.  In all cases we use wide title.  Thus we typeset the top
-%   matter in a special box to be use in the construction
+%   Some of our formats use a two-column design.  Some use a one-column
+%   design.  In all cases we use a wide title.  Thus we typeset the top
+%   matter in a special box to be used in the construction
 %   \cs{@twocolumn}\oarg{box}.
 %    \begin{macrocode}
 \newbox\mktitle@bx
@@ -4494,11 +4495,11 @@ Computing Machinery]
 % Michael Ekstrand)} 
 % \changes{v1.46}{2017/08/27}{Added authors' addresses} 
 % \changes{v1.46}{2017/08/28}{Thankses go before authors' addresses} 
-%   The (in)famous \cs{maketitle}.  Note that in sigchi-a mode authors
+%   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
 %  Another note: there is a subtle difference between author notes,
-%  title notes and thankses.  The latter refer to the paper itself,
+%  title notes and thanks.  The latter two refer to the paper itself
 %  and therefore belong to the copyright/permission block.  By the
 %  way, this was the default behavior of the old ACM classes.  
 %    \begin{macrocode}
@@ -4513,7 +4514,7 @@ Computing Machinery]
   \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
   \global\@topnum\z@ % this prevents floats from falling 
                      % at the top of page 1
-  \global\@botnum\z@ % we do not want them to be on bottom either
+  \global\@botnum\z@ % we do not want them to be on the bottom either
   \hsize=\textwidth
   \def\@makefnmark{\hbox{\@textsuperscript{\@thefnmark}}}%
   \@mktitle\if@ACM@sigchiamode\else\@mkauthors\fi\@mkteasers
@@ -4626,7 +4627,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@specialsection}
-%   This macro starts section for proceedings and uses small for journals
+%   This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
   \ifcase\ACM@format@nr
@@ -4657,9 +4658,9 @@ Computing Machinery]
 % \begin{macro}{\@printtopmatter}
 % \changes{v1.06}{2016/05/01}{Added processing badges}
 % \changes{v1.46}{2017/08/29}{Deleted rule}
-%   The printing of top matter starts the new page, and uses the given
-%   title box.  Note that for sigchi-a we print badges here rather
-%   than in \cs{mktitle} since we want them on the margins.
+%   The printing of top matter starts a new page and uses the given
+%   title box.  Note that for |sigchi-a| we print badges here rather
+%   than in \cs{mktitle} since we want them in the margins.
 %    \begin{macrocode}
 \def\@printtopmatter{%
   \ifx\@startPage\@empty
@@ -4739,7 +4740,7 @@ Computing Machinery]
 % \changes{v1.06}{2016/05/01}{Added macro}
 % \changes{v1.45}{2017/08/15}{Switched \cs{bfeseries}\cs{sffamily} to
 % \cs{sffamily}\cs{bfseries}} 
-%   The font to typeset title
+%   The font to typeset the title
 %    \begin{macrocode}
 \def\@titlefont{%
   \ifcase\ACM@format@nr
@@ -4769,7 +4770,7 @@ Computing Machinery]
 % \begin{macro}{\@subtitlefont}
 % \changes{v1.06}{2016/05/01}{Added macro}
 % \changes{v1.33}{2017/03/12}{Added \cs{normalsize}}
-%   The font to typeset title
+%   The font to typeset the subtitle
 %    \begin{macrocode}
 \def\@subtitlefont{\normalsize
   \ifcase\ACM@format@nr
@@ -4835,7 +4836,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@mktitle@ii}
 % \changes{v1.06}{2016/05/01}{Now this macro is obsolete}
-%   The version of \cs{mktitle} for TOG.  Since v1.06 is subsumed by
+%   The version of \cs{mktitle} for TOG.  Since v1.06, this is subsumed by
 %   the \cs{mktitle@i} macro
 % \end{macro}
 %
@@ -4843,8 +4844,8 @@ Computing Machinery]
 % \begin{macro}{\@mktitle@iii}
 % \changes{v1.06}{2016/05/01}{Made more generic}
 % \changes{v1.06}{2016/05/01}{Added processing badges}
-%   The version of \cs{@mktitle} for sigproc.  Note that since the
-%   title is centered, we leave the space for the left badge even if
+%   The version of \cs{@mktitle} for SIG proceedings.  Note that since 
+%   the title is centered, we leave space for the left badge even if
 %   only the right badge is defined.
 %    \begin{macrocode}
 \def\@mktitle@iii{\hsize=\textwidth
@@ -4882,7 +4883,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@mktitle@iv}
 % \changes{v1.06}{2016/05/01}{Made more generic}
-%   The version of \cs{@mktitle} for sigchi-a
+%   The version of \cs{@mktitle} for |sigchi-a|
 %    \begin{macrocode}
 \def\@mktitle@iv{\hsize=\textwidth
     \setbox\mktitle@bx=\vbox{\raggedright\leftskip5pc\@titlefont
@@ -4899,12 +4900,12 @@ Computing Machinery]
 % \begin{macro}{\@ACM@addtoaddress}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
-%   The macro adds an item to address using the following rules:
+%   This macro adds an item to the address using the following rules:
 %   \begin{enumerate}
 %   \item If we start a paragraph, add the item
 %   \item Otherwise, add a comma and the item
-%   \item However, the comma is deleted, if it is on the end of the
-%   line.  We use the magic cleaders trick for this.
+%   \item However, the comma is deleted if it is at the end of a
+%   line.  We use the magic \cs{cleaders} trick for this.
 %   \end{enumerate}
 %    \begin{macrocode}
 \newbox\@ACM@commabox
@@ -4989,7 +4990,7 @@ Computing Machinery]
 % \begin{macro}{\@mkauthors}
 % \changes{v1.17}{2016/07/09}{TOG now uses the same authors block as
 % other journals}
-%   Typesetting authors
+%   Typesetting the authors
 %    \begin{macrocode}
 \def\@mkauthors{\begingroup
   \hsize=\textwidth
@@ -5087,7 +5088,7 @@ Computing Machinery]
 % \changes{v1.18}{2016/07/12}{Now we andify affiliations}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/04}{Switched to MakeTextUppercase}
-%   This is version used in most journal formats.  Note that \cs{and} between
+%   This version is used in most journal formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
 \def\@mkauthors@i{%
@@ -5126,12 +5127,13 @@ Computing Machinery]
 %
 % \begin{macro}{\@mkauthors@ii}
 % \changes{v1.17}{2016/07/09}{Deleted}
-%   \cs{@mkauthors@iI} was version used in acmtog.  No longer necessary
+%   The \cs{@mkauthors@ii} command was the version used in |acmtog|.
+%   It is no longer necessary.
 %
 % \end{macro}
 %
 % \begin{macro}{\author@bx}
-%   The box to put individual author to
+%   The box to put an individual author in
 %    \begin{macrocode}
 \newbox\author@bx
 %    \end{macrocode}
@@ -5147,7 +5149,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\author@bx@sep}
-%   The separation between the author boxes
+%   The separation between author boxes
 %    \begin{macrocode}
 \newskip\author@bx@sep
 \author@bx@sep=1pc\relax
@@ -5157,7 +5159,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@typeset@author@bx}
 % \changes{v1.15}{2016/07/04}{Moved to separate macro}
-%   Typesetting the box with authors.  Note that in SIGCHI-A the box
+%   Typesetting the box with authors.  Note that in |sigchi-a| the box
 %   is not centered.
 %    \begin{macrocode}
 \def\@typeset@author@bx{\bgroup\hsize=\author@bx@wd\def\and{\par}%
@@ -5176,7 +5178,7 @@ Computing Machinery]
 % \changes{v1.15}{2016/07/04}{New authors system}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
-%   The |sigconf| version.  Here we use centered design with each
+%   The |sigconf| version.  Here we use a centered design with each
 %   author in a separate box.
 %    \begin{macrocode}
 \def\@mkauthors@iii{%
@@ -5234,7 +5236,7 @@ Computing Machinery]
   \global\let\and\@typeset@author@bx
 }%
 %    \end{macrocode}
-% Actual typesetting is done by \cs{and} macro:
+% Actual typesetting is done by the \cs{and} macro:
 %    \begin{macrocode}
   \hsize=\textwidth
   \global\setbox\mktitle@bx=\vbox{\noindent
@@ -5249,9 +5251,8 @@ Computing Machinery]
 % \begin{macro}{\@mkauthors@iv}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
-%   The |sigchia| version.  Now we put
-%   authors in the main text, and no more than 2 authors per line,
-%   unless overriden.
+%   The |sigchi-a| version.  We put authors in the main text with
+%   no more than 2 authors per line, unless overriden.
 %    \begin{macrocode}
 \def\@mkauthors@iv{%
 %    \end{macrocode}
@@ -5302,7 +5303,7 @@ Computing Machinery]
   \global\let\and\@typeset@author@bx}%
 %
 %    \end{macrocode}
-% Actual typesetting is done by \cs{and} macro
+% Actual typesetting is done by the \cs{and} macro
 %    \begin{macrocode}
     \bgroup\hsize=\columnwidth
     \par\raggedright\leftskip=\z@
@@ -5340,7 +5341,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@setaddresses}
-%   This is an |amsart| macro, which we do not need.
+%   This is an |amsart| macro that we do not need.
 %    \begin{macrocode}
 \def\@setaddresses{}
 %    \end{macrocode}
@@ -5349,8 +5350,8 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\@authornotemark}
-% Adding footnotemark to authors.  This version adds ``normal''
-% footnotemark.
+% Adding a footnote mark to authors.  This version adds a ``normal''
+% footnote mark.
 %    \begin{macrocode}
 \def\@authornotemark{\g@addto@macro\@currentauthors{\footnotemark\relax}}
 %    \end{macrocode}
@@ -5359,7 +5360,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@@authornotemark}
 % \changes{v1.39}{2017/05/14}{Added macro}
-% Adding footnotemark to authors with the given number
+% Adding a footnote mark to authors with a given number
 %    \begin{macrocode}
 \def\@@authornotemark#1{\g@addto@macro\@currentauthors{\footnotemark[#1]}}
 %    \end{macrocode}
@@ -5367,7 +5368,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@mkteasers}
-%   Typesetting teasers
+%   Typesetting the teasers
 %    \begin{macrocode}
 \def\@mkteasers{%
   \ifx\@teaserfigures\@empty\else
@@ -5388,7 +5389,7 @@ Computing Machinery]
 % Wickerson)}
 % \changes{v1.48}{2017/09/16}{Removed spurious indentation if abstract
 % is followed by an empty line}
-%   Typesetting abstract
+%   Typesetting the abstract
 %    \begin{macrocode}
 \def\@mkabstract{\bgroup
   \ifx\@abstract\@lempty\else  
@@ -5412,7 +5413,7 @@ Computing Machinery]
 % \changes{v1.44}{2017/07/30}{If the paper has just one page, use
 % `page' instead of `pages'}
 % \changes{v1.46}{2017/08/25}{Added subtitle}
-%   Print bibcitation format
+%   Print the |bibcitation| format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup  
   \def\@pages@word{\ifnum\getrefnumber{TotPages}=1\relax page\else pages\fi}%
@@ -5485,7 +5486,7 @@ Computing Machinery]
 % cmyk colors in boxes do not work}
 % \changes{v1.46}{2017/08/28}{Rearranged the code to get rid of
 % spurious underfull messages (Benjamin Byholm)}
-%   This is the box displayed in the review mode
+%   This is the box displayed in review mode
 %    \begin{macrocode}
 \if@ACM@review
   \newsavebox{\ACM@linecount@bx}
@@ -5546,7 +5547,7 @@ Computing Machinery]
 %  The timestamp system
 %    \begin{macrocode}
 \if@ACM@timestamp
-  % Subtracting 30 from \time gives us the effect of rounding-down despite
+  % Subtracting 30 from \time gives us the effect of rounding down despite
   % \numexpr rounding to nearest
   \newcounter{ACM@time@hours}
   \setcounter{ACM@time@hours}{\numexpr (\time - 30) / 60 \relax}
@@ -5568,7 +5569,7 @@ Computing Machinery]
 % \begin{macro}{\@shortauthors}
 % \changes{v1.15}{2016/07/04}{Introduced macro}
 %   Even if the author redefined \cs{shortauthors}, we do not print
-%   them in the anonymous mode in the headers:
+%   it in the headers when in anonymous mode:
 %    \begin{macrocode}
 \def\@shortauthors{\if@ACM@anonymous Anon.\else\shortauthors\fi}
 %    \end{macrocode}
@@ -5595,8 +5596,8 @@ Computing Machinery]
 % \changes{v1.17}{2016/07/10}{Added paper title to sigs}
 % \changes{v1.29}{2017/01/22}{Corrected printfolios (Matthew Fluet)}
 % \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams)}
-% \changes{v1.33}{2017/03/29}{Added right linecount for two column formats}
-%   The pagestyle for all pages but the first one
+% \changes{v1.33}{2017/03/29}{Added right linecount for two-column formats}
+%   The page style for all pages but the first one
 %    \begin{macrocode}
 \fancypagestyle{standardpagestyle}{%
   \fancyhf{}%
@@ -5726,8 +5727,8 @@ Computing Machinery]
 %
 % \begin{macro}{firstpagestyle}
 % \changes{v1.33}{2017/03/10}{Added timestamp (Michael D.~Adams)}
-% \changes{v1.33}{2017/03/29}{Added right linecount for two column formats}
-%   The pagestyle for the first page only.
+% \changes{v1.33}{2017/03/29}{Added right linecount for two-column formats}
+%   The page style for the first page only.
 %    \begin{macrocode}
 \fancypagestyle{firstpagestyle}{%
   \fancyhf{}%
@@ -5781,7 +5782,7 @@ Computing Machinery]
 % \begin{macro}{\ACM@restore@pagestyle}
 % \changes{v1.44}{2017/07/30}{Added macro}
 % The following code by Ross Moore protects against changes by
-% |totpages| package:
+% the |totpages| package:
 %    \begin{macrocode}
 \let\ACM@ps@plain\ps@plain
 \let\ACM@ps@myheadings\ps@myheadings
@@ -5904,7 +5905,7 @@ Computing Machinery]
 % \end{macro}
 % 
 % \begin{macro}{\@adddotafter}
-%   Add punctuation after the command
+%   Add punctuation after a sectioning command
 %    \begin{macrocode}
 \def\@adddotafter#1{#1\@addpunct{.}}
 %    \end{macrocode}
@@ -5912,20 +5913,20 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@addspaceafter}
-%   Add space after the command
+%   Add space after a sectioning command
 %    \begin{macrocode}
 \def\@addspaceafter#1{#1\@addpunct{\enspace}}
 %    \end{macrocode}
 %
 % \end{macro}
 %
-%\subsection{TOC Lists}
+%\subsection{TOC lists}
 %\label{sec:tocs}
 %
 % \begin{macro}{\@dotsep}
 % Related to the \cs{tableofcontents} are all the horizontal fillers. Base
 % \LaTeX\ defines \cs{@dottedtocline}, which we should not disable. Yet, this
-% command expects \cs{@dotsep} to be defined, but leaves this to the class
+% command expects \cs{@dotsep} to be defined but leaves this to the class
 % implementation. Since |amsart| does not provide this, we copy the standard
 % variant from |article| here.
 %    \begin{macrocode}
@@ -5939,7 +5940,7 @@ Computing Machinery]
 %\label{sec:theorems}
 %
 % \begin{macro}{\@acmplainbodyfont}
-%   The font to typeset the |acmplain| theorem style body.
+%   The font to typeset the body of the |acmplain| theorem style.
 %    \begin{macrocode}
 \def\@acmplainbodyfont{\itshape}
 %    \end{macrocode}
@@ -5955,7 +5956,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@acmplainheadfont}
-%   The font to typeset the |acmplain| theorem style head.
+%   The font to typeset the head of the |acmplain| theorem style.
 %    \begin{macrocode}
 \def\@acmplainheadfont{\scshape}
 %    \end{macrocode}
@@ -5963,14 +5964,14 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@acmplainnotefont}
-%   The font to typeset the |acmplain| theorem style note.
+%   The font to typeset the note of the |acmplain| theorem style.
 %    \begin{macrocode}
 \def\@acmplainnotefont{\@empty}
 %    \end{macrocode}
 %
 % \end{macro}
 %
-% Customization of |acmplain| theorem style:
+% Customization of the |acmplain| theorem style:
 %    \begin{macrocode}
 \ifcase\ACM@format@nr
 \relax % manuscript
@@ -6009,7 +6010,7 @@ Computing Machinery]
 %
 %
 % \begin{macro}{\@acmdefinitionbodyfont}
-%   The font to typeset the |acmdefinition| theorem style body.
+%   The font to typeset the body of the |acmdefinition| theorem style.
 %    \begin{macrocode}
 \def\@acmdefinitionbodyfont{\normalfont}
 %    \end{macrocode}
@@ -6025,7 +6026,7 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@acmdefinitionheadfont}
-%   The font to typeset the |acmdefinition| theorem style head.
+%   The font to typeset the head of the |acmdefinition| theorem style.
 %    \begin{macrocode}
 \def\@acmdefinitionheadfont{\itshape}
 %    \end{macrocode}
@@ -6033,14 +6034,14 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@acmdefinitionnotefont}
-%   The font to typeset the |acmdefinition| theorem style note.
+%   The font to typeset the note of the |acmdefinition| theorem style.
 %    \begin{macrocode}
 \def\@acmdefinitionnotefont{\@empty}
 %    \end{macrocode}
 %
 % \end{macro}
 %
-% Customization of |acmdefinition| theorem style:
+% Customization of the |acmdefinition| theorem style:
 %    \begin{macrocode}
 \ifcase\ACM@format@nr
 \relax % manuscript
@@ -6086,7 +6087,7 @@ Computing Machinery]
 % have been loaded.  In particular, the |cleveref| package must be
 % loaded before the theorem environments are defined in order to show
 % the correct environment name (see
-% https://github.com/borisveytsman/acmart/issues/138).  The |acmthm|
+% \url{https://github.com/borisveytsman/acmart/issues/138}).  The |acmthm|
 % option is used to suppress the definition of any theorem
 % environments.  Also, to avoid obscure errors arising from these
 % environment definitions conflicting with environments defined by the
@@ -6139,7 +6140,7 @@ Computing Machinery]
 %
 % \end{macro}
 %
-% Customization of proof environment.
+% Customization of the proof environment.
 %    \begin{macrocode}
 \ifcase\ACM@format@nr
 \relax % manuscript
@@ -6157,7 +6158,7 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \begin{macro}{proof}
-%   We want some customization of proof environment.
+%   We want some customization of the proof environment.
 %    \begin{macrocode}
 \renewenvironment{proof}[1][\proofname]{\par
   \pushQED{\qed}%
