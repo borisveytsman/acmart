@@ -1649,7 +1649,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/09/09 v1.48 Typesetting articles for the Association for
+[2017/09/16 v1.48 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1722,6 +1722,7 @@ Computing Machinery]
 % \changes{v1.46}{2017/08/29}{Restore theorem defs to class file}
 % \changes{v1.47}{2017/08/31}{New journal: THRI}
 % \changes{v1.48}{2017/09/09}{Typos fixed (Jamie Davis)}
+% \changes{v1.48}{2017/09/16}{Code prettying (Michael D.~Adams)}
 %
 %
 % And the driver code:
@@ -3173,22 +3174,22 @@ Computing Machinery]
   \def\@permissionCodeOne{1550-4832}%
 \or % JOCCH
   \def\@journalName{ACM Journal on Computing and Cultural Heritage}%
-  \def\@journalName{ACM J. Comput. Cult. Herit.}%
+  \def\@journalNameShort{ACM J. Comput. Cult. Herit.}%
 \or % PACMHCI
   \def\@journalName{Proceedings of the ACM on Human-Computer Interaction}%
-  \def\@journalName{Proc. ACM Hum.-Comput. Interact.}%
+  \def\@journalNameShort{Proc. ACM Hum.-Comput. Interact.}%
   \def\@permissionCodeOne{2573-0142}%
   \@ACM@screentrue
   \PackageInfo{\@classname}{Using screen mode due to \@journalCode}%
 \or % PACMPL
   \def\@journalName{Proceedings of the ACM on Programming Languages}%
-  \def\@journalName{Proc. ACM Program. Lang.}%
+  \def\@journalNameShort{Proc. ACM Program. Lang.}%
   \def\@permissionCodeOne{2475-1421}%
   \@ACM@screentrue
   \PackageInfo{\@classname}{Using screen mode due to \@journalCode}%
 \or % POMACS
   \def\@journalName{Proceedings of the ACM on Measurement and Analysis of Computing Systems}%
-  \def\@journalName{Proc. ACM Meas. Anal. Comput. Syst.}%
+  \def\@journalNameShort{Proc. ACM Meas. Anal. Comput. Syst.}%
   \def\@permissionCodeOne{2476-1249}%
   \@ACM@screentrue
   \PackageInfo{\@classname}{Using screen mode due to \@journalCode}%
@@ -3202,6 +3203,7 @@ Computing Machinery]
   \def\@permissionCodeOne{1936-7228}%
 \or % TACO
   \def\@journalName{ACM Transactions on Architecture and Code Optimization}%
+  \def\@journalNameShort{ACM Trans. Arch. Code Optim.}%
 \or % TALG
   \def\@journalName{ACM Transactions on Algorithms}%
   \def\@journalNameShort{ACM Trans. Algor.}%
@@ -5514,6 +5516,7 @@ Computing Machinery]
 % \changes{v1.33}{2017/03/10}{Added macro (Michael D.~Adams)}
 % \changes{v1.33}{2017/03/28}{Added current page number}
 % \changes{v1.33}{2017/03/29}{Added submission id}
+% \changes{v1.48}{2017/09/16}{Fromatting change (Michael D.~Adams)}
 %  The timestamp system
 %    \begin{macrocode}
 \if@ACM@timestamp
@@ -5548,6 +5551,7 @@ Computing Machinery]
 %
 % \begin{macro}{\@headfootfont}
 % \changes{v1.16}{2016/07/07}{Added macro}
+% \changes{v1.48}{2017/09/16}{Deleted unnecessary switch (Michael D.~Adams)}
 %   The font to typeset header and footer text.
 %    \begin{macrocode}
 \def\@headfootfont{\sffamily}
