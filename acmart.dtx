@@ -1871,6 +1871,7 @@ Computing Machinery]
 % \begin{macro}{\if@ACM@natbib@override}
 % \changes{v1.12}{2016/05/30}{Added macro}
 % \changes{v1.33}{2017/03/28}{Deleted macro}
+% This macro is no longer used.
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@natbib}
@@ -3413,7 +3414,10 @@ Computing Machinery]
 % \begin{macro}{\@acmEditors}
 % \changes{v1.44}{2017/08/11}{Added macro}
 %   The list of editors
+%    \begin{macrocode}
 \def\@acmEditors{}
+%    \end{macrocode}
+%
 % \end{macro}
 %
 % \begin{macro}{\editor}
@@ -3427,7 +3431,7 @@ Computing Machinery]
     \g@addto@macro\@acmEditors{\and#1}%
 \fi}
 %    \end{macrocode}
-%   
+%
 % \end{macro}
 %
 % \begin{macro}{\subtitle}
@@ -3467,8 +3471,11 @@ Computing Machinery]
 % \begin{macro}{\if@insideauthorgroup}
 % \changes{v1.15}{2016/06/25}{Introduced macro}
 %  Whether we are continuing an author group
+%    \begin{macrocode}
 \newif\if@insideauthorgroup
 \@insideauthorgroupfalse
+%    \end{macrocode}
+%
 % \end{macro}
 %
 % \begin{macro}{\author}
@@ -3592,14 +3599,20 @@ Computing Machinery]
 % \begin{macro}{\orcid}
 % \changes{v1.15}{2016/06/25}{Introduced macro}
 %   Right now we do not typeset orcids
+%    \begin{macrocode}
 \def\orcid#1{\unskip\ignorespaces}
+%    \end{macrocode}
+%
 % \end{macro}
 %
 % \begin{macro}{\authorsaddresses}
 % \changes{v1.46}{2017/08/27}{Introduced macro}
 % Setting up authors' addresses
+%    \begin{macrocode}
 \def\authorsaddresses#1{\def\@authorsaddresses{#1}}
 \authorsaddresses{\@mkauthorsaddresses}
+%    \end{macrocode}
+%
 % \end{macro}
 %
 %
@@ -5280,6 +5293,7 @@ Computing Machinery]
 % \begin{macro}{\@mkauthorsaddresses}
 % \changes{v1.46}{2017/08/27}{Introduced macro}
 % Typesetting authors' addresses in the footnote style
+%    \begin{macrocode}
 \def\@mkauthorsaddresses{%
   \ifnum\num@authors>1\relax
   Authors' \else Author's \fi
@@ -5299,6 +5313,8 @@ Computing Machinery]
   \def\email##1##2{\unskip\@addpunct, \nolinkurl{##2}}%
   \addresses
   \egroup}
+%    \end{macrocode}
+%
 % \end{macro}
 %
 % \begin{macro}{\@setaddresses}
