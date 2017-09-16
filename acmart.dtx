@@ -1809,7 +1809,7 @@ Computing Machinery]
     \PackageInfo{\@classname}{Using screen mode}%
   \else
     \PackageInfo{\@classname}{Not using screen mode}%
-  \fi}{\PackageError{\@classname}{Option screen can be either true or
+  \fi}{\PackageError{\@classname}{The option screen can be either true or
     false}}
 \ExecuteOptionsX{screen=false}
 %    \end{macrocode}
@@ -1826,7 +1826,7 @@ Computing Machinery]
     \PackageInfo{\@classname}{Requiring acmthm}%
   \else
     \PackageInfo{\@classname}{Suppressing acmthm}%
-  \fi}{\PackageError{\@classname}{Option acmthm can be either true or
+  \fi}{\PackageError{\@classname}{The option acmthm can be either true or
     false}}
 \ExecuteOptionsX{acmthm=true}
 %    \end{macrocode}
@@ -1844,7 +1844,7 @@ Computing Machinery]
     \AtBeginDocument{\@ACM@printfoliostrue}%
   \else
     \PackageInfo{\@classname}{Not using review mode}%
-  \fi}{\PackageError{\@classname}{Option review can be either true or
+  \fi}{\PackageError{\@classname}{The option review can be either true or
     false}}
 \ExecuteOptionsX{review=false}
 %    \end{macrocode}
@@ -1860,7 +1860,7 @@ Computing Machinery]
     \PackageInfo{\@classname}{Using authorversion mode}%
   \else
     \PackageInfo{\@classname}{Not using authorversion mode}%
-  \fi}{\PackageError{\@classname}{Option authorversion can be either true or
+  \fi}{\PackageError{\@classname}{The option authorversion can be either true or
     false}}
 \ExecuteOptionsX{authorversion=false}
 %    \end{macrocode}
@@ -1881,7 +1881,7 @@ Computing Machinery]
     \PackageInfo{\@classname}{Explicitly selecting natbib mode}%
   \else
     \PackageInfo{\@classname}{Explicitly deselecting natbib mode}%
-  \fi}{\PackageError{\@classname}{Option natbib can be either true or
+  \fi}{\PackageError{\@classname}{The option natbib can be either true or
     false}}
 \ExecuteOptionsX{natbib=true}
 %    \end{macrocode}
@@ -1897,7 +1897,7 @@ Computing Machinery]
     \PackageInfo{\@classname}{Using anonymous mode}%
   \else
     \PackageInfo{\@classname}{Not using anonymous mode}%
-  \fi}{\PackageError{\@classname}{Option anonymous can be either true or
+  \fi}{\PackageError{\@classname}{The option anonymous can be either true or
     false}}
 \ExecuteOptionsX{anonymous=false}
 %    \end{macrocode}
@@ -1914,7 +1914,7 @@ Computing Machinery]
     \PackageInfo{\@classname}{Using timestamp mode}%
   \else
     \PackageInfo{\@classname}{Not using timestamp mode}%
-  \fi}{\PackageError{\@classname}{Option timestamp can be either true or
+  \fi}{\PackageError{\@classname}{The option timestamp can be either true or
     false}}
 \ExecuteOptionsX{timestamp=false}
 %    \end{macrocode}
@@ -1934,7 +1934,7 @@ Computing Machinery]
     \@ACM@reviewtrue
   \else
     \PackageInfo{\@classname}{Not using authordraft mode}%
-  \fi}{\PackageError{\@classname}{Option authordraft can be either true or
+  \fi}{\PackageError{\@classname}{The option authordraft can be either true or
     false}}
 \ExecuteOptionsX{authordraft=false}
 %    \end{macrocode}
@@ -1999,7 +1999,7 @@ Computing Machinery]
 % Setting up switches
 %    \begin{macrocode}
 \ifnum\ACM@format@nr=5\relax % siggraph
-  \ClassWarning{\@classname}{The format `siggraph' is now obsolete.
+  \ClassWarning{\@classname}{The format siggraph is now obsolete.
     I am switching to sigconf.}
   \setkeys{acmart.cls}{format=sigconf}
 \fi
@@ -2773,12 +2773,13 @@ Computing Machinery]
 \newif\if@ACM@newfonts
 \@ACM@newfontstrue
 \IfFileExists{libertine.sty}{}{\ClassWarning{\@classname}{You do not
-    have libertine package installed.  Please upgrade your 
+    have the libertine package installed.  Please upgrade your 
     TeX}\@ACM@newfontsfalse}
 \IfFileExists{zi4.sty}{}{\ClassWarning{\@classname}{You do not
-    have zi4 package installed.  Please upgrade your TeX}\@ACM@newfontsfalse}
+    have the zi4 package installed.  Please upgrade your
+    TeX}\@ACM@newfontsfalse}
 \IfFileExists{newtxmath.sty}{}{\ClassWarning{\@classname}{You do not
-    have newtxmath package installed.  Please upgrade your
+    have the newtxmath package installed.  Please upgrade your
     TeX}\@ACM@newfontsfalse} 
 %    \end{macrocode}
 %   
@@ -3543,7 +3544,7 @@ Computing Machinery]
 %   American punctuation)
 %    \begin{macrocode}
 \define@boolkey+{@ACM@affiliation@}[@ACM@affiliation@]{obeypunctuation}%
-[true]{}{\ClassError{\@classname}{obeypunctuation must be true or false}}
+[true]{}{\ClassError{\@classname}{The option obeypunctuation can be either true or false}}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -3941,7 +3942,7 @@ Computing Machinery]
     \ClassInfo{\@classname}{Printing CCS}%
   \else
     \ClassInfo{\@classname}{Suppressing CCS}%
-  \fi}{\ClassError{\@classname}{printccs must be true or false}}
+  \fi}{\ClassError{\@classname}{The option printccs can be either true or false}}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -3954,7 +3955,7 @@ Computing Machinery]
     \ClassInfo{\@classname}{Printing bibformat}%
   \else
     \ClassInfo{\@classname}{Suppressing bibformat}%
-  \fi}{\ClassError{\@classname}{printacmref must be true or false}}
+  \fi}{\ClassError{\@classname}{The option printacmref can be either true or false}}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -3968,7 +3969,7 @@ Computing Machinery]
     \ClassInfo{\@classname}{Printing folios}%
   \else
     \ClassInfo{\@classname}{Suppressing folios}%
-  \fi}{\ClassError{\@classname}{printfolios must be true or false}}
+  \fi}{\ClassError{\@classname}{The option printfolios can be either true or false}}
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -3978,7 +3979,7 @@ Computing Machinery]
 %    \begin{macrocode}
 \define@cmdkey{@ACM@topmatter@}[@ACM@]{authorsperrow}[0]{%
   \IfInteger{#1}{\ClassInfo{\@classname}{Setting authorsperrow to
-      #1}}{\ClassWarning{\@classname}{Parameter authorsperrow must be
+      #1}}{\ClassWarning{\@classname}{The parameter authorsperrow must be
       numerical. Ignoring the input #1}\gdef\@ACM@authorsperrow{0}}}
 %    \end{macrocode}
 %   
@@ -5379,7 +5380,7 @@ Computing Machinery]
   \def\footnotemark{}%
   \def\\{\unskip{} \ignorespaces}%
   \def\footnote{\ClassError{\@classname}{Please do note use footnotes
-      inside \string\title{} or \string\author{} command! Use
+      inside a \string\title{} or \string\author{} command! Use
       \string\titlenote{} or \string\authornote{} instead!}}%
   \def\@article@string{\ifx\@acmArticle\@empty{\ }\else,
     Article~\@acmArticle\ \fi}%
