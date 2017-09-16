@@ -5384,14 +5384,17 @@ Computing Machinery]
 % \changes{v1.19}{2016/07/28}{Include 'Abstract' in PDF bookmarks
 % (Matthew Fluet)}
 % \changes{v1.20}{2016/08/03}{Deleted spurious space}
-% \changes{v1.29}{2017/01/22}{Removed spurious indentation (John Wickerson)}
+% \changes{v1.29}{2017/01/22}{Removed spurious indentation (John
+% Wickerson)}
+% \changes{v1.48}{2017/09/16}{Removed spurious indentation if abstract
+% is followed by an empty line}
 %   Typesetting abstract
 %    \begin{macrocode}
 \def\@mkabstract{\bgroup
   \ifx\@abstract\@lempty\else  
   {\phantomsection\addcontentsline{toc}{section}{Abstract}%
     \if@ACM@journal
-       \small\noindent
+       \everypar{\setbox\z@\lastbox\everypar{}}\small
     \else
       \section*{Abstract}%
     \fi
