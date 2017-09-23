@@ -1648,7 +1648,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/09/16 v1.48 Typesetting articles for the Association for
+[2017/09/23 v1.48 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -4474,6 +4474,8 @@ Computing Machinery]
 % Michael Ekstrand)}
 % \changes{v1.46}{2017/08/27}{Added authors' addresses}
 % \changes{v1.46}{2017/08/28}{Thankses go before authors' addresses}
+% \changes{v1.48}{2017/09/23}{Added acmart and version info to
+% pdfcreator tag}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -4595,7 +4597,11 @@ Computing Machinery]
   \hypersetup{pdfauthor={\authors},
     pdftitle={\@title},
     pdfsubject={\@concepts},
-    pdfkeywords={\@keywords}}%
+    pdfkeywords={\@keywords},
+    pdfcreator={LaTeX with acmart version
+      \csname ver@acmart.cls\endcsname\space
+      and hyperref package
+      \csname ver@hyperref.sty\endcsname}}%
   \@printendtopmatter
   \@afterindentfalse
   \@afterheading

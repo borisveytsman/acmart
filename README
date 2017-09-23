@@ -161,4 +161,4 @@ Version 1.48    Bug fixes
 		Code prettying (Michael D. Adams)
 		Bibliography changes: @MISC entries no longer have a
 		separate date
-		
+		Acmart and version info are added to pdfcreator tag		
