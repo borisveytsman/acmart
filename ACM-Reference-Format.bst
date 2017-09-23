@@ -2693,7 +2693,6 @@ FUNCTION { misc }
     { "\bibinfo{howpublished}{" howpublished "}" * * output }
   if$
   "" output.nonnull.dot.space
-  output.day.month.year
   calc.format.page.count output
   fin.block
   output.issue.doi.coden.isxn.lccn.url.eprint.note
