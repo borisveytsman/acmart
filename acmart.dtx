@@ -1403,6 +1403,11 @@
 % \cs{shortcite} is the same as \cs{cite} in numerical mode and cites
 % the year in author-date mode.
 %
+% Note that before version~1.48 the command \cs{citeyear} put the year
+% in parentheses.  In version~1.48 and later it produces just the
+% year; the command \cs{citeyearpar} can be used to emulate its old
+% behavior.  
+%
 % There are several customized \BibTeX\ entry types and fields in the ACM
 % style file \path{ACM-Reference-Format.bst} that you may want to be
 % aware of.
@@ -2429,6 +2434,8 @@ Computing Machinery]
 % Bibliography mangling.
 % \changes{v1.33}{2017/03/23}{Moved \cs{citename} definition for
 % non-natbib bibliography, so a package may redefine it}
+% \changes{v1.48}{2017/09/23}{\cs{citeyear} no longer behaves like
+% \cs{citeyearpar}} 
 %    \begin{macrocode}
 \if@ACM@natbib
   \let\citeN\cite
@@ -2448,7 +2455,7 @@ Computing Machinery]
     \providecommand\citename[1]{#1}}
 \fi
 \newcommand\shortcite[2][]{%
-  \ifNAT@numbers\cite[#1]{#2}\else\citeyear[#1]{#2}\fi}
+  \ifNAT@numbers\cite[#1]{#2}\else\citeyearpar[#1]{#2}\fi}
 %    \end{macrocode}
 %
 %
@@ -4598,9 +4605,9 @@ Computing Machinery]
     pdftitle={\@title},
     pdfsubject={\@concepts},
     pdfkeywords={\@keywords},
-    pdfcreator={LaTeX with acmart version
+    pdfcreator={LaTeX with acmart 
       \csname ver@acmart.cls\endcsname\space
-      and hyperref package
+      and hyperref 
       \csname ver@hyperref.sty\endcsname}}%
   \@printendtopmatter
   \@afterindentfalse
