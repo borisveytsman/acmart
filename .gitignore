@@ -25,3 +25,5 @@ sample-*.pdf
 *.zip
 *.rpi
 *~
+*.bcf
+*.run.xml
