@@ -48,7 +48,7 @@ ENTRY
         % New keys recognized
         issue         % UTAH: used in, e.g., ACM SIGSAM Bulletin and ACM Communications in Computer Algebra
         articleno
-	eid           
+        eid           
         day           % UTAH: needed for newspapers, weeklies, bi-weeklies
         doi           % UTAH
         url           % UTAH
@@ -1505,7 +1505,7 @@ FUNCTION { format.articleno.numpages }
       numpages empty.or.unknown
         { }
         { "numpages field, but no articleno or eid field, in "
-	  cite$ * warning$ }
+          cite$ * warning$ }
       if$
       ""
     }
@@ -1515,7 +1515,7 @@ FUNCTION { format.articleno.numpages }
           pages empty.or.unknown
             {
               "articleno or eid, but no pages or numpages field in "
-	         cite$ * warning$
+                 cite$ * warning$
               "" 'page.count :=
             }
             { reduce.pages.to.page.count }
