@@ -41,7 +41,7 @@ acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
 	- bibtex acmguide
 	pdflatex -jobname acmguide $(PACKAGE).dtx
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' acmguide.log) \
-	do 	pdflatex -jobname acmguide $(PACKAGE).dtx; done
+	do pdflatex -jobname acmguide $(PACKAGE).dtx; done
 
 %.cls:   %.ins %.dtx  
 	pdflatex $<
