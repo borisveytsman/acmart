@@ -17,7 +17,7 @@ SAMPLES = \
 	sample-sigconf-authordraft.tex \
 	sample-sigplan.tex \
 	sample-sigchi.tex \
-	sample-sigchi-a.tex 
+	sample-sigchi-a.tex
 
 
 PDF = $(PACKAGE).pdf ${SAMPLES:%.tex=%.pdf} acmguide.pdf
@@ -43,7 +43,7 @@ acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' acmguide.log) \
 	do pdflatex -jobname acmguide $(PACKAGE).dtx; done
 
-%.cls:   %.ins %.dtx  
+%.cls:   %.ins %.dtx
 	pdflatex $<
 
 %.pdf:  %.tex   $(PACKAGE).cls ACM-Reference-Format.bst
