@@ -23,8 +23,8 @@ ENTRY
     author
     booktitle
     chapter
-    city     
-    date     
+    city
+    date
     edition
     editor
     eprint
@@ -48,7 +48,7 @@ ENTRY
         % New keys recognized
         issue         % UTAH: used in, e.g., ACM SIGSAM Bulletin and ACM Communications in Computer Algebra
         articleno
-        eid           
+        eid
         day           % UTAH: needed for newspapers, weeklies, bi-weeklies
         doi           % UTAH
         url           % UTAH
@@ -433,11 +433,11 @@ FUNCTION { format.articleno }
      { "" }
      {
         numpages empty.or.unknown
-          { "articleno or eid field, but no numpages field, in " 
+          { "articleno or eid field, but no numpages field, in "
             cite$ * warning$ }
           { }
         if$
-        eid empty.or.unknown 
+        eid empty.or.unknown
           { "Article \bibinfo{articleno}{" articleno * "}" * }
           { "Article \bibinfo{articleno}{" eid * "}" * }
         if$
@@ -754,9 +754,9 @@ FUNCTION { output.url } % UTAH
 FUNCTION { output.year.check }
 { % warn if year empty, output top string and leave " YEAR<label>" on stack in mid-sentence
   year empty.or.unknown
-     { "empty year in " cite$ * warning$ 
+     { "empty year in " cite$ * warning$
        write$
-       " \bibinfo{year}{[n. d.]}"  
+       " \bibinfo{year}{[n. d.]}"
        "\natexlab{" extra.label * "}" * *
        mid.sentence 'output.state :=
      }
@@ -2282,7 +2282,7 @@ FUNCTION { calc.basic.label }
     }
   if$
   duplicate$
-  year empty.or.unknown 
+  year empty.or.unknown
     { "[n. d.]" }
     { year field.or.null purify$ #-1 #4 substring$}
   if$
@@ -2330,7 +2330,7 @@ FUNCTION { calc.label }
   %
   % save the year for sort processing afterwards (adding a, b, c, etc.)
   %
-  year empty.or.unknown 
+  year empty.or.unknown
     { "[n. d.]" }
     { year field.or.null purify$ #-1 #4 substring$}
   if$
@@ -3036,13 +3036,13 @@ FUNCTION { presort }
   % including organizations as the sort key; the following is stolen from
   % alpha.bst.
 
-  calc.label 
-  basic.label.year 
+  calc.label
+  basic.label.year
   swap$
-  "    " 
+  "    "
   swap$
   * *
-  "    " 
+  "    "
   *
   sortify
   year field.or.null purify$ #-1 #4 substring$ * % add year

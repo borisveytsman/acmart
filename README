@@ -16,9 +16,9 @@ version 1.10    Bug fixes
 version 1.11    Customization of ACM theorem styles and proof
                 environment (Matthew Fluet).
 
-version 1.12    Bug fixes and documentation updates.  
+version 1.12    Bug fixes and documentation updates.
                 Footnotes rearranged.
-                Option natbib is now mostly superfluous: the class 
+                Option natbib is now mostly superfluous: the class
                 makes a guess based on the format chosen.
 
 version 1.13    Formatting changes: headers, folios etc.
@@ -46,7 +46,7 @@ version 1.20    Bug fixes, documentation updates
 
 version 1.21    Bibliography changes: added arXiv, some cleanup
 
-version 1.22    Bibliography changes for Aptara backend;  should be 
+version 1.22    Bibliography changes for Aptara backend; should be
                 invisible for the users.
 
 version 1.23    Added PACM PL journal option.
@@ -61,7 +61,7 @@ version 1.27    Bug fixes
 
 version 1.28    Bug fixes: natbib=false now behaves correctly.
 
-version 1.29        Documentation changes.  Head height increased from 12pt to 13pt.
+version 1.29    Documentation changes.  Head height increased from 12pt to 13pt.
                 Removed spurious indent at start of abstract.
                 Improved kerning in CCS description list.
 
@@ -94,7 +94,7 @@ version 1.33    New option `timestamp' (Michael D. Adams)
                 Added right line count ruler for two-column formats
                 Added workaround for Adobe Acrobat bugs in selection
                 Added eid field to the bibliography
-                
+
 version 1.34    Deleted DOI from doi numbers
                 Changed bibstrip formatting
                 The command \terms is now obsolete
@@ -110,7 +110,7 @@ Version 1.36    Bug fixes
                 New journal: PACMHCI
                 Added the possibility to adjust number of author
                 boxes per row in conference formats
-                
+
 Version 1.37    Reduce list indentation (Matthew Fluet)
 
 Version 1.38    Increase default font size for SIGPLAN
@@ -142,19 +142,19 @@ Version 1.44    Bug fixes.
 Version 1.45    Workaround for a Libertine bug.  Thanks to LianTze Lim
                 from Overleaf
 
-Version 1.46    Bug fixes for bibliography:  label width is now calculated
+Version 1.46    Bug fixes for bibliography: label width is now calculated
                 correctly.
                 All PACM now use screen option.  This requires etoolbox.
                 Added subtitle to ACM reference format.
                 Now acmart is compatible with fontspec.
                 \thanks is now obsolete.  The addresses are automatically
-                added to the journal version;  this can be overriden with
+                added to the journal version; this can be overriden with
                 \authorsaddresses command.
                 Deleted the rule at the end of frontmatter for all formats.
                 Deleted new line before doi in the reference format.
                 Reintegrated theorem code into acmart.dtx (Matthew Fluet)
 
-Version 1.47    New journal:  THRI
+Version 1.47    New journal: THRI
 
 Version 1.48    Bug fixes
                 Review mode now switches on folios
@@ -164,4 +164,3 @@ Version 1.48    Bug fixes
                 Acmart and version info are added to pdfcreator tag
                 \citeyear no longer produces parenthetical year
                 Added initial support for Biblatex (Daniel Thomas)
-		
