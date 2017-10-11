@@ -578,14 +578,11 @@ FUNCTION { output.doi } % UTAH
   doi empty.or.unknown
     { }
     {
-      %% NB: We want URLs at beginning of line to reduce likelihood of
-      %% BibTeX's nasty line wrapping after column 79, which then requires
-      %% manual (or automated) editing of the .bbl file to repair.
-      %% The \url{} macro strips percent-newlines, and is thus safe in
-      %% the presence of the line wrapping, but \path|...| and
-      %% \verb|...| do not.
-      "\showDOI{%" writeln
-      "\url{https://doi.org/" strip.doi * "}}" * writeln
+      %% Use \urldef here for the same reason it is used in output.url,
+      %% see output.url for further discussion.
+      "\urldef\tempurl%" writeln
+      "\url{https://doi.org/" strip.doi * "}" * writeln
+      "\showDOI{\tempurl}" writeln
     }
   if$
 }
@@ -700,52 +697,22 @@ FUNCTION { output.url } % UTAH
     url empty.or.unknown
       { }
       {
-          %% NB: We want URLs at beginning of line to reduce likelihood of
-          %% BibTeX's nasty line wrapping after column 79, which would require
-          %% manual (or automated) editing of the .bbl file to repair.  However,
-          %% the \url{} macro handles the unwrapping job automatically.
+          %% Use \urldef, outside \showURL, so that %nn, #, etc in URLs work
+          %% correctly.  Put the actual URL on its own line to reduce the
+          %% likelihood of BibTeX's nasty line wrapping after column 79.
+          %% \url{} can undo this, but if that doesn't work for some reason
+          %% the .bbl file would have to be repaired manually.
+          "\urldef\tempurl%" writeln
+          "\url{" url * "}" * writeln
+
           "\showURL{%" writeln
           lastaccessed empty.or.unknown
             { "" }
             { "Retrieved " lastaccessed * " from " * }
           if$
-
-          %% The URL field may contain a semicolon-separated list of Web
-          %% addresses, and we locate and wrap each of them in \url{...}.
-          %% The simplistic approach of putting the entire list into the
-          %% macro argument is that the semicolons are typeset in a
-          %% typewriter font, and no space follows them.
-          %%
-          %% We therefore replace the original code
-          %%    "\url{" * url * "}}" * writeln
-          %% with this character-at-a-time loop:
-
-          "\url{" *
-
-          url 't :=                       % get modifiable copy of URL list
-
-          { t text.length$ }
-          {
-            t #1 #1 substring$ ";" =
-              {                         % then split argument at separator
-                "};" * writeln
-                "\url{"
-              }
-              {                         % else concatenate nonblank character to argument
-                t #1 #1 substring$ " " =
-                  { }
-                  { t #1 #1 substring$ * }
-                if$
-              }
-            if$
-
-            t #2 t text.length$ #1 - substring$ 't :=
-          }
-          while$
-
-          "}}" * writeln
+          "\tempurl}" * writeln
       }
-    if$
+      if$
   }
   { }
   if$
