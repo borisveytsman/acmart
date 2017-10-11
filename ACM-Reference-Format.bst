@@ -28,6 +28,8 @@ ENTRY
     edition
     editor
     eprint
+    eprinttype
+    eprintclass
     howpublished
     institution
     journal
@@ -670,13 +672,21 @@ FUNCTION { output.eprint } %
     { }
     { "\showeprint"
          archiveprefix empty.or.unknown
-           { }
-           { "["  archiveprefix "l" change.case$ "]" * * * }
+           { eprinttype empty.or.unknown
+               { }
+               { "[" eprinttype "]" * * * }
+             if$
+           }
+           { "[" archiveprefix "l" change.case$ "]" * * * }
          if$
          "{" *
          primaryclass empty.or.unknown
-           { }
-           { primaryclass "/" * *}
+           { eprintclass empty.or.unknown
+             { }
+             { eprintclass "/" * * }
+             if$
+           }
+           { primaryclass "/" * * }
          if$
          eprint "}" * *
          writeln
