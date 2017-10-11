@@ -993,18 +993,10 @@ FUNCTION { field.or.null }
 
 
 FUNCTION { emphasize }
-{ % emphasize a non-empty top string on the stack (WITHOUT italic correction)
+{ % emphasize a non-empty top string on the stack
   duplicate$ empty.or.unknown
     { pop$ "" }
-    { "{\em " swap$ * "}" * }
-  if$
-}
-
-FUNCTION { emphasize.with.italic.correction }
-{ % convert empty string to null string, or emphasize with a trailing italic correction
-  duplicate$ empty.or.unknown
-    { pop$ "" }
-    { "{\em " swap$ * "\/}" * }
+    { "\emph{" swap$ * "}" * }
   if$
 }
 
@@ -1246,35 +1238,23 @@ FUNCTION { n.dashify }
   while$
 }
 
-FUNCTION { format.btitle }
+FUNCTION { format.a.title.with.edition }
 {
   "\bibinfo{booktitle}{"
+  swap$ emphasize *
   edition empty.or.unknown
-  { title emphasize }
-  { title empty.or.unknown
-    { title emphasize } % jtb: what is this supposed to do ?!?
-    { "{\em " title * "\/} (\bibinfo{edition}{" * edition "l" change.case$ *
-    "} ed.)" * } % jtb: no parens for ed.
-    if$
-  }
+    'skip$
+    { " (\bibinfo{edition}{" * edition "l" change.case$ *
+      "} ed.)" * } % jtb: no parens for ed.
   if$
-  * "}" *
+  "}" *
 }
 
+FUNCTION { format.btitle }
+{ title format.a.title.with.edition }
+
 FUNCTION { format.emphasize.booktitle }
-{ % push "" or "{\em booktitle}" or "{\em booktitle}, (second ed.)" on stack
-  "\bibinfo{booktitle}{"
-  edition empty.or.unknown
-    { booktitle emphasize }
-    { booktitle empty.or.unknown
-      { "" }
-      { "{\em " booktitle * "} (\bibinfo{edition}{" *
-      edition "l" change.case$ * "} ed.)" * }
-      if$
-    }
-  if$
-  * "}" *
-}
+{ booktitle format.a.title.with.edition }
 
 FUNCTION { format.city }
 {
@@ -1352,7 +1332,7 @@ FUNCTION { format.series }
 {
   series empty.or.unknown
     {""}
-    {" {\em (\bibinfo{series}{" * series "})}" *}
+    {" \emph{(\bibinfo{series}{" * series "})}" *}
   if$
 }
 
@@ -1550,6 +1530,105 @@ FUNCTION {calc.format.page.count}
 }
 
 
+FUNCTION { journal.canon.abbrev }
+{
+  % Returns a canonical abbreviation for 'journal', or else 'journal'
+  % unchanged.
+  journal "ACM Computing Surveys"                                                                       = { "Comput. Surveys"                                 } {
+  journal "{ACM} Computing Surveys"                                                                     = { "Comput. Surveys"                                 } {
+  journal "ACM Transactions on Mathematical Software"                                                   = { "ACM Trans. Math. Software"                       } {
+  journal "{ACM} Transactions on Mathematical Software"                                                 = { "ACM Trans. Math. Software"                       } {
+  journal "ACM SIGNUM Newsletter"                                                                       = { "ACM SIGNUM Newslett."                            } {
+  journal "ACM {SIGNUM} Newsletter"                                                                     = { "ACM SIGNUM Newslett."                            } {
+  journal "{ACM} SIGNUM Newsletter"                                                                     = { "ACM SIGNUM Newslett."                            } {
+  journal "{ACM} {SIGNUM} Newsletter"                                                                   = { "ACM SIGNUM Newslett."                            } {
+  journal "American Journal of Sociology"                                                               = { "Amer. J. Sociology"                              } {
+  journal "American Mathematical Monthly"                                                               = { "Amer. Math. Monthly"                             } {
+  journal "American Mathematical Society Translations"                                                  = { "Amer. Math. Soc. Transl."                        } {
+  journal "Applied Mathematics and Computation"                                                         = { "Appl. Math. Comput."                             } {
+  journal "British Journal of Mathematical and Statistical Psychology"                                  = { "Brit. J. Math. Statist. Psych."                  } {
+  journal "Bulletin of the American Mathematical Society"                                               = { "Bull. Amer. Math. Soc."                          } {
+  journal "Canadian Mathematical Bulletin"                                                              = { "Canad. Math. Bull."                              } {
+  journal "Communications of the ACM"                                                                   = { "Commun. ACM"                                     } {
+  journal "Communications of the {ACM}"                                                                 = { "Commun. ACM"                                     } {
+  journal "Computers and Structures"                                                                    = { "Comput. \& Structures"                           } {
+  journal "Contemporary Mathematics"                                                                    = { "Contemp. Math."                                  } {
+  journal "Crelle's Journal"                                                                            = { "Crelle's J."                                     } {
+  journal "Giornale di Mathematiche"                                                                    = { "Giorn. Mat."                                     } {
+  journal "IEEE Transactions on Aerospace and Electronic Systems"                                       = { "IEEE Trans. Aerospace Electron. Systems"         } {
+  journal "{IEEE} Transactions on Aerospace and Electronic Systems"                                     = { "IEEE Trans. Aerospace Electron. Systems"         } {
+  journal "IEEE Transactions on Automatic Control"                                                      = { "IEEE Trans. Automat. Control"                    } {
+  journal "{IEEE} Transactions on Automatic Control"                                                    = { "IEEE Trans. Automat. Control"                    } {
+  journal "IEEE Transactions on Computers"                                                              = { "IEEE Trans. Comput."                             } {
+  journal "{IEEE} Transactions on Computers"                                                            = { "IEEE Trans. Comput."                             } {
+  journal "IMA Journal of Numerical Analysis"                                                           = { "IMA J. Numer. Anal."                             } {
+  journal "{IMA} Journal of Numerical Analysis"                                                         = { "IMA J. Numer. Anal."                             } {
+  journal "Information Processing Letters"                                                              = { "Inform. Process. Lett."                          } {
+  journal "International Journal for Numerical Methods in Engineering"                                  = { "Internat. J. Numer. Methods Engrg."              } {
+  journal "International Journal of Control"                                                            = { "Internat. J. Control"                            } {
+  journal "International Journal of Supercomputing Applications"                                        = { "Internat. J. Supercomputing Applic."             } {
+  journal "Journal of Computational Physics"                                                            = { "J. Comput. Phys."                                } {
+  journal "Journal of Computational and Applied Mathematics"                                            = { "J. Comput. Appl. Math."                          } {
+  journal "Journal of Computer and System Sciences"                                                     = { "J. Comput. System Sci."                          } {
+  journal "Journal of Mathematical Analysis and Applications"                                           = { "J. Math. Anal. Appl."                            } {
+  journal "Journal of Mathematical Physics"                                                             = { "J. Math. Phys."                                  } {
+  journal "Journal of Parallel and Distributed Computing"                                               = { "J. Parallel and Distrib. Comput."                } {
+  journal "Journal of Research of the National Bureau of Standards"                                     = { "J. Res. Nat. Bur. Standards"                     } {
+  journal "Journal of VLSI and Computer Systems"                                                        = { "J. VLSI Comput. Syst."                           } {
+  journal "Journal of {VLSI} and Computer Systems"                                                      = { "J. VLSI Comput. Syst."                           } {
+  journal "Journal of the ACM"                                                                          = { "J. ACM"                                          } {
+  journal "Journal of the American Statistical Association"                                             = { "J. Amer. Statist. Assoc."                        } {
+  journal "Journal of the Institute of Mathematics and its Applications"                                = { "J. Inst. Math. Appl."                            } {
+  journal "Journal of the Society for Industrial and Applied Mathematics"                               = { "J. Soc. Indust. Appl. Math."                     } {
+  journal "Journal of the Society for Industrial and Applied Mathematics, Series B, Numerical Analysis" = { "J. Soc. Indust. Appl. Math. Ser. B Numer. Anal." } {
+  journal "Linear Algebra and its Applications"                                                         = { "Linear Algebra Appl."                            } {
+  journal "Mathematica Scandinavica"                                                                    = { "Math. Scand."                                    } {
+  journal "Mathematical Tables and Other Aids to Computation"                                           = { "Math. Tables Aids Comput."                       } {
+  journal "Mathematics of Computation"                                                                  = { "Math. Comp."                                     } {
+  journal "Mathematische Annalen"                                                                       = { "Math. Ann."                                      } {
+  journal "Numerische Mathematik"                                                                       = { "Numer. Math."                                    } {
+  journal "Pacific Journal of Mathematics"                                                              = { "Pacific J. Math."                                } {
+  journal "Parallel Computing"                                                                          = { "Parallel Comput."                                } {
+  journal "Philosophical Magazine"                                                                      = { "Philos. Mag."                                    } {
+  journal "Proceedings of the American Mathematical Society"                                            = { "Proc. Amer. Math. Soc."                          } {
+  journal "Proceedings of the IEEE"                                                                     = { "Proc. IEEE"                                      } {
+  journal "Proceedings of the {IEEE}"                                                                   = { "Proc. IEEE"                                      } {
+  journal "Proceedings of the National Academy of Sciences of the USA"                                  = { "Proc. Nat. Acad. Sci. U. S. A."                  } {
+  journal "Quarterly Journal of Mathematics, Oxford, Series (2)"                                        = { "Quart. J. Math. Oxford Ser. (2)"                 } {
+  journal "Quarterly of Applied Mathematics"                                                            = { "Quart. Appl. Math."                              } {
+  journal "Review of the International Statisical Institute"                                            = { "Rev. Inst. Internat. Statist."                   } {
+  journal "SIAM Journal on Algebraic and Discrete Methods"                                              = { "SIAM J. Algebraic Discrete Methods"              } {
+  journal "{SIAM} Journal on Algebraic and Discrete Methods"                                            = { "SIAM J. Algebraic Discrete Methods"              } {
+  journal "SIAM Journal on Applied Mathematics"                                                         = { "SIAM J. Appl. Math."                             } {
+  journal "{SIAM} Journal on Applied Mathematics"                                                       = { "SIAM J. Appl. Math."                             } {
+  journal "SIAM Journal on Computing"                                                                   = { "SIAM J. Comput."                                 } {
+  journal "{SIAM} Journal on Computing"                                                                 = { "SIAM J. Comput."                                 } {
+  journal "SIAM Journal on Matrix Analysis and Applications"                                            = { "SIAM J. Matrix Anal. Appl."                      } {
+  journal "{SIAM} Journal on Matrix Analysis and Applications"                                          = { "SIAM J. Matrix Anal. Appl."                      } {
+  journal "SIAM Journal on Numerical Analysis"                                                          = { "SIAM J. Numer. Anal."                            } {
+  journal "{SIAM} Journal on Numerical Analysis"                                                        = { "SIAM J. Numer. Anal."                            } {
+  journal "SIAM Journal on Scientific and Statistical Computing"                                        = { "SIAM J. Sci. Statist. Comput."                   } {
+  journal "{SIAM} Journal on Scientific and Statistical Computing"                                      = { "SIAM J. Sci. Statist. Comput."                   } {
+  journal "SIAM Review"                                                                                 = { "SIAM Rev."                                       } {
+  journal "{SIAM} Review"                                                                               = { "SIAM Rev."                                       } {
+  journal "Software Practice and Experience"                                                            = { "Software Prac. Experience"                       } {
+  journal "Statistical Science"                                                                         = { "Statist. Sci."                                   } {
+  journal "The Computer Journal"                                                                        = { "Comput. J."                                      } {
+  journal "Transactions of the American Mathematical Society"                                           = { "Trans. Amer. Math. Soc."                         } {
+  journal "USSR Computational Mathematics and Mathematical Physics"                                     = { "U. S. S. R. Comput. Math. and Math. Phys."       } {
+  journal "{USSR} Computational Mathematics and Mathematical Physics"                                   = { "U. S. S. R. Comput. Math. and Math. Phys."       } {
+  journal "Zeitschrift fur Angewandte Mathematik und Mechanik"                                          = { "Z. Angew. Math. Mech."                           } {
+  journal "Zeitschrift fur Angewandte Mathematik und Physik"                                            = { "Z. Angew. Math. Phys."                           } {
+  journal
+  } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$
+  } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$
+  } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$
+  } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$
+  } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$
+  } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$
+  } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$
+  } if$ } if$ } if$ } if$ } if$ } if$ } if$ } if$
+}
 
 FUNCTION { format.journal.volume.number.day.month.year }
 {
@@ -1559,429 +1638,11 @@ FUNCTION { format.journal.volume.number.day.month.year }
   % Format journal, volume, number, pages for article types.
   %
   journal empty.or.unknown
-    { "no journal in " cite$ * warning$
-      "" }
-%    { journal emphasize.with.italic.correction }
-     {
-       "\bibinfo{journal}{"
-           journal "Journal of the ACM" =
-       { "{\it J. ACM}" }
-       {
-           journal "American Mathematical Society Translations" =
-       { "{\it Amer. Math. Soc. Transl.}" }
-       {
-           journal "Bulletin of the American Mathematical Society" =
-       { "{\it Bull. Amer. Math. Soc.}" }
-       {
-           journal "Proceedings of the American Mathematical Society" =
-       { "{\it Proc. Amer. Math. Soc.}" }
-       {
-           journal "Transactions of the American Mathematical Society" =
-       { "{\it Trans. Amer. Math. Soc.}" }
-       {
-           journal "Communications of the {ACM}" =
-       { "{\it Commun. {ACM}}" }
-       {
-           journal "{ACM} Computing Surveys" =
-       { "{\it Comput. Surveys}" }
-       {
-           journal "{ACM} Transactions on Mathematical Software" =
-       { "{\it {ACM} Trans. Math. Software}" }
-       {
-           journal "{ACM} {SIGNUM} Newsletter" =
-       { "{\it {ACM} {SIGNUM} Newslett.}" }
-       {
-           journal "American Journal of Sociology" =
-       { "{\it Amer. J. Sociology}" }
-       {
-           journal "Journal of the American Statistical Association" =
-       { "{\it J. Amer. Statist. Assoc.}" }
-       {
-           journal "Applied Mathematics and Computation" =
-       { "{\it Appl. Math. Comput.}" }
-       {
-           journal "American Mathematical Monthly" =
-       { "{\it Amer. Math. Monthly}" }
-       {
-           journal "British Journal of Mathematical and Statistical Psychology" =
-       { "{\it Brit. J. Math. Statist. Psych.}" }
-       {
-           journal "Canadian Mathematical Bulletin" =
-       { "{\it Canad. Math. Bull.}" }
-       {
-           journal "Journal of Computational and Applied Mathematics" =
-       { "{\it J. Comput. Appl. Math.}" }
-       {
-           journal "Journal of Computational Physics" =
-       { "{\it J. Comput. Phys.}" }
-       {
-           journal "Computers and Structures" =
-       { "{\it Comput. \& Structures}" }
-       {
-           journal "The Computer Journal" =
-       { "{\it Comput. J.}" }
-       {
-           journal "Journal of Computer and System Sciences" =
-       { "{\it J. Comput. System Sci.}" }
-       {
-           journal "Contemporary Mathematics" =
-       { "{\it Contemp. Math.}" }
-       {
-           journal "Crelle's Journal" =
-       { "{\it Crelle's J.}" }
-       {
-           journal "Giornale di Mathematiche" =
-       { "{\it Giorn. Mat.}" }
-       {
-           journal "{IEEE} Transactions on Computers" =
-       { "{\it {IEEE} Trans. Comput.}" }
-       {
-           journal "{IEEE} Transactions on Automatic Control" =
-       { "{\it {IEEE} Trans. Automat. Control}" }
-       {
-           journal "Proceedings of the {IEEE}" =
-       { "{\it Proc. {IEEE}}" }
-       {
-           journal "{IEEE} Transactions on Aerospace and Electronic Systems" =
-       { "{\it {IEEE} Trans. Aerospace Electron. Systems}" }
-       {
-           journal "{IMA} Journal of Numerical Analysis" =
-       { "{\it {IMA} J. Numer. Anal.}" }
-       {
-           journal "Information Processing Letters" =
-       { "{\it Inform. Process. Lett.}" }
-       {
-           journal "Journal of the Institute of Mathematics and its Applications" =
-       { "{\it J. Inst. Math. Appl.}" }
-       {
-           journal "International Journal of Control" =
-       { "{\it Internat. J. Control}" }
-       {
-           journal "International Journal for Numerical Methods in Engineering" =
-       { "{\it Internat. J. Numer. Methods Engrg.}" }
-       {
-           journal "International Journal of Supercomputing Applications" =
-       { "{\it Internat. J. Supercomputing Applic.}" }
-       {
-           journal "Journal of Research of the National Bureau of Standards" =
-       { "{\it J. Res. Nat. Bur. Standards}" }
-       {
-           journal "Linear Algebra and its Applications" =
-       { "{\it Linear Algebra Appl.}" }
-       {
-           journal "Journal of Mathematical Analysis and Applications" =
-       { "{\it J. Math. Anal. Appl.}" }
-       {
-           journal "Mathematische Annalen" =
-       { "{\it Math. Ann.}" }
-       {
-           journal "Journal of Mathematical Physics" =
-       { "{\it J. Math. Phys.}" }
-       {
-           journal "Mathematics of Computation" =
-       { "{\it Math. Comp.}" }
-       {
-           journal "Mathematica Scandinavica" =
-       { "{\it Math. Scand.}" }
-       {
-           journal "Mathematical Tables and Other Aids to Computation" =
-       { "{\it Math. Tables Aids Comput.}" }
-       {
-           journal "Numerische Mathematik" =
-       { "{\it Numer. Math.}" }
-       {
-           journal "Pacific Journal of Mathematics" =
-       { "{\it Pacific J. Math.}" }
-       {
-           journal "Journal of Parallel and Distributed Computing" =
-       { "{\it J. Parallel and Distrib. Comput.}" }
-       {
-           journal "Parallel Computing" =
-       { "{\it Parallel Comput.}" }
-       {
-           journal "Philosophical Magazine" =
-       { "{\it Philos. Mag.}" }
-       {
-           journal "Proceedings of the National Academy of Sciences of the USA" =
-       { "{\it Proc. Nat. Acad. Sci. U. S. A.}" }
-       {
-           journal "Quarterly Journal of Mathematics, Oxford, Series (2)" =
-       { "{\it Quart. J. Math. Oxford Ser. (2)}" }
-       {
-           journal "Quarterly of Applied Mathematics" =
-       { "{\it Quart. Appl. Math.}" }
-       {
-           journal "Review of the International Statisical Institute" =
-       { "{\it Rev. Inst. Internat. Statist.}" }
-       {
-           journal "Journal of the Society for Industrial and Applied Mathematics" =
-       { "{\it J. Soc. Indust. Appl. Math.}" }
-       {
-           journal "Journal of the Society for Industrial and Applied Mathematics, Series B, Numerical Analysis" =
-       { "{\it J. Soc. Indust. Appl. Math. Ser. B Numer. Anal.}" }
-       {
-           journal "{SIAM} Journal on Algebraic and Discrete Methods" =
-       { "{\it {SIAM} J. Algebraic Discrete Methods}" }
-       {
-           journal "{SIAM} Journal on Applied Mathematics" =
-       { "{\it {SIAM} J. Appl. Math.}" }
-       {
-           journal "{SIAM} Journal on Computing" =
-       { "{\it {SIAM} J. Comput.}" }
-       {
-           journal "{SIAM} Journal on Matrix Analysis and Applications" =
-       { "{\it {SIAM} J. Matrix Anal. Appl.}" }
-       {
-           journal "{SIAM} Journal on Numerical Analysis" =
-       { "{\it {SIAM} J. Numer. Anal.}" }
-       {
-           journal "{SIAM} Review" =
-       { "{\it {SIAM} Rev.}" }
-       {
-           journal "{SIAM} Journal on Scientific and Statistical Computing" =
-       { "{\it {SIAM} J. Sci. Statist. Comput.}" }
-       {
-           journal "Software Practice and Experience" =
-       { "{\it Software Prac. Experience}" }
-       {
-           journal "Statistical Science" =
-       { "{\it Statist. Sci.}" }
-       {
-           journal "{USSR} Computational Mathematics and Mathematical Physics" =
-       { "{\it {U. S. S. R.} Comput. Math. and Math. Phys.}" }
-       {
-           journal "Journal of {VLSI} and Computer Systems" =
-       { "{\it J. {VLSI} Comput. Syst.}" }
-       {
-           journal "Zeitschrift fur Angewandte Mathematik und Mechanik" =
-       { "{\it Z. Angew. Math. Mech.}" }
-       {
-           journal "Zeitschrift fur Angewandte Mathematik und Physik" =
-       { "{\it Z. Angew. Math. Phys.}" }
-       {
-           journal "ACM Computing Surveys" =
-       { "{\it Comput. Surveys}" }
-       {
-           journal "ACM Transactions on Mathematical Software" =
-       { "{\it ACM Trans. Math. Software}" }
-       {
-           journal "ACM {SIGNUM} Newsletter" =
-       { "{\it ACM {SIGNUM} Newslett.}" }
-       {
-           journal "IEEE Transactions on Computers" =
-       { "{\it IEEE Trans. Comput.}" }
-       {
-           journal "IEEE Transactions on Automatic Control" =
-       { "{\it IEEE Trans. Automat. Control}" }
-       {
-           journal "Proceedings of the IEEE" =
-       { "{\it Proc. IEEE}" }
-       {
-           journal "IEEE Transactions on Aerospace and Electronic Systems" =
-       { "{\it IEEE Trans. Aerospace Electron. Systems}" }
-       {
-           journal "IMA Journal of Numerical Analysis" =
-       { "{\it IMA J. Numer. Anal.}" }
-       {
-           journal "SIAM Journal on Algebraic and Discrete Methods" =
-       { "{\it SIAM J. Algebraic Discrete Methods}" }
-       {
-           journal "SIAM Journal on Applied Mathematics" =
-       { "{\it SIAM J. Appl. Math.}" }
-       {
-           journal "SIAM Journal on Computing" =
-       { "{\it SIAM J. Comput.}" }
-       {
-           journal "SIAM Journal on Matrix Analysis and Applications" =
-       { "{\it SIAM J. Matrix Anal. Appl.}" }
-       {
-           journal "SIAM Journal on Numerical Analysis" =
-       { "{\it SIAM J. Numer. Anal.}" }
-       {
-           journal "SIAM Review" =
-       { "{\it SIAM Rev.}" }
-       {
-           journal "SIAM Journal on Scientific and Statistical Computing" =
-       { "{\it SIAM J. Sci. Statist. Comput.}" }
-       {
-           journal "USSR Computational Mathematics and Mathematical Physics" =
-       { "{\it U. S. S. R. Comput. Math. and Math. Phys.}" }
-       {
-           journal "Journal of VLSI and Computer Systems" =
-       { "{\it J. VLSI Comput. Syst.}" }
-       {
-           journal "Communications of the ACM" =
-       { "{\it Commun. ACM}" }
-       %% If no match with cases needing special handling, just output journal name
-       {  journal emphasize.with.italic.correction  }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-           }
-     if$
-     * "}" *
-         }
-    if$
+    { "no journal in " cite$ * warning$ "" }
+    { "\bibinfo{journal}{"
+      journal.canon.abbrev emphasize *
+      "}" * }
+  if$
 
   number empty.or.unknown
     {
@@ -2136,7 +1797,7 @@ FUNCTION { format.book.crossref }
           crossref * warning$
           "" *
         }
-        { "{\em " * series * "\/}" * }
+        { series emphasize * }
       if$
     }
     { key * }
