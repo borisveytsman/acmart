@@ -161,6 +161,7 @@ Version 1.48    Bug fixes
                 Code prettying (Michael D. Adams)
                 Bibliography changes: @MISC entries no longer have a
                 separate date
+		Sigch-a sample bibliography renamed
                 Acmart and version info are added to pdfcreator tag
                 \citeyear no longer produces parenthetical year
                 Added initial support for Biblatex (Daniel Thomas)
