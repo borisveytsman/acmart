@@ -5431,7 +5431,7 @@ Computing Machinery]
      ACM, New York, NY, USA%
        \@article@string\unskip, \ref{TotPages}~\@pages@word.
   \fi
-  \@formatdoi{\@acmDOI}
+  \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi
 \par\egroup}
 %    \end{macrocode}
 %
