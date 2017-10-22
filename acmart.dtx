@@ -1656,7 +1656,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/09/23 v1.48 Typesetting articles for the Association for
+[2017/10/22 v1.48 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2480,9 +2480,11 @@ Computing Machinery]
 % \end{macro}
 %
 %
-% Graphics and color
+% Graphics and color.
+% \changes{1.48}{2017/10/22}{Added prologue option to xcolor}
 %    \begin{macrocode}
-\RequirePackage{graphicx, xcolor}
+\RequirePackage{graphicx}
+\RequirePackage[prologue]{xcolor}
 %    \end{macrocode}
 %
 % We define ACM colors according to~\cite{ACMIdentityStandards}:
