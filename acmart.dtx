@@ -1018,7 +1018,11 @@
 %     government other than the US or Canada. \\
 %     \texttt{licensedothergov} & Authors are employees of a
 %     government other than the US or Canada, and the publication rights
-%     are licensed to the ACM\@. \\
+%                                   are licensed to the ACM\@. \\
+%     \texttt{iw3c2www} & Special statement for conferences organized
+%     by IW3C2.\\
+%     \texttt{iw3c2wwwgoogle} & Special statement for conferences organized
+%     by IW3C2, when some authors are approved Google employees.\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1658,7 +1662,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/12/03 v1.48 Typesetting articles for the Association for
+[2017/12/14 v1.48 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -4183,7 +4187,8 @@ Computing Machinery]
   \acm@copyrightinput\acm@copyrightmode]{none,%
     acmcopyright,acmlicensed,rightsretained,%
     usgov,usgovmixed,cagov,cagovmixed,licensedusgovmixed,%
-    licensedcagov,licensedcagovmixed,othergov,licensedothergov}{%
+    licensedcagov,licensedcagovmixed,othergov,licensedothergov,%
+    iw3c2www,iw3c2wwwgoogle}{%
   \@printpermissiontrue
   \@printcopyrighttrue
   \@acmownedtrue
@@ -4221,6 +4226,12 @@ Computing Machinery]
    \@acmownedtrue
   \fi
   \ifnum\acm@copyrightmode=12\relax % licensedothergov
+   \@acmownedfalse
+  \fi
+  \ifnum\acm@copyrightmode=13\relax % iw3c2www
+   \@acmownedfalse
+  \fi
+  \ifnum\acm@copyrightmode=14\relax % iw3c2wwwgoogle
    \@acmownedfalse
   \fi}
 %    \end{macrocode}
@@ -4269,6 +4280,10 @@ Computing Machinery]
   \or % licensedothergov
   Copyright held by the owner/author(s). Publication rights licensed to
   the Association for Computing Machinery.
+  \or % ic2w3www
+  IW3C2 (International World Wide Web Conference Committee).
+  \or % ic2w3wwwgoogle
+  IW3C2 (International World Wide Web Conference Committee).  
   \fi}
 %    \end{macrocode}
 %
@@ -4399,7 +4414,26 @@ Computing Machinery]
    retains a nonexclusive, royalty-free right to publish or reproduce
    this article, or to allow others to do so, for Government purposes
    only.
-  \fi}
+ \or % iw3c2www
+   This paper is published under the Creative Commons Attribution~4.0
+   International (CC~BY~4.0) license. Authors reserve their rights to
+   disseminate the work on their personal and corporate Web sites with
+   the appropriate attribution. In case of republication, reuse, etc.,
+   the following attribution should be used: ``Published in
+   WWW\@acmYear{} Proceedings \textcopyright{} \@copyrightyear{}
+   International World Wide Web Conference Committee, published under
+   Creative Commons~CC~BY~4.0  License.'' 
+ \or % iw3c2wwwgoogle
+   This paper is published under the Creative Commons
+   Attribution-NonCommercial-NoDerivs~4.0 International
+   (CC~BY-NC-ND~4.0) license. Authors reserve their rights to
+   disseminate the work on their personal and corporate Web sites with
+   the appropriate attribution. In case of republication, reuse, etc.,
+   the following attribution should be used: ``Published in
+   WWW\@acmYear{} Proceedings \textcopyright{} \@copyrightyear
+   International World Wide Web Conference Committee, published under
+   Creative Commons CC~BY-NC-ND~4.0 License.''   
+ \fi}
 %    \end{macrocode}
 %
 % \end{macro}

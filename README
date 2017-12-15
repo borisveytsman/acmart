@@ -171,3 +171,4 @@ Version 1.48    Bug fixes
                 Acmart and version info are added to pdfcreator tag
                 \citeyear no longer produces parenthetical year
                 Added initial support for Biblatex (Daniel Thomas)
+		Added support for IW3C2 conferences
