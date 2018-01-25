@@ -172,3 +172,5 @@ Version 1.48    Bug fixes
                 \citeyear no longer produces parenthetical year
                 Added initial support for Biblatex (Daniel Thomas)
 		Added support for IW3C2 conferences
+
+Version 1.49    New jorunal:  DTRAP

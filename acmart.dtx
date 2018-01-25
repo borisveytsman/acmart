@@ -276,7 +276,8 @@
 %     \normalfont Value & Meaning\\
 %     \midrule
 %   manuscript & A manuscript. This is the default. \\
-%   acmsmall & Small single-column format.  Used for CIE, CSUR, JACM, JDIQ, JEA, JERIC,
+%   acmsmall & Small single-column format.  Used for CIE, CSUR, DTRAP,
+%            JACM, JDIQ, JEA, JERIC,
 %            JETC, PACMHCI, PACMPL, TAAS, TACCESS, TACO, TALG, TALLIP (formerly TALIP), TCPS,
 %            TEAC, TECS, THRI, TIIS, TISSEC, TIST, TKDD, TMIS, TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
@@ -409,6 +410,7 @@
 %     \midrule
 %     CIE & ACM Computers in Entertainment \\
 %     CSUR & ACM Computing Surveys\\
+%     DTRAP &  Digital Threats: Research and Practice\\  
 %     IMWUT & PACM on Interactive, Mobile, Wearable and Ubiquitous
 %     Technologies\\
 %     JACM &  Journal of the ACM \\
@@ -1662,7 +1664,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2017/12/14 v1.48 Typesetting articles for the Association for
+[2018/01/24 v1.49 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1741,6 +1743,7 @@ Computing Machinery]
 % \changes{v1.48}{2017/10/01}{Initial support for Biblatex (Daniel Thomas)}
 % \changes{1.48}{2017/10/14}{Bib code cleanup (Zack Weinberg)}
 % \changes{1.48}{2017/12/03}{Documentation update (siggraph)}
+% \changes{1.49}{2018/01/24}{New journal:  DTRAP}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -3107,6 +3110,7 @@ Computing Machinery]
 \define@choicekey*+{ACM}{acmJournal}[\@journalCode\@journalCode@nr]{%
   CIE,%
   CSUR,%
+  DTRAP,%
   IMWUT,%
   JACM,%
   JDIQ,%
@@ -3167,6 +3171,10 @@ Computing Machinery]
   \def\@journalName{ACM Computing Surveys}%
   \def\@journalNameShort{ACM Comput. Surv.}%
   \def\@permissionCodeOne{0360-0300}%
+\or % DTRAP
+  \def\@journalName{Digital Threats: Research and Practice}%
+  \def\@journalNameShort{Digit. Threat. Res. Pract.}%
+  \def\@permissionCodeOne{2576-5337}%
 \or % IMWUT
   \def\@journalName{Proceedings of the ACM on Interactive, Mobile,
     Wearable and Ubiquitous Technologies}%
