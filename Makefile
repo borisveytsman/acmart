@@ -88,4 +88,4 @@ zip:  all clean
 	zip -r  $(PACKAGE).zip * -x '*~' -x '*.tgz' -x '*.zip' -x CVS -x 'CVS/*'
 
 documents.zip: all
-	zip $@ acmart.pdf acmguide.pdf sample-*.pdf *.cls
+	zip $@ acmart.pdf acmguide.pdf sample-*.pdf *.cls *.bst
