@@ -180,4 +180,4 @@ Version 1.50    Changes in iw3c2w3 and iw3c2w3g
 Version 1.51    Journal footers now use abbreviated journal titles.
 		Corrected the bug with acmPrice.
 		Do not show price when copyright is set to iw3c2w3 and iw3c2w3g
-		
+		The package now is compatible with polyglossia (Joachim Breitner) 

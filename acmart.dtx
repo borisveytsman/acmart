@@ -101,6 +101,7 @@
 %  Michael D.~Adams,
 %  Leif Andersen,
 %  Dirk Beyer,
+%  Joachim Breitner,
 %  Benjamin Byholm,
 %  Michael Ekstrand,
 %  Matthew Fluet,
@@ -2820,13 +2821,20 @@ Computing Machinery]
 % problems with \cs{l} in OT1}%
 % \changes{v1.33}{2017/03/12}{Switched to Type~1 fonts for libertine
 % even if OTF-capable engine is used (Kai Mindermann)}
+% \changes{v1.51}{2018/04/05}{XeTeX now uses OTF fonts (Joachim Breitner)}
 % We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
-\RequirePackage[tt=false, type1=true]{libertine}
+\ifxetex
+  \RequirePackage[tt=false]{libertine}
+\else
+  \RequirePackage[tt=false, type1=true]{libertine}
+\fi
 \RequirePackage[varqu]{zi4}
 \RequirePackage[libertine]{newtxmath}
-\RequirePackage[T1]{fontenc}
+\ifxetex\else
+  \RequirePackage[T1]{fontenc}
+\fi
 \fi
 %    \end{macrocode}
 %
