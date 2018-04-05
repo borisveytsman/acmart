@@ -865,9 +865,9 @@
 % \end{verbatim}
 % Note that you do not need to put the dollar sign here, just the
 % amount.  By default the price is \$15.00, unless the copyright is
-% set to |usgov| or |rightsretained|, when it is suppressed.  Note that to
-% override the defaults you need to set the price \emph{after} the
-% \cs{setcopyright} command.  Also, the
+% set to |usgov|, |rightsretained|, |iw3c2w3|, or |iw3c2w3g|, when it
+% is suppressed.  Note that to override the defaults you need to set
+% the price \emph{after} the \cs{setcopyright} command.  Also, the
 % command |\acmPrice{}| suppresses the printing of the price.
 %
 % \DescribeMacro{\acmISBN}%
@@ -4196,6 +4196,9 @@ Computing Machinery]
 % \changes{v1.10}{2016/05/22}{Changes of `licensedothergov' wording}
 % \changes{v1.35}{2017/04/22}{If the copyright is set to usgov or
 % rigtsretained, the price is suppressed}
+% \changes{v1.51}{2018/04/05}{Suppress price if the copyright is set
+% to iw3c2w3 or iw3c2w3g}
+% \changes{v1.51}{2018/04/05}{Corrected the bug with price suppression}
 % Keys:
 %    \begin{macrocode}
 \define@choicekey*{ACM@}{acmcopyrightmode}[%
@@ -4217,13 +4220,13 @@ Computing Machinery]
   \fi
   \ifnum\acm@copyrightmode=3\relax % rightsretained
    \@acmownedfalse
-   \acmPrice{}%
+   \AtBeginDocument{\acmPrice{}}%
   \fi
   \ifnum\acm@copyrightmode=4\relax % usgov
    \@printpermissiontrue
    \@printcopyrightfalse
    \@acmownedfalse
-   \acmPrice{}%
+   \AtBeginDocument{\acmPrice{}}%
   \fi
   \ifnum\acm@copyrightmode=6\relax % cagov
    \@acmownedfalse
@@ -4245,9 +4248,11 @@ Computing Machinery]
   \fi
   \ifnum\acm@copyrightmode=13\relax % iw3c2w3
    \@acmownedfalse
+   \AtBeginDocument{\acmPrice{}}%
   \fi
   \ifnum\acm@copyrightmode=14\relax % iw3c2w3g
    \@acmownedfalse
+   \AtBeginDocument{\acmPrice{}}%
   \fi}
 %    \end{macrocode}
 %
