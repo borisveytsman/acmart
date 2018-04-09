@@ -182,3 +182,5 @@ Version 1.51    Journal footers now use abbreviated journal titles.
 		Do not show price when copyright is set to iw3c2w3 and iw3c2w3g.
 		The package now is compatible with polyglossia (Joachim Breitner).
 		Slightly reworded copyright statements.
+
+Version 1.51    Another rewording of licenses
