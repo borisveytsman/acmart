@@ -5741,6 +5741,13 @@ Computing Machinery]
   \fancyhf{}%
   \renewcommand{\headrulewidth}{\z@}%
   \renewcommand{\footrulewidth}{\z@}%
+  \def\@acmArticlePage{%
+    \ifx\@acmArticle\empty%
+      \if@ACM@printfolios\thepage\fi%
+    \else%
+      \@acmArticle\if@ACM@printfolios:\thepage\fi%
+    \fi%
+  }
   \ifcase\ACM@format@nr
   \relax % manuscript
     \fancyhead[LE]{\ACM@linecountL\if@ACM@printfolios\thepage\fi}%
@@ -5751,8 +5758,8 @@ Computing Machinery]
       \fancyfoot[RO,LE]{\footnotesize Manuscript submitted to ACM}
     \fi%
   \or % acmsmall
-    \fancyhead[LE]{\ACM@linecountL\@headfootfont\@acmArticle\if@ACM@printfolios:\thepage\fi}%
-    \fancyhead[RO]{\@headfootfont\@acmArticle\if@ACM@printfolios:\thepage\fi}%
+    \fancyhead[LE]{\ACM@linecountL\@headfootfont\@acmArticlePage}%
+    \fancyhead[RO]{\@headfootfont\@acmArticlePage}%
     \fancyhead[RE]{\@headfootfont\@shortauthors}%
     \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
     \if@ACM@nonacm\else%
@@ -5761,21 +5768,21 @@ Computing Machinery]
     \fi%
   \or % acmlarge
     \fancyhead[LE]{\ACM@linecountL\@headfootfont
-      \@acmArticle\if@ACM@printfolios:\thepage\fi\quad\textbullet\quad\@shortauthors}%
+      \@acmArticlePage\quad\textbullet\quad\@shortauthors}%
     \fancyhead[LO]{\ACM@linecountL}%
     \fancyhead[RO]{\@headfootfont
-      \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi}%
+      \shorttitle\quad\textbullet\quad\@acmArticlePage}%
     \if@ACM@nonacm\else%
       \fancyfoot[RO,LE]{\footnotesize \@journalNameShort, Vol. \@acmVolume, No.
       \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
     \fi%
   \or % acmtog
     \fancyhead[LE]{\ACM@linecountL\@headfootfont
-      \@acmArticle\if@ACM@printfolios:\thepage\fi\quad\textbullet\quad\@shortauthors}%
+      \@acmArticlePage\quad\textbullet\quad\@shortauthors}%
     \fancyhead[LO]{\ACM@linecountL}%
     \fancyhead[RE]{\ACM@linecountR}%
     \fancyhead[RO]{\@headfootfont
-      \shorttitle\quad\textbullet\quad\@acmArticle\if@ACM@printfolios:\thepage\fi\ACM@linecountR}%
+      \shorttitle\quad\textbullet\quad\@acmArticlePage\ACM@linecountR}%
     \if@ACM@nonacm\else%
       \fancyfoot[RO,LE]{\footnotesize \@journalNameShort, Vol. \@acmVolume, No.
       \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
