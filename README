@@ -186,3 +186,5 @@ Version 1.51    Journal footers now use abbreviated journal titles.
 Version 1.52    Another rewording of licenses
 
 Version 1.53    New journals: PACMCGIT, TIOT, TDSCI
+
+Version 1.54    New option: 'noacm' (Gabriel Scherer)
