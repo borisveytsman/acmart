@@ -5970,7 +5970,7 @@ Computing Machinery]
 %\subsection{Sectioning}
 %\label{sec:sectioninng}
 %
-%
+%% \changes{v1.54}{2018/05/27}{Deleted indent for subsubsection}
 %   Sectioning is different for different levels
 %    \begin{macrocode}
 \renewcommand\section{\@startsection{section}{1}{\z@}%
@@ -5981,7 +5981,7 @@ Computing Machinery]
   {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {.25\baselineskip}%
   {\@subsecfont}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{10pt}%
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\@subsubsecfont\@adddotafter}}
