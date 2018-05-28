@@ -1463,7 +1463,27 @@
 % }
 % \end{verbatim}
 %
-%
+% A note about sorting.  The current ACM bibliography styles always
+% sort the entries according to authors names and publication year.
+% There is a controversy about sorting names with ``von'' or ``van''
+% part: should Ludwig van Beethoven be sorted under ``V'' or under
+% ``B''?  The American practice is to use ``van'' in sorting, i.e. to
+% file van Beethoven under ``V''.  However, some authorities recommend
+% to sort Belgian persons according to their last names, so if van
+% Beethoven were Belgian, he should be sorted under ``B'' (see
+% e.g. \url{https://www.ifla.org/files/assets/cataloguing/pubs/names-of-persons_1996.pdf}).
+% While I do not want to take a part in this dispute, I would like to
+% point to the old ``noopsort'' trick by Oren Patashnik.  Add to the
+% \texttt{.bib} file the line
+% \begin{verbatim}
+% @PREAMBLE{"\providecommand{\noopsort}[1]{}"}
+% \end{verbatim}
+% and then encode the author as
+% \begin{verbatim}
+%  author = {Ludwig {\noopsort{Beethoven}}van Beethoven},
+% \end{verbatim}
+% This will make the author to be sorted as ``Beethoven'' rather than
+% ``van Beethoven''.  
 %
 %\subsection{Colors}
 %\label{sec:ug_colors}
