@@ -1713,7 +1713,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2018/05/27 v1.54 Typesetting articles for the Association for
+[2018/06/10 v1.54 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -5563,12 +5563,13 @@ Computing Machinery]
 % \changes{v1.44}{2017/07/30}{If the paper has just one page, use
 % `page' instead of `pages'}
 % \changes{v1.46}{2017/08/25}{Added subtitle}
+% \changes{v1.54}{2018/06/10}{Bug corrected (Ross Moore)}
 %   Print the |bibcitation| format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup
   \def\@pages@word{\ifnum\getrefnumber{TotPages}=1\relax page\else pages\fi}%
   \def\footnotemark{}%
-  \def\\{\unskip{} \ignorespaces}%
+  \def\\{\unskip{}, \ignorespaces}%
   \def\footnote{\ClassError{\@classname}{Please do not use footnotes
       inside a \string\title{} or \string\author{} command! Use
       \string\titlenote{} or \string\authornote{} instead!}}%

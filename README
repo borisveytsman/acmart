@@ -190,4 +190,4 @@ Version 1.53    New journals: PACMCGIT, TIOT, TDSCI
 Version 1.54    New option: 'noacm' (Gabriel Scherer)
 		Deleted indent for subsubsection (suggested by Ross Moore)
 		Suppressed some obscurious warning in BibTeX processing
-		
+		Bug fixes
