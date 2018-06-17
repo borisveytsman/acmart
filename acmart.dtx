@@ -1713,7 +1713,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2018/06/10 v1.54 Typesetting articles for the Association for
+[2018/06/17 v1.54 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1795,6 +1795,8 @@ Computing Machinery]
 % \changes{1.49}{2018/01/24}{New journal:  DTRAP}
 % \changes{1.53}{2018/04/14}{New journals: PACMCGIT, TIOT, TDSCI}
 % \changes{1.53}{2018/04/14}{Rearranged docs}
+% \changes{1.54}{2018/06/17}{Moved footnote stuff before hyperref call
+% (Ross Moore)}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -2476,7 +2478,67 @@ Computing Machinery]
 %
 % \end{macro}
 %
-% And |hyperref|
+% We need to define foonote-related stuff before the call to hyperref
+% (Ross Moore)
+% \begin{macro}{\@makefntext}
+%   We do not use indentation for footnotes
+%    \begin{macrocode}
+\def\@makefntext{\noindent\@makefnmark}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@footnotetext}
+%   In |sigchi-a| mode our footnotes are in the margin!
+%    \begin{macrocode}
+\if@ACM@sigchiamode
+\long\def\@footnotetext#1{\marginpar{%
+    \reset@font\small
+    \interlinepenalty\interfootnotelinepenalty
+    \protected@edef\@currentlabel{%
+       \csname p@footnote\endcsname\@thefnmark
+    }%
+    \color@begingroup
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+    \color@endgroup}}%
+\fi
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@mpfootnotetext}
+% \changes{v1.13}{2016/06/06}{Made minipage footnotes centered}
+%   We want the footnotes in minipages centered:
+%    \begin{macrocode}
+\long\def\@mpfootnotetext#1{%
+  \global\setbox\@mpfootins\vbox{%
+    \unvbox\@mpfootins
+    \reset@font\footnotesize
+    \hsize\columnwidth
+    \@parboxrestore
+    \protected@edef\@currentlabel
+         {\csname p@mpfootnote\endcsname\@thefnmark}%
+    \color@begingroup\centering
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+    \color@endgroup}}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% \begin{macro}{\@makefnmark}
+% \changes{v1.17}{2016/067/09}{Redefined}
+%   AMS classes use a buggy definition of \cs{makefnmark}.  We revert
+%   to the standard one.
+%    \begin{macrocode}
+\def\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
+% And now, |hyperref|
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
 % \changes{v1.46}{2017/08/25}{Delayed hypersetup since journal options
 % may change screen mode}
@@ -2760,63 +2822,6 @@ Computing Machinery]
   \color@endgroup
   \egroup
   \expandafter\@iiiparbox\@mpargs{\unvbox\@tempboxa}}
-%    \end{macrocode}
-%
-% \end{macro}
-%
-% \begin{macro}{\@makefntext}
-%   We do not use indentation for footnotes
-%    \begin{macrocode}
-\def\@makefntext{\noindent\@makefnmark}
-%    \end{macrocode}
-%
-% \end{macro}
-%
-% \begin{macro}{\@footnotetext}
-%   In |sigchi-a| mode our footnotes are in the margin!
-%    \begin{macrocode}
-\if@ACM@sigchiamode
-\long\def\@footnotetext#1{\marginpar{%
-    \reset@font\small
-    \interlinepenalty\interfootnotelinepenalty
-    \protected@edef\@currentlabel{%
-       \csname p@footnote\endcsname\@thefnmark
-    }%
-    \color@begingroup
-      \@makefntext{%
-        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
-    \color@endgroup}}%
-\fi
-%    \end{macrocode}
-%
-% \end{macro}
-%
-% \begin{macro}{\@mpfootnotetext}
-% \changes{v1.13}{2016/06/06}{Made minipage footnotes centered}
-%   We want the footnotes in minipages centered:
-%    \begin{macrocode}
-\long\def\@mpfootnotetext#1{%
-  \global\setbox\@mpfootins\vbox{%
-    \unvbox\@mpfootins
-    \reset@font\footnotesize
-    \hsize\columnwidth
-    \@parboxrestore
-    \protected@edef\@currentlabel
-         {\csname p@mpfootnote\endcsname\@thefnmark}%
-    \color@begingroup\centering
-      \@makefntext{%
-        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
-    \color@endgroup}}
-%    \end{macrocode}
-%
-% \end{macro}
-%
-% \begin{macro}{\@makefnmark}
-% \changes{v1.17}{2016/067/09}{Redefined}
-%   AMS classes use a buggy definition of \cs{makefnmark}.  We revert
-%   to the standard one.
-%    \begin{macrocode}
-\def\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
 %    \end{macrocode}
 %
 % \end{macro}
