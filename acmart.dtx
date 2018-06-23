@@ -1713,7 +1713,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2018/06/17 v1.54 Typesetting articles for the Association for
+[2018/06/23 v1.54 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3611,6 +3611,7 @@ Computing Machinery]
 % \begin{macro}{\author}
 % \changes{v1.15}{2016/06/25}{Added code for author groups}
 % \changes{v1.46}{2017/08/27}{Started counting authors}
+% \changes{v1.54}{2018/06/23}{Added submission id in anonymous mode}
 %   Adding an author to the list of authors and addresses
 %    \begin{macrocode}
 \renewcommand\author[2][]{%
@@ -3621,7 +3622,9 @@ Computing Machinery]
   \fi
   \ifx\addresses\@empty
     \if@ACM@anonymous
-      \gdef\addresses{\@author{Anonymous Author(s)}}%
+      \gdef\addresses{\@author{Anonymous Author(s)%
+        \ifx\@acmSubmissionID\@empty\else\\Submission Id: 
+          \@acmSubmissionID\fi}}%
       \gdef\authors{Anonymous Author(s)}%
     \else
       \gdef\addresses{\@author{#2}}%
@@ -3635,7 +3638,9 @@ Computing Machinery]
   \fi
   \if@ACM@anonymous
     \ifx\shortauthors\@empty
-      \gdef\shortauthors{Anon.}%
+      \gdef\shortauthors{Anon. 
+        \ifx\@acmSubmissionID\@empty\else Submission Id: 
+        \@acmSubmissionID\fi}%
     \fi
   \else
     \def\@tempa{#1}%
@@ -5730,10 +5735,15 @@ Computing Machinery]
 %
 % \begin{macro}{\@shortauthors}
 % \changes{v1.15}{2016/07/04}{Introduced macro}
+% \changes{v1.54}{2016/06/23}{Added submission id in anonymous mode}
 %   Even if the author redefined \cs{shortauthors}, we do not print
 %   it in the headers when in anonymous mode:
 %    \begin{macrocode}
-\def\@shortauthors{\if@ACM@anonymous Anon.\else\shortauthors\fi}
+\def\@shortauthors{%
+  \if@ACM@anonymous
+    Anon.
+    \ifx\@acmSubmissionID\@empty\else Submission Id: \@acmSubmissionID\fi
+  \else\shortauthors\fi}
 %    \end{macrocode}
 %
 % \end{macro}

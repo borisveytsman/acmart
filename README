@@ -192,4 +192,5 @@ Version 1.54    New option: 'noacm' (Gabriel Scherer)
 		Suppressed some obscurious warning in BibTeX processing
 		Bug fixes
 		New code for sections to help with accessibility patches
-		(Ross Moore) 
+		(Ross Moore)
+		Submission id, if present, is printed in anon mode
