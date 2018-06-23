@@ -191,3 +191,5 @@ Version 1.54    New option: 'noacm' (Gabriel Scherer)
 		Deleted indent for subsubsection (suggested by Ross Moore)
 		Suppressed some obscurious warning in BibTeX processing
 		Bug fixes
+		New code for sections to help with accessibility patches
+		(Ross Moore) 

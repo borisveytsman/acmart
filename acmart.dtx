@@ -5995,29 +5995,105 @@ Computing Machinery]
 %\subsection{Sectioning}
 %\label{sec:sectioninng}
 %
-%% \changes{v1.54}{2018/05/27}{Deleted indent for subsubsection}
+% \begin{macro}{\ACM@NRadjust}
+% \changes{v1.54}{2018/06/17}{Added macro}
+% Ross Moore's macro.
+% \begin{quotation}
+%   Initially |\ACM@sect@format@| just passes through its |#1|
+%   argument unchanged. 
+% When a sectioning macro such as |\section| occurs, the
+% |\ACM@NRadjust| redefines |\ACM@sect@format@| to expand into the
+% styling commands; e.g., |\@secfont|. 
+% Then |\Sectionformat| is temporarily redefined to produce
+% |\realSectionformat{\ACM@sect@format{#1}}{#2}|, which ultimately
+% becomes |\Sectionformat{\@secfont{#1}}{#2}|. 
+% This is done to allow |\Sectionformat| to be variable, as may be
+% needed in particular circumstances. Its current expansion is saved
+% as |\realSectionformat| which is used with the modified 1st argument,
+% then |\Sectionformat| is reverted to its former expansion. 
+%
+% To style the section-number, the line |#1{}| is used at the end of
+% |\ACM@NRadjust|. This imposes style-changing commands for fonts and
+% sizes, but any |\MakeUppercase| acts on just the |{}|. It's a bit hacky,
+% by essentially assuming that only numbers occur here, not letters to
+% be case-changed. (This should be acceptable in a class-file, as it
+% ought to be possible to change the case elsewhere, if that was ever
+% desired.) Also, it can result in |\@adddotafter| being called too
+% soon, so a slight adjustment is made, via |\ACM@adddotafter|, which
+% now tests whether its argument is empty. But the coding has to allow
+% for other packages to have also patched |\@adddotafter|. 
+% \end{quotation}
+%    \begin{macrocode}
+\def\ACM@NRadjust#1{%
+ \begingroup
+  \expandafter\ifx\csname Sectionformat\endcsname\relax
+  % do nothing when  \Sectionformat  is unknown
+   \def\next{\endgroup #1}%
+ \else
+  \def\next{\endgroup
+   \let\realSectionformat\Sectionformat
+   \def\ACM@sect@format@{#1}%
+   \let\Sectionformat\ACM@NR@adjustedSectionformat
+ %%  next lines added 2018-06-17 to ensure section number is styled
+   \let\real@adddotafter\@adddotafter
+   \let\@adddotafter\ACM@adddotafter
+   #1{}% imposes the styles, but nullifies  \MakeUppercase 
+   \let\@adddotafter\real@adddotafter
+  }%
+ \fi \next
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ACM@NR@adjustedSectionformat}
+% \changes{v1.54}{2018/06/17}{Added macro}
+%    \begin{macrocode}
+\def\ACM@NR@adjustedSectionformat#1#2{%
+ \realSectionformat{\ACM@sect@format{#1}}{#2}%
+ \let\Sectionformat\realSectionformat}
+\DeclareRobustCommand{\ACM@sect@format}{\ACM@sect@format@}
+\def\ACM@sect@format@null#1{#1}
+\let\ACM@sect@format@\ACM@sect@format@null
+\AtBeginDocument{%
+ \expandafter\ifx\csname LTX@adddotafter\endcsname\relax
+  \let\LTX@adddotafter\@adddotafter
+ \fi
+}
+%    \end{macrocode}
+% 
+% \end{macro}
+% \begin{macro}{\ACM@adddotafter}
+% \changes{v1.54}{2018/06/17}{Added macro}
+%    \begin{macrocode}
+\def\ACM@adddotafter#1{\ifx\relax#1\relax\else\LTX@adddotafter{#1}\fi}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+% \changes{v1.54}{2018/05/27}{Deleted indent for subsubsection}
+% \changes{v1.54}{2018/06/17}{Added Ross's patch for sectioning}
 %   Sectioning is different for different levels
 %    \begin{macrocode}
 \renewcommand\section{\@startsection{section}{1}{\z@}%
   {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {.25\baselineskip}%
-  {\@secfont}}
+  {\ACM@NRadjust\@secfont}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
   {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {.25\baselineskip}%
-  {\@subsecfont}}
+  {\ACM@NRadjust\@subsecfont}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
-  {\@subsubsecfont\@adddotafter}}
+  {\ACM@NRadjust{\@subsubsecfont\@adddotafter}}}
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
-  {\@parfont\@adddotafter}}
+  {\ACM@NRadjust{\@parfont\@adddotafter}}}
 \renewcommand\part{\@startsection{part}{9}{\z@}%
   {-10\p@ \@plus -4\p@ \@minus -2\p@}%
   {4\p@}%
-  {\@parfont}}
+  {\ACM@NRadjust\@parfont}}
 %    \end{macrocode}
 %
 % \begin{macro}{\section@raggedright}
