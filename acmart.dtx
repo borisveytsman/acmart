@@ -1713,7 +1713,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2018/06/23 v1.54 Typesetting articles for the Association for
+[2018/07/16 v1.54 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2891,10 +2891,13 @@ Computing Machinery]
 % problems with \cs{l} in OT1}%
 % \changes{v1.33}{2017/03/12}{Switched to Type~1 fonts for libertine
 % even if OTF-capable engine is used (Kai Mindermann)}
-% \changes{v1.51}{2018/04/05}{XeTeX now uses OTF fonts (Joachim Breitner)}
+% \changes{v1.51}{2018/04/05}{XeTeX now uses OTF fonts (Joachim
+% Breitner)}
+% \changes{v1.54}{2018/07/16}{XeTeX now uses T1 encoding}
 % We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
+  \RequirePackage[T1]{fontenc}
 \ifxetex
   \RequirePackage[tt=false]{libertine}
 \else
@@ -2902,9 +2905,6 @@ Computing Machinery]
 \fi
 \RequirePackage[varqu]{zi4}
 \RequirePackage[libertine]{newtxmath}
-\ifxetex\else
-  \RequirePackage[T1]{fontenc}
-\fi
 \fi
 %    \end{macrocode}
 %

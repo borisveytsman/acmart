@@ -190,7 +190,9 @@ Version 1.53    New journals: PACMCGIT, TIOT, TDSCI
 Version 1.54    New option: 'noacm' (Gabriel Scherer)
 		Deleted indent for subsubsection (suggested by Ross Moore)
 		Suppressed some obscurious warning in BibTeX processing
-		Bug fixes
+		Suppressed hyperrerf warnings (Paolo G. Giarrusso)
 		New code for sections to help with accessibility patches
 		(Ross Moore)
 		Submission id, if present, is printed in anon mode
+		Bug fixes
+		
