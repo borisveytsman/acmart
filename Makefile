@@ -9,16 +9,16 @@
 PACKAGE=acmart
 
 SAMPLES = \
-	sample-manuscript.tex \
-	sample-acmsmall.tex \
-	sample-acmlarge.tex \
-	sample-acmtog.tex \
-	sample-sigconf.tex \
-	sample-sigconf-authordraft.tex \
-	sample-sigconf-xelatex.tex \
-	sample-sigplan.tex \
-	sample-sigchi.tex \
-	sample-sigchi-a.tex
+	samples/sample-manuscript.tex \
+	samples/sample-acmsmall.tex \
+	samples/sample-acmlarge.tex \
+	samples/sample-acmtog.tex \
+	samples/sample-sigconf.tex \
+	samples/sample-sigconf-authordraft.tex \
+	samples/sample-sigconf-xelatex.tex \
+	samples/sample-sigplan.tex \
+	samples/sample-sigchi.tex \
+	samples/sample-sigchi-a.tex
 
 
 PDF = $(PACKAGE).pdf ${SAMPLES:%.tex=%.pdf} acmguide.pdf
@@ -47,32 +47,38 @@ acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
 %.cls:   %.ins %.dtx
 	pdflatex $<
 
-%.pdf:  %.tex   $(PACKAGE).cls ACM-Reference-Format.bst
-	pdflatex $<
-	- bibtex $*
-	pdflatex $<
-	pdflatex $<
-	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $*.log) \
-	do pdflatex $<; done
+samples/%: %
+	cp $^ $@
 
-sample-sigconf-xelatex.pdf:  sample-sigconf-xelatex.tex   $(PACKAGE).cls ACM-Reference-Format.bst
-	xelatex $<
-	- bibtex $*
-	xelatex $<
-	xelatex $<
-	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $*.log) \
-	do xelatex $<; done
+samples/$(PACKAGE).cls: $(PACKAGE).cls
+samples/ACM-Reference-Format.bst: ACM-Reference-Format.bst
 
-sample-manuscript.pdf \
-sample-acmsmall.pdf \
-sample-acmlarge.pdf \
-sample-acmtog.pdf: samplebody-journals.tex
+samples/%.pdf:  samples/%.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
+	cd $(dir $@) && pdflatex $(notdir $<)
+	- cd $(dir $@) && bibtex $(notdir $(basename $<))
+	cd $(dir $@) && pdflatex $(notdir $<)
+	cd $(dir $@) && pdflatex $(notdir $<)
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
+	  do cd $(dir $@) && pdflatex $(notdir $<); done
 
-sample-sigconf.pdf \
-sample-sigconf-authordraft.pdf \
-sample-sigconf-xelatex.pdf \
-sample-sigplan.pdf \
-sample-sigchi.pdf: samplebody-conf.tex
+samples/sample-sigconf-xelatex.pdf:  samples/sample-sigconf-xelatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
+	cd $(dir $@) && xelatex $(notdir $<)
+	- cd $(dir $@) && bibtex $(notdir $(basename $<))
+	cd $(dir $@) && xelatex $(notdir $<)
+	cd $(dir $@) && xelatex $(notdir $<)
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
+	  do cd $(dir $@) && xelatex $(notdir $<); done
+
+samples/sample-manuscript.pdf \
+samples/sample-acmsmall.pdf \
+samples/sample-acmlarge.pdf \
+samples/sample-acmtog.pdf: samples/samplebody-journals.tex
+
+samples/sample-sigconf.pdf \
+samples/sample-sigconf-authordraft.pdf \
+samples/sample-sigconf-xelatex.pdf \
+samples/sample-sigplan.pdf \
+samples/sample-sigchi.pdf: samples/samplebody-conf.tex
 
 
 .PRECIOUS:  $(PACKAGE).cfg $(PACKAGE).cls
@@ -83,10 +89,13 @@ clean:
 	*.cfg *.glo *.idx *.toc \
 	*.ilg *.ind *.out *.lof \
 	*.lot *.bbl *.blg *.gls *.cut *.hd \
-	*.dvi *.ps *.thm *.tgz *.zip *.rpi
+	*.dvi *.ps *.thm *.tgz *.zip *.rpi \
+	samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst \
+	samples/*.log samples/*.aux samples/*.out \
+	samples/*.bbl samples/*.blg samples/*.cut
 
 distclean: clean
-	$(RM) $(PDF) *-converted-to.pdf
+	$(RM) $(PDF) samples/*-converted-to.pdf
 
 #
 # Archive for the distribution. Includes typeset documentation
@@ -98,4 +107,4 @@ zip:  all clean
 	zip -r  $(PACKAGE).zip * -x '*~' -x '*.tgz' -x '*.zip' -x CVS -x 'CVS/*'
 
 documents.zip: all
-	zip $@ acmart.pdf acmguide.pdf sample-*.pdf *.cls *.bst
+	zip $@ acmart.pdf acmguide.pdf samples/sample-*.pdf *.cls *.bst
