@@ -195,4 +195,5 @@ Version 1.54    New option: 'noacm' (Gabriel Scherer)
 		(Ross Moore)
 		Submission id, if present, is printed in anon mode
 		Bug fixes
-		
+
+Version 1.55    Bug fixes
