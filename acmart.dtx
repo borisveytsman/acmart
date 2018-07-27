@@ -164,7 +164,7 @@
 %
 % Please note that the version on Github is a development (or
 % experimental) version: please download it for testing new features.
-% The production version is the one on CTAN and ACM sites.  
+% The production version is the one on CTAN and ACM sites.
 %
 % Most users should not attempt to install this package themselves
 % but should rather rely on their \TeX\ distributions to provide it.  If you
@@ -283,7 +283,7 @@
 %            JETC, PACMCGIT, PACMHCI, PACMPL, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDSCI,
 %            TEAC, TECS, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
-%            TOCE, TOCHI, TOCL, 
+%            TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
 %            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS,
 %            TOS, TOSEM, TOSN, TRETS,
@@ -1352,7 +1352,7 @@
 % \setcitestyle{nosort}
 % \end{verbatim}
 % It is useful if you do not like the way |natbib| sorts citation
-% lists.  
+% lists.
 %
 % If you use |natbib|, then commands like \cs{citep} and
 % \cs{citeauthor} are automatically supported.  The command
@@ -1482,7 +1482,7 @@
 %  author = {Ludwig {\noopsort{Beethoven}}van Beethoven},
 % \end{verbatim}
 % This will make the author to be sorted as ``Beethoven'' rather than
-% ``van Beethoven''.  
+% ``van Beethoven''.
 %
 %\subsection{Colors}
 %\label{sec:ug_colors}
@@ -1628,7 +1628,7 @@
 % \endfoot
 %     CIE & ACM Computers in Entertainment \\
 %     CSUR & ACM Computing Surveys\\
-%     DTRAP &  Digital Threats: Research and Practice\\  
+%     DTRAP &  Digital Threats: Research and Practice\\
 %     IMWUT & PACM on Interactive, Mobile, Wearable and Ubiquitous
 %     Technologies\\
 %     JACM &  Journal of the ACM \\
@@ -1638,7 +1638,7 @@
 %     JETC & ACM Journal on Emerging Technologies in Computing Systems \\
 %     JOCCH & ACM Journal on Computing and Cultural Heritage \\
 %     PACMCGIT & Proceedings of the ACM on Computer Graphics and
-%     Interactive Techniques\\ 
+%     Interactive Techniques\\
 %     PACMHCI & PACM on Human-Computer Interaction\\
 %     PACMPL & PACM on Programming Languages \\
 %     POMACS & PACM on Measurement and Analysis of Computing Systems \\
@@ -3625,7 +3625,7 @@ Computing Machinery]
   \ifx\addresses\@empty
     \if@ACM@anonymous
       \gdef\addresses{\@author{Anonymous Author(s)%
-        \ifx\@acmSubmissionID\@empty\else\\Submission Id: 
+        \ifx\@acmSubmissionID\@empty\else\\Submission Id:
           \@acmSubmissionID\fi}}%
       \gdef\authors{Anonymous Author(s)}%
     \else
@@ -3640,8 +3640,8 @@ Computing Machinery]
   \fi
   \if@ACM@anonymous
     \ifx\shortauthors\@empty
-      \gdef\shortauthors{Anon. 
-        \ifx\@acmSubmissionID\@empty\else Submission Id: 
+      \gdef\shortauthors{Anon.
+        \ifx\@acmSubmissionID\@empty\else Submission Id:
         \@acmSubmissionID\fi}%
     \fi
   \else
@@ -4428,7 +4428,7 @@ Computing Machinery]
 % \changes{v1.40}{2017/06/16}{Added new copyright version: licensedcagov}
 % \changes{v1.50}{2018/02/07}{New copyright statements for iw3c2w3[g]}
 % \changes{v1.52}{2018/04/09}{Another rewording of copyright
-% statements for iw3c2w3[g]} 
+% statements for iw3c2w3[g]}
 %   The canned permission block.
 %    \begin{macrocode}
 \def\@copyrightpermission{%
@@ -4546,13 +4546,13 @@ Computing Machinery]
    This paper is published under the Creative Commons Attribution~4.0
    International (CC-BY~4.0) license. Authors reserve their rights to
    disseminate the work on their personal and corporate Web sites with
-   the appropriate attribution. 
+   the appropriate attribution.
  \or % iw3c2w3g
    This paper is published under the Creative Commons
    Attribution-NonCommercial-NoDerivs~4.0 International
    (CC-BY-NC-ND~4.0) license. Authors reserve their rights to
    disseminate the work on their personal and corporate Web sites with
-   the appropriate attribution. 
+   the appropriate attribution.
  \fi}
 %    \end{macrocode}
 %
@@ -5923,7 +5923,7 @@ Computing Machinery]
 % \changes{v1.33}{2017/03/29}{Added right linecount for two-column
 % formats}
 % \changes{v1.51}{2018/04/05}{We now use journal abbreviation for
-% footers} 
+% footers}
 %   The page style for the first page only.
 %    \begin{macrocode}
 \fancypagestyle{firstpagestyle}{%
@@ -6012,17 +6012,17 @@ Computing Machinery]
 % Ross Moore's macro.
 % \begin{quotation}
 %   Initially |\ACM@sect@format@| just passes through its |#1|
-%   argument unchanged. 
+%   argument unchanged.
 % When a sectioning macro such as |\section| occurs, the
 % |\ACM@NRadjust| redefines |\ACM@sect@format@| to expand into the
-% styling commands; e.g., |\@secfont|. 
+% styling commands; e.g., |\@secfont|.
 % Then |\Sectionformat| is temporarily redefined to produce
 % |\realSectionformat{\ACM@sect@format{#1}}{#2}|, which ultimately
-% becomes |\Sectionformat{\@secfont{#1}}{#2}|. 
+% becomes |\Sectionformat{\@secfont{#1}}{#2}|.
 % This is done to allow |\Sectionformat| to be variable, as may be
 % needed in particular circumstances. Its current expansion is saved
 % as |\realSectionformat| which is used with the modified 1st argument,
-% then |\Sectionformat| is reverted to its former expansion. 
+% then |\Sectionformat| is reverted to its former expansion.
 %
 % To style the section-number, the line |#1{}| is used at the end of
 % |\ACM@NRadjust|. This imposes style-changing commands for fonts and
@@ -6033,7 +6033,7 @@ Computing Machinery]
 % desired.) Also, it can result in |\@adddotafter| being called too
 % soon, so a slight adjustment is made, via |\ACM@adddotafter|, which
 % now tests whether its argument is empty. But the coding has to allow
-% for other packages to have also patched |\@adddotafter|. 
+% for other packages to have also patched |\@adddotafter|.
 % \end{quotation}
 %    \begin{macrocode}
 \def\ACM@NRadjust#1{%
@@ -6049,7 +6049,7 @@ Computing Machinery]
  %%  next lines added 2018-06-17 to ensure section number is styled
    \let\real@adddotafter\@adddotafter
    \let\@adddotafter\ACM@adddotafter
-   #1{}% imposes the styles, but nullifies  \MakeUppercase 
+   #1{}% imposes the styles, but nullifies  \MakeUppercase
    \let\@adddotafter\real@adddotafter
   }%
  \fi \next
@@ -6072,14 +6072,14 @@ Computing Machinery]
  \fi
 }
 %    \end{macrocode}
-% 
+%
 % \end{macro}
 % \begin{macro}{\ACM@adddotafter}
 % \changes{v1.54}{2018/06/17}{Added macro}
 %    \begin{macrocode}
 \def\ACM@adddotafter#1{\ifx\relax#1\relax\else\LTX@adddotafter{#1}\fi}
 %    \end{macrocode}
-% 
+%
 % \end{macro}
 %
 % \changes{v1.54}{2018/05/27}{Deleted indent for subsubsection}
