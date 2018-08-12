@@ -7,7 +7,7 @@ Installation section of the User's Guide.
 
 Please note that the version on Github is a development (or
 experimental) version: please download it for testing new features.
-The production version is the one on CTAN and ACM sites.  
+The production version is the one on CTAN and ACM sites.
 
 
 Changes
@@ -166,34 +166,34 @@ Version 1.48    Bug fixes
                 Code prettying (Michael D. Adams)
                 Bibliography changes: @MISC entries no longer have a
                 separate date
-		Sigch-a sample bibliography renamed
-		Bib code cleanup (Zack Weinberg)
+                Sigch-a sample bibliography renamed
+                Bib code cleanup (Zack Weinberg)
                 Acmart and version info are added to pdfcreator tag
                 \citeyear no longer produces parenthetical year
                 Added initial support for Biblatex (Daniel Thomas)
-		Added support for IW3C2 conferences
+                Added support for IW3C2 conferences
 
 Version 1.49    New jorunal:  DTRAP
 
 Version 1.50    Changes in iw3c2w3 and iw3c2w3g
 
 Version 1.51    Journal footers now use abbreviated journal titles.
-		Corrected the bug with acmPrice.
-		Do not show price when copyright is set to iw3c2w3 and iw3c2w3g.
-		The package now is compatible with polyglossia (Joachim Breitner).
-		Slightly reworded copyright statements.
+                Corrected the bug with acmPrice.
+                Do not show price when copyright is set to iw3c2w3 and iw3c2w3g.
+                The package now is compatible with polyglossia (Joachim Breitner).
+                Slightly reworded copyright statements.
 
 Version 1.52    Another rewording of licenses
 
 Version 1.53    New journals: PACMCGIT, TIOT, TDSCI
 
 Version 1.54    New option: 'noacm' (Gabriel Scherer)
-		Deleted indent for subsubsection (suggested by Ross Moore)
-		Suppressed some obscurious warning in BibTeX processing
-		Suppressed hyperrerf warnings (Paolo G. Giarrusso)
-		New code for sections to help with accessibility patches
-		(Ross Moore)
-		Submission id, if present, is printed in anon mode
-		Bug fixes
+                Deleted indent for subsubsection (suggested by Ross Moore)
+                Suppressed some obscurious warning in BibTeX processing
+                Suppressed hyperrerf warnings (Paolo G. Giarrusso)
+                New code for sections to help with accessibility patches
+                (Ross Moore)
+                Submission id, if present, is printed in anon mode
+                Bug fixes
 
 Version 1.55    Bug fixes
