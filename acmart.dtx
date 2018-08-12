@@ -1713,7 +1713,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2018/07/25 v1.55 Typesetting articles for the Association for
+[2018/08/12 v1.55 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1823,7 +1823,7 @@ Computing Machinery]
 %
 %
 %\subsection{Preload hook}
-%\label{sec:preload}
+`%\label{sec:preload}
 %
 % We preload |acmart-preload-hook|:
 %    \begin{macrocode}
@@ -2201,6 +2201,7 @@ Computing Machinery]
 % \changes{v1.19}{2016/07/28}{Include 'References' in PDF bookmarks
 % (Matthew Fluet)}
 % \changes{v1.14}{2016/06/09}{Patched \cs{citestyle}}
+% \changes{v1.55}{2016/08/012}{Typo corrected (Zack Weinberg)}
 % We patch \cs{setcitestyle} to allow, for example,
 % \cs{setcitestyle}|{sort}| and \cs{setcitestyle}|{nosort}|.  We patch
 % \cs{citestyle} to warn about undefined citation styles.
@@ -2245,7 +2246,7 @@ Computing Machinery]
    \def\@tempb{compress}\ifx\@tempa\@tempb
      \def\NAT@cmprs{\@ne}\fi
    \def\@tempb{nocompress}\ifx\@tempa\@tempb
-     \def\NAT@cmprs{\@z}\fi
+     \def\NAT@cmprs{\z@}\fi
    \def\@tempb{sort&compress}\ifx\@tempa\@tempb
      \def\NAT@sort{\@ne}\def\NAT@cmprs{\@ne}\fi
    \def\@tempb{mcite}\ifx\@tempa\@tempb
