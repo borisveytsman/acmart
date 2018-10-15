@@ -48,7 +48,7 @@ acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
 	pdflatex $<
 
 samples/%: %
-	cp $^ $@
+	cp $^ samples
 
 samples/$(PACKAGE).cls: $(PACKAGE).cls
 samples/ACM-Reference-Format.bst: ACM-Reference-Format.bst

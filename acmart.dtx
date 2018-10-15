@@ -1,3 +1,4 @@
+
 % \iffalse
 %
 % Copyright 2016-2018, Association for Computing Machinery
@@ -1713,7 +1714,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2018/08/12 v1.55 Typesetting articles for the Association for
+[2018/10/14 v1.55 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -4649,6 +4650,7 @@ Computing Machinery]
 % \changes{v1.48}{2017/10/14}{Suppressed empty DOI (Serguei Mokhov)}
 % \changes{v1.48}{2017/11/18}{Added language and doctitle attributes
 % to PDF (Andreas Reichinger)}
+% \changes{v1.55}{2018/10/14}{Fixes topnum}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -4666,9 +4668,6 @@ Computing Machinery]
   \let\@footnotemark\@footnotemark@nolink
   \let\@footnotetext\@footnotetext@nolink
   \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
-  \global\@topnum\z@ % this prevents floats from falling
-                     % at the top of page 1
-  \global\@botnum\z@ % we do not want them to be on the bottom either
   \hsize=\textwidth
   \def\@makefnmark{\hbox{\@textsuperscript{\@thefnmark}}}%
   \@mktitle\if@ACM@sigchiamode\else\@mkauthors\fi\@mkteasers
@@ -4779,6 +4778,9 @@ Computing Machinery]
       \csname ver@acmart.cls\endcsname\space
       and hyperref
       \csname ver@hyperref.sty\endcsname}}%
+  \global\@topnum\z@ % this prevents floats from falling
+                     % at the top of page 1
+  \global\@botnum\z@ % we do not want them to be on the bottom either
   \@printendtopmatter
   \@afterindentfalse
   \@afterheading
