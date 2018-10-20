@@ -109,8 +109,9 @@
 %  Paolo G.~Giarrusso,
 %  Ben Greenman,
 %  Jamie Davis,
-%  LianTze Lim,
+%  Luis Leiva,
 %  Ben Liblit,
+%  LianTze Lim,
 %  Kai Mindermann,
 %  Frank Mittelbach,
 %  Serguei Mokhov,
@@ -2544,6 +2545,7 @@ Computing Machinery]
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
 % \changes{v1.46}{2017/08/25}{Delayed hypersetup since journal options
 % may change screen mode}
+% \changes{v1.55}{2018/10/20}{Now we use purple color for links}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
@@ -2571,7 +2573,7 @@ Computing Machinery]
 \AtEndPreamble{%
   \if@ACM@screen
     \hypersetup{colorlinks,
-      linkcolor=ACMRed,
+      linkcolor=ACMPurple,
       citecolor=ACMPurple,
       urlcolor=ACMDarkBlue,
       filecolor=ACMDarkBlue}
@@ -2934,6 +2936,8 @@ Computing Machinery]
 %\subsection{Floats}
 %\label{sec:floats}
 %
+% \changes{v1.55}{2018/10/20}{Table captions for SIGCHI now use the
+% same font size as figure captions (Luis Leiva)}
 % We use the |caption| package
 %    \begin{macrocode}
 \RequirePackage{caption, float}
