@@ -2668,6 +2668,7 @@ Computing Machinery]
 % \changes{v1.17}{2016/07/07}{Slightly decreased margins for sigs}
 % \changes{v1.29}{2017/01/22}{Increased head to 13pt}
 % \changes{v1.40}{2017/07/15}{Added heightrounded to geometry}
+% \changes{v1.55}{2018/10/16}{Make two-column layouts flush (Philip Quinn)}
 % We use |geometry| for dimensions.  Note that the present margins do not
 % depend on the font size option---we might need to change this.
 % See \url{https://github.com/borisveytsman/acmart/issues/5#issuecomment-272881329}.
@@ -2843,6 +2844,28 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \end{macro}
+%
+% In two-column layouts, force both columns to be the same height by inserting
+% extra internal vertical space to fill out the page.
+%    \begin{macrocode}
+\ifcase\ACM@format@nr
+\relax % manuscript
+\or % acmsmall
+\or % acmlarge
+\or % acmtog
+  \flushbottom
+\or % sigconf
+  \flushbottom
+\or % siggraph
+  \flushbottom
+\or % sigplan
+  \flushbottom
+\or % sigchi
+  \flushbottom
+\or % sigchi-a
+\fi
+%    \end{macrocode}
+%
 %\subsection{Fonts}
 %\label{sec:fonts}
 %
