@@ -506,15 +506,14 @@ FUNCTION { strip.doi } % UTAH
   % result on the output stack, as recommended by CrossRef DOI
   % documentation.
   % For example, reduce "http://doi.acm.org/10.1145/1534530.1534545" to
-  % "10.1145/1534530.1534545".  That is later typeset and displayed as
-  % doi:10.1145/1534530.1534545 as the LAST item in the reference list
-  % entry.  Publisher Web sites wrap this with a suitable link to a real
-  % URL to resolve the DOI, and the master https://doi.org/ address is
-  % preferred, since publisher-specific URLs can disappear in response
-  % to economic events.  All journals are encouraged by the DOI
-  % authorities to use that typeset format and link procedures for
-  % uniformity across all publications that include DOIs in reference
-  % lists.
+  % "10.1145/1534530.1534545".  A suitable URL is later typeset and
+  % displayed as the LAST item in the reference list entry.  Publisher Web
+  % sites wrap this with a suitable link to a real URL to resolve the DOI,
+  % and the master https://doi.org/ address is preferred, since publisher-
+  % specific URLs can disappear in response to economic events.  All
+  % journals are encouraged by the DOI authorities to use that typeset
+  % format and link procedures for uniformity across all publications that
+  % include DOIs in reference lists.
   % The numeric prefix is guaranteed to start with "10.", so we use
   % that as a test.
   % 2017-02-04 Added stripping of https:// (Boris)
