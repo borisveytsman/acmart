@@ -2938,9 +2938,12 @@ Computing Machinery]
 %
 % \changes{v1.55}{2018/10/20}{Table captions for SIGCHI now use the
 % same font size as figure captions (Luis Leiva)}
+% \changes{v1.55}{2018/10/20}{Use \cs{boldmath} in bold captions to
+% match the surrounding text (Philip Quinn)}
 % We use the |caption| package
 %    \begin{macrocode}
 \RequirePackage{caption, float}
+\DeclareCaptionFont{xbf}{\bfseries\boldmath}
 \captionsetup[table]{position=top}
 \if@ACM@journal
   \captionsetup{labelfont={sf, small},
@@ -2948,7 +2951,7 @@ Computing Machinery]
   \captionsetup[figure]{name={Fig.}}
 \else
   \captionsetup{labelfont={bf},
-    textfont={bf}, labelsep=colon, margin=\z@}
+    textfont={xbf}, labelsep=colon, margin=\z@}
   \ifcase\ACM@format@nr
   \relax % manuscript
   \or % acmsmall
@@ -2962,14 +2965,14 @@ Computing Machinery]
       textfont={normalfont}, labelsep=period, margin=\z@}
   \or % sigchi
     \captionsetup[figure]{labelfont={bf, small},
-      textfont={bf, small}}
+      textfont={xbf, small}}
     \captionsetup[table]{labelfont={bf, small},
-      textfont={bf, small}}
+      textfont={xbf, small}}
   \or % sigchi-a
     \captionsetup[figure]{labelfont={bf, small},
-      textfont={bf, small}}
+      textfont={xbf, small}}
     \captionsetup[table]{labelfont={bf, small},
-      textfont={bf, small}}
+      textfont={xbf, small}}
   \fi
 \fi
 %    \end{macrocode}
