@@ -198,5 +198,8 @@ Version 1.54    New option: 'noacm' (Gabriel Scherer)
 
 Version 1.55    Bug fixes
 		Font changes for SIGCHI table captions
-		
+
+
+Version 1.56    Bug fixes
+		Added \flushbottom to two column formats (Philip Quinn)
 
