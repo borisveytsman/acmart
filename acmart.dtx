@@ -4236,9 +4236,10 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \begin{macro}{\@concepts}
-%   This is the storage macro for concepts
+%   This is the storage macro and counter for concepts
 %    \begin{macrocode}
 \let\@concepts\@empty
+\newcounter{@concepts}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4260,11 +4261,14 @@ Computing Machinery]
 % \changes{v1.29}{2017/01/22}{Add spacing after bullet and around
 % rightarrow; semicolon separators no longer in bold/italic (John Wickerson)}
 % \changes{v1.40}{2017/05/27}{Now we can parse |Significance~General| nodes}
+% \changes{v1.56}{2018/10/23}{End the concepts list with a period
+% (Philip Quinn)}
 %   The parser of the expression |Significance~General~Specific| (we need
 %   |textcomp| for |\textrightarrow|).  Note that |Specific| can be empty!
 %    \begin{macrocode}
 \RequirePackage{textcomp}
 \def\ccsdesc@parse#1~#2~#3~{%
+  \stepcounter{@concepts}%
   \expandafter\ifx\csname CCS@General@#2\endcsname\relax
     \expandafter\gdef\csname CCS@General@#2\endcsname{\textbullet\
       \textbf{#2}}%
@@ -4278,9 +4282,10 @@ Computing Machinery]
     \expandafter\gdef\csname CCS@Punctuation@#2\endcsname{
       \textrightarrow\ }%
     \expandafter\g@addto@macro\expandafter{\csname CCS@Specific@#2\endcsname}{%
-     \ifnum#1>499\textbf{#3}; \else
-     \ifnum#1>299\textit{#3}; \else
-     #3; \fi\fi}%
+     \addtocounter{@concepts}{-1}%
+     \ifnum#1>499\textbf{#3}\else
+     \ifnum#1>299\textit{#3}\else
+     #3\fi\fi\ifnum\value{@concepts}=0.\else; \fi}%
   \fi
 \ccsdesc@parse@finish}
 %    \end{macrocode}
