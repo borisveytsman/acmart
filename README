@@ -202,4 +202,5 @@ Version 1.55    Bug fixes
 
 Version 1.56    Bug fixes
 		Added \flushbottom to two column formats (Philip Quinn)
-
+		The final punctuation for the list of concepts
+		is now period instead of semilcolon (Philip Quinn)
