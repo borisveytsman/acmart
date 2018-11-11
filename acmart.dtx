@@ -1,4 +1,3 @@
-
 % \iffalse
 %
 % Copyright 2016-2018, Association for Computing Machinery
@@ -104,6 +103,7 @@
 %  Dirk Beyer,
 %  Joachim Breitner,
 %  Benjamin Byholm,
+%  Nils Anders Danielsson,
 %  Michael Ekstrand,
 %  Matthew Fluet,
 %  Paolo G.~Giarrusso,
@@ -1190,6 +1190,35 @@
 % A good way to do so is to put the contents into a
 % \cs{minipage} of the width \cs{columnwidth}.
 %
+%
+%\subsection{Descriptions of images}
+%\label{sec:descriptions}
+%
+% \DescribeMacro{\Description}%
+% Some readers of ACM publications might be visually challenged.
+% These readers might use a voice-over software to read aloud the
+% papers.  It is important to provided them a description of each
+% image used in the paper.
+%
+% The command \cs{Description}\oarg{short description}\marg{long
+% description} should be placed inside every \texttt{figure},
+% \texttt{teaserfigure} or \texttt{marginfigure} environment to
+% provide a description of the image(s) used in the figure.  Unlike
+% \cs{caption}, which is used alongside the image, \cs{Description} is
+% intended to be used instead of the image, for example,
+% \begin{verbatim}
+% \begin{figure}
+%   \centering
+%   \includegraphics{voltage}
+%   \Description{A bell-like histogram centered at $0.5$~V with most
+%   measurements between $0.2$~V and $0.8$~V}
+%   \caption{Histogram of the measurements of voltage}
+%   \label{fig:voltage}
+% \end{figure}
+% \end{verbatim}
+% At present the lack of descriptions generates a warning at
+% compilation.  
+%
 %\subsection{Theorems}
 %\label{sec:ug_theorems}
 %
@@ -1800,6 +1829,7 @@ Computing Machinery]
 % \changes{1.53}{2018/04/14}{Rearranged docs}
 % \changes{1.54}{2018/06/17}{Moved footnote stuff before hyperref call
 % (Ross Moore)}
+% \changes{1.56}{2018/11/11}{Documented \cs{Description}}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -2960,6 +2990,55 @@ Computing Machinery]
 %    \end{macrocode}
 %
 %
+%
+%\subsection{Image descriptions}
+%\label{sec:description}
+%
+% \begin{macro}{\if@Description@present}
+% \changes{v1.56}{2018/11/11}{Added macro}
+% A local switch: whether there is a description in the given figure
+%    \begin{macrocode}
+\newif\if@Description@present
+\@Description@presenttrue
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\if@undescribed@images}
+% \changes{v1.56}{2018/11/11}{Added macro}
+% A global switch whether some images were \emph{not} described
+%    \begin{macrocode}
+\newif\if@undescribed@images
+\@undescribed@imagesfalse
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\Description}
+% \changes{v1.56}{2018/11/11}{Added macro}
+% The Description macro right now just sets switches
+%    \begin{macrocode}
+\newcommand\Description[2][]{\global\@Description@presenttrue}
+%    \end{macrocode}
+% \end{macro}
+%
+% The global warning
+%    \begin{macrocode}
+\AtEndDocument{\if@undescribed@images
+  \ClassWarningNoLine{\@classname}{Some images may lack descriptions}\fi}
+%    \end{macrocode}
+%
+% Hooks for figures
+%    \begin{macrocode}
+\AtBeginEnvironment{figure}{\@Description@presentfalse}
+\AtBeginEnvironment{figure*}{\@Description@presentfalse}
+\AtEndEnvironment{figure}{\if@Description@present\else
+  \global\@undescribed@imagestrue
+  \ClassWarning{\@classname}{A possible image without description}\fi}
+\AtEndEnvironment{figure*}{\if@Description@present\else
+  \global\@undescribed@imagestrue
+  \ClassWarning{\@classname}{A possible image without description}\fi}
+%    \end{macrocode}
+% 
+%
 %\subsection{Floats}
 %\label{sec:floats}
 %
@@ -3030,10 +3109,17 @@ Computing Machinery]
 %
 % \begin{macro}{\@marginfigure}
 % \changes{v1.12}{2016/05/30}{Now centering by default}
+% \changes{v1.56}{2018/11/11}{Added checking for description}
 %   The processing of the saved text
 %    \begin{macrocode}
-\long\def\@marginfigure#1{\bgroup\captionsetup{type=figure}%
-  \marginpar{\centering\small#1}\egroup}
+\long\def\@marginfigure#1{\bgroup
+  \captionsetup{type=figure}%
+  \marginpar{\@Description@presentfalse\centering
+    \small#1\if@Description@present\else
+      \global\@undescribed@imagestrue
+      \ClassWarning{\@classname}{A possible image without description}
+      \fi}%
+  \egroup}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -5571,14 +5657,20 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@mkteasers}
-%   Typesetting the teasers
+% Typesetting the teasers
+% \changes{v1.56}{2018/11/1}{Added check for description}
 %    \begin{macrocode}
 \def\@mkteasers{%
   \ifx\@teaserfigures\@empty\else
     \def\@teaser##1{\par\bigskip\bgroup
       \captionsetup{type=figure}##1\egroup\par}
     \global\setbox\mktitle@bx=\vbox{\noindent\box\mktitle@bx\par
-    \noindent\@teaserfigures\par\medskip}%
+      \noindent\@Description@presentfalse
+      \@teaserfigures\par\if@Description@present\else
+         \global\@undescribed@imagestrue
+         \ClassWarning{\@classname}{A possible image without
+           description}\fi
+    \medskip}%    
   \fi}
 %    \end{macrocode}
 %

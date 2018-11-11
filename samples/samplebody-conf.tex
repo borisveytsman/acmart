@@ -232,12 +232,13 @@ displayable with \LaTeX.  If you work with pdf\LaTeX, use files in the
 each of these are found in the \textit{Author's Guide}.
 
 \begin{figure}
-\includegraphics{fly}
+\includegraphics{fly}\Description{A fly}
 \caption{A sample black and white graphic.}
 \end{figure}
 
 \begin{figure}
-\includegraphics[height=1in, width=1in]{fly}
+\includegraphics[height=1in, width=1in]{fly}\Description{A fly image,
+  to $1''\times1''$}
 \caption{A sample black and white graphic
 that has been resized with the \texttt{includegraphics} command.}
 \end{figure}
@@ -250,14 +251,15 @@ the figure and its caption.  And don't forget to end the environment
 with \textbf{figure*}, not \textbf{figure}!
 
 \begin{figure*}
-\includegraphics{flies}
+\includegraphics{flies}\Description{Several flies, spanning two
+  columns of text}
 \caption{A sample black and white graphic
 that needs to span two columns of text.}
 \end{figure*}
 
 
 \begin{figure}
-\includegraphics[height=1in, width=1in]{rosette}
+\includegraphics[height=1in, width=1in]{rosette}\Description{A rosette}
 \caption{A sample black and white graphic that has
 been resized with the \texttt{includegraphics} command.}
 \end{figure}
