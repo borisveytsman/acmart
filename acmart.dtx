@@ -1716,7 +1716,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2018/10/21 v1.56 Typesetting articles for the Association for
+[2018/11/11 v1.56 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2922,12 +2922,15 @@ Computing Machinery]
 % \changes{v1.51}{2018/04/05}{XeTeX now uses OTF fonts (Joachim
 % Breitner)}
 % \changes{v1.54}{2018/07/16}{XeTeX now uses T1 encoding}
+% \changes{v1.56}{2018/11/11}{Looks like XeTeX requires explicit
+% monotype font delcaration}
 % We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
   \RequirePackage[T1]{fontenc}
 \ifxetex
   \RequirePackage[tt=false]{libertine}
+  \setmonofont{inconsolata}
 \else
   \RequirePackage[tt=false, type1=true]{libertine}
 \fi
