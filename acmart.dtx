@@ -492,8 +492,11 @@
 % \affiliation{...}
 % \email{...}
 % \end{verbatim}
-% Do \emph{not} use the \LaTeX\ \cs{and} macro! Each author deserves
-% his or her own \cs{author} command.
+% Do \emph{not} use the \LaTeX\ \cs{and} macro or commas, or \verb|\\|
+% between the authors! Each author deserves his or
+% her own \cs{author} command.  An attempt to list several authors or
+% their e-mails in one command leads to a warning or an error.  This
+% is not a bug, but the expected behavior.
 %
 % Note that some formats do not typset e-mails or ORCID identifiers.
 % Do not worry: the metadata tools will get them.
@@ -1595,6 +1598,22 @@
 % \cs{NoCaseChange} inside the title may help to prevent extraneous
 % uppercasing.
 %
+%
+%
+%\subsection{Disabled or forbidden commands}
+%\label{sec:ug_disabled}
+%
+% The goal of |acmart| package is to provide a uniform look and feel
+% for ACM publications.  Accordingly, a number of commands is
+% forbidden or disabled in |acmart|.
+%
+% You may \emph{not} put several authors or several e-mails into a
+% \cs{author} or \cs{email} command.  This may lead to errors or
+% warning.
+%
+% You cannot change \cs{baselinestretch} in your document: this
+% produces an erorr.
+%
 %\subsection{A note for wizards: \texttt{acmart-preload-hook.tex}}
 %\label{sec:ug_preload}
 %
@@ -1745,7 +1764,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2018/11/11 v1.56 Typesetting articles for the Association for
+[2018/12/16 v1.57 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1874,7 +1893,7 @@ Computing Machinery]
 \RequirePackage{xkeyval}
 %    \end{macrocode}
 %
-% We use |xstring| to check whether user input is integer
+% We use |xstring| to check whether user input is valid
 %    \begin{macrocode}
 \RequirePackage{xstring}
 %    \end{macrocode}
@@ -3737,9 +3756,12 @@ Computing Machinery]
 % \changes{v1.15}{2016/06/25}{Added code for author groups}
 % \changes{v1.46}{2017/08/27}{Started counting authors}
 % \changes{v1.54}{2018/06/23}{Added submission id in anonymous mode}
+% \changes{v1.57}{2018/12/09}{Added warning if \cs{author} has comma}
 %   Adding an author to the list of authors and addresses
 %    \begin{macrocode}
 \renewcommand\author[2][]{%
+  \IfSubStr{#2}{,}{\ClassWarning{\@classname}{Do not put several
+      authors in the same \string\author\space macro!}}{}%
   \global\advance\num@authors by 1\relax
   \if@insideauthorgroup\else
     \global\advance\num@authorgroups by 1\relax
@@ -3844,11 +3866,14 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\email}
+% \changes{v1.57}{2018/12/09}{Added warning if \cs{author} has comma}
 %   The macro \cs{email} mimics \cs{email} from |amsart|.
 %   Again, it has an optional argument that we do not currently need
 %   but keep for possible future use.
 %    \begin{macrocode}
 \renewcommand{\email}[2][]{%
+  \IfSubStr{#2}{,}{\ClassWarning{\@classname}{Do not put several
+      addresses in the same \string\email\space macro!}}{}%
   \if@ACM@anonymous\else
     \g@addto@macro\addresses{\email{#1}{#2}}%
   \fi}
@@ -6687,6 +6712,20 @@ Computing Machinery]
 %\subsection{End of Class}
 %\label{end}
 %
+%
+% \begin{macro}{\ACM@origbaselinestretch}
+% \changes{v1.57}{2018/12/16}{Added check whether the user changed
+% \cs{baselinestretch}}
+% We produce an error if the user tries to change \cs{baselinestretch}
+%    \begin{macrocode}
+\let\ACM@origbaselinestretch\baselinestretch
+\AtEndDocument{\ifx\baselinestretch\ACM@origbaselinestretch\else
+  \ClassError{\@classname}{An attempt to redefine
+    \string\baselinestretch\space detected.  Please do not do this for
+    ACM submissions!}\fi}
+%    \end{macrocode}
+% 
+% \end{macro}
 %
 % \changes{v1.30}{2017/02/10}{Added \cs{frenchspacing}}
 %    \begin{macrocode}

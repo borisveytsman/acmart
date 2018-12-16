@@ -206,3 +206,5 @@ Version 1.56    Bug fixes
 		is now period instead of semilcolon (Philip Quinn)
 		New command \Description to describe images for visually
 		impaired users.
+
+Version 1.57    Change of \baselinestretch now produces an error
