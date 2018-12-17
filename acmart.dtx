@@ -198,6 +198,7 @@
 % \item \textsl{amsfonts}, \url{http://www.ctan.org/pkg/amsfonts}
 % \item \textsl{amsmath}, \url{http://www.ctan.org/pkg/amsmath}
 % \item \textsl{binhex}, \url{http://www.ctan.org/pkg/binhex}
+% \item \textsl{balance}, \url{http://www.ctan.org/pkg/balance}
 % \item \textsl{booktabs}, \url{http://www.ctan.org/pkg/booktabs}
 % \item \textsl{caption}, \url{http://www.ctan.org/pkg/caption}
 % \item \textsl{comment}, \url{http://www.ctan.org/pkg/comment}
@@ -347,6 +348,11 @@
 % overriden by setting these options to |false| \emph{after}
 % setting |authordraft| to |true|.
 %
+% The option |balance| determines whether the last page in the two
+% column mode has balanced columns.  By default it is |true|; however,
+% it may lead to problems for some documents.  Set it to |false| if
+% you encounter compilation errors.
+%
 % \begin{table}
 %   \centering
 %   \caption{Boolean options}
@@ -372,7 +378,9 @@
 %     footer of each page\\
 %     authordraft & false & Whether author's-draft mode is enabled\\
 %     acmthm & true & Whether to define theorem-like environments, see
-%     Section~\ref{sec:ug_theorems}\\
+%                       Section~\ref{sec:ug_theorems}\\
+%     balance & true & Whether to balance the last page in two column
+%     mode\\ 
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -2015,6 +2023,19 @@ Computing Machinery]
 %    \end{macrocode}
 %
 % \end{macro}
+%
+% \begin{macro}{\if@ACM@balance}
+% \changes{v1.57}{2018/12/16}{Added macro}
+% Whether to balance the last page
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{balance}[true]{}{%
+  \PackageError{\@classname}{The option balance can be either true or
+    false}}
+\ExecuteOptionsX{balance}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
 %
 % \begin{macro}{\if@ACM@natbib@override}
 % \changes{v1.12}{2016/05/30}{Added macro}
@@ -6627,6 +6648,45 @@ Computing Machinery]
 % \end{macro}
 %
 %
+%
+%\subsection{Balancing columns}
+%\label{sec:balancing}
+%
+% We need balancing only if the user did not disable it, and we use a
+% two column format
+%    \begin{macrocode}
+\AtEndPreamble{%
+  \if@ACM@balance
+    \ifcase\ACM@format@nr
+    \relax % manuscript
+         \global\@ACM@balancefalse
+       \or % acmsmall
+         \global\@ACM@balancefalse
+       \or % acmlarge
+         \global\@ACM@balancefalse
+       \or % acmtog
+          \RequirePackage{balance}%
+       \or % sigconf
+          \RequirePackage{balance}%
+       \or % siggraph
+          \RequirePackage{balance}%
+       \or % sigplan
+          \RequirePackage{balance}%
+       \or % sigchi
+          \RequirePackage{balance}%
+       \or % sigchi-a
+          \global\@ACM@balancefalse  
+    \fi
+  \fi
+}
+\AtEndDocument{%
+  \if@ACM@balance
+  \if@twocolumn
+  \balance
+  \fi\fi}
+%    \end{macrocode}
+% 
+%
 %\subsection{Acknowledgments}
 %\label{sec:acks}
 %
@@ -6696,6 +6756,7 @@ Computing Machinery]
 \fi}
 %    \end{macrocode}
 %
+% 
 %
 %\subsection{Additional bibliography commands}
 %\label{sec:bibliography}
