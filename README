@@ -208,3 +208,4 @@ Version 1.56    Bug fixes
 		impaired users.
 
 Version 1.57    Change of \baselinestretch now produces an error
+		Booktabs is now always loaded

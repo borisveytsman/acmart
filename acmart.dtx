@@ -198,6 +198,7 @@
 % \item \textsl{amsfonts}, \url{http://www.ctan.org/pkg/amsfonts}
 % \item \textsl{amsmath}, \url{http://www.ctan.org/pkg/amsmath}
 % \item \textsl{binhex}, \url{http://www.ctan.org/pkg/binhex}
+% \item \textsl{booktabs}, \url{http://www.ctan.org/pkg/booktabs}
 % \item \textsl{caption}, \url{http://www.ctan.org/pkg/caption}
 % \item \textsl{comment}, \url{http://www.ctan.org/pkg/comment}
 % \item \textsl{cm-super}, \url{http://www.ctan.org/pkg/cm-super}
@@ -1200,7 +1201,7 @@
 % \DescribeMacro{\Description}%
 % Some readers of ACM publications might be visually challenged.
 % These readers might use a voice-over software to read aloud the
-% papers.  It is important to provided them a description of each
+% papers.  It is important to provide them a description of each
 % image used in the paper.
 %
 % The command \cs{Description}\oarg{short description}\marg{long
@@ -1852,6 +1853,7 @@ Computing Machinery]
 % \changes{1.54}{2018/06/17}{Moved footnote stuff before hyperref call
 % (Ross Moore)}
 % \changes{1.56}{2018/11/11}{Documented \cs{Description}}
+% \changes{1.57}{2018/12/16}{Booktabs package is now the default}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -1901,7 +1903,7 @@ Computing Machinery]
 \RequirePackage{xstring}
 %    \end{macrocode}
 %
-%
+% 
 %
 % \begin{macro}{format}
 %   The possible formats
@@ -2223,6 +2225,11 @@ Computing Machinery]
 \RequirePackage{etoolbox}
 %    \end{macrocode}
 %
+% Booktabs is now the default
+%    \begin{macrocode}
+\RequirePackage{booktabs}
+%    \end{macrocode}
+% 
 %
 % We need |totpages| to calculate the number of pages and
 % |refcount| to use that number
