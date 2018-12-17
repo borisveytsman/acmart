@@ -14,8 +14,8 @@ SAMPLES = \
 	samples/sample-acmlarge.tex \
 	samples/sample-acmtog.tex \
 	samples/sample-sigconf.tex \
-	samples/sample-sigconf-authordraft.tex \
-	samples/sample-sigconf-xelatex.tex \
+	samples/sample-authordraft.tex \
+	samples/sample-xelatex.tex \
 	samples/sample-sigplan.tex \
 	samples/sample-sigchi.tex \
 	samples/sample-sigchi-a.tex
@@ -50,6 +50,38 @@ acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
 samples/%: %
 	cp $^ samples
 
+samples/sample-acmsmall.tex: samples/sample-manuscript.tex
+	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[acmsmall]{acmart}/' $< > $@
+
+samples/sample-acmlarge.tex: samples/sample-manuscript.tex
+	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[acmlarge,screen]{acmart}/' $< > $@
+
+samples/sample-acmtog.tex: samples/sample-manuscript.tex
+	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[acmtog]{acmart}/' $<   > $@
+
+samples/sample-sigconf.tex: samples/sample-manuscript.tex
+	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigconf]{acmart}/' $< | sed 's/^%%//'  > $@
+
+samples/sample-authordraft.tex: samples/sample-manuscript.tex
+	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigconf,authordraft]{acmart}/' $< | sed 's/^%%//'  > $@
+
+samples/sample-xelatex.tex: samples/sample-sigconf.tex
+	cp $< $@
+
+samples/sample-sigplan.tex: samples/sample-manuscript.tex
+	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigplan,screen]{acmart}/' $< | sed 's/^%%//'  > $@
+
+samples/sample-sigchi.tex: samples/sample-manuscript.tex
+	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigchi]{acmart}/' $< | sed 's/^%%//'  > $@
+
+samples/sample-sigchi-a.tex: samples/sample-manuscript.tex
+	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigchi-a]{acmart}/' $< | \
+	sed 's/begin{figure}\[h\]/begin{marginfigure}/' | \
+	sed 's/end{figure}/end{marginfigure}/' | \
+	sed 's/begin{table}/begin{margintable}/' | \
+	sed 's/end{table}/end{margintable}/'   > $@
+
+
 samples/$(PACKAGE).cls: $(PACKAGE).cls
 samples/ACM-Reference-Format.bst: ACM-Reference-Format.bst
 
@@ -61,7 +93,7 @@ samples/%.pdf:  samples/%.tex   samples/$(PACKAGE).cls samples/ACM-Reference-For
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
 	  do cd $(dir $@) && pdflatex $(notdir $<); done
 
-samples/sample-sigconf-xelatex.pdf:  samples/sample-sigconf-xelatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
+samples/sample-xelatex.pdf:  samples/sample-xelatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
 	cd $(dir $@) && xelatex $(notdir $<)
 	- cd $(dir $@) && bibtex $(notdir $(basename $<))
 	cd $(dir $@) && xelatex $(notdir $<)
@@ -69,16 +101,6 @@ samples/sample-sigconf-xelatex.pdf:  samples/sample-sigconf-xelatex.tex   sample
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
 	  do cd $(dir $@) && xelatex $(notdir $<); done
 
-samples/sample-manuscript.pdf \
-samples/sample-acmsmall.pdf \
-samples/sample-acmlarge.pdf \
-samples/sample-acmtog.pdf: samples/samplebody-journals.tex
-
-samples/sample-sigconf.pdf \
-samples/sample-sigconf-authordraft.pdf \
-samples/sample-sigconf-xelatex.pdf \
-samples/sample-sigplan.pdf \
-samples/sample-sigchi.pdf: samples/samplebody-conf.tex
 
 
 .PRECIOUS:  $(PACKAGE).cfg $(PACKAGE).cls
@@ -95,7 +117,7 @@ clean:
 	samples/*.bbl samples/*.blg samples/*.cut
 
 distclean: clean
-	$(RM) $(PDF) samples/*-converted-to.pdf
+
 
 #
 # Archive for the distribution. Includes typeset documentation
