@@ -1614,6 +1614,9 @@
 % You cannot change \cs{baselinestretch} in your document: this
 % produces an erorr.
 %
+% You should not abuse the command \cs{vspace}:  this command may
+% disturb the typesetting of ACM papers.
+%
 %\subsection{A note for wizards: \texttt{acmart-preload-hook.tex}}
 %\label{sec:ug_preload}
 %
@@ -6711,6 +6714,20 @@ Computing Machinery]
 %
 %\subsection{End of Class}
 %\label{end}
+%
+% \begin{macro}{\vspace}
+% \changes{v1.57}{2018/12/16}{Added warning}
+% We do not disable \cs{vspace}, but add warning to it
+%    \begin{macrocode}
+\apptocmd{\@vspace}{\ClassWarning{\@classname}{\string\vspace\space should
+    only be used to provide space above/below surrounding
+    objects}}{}{} 
+\apptocmd{\@vspacer}{\ClassWarning{\@classname}{\string\vspace\space should
+    only be used to provide space above/below surrounding
+    objects}}{}{} 
+%    \end{macrocode}
+% 
+% \end{macro}
 %
 %
 % \begin{macro}{\ACM@origbaselinestretch}
