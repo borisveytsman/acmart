@@ -210,3 +210,4 @@ Version 1.56    Bug fixes
 Version 1.57    Change of \baselinestretch now produces an error
 		Booktabs is now always loaded
 		Added option `balance' to balance last page in two-column mode
+		E-mail is no longer split in addresses
