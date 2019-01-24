@@ -57,7 +57,7 @@ samples/sample-acmlarge.tex: samples/sample-manuscript.tex
 	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[acmlarge,screen]{acmart}/' $< > $@
 
 samples/sample-acmtog.tex: samples/sample-manuscript.tex
-	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[acmtog]{acmart}/' $<   > $@
+	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[acmtog]{acmart}/' $< | sed 's/^%\\citestyle{acmauthoryear}/\\citestyle{acmauthoryear}/'      > $@
 
 samples/sample-sigconf.tex: samples/sample-manuscript.tex
 	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigconf]{acmart}/' $< | sed 's/^%%//'  > $@
