@@ -1,6 +1,6 @@
 % \iffalse
 %
-% Copyright 2016-2018, Association for Computing Machinery
+% Copyright 2016-2019, Association for Computing Machinery
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
 % version 1.3 of this license or (at your option) any
@@ -58,7 +58,7 @@
 % \ifx\currentjob\guide\OnlyDescription\fi
 % \GetFileInfo{acmart.dtx}
 % \title{\LaTeX{} Class for the \emph{Association for Computing
-% Machinery}\thanks{\copyright 2016--2018, Association for Computing Machinery}}
+% Machinery}\thanks{\copyright 2016--2019, Association for Computing Machinery}}
 % \author{Boris Veytsman\thanks{%
 % \href{mailto:borisv@lk.net}{\texttt{borisv@lk.net}},
 % \href{mailto:boris@varphi.com}{\texttt{boris@varphi.com}}}}
@@ -1776,7 +1776,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2018/12/16 v1.58 Typesetting articles for the Association for
+[2019/01/23 v1.58 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -3076,16 +3076,24 @@ Computing Machinery]
   \ClassWarningNoLine{\@classname}{Some images may lack descriptions}\fi}
 %    \end{macrocode}
 %
-% Hooks for figures
+% Hooks for figures and tables
 %    \begin{macrocode}
-\AtBeginEnvironment{figure}{\@Description@presentfalse}
-\AtBeginEnvironment{figure*}{\@Description@presentfalse}
+\AtBeginEnvironment{figure}{\@Description@presentfalse
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{figure*}{\@Description@presentfalse
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
 \AtEndEnvironment{figure}{\if@Description@present\else
   \global\@undescribed@imagestrue
   \ClassWarning{\@classname}{A possible image without description}\fi}
 \AtEndEnvironment{figure*}{\if@Description@present\else
   \global\@undescribed@imagestrue
   \ClassWarning{\@classname}{A possible image without description}\fi}
+\AtBeginEnvironment{table}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{table*}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
 %    \end{macrocode}
 % 
 %
@@ -3141,9 +3149,11 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@sidebar}
+% \changes{v1.58}{2019/01/23}{Deleted spurious \cs{vspace} warning}
 %   The processing of the saved text
 %    \begin{macrocode}
-\long\def\@sidebar#1{\bgroup\captionsetup{type=sidebar}%
+\long\def\@sidebar#1{\bgroup\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig\captionsetup{type=sidebar}%
   \marginpar{\small#1}\egroup}
 %    \end{macrocode}
 %
@@ -3160,9 +3170,12 @@ Computing Machinery]
 % \begin{macro}{\@marginfigure}
 % \changes{v1.12}{2016/05/30}{Now centering by default}
 % \changes{v1.56}{2018/11/11}{Added checking for description}
+% \changes{v1.58}{2019/01/23}{Deleted spurious \cs{vspace} warning}
 %   The processing of the saved text
 %    \begin{macrocode}
 \long\def\@marginfigure#1{\bgroup
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig
   \captionsetup{type=figure}%
   \marginpar{\@Description@presentfalse\centering
     \small#1\if@Description@present\else
@@ -3184,9 +3197,11 @@ Computing Machinery]
 %
 % \begin{macro}{\@margintable}
 % \changes{v1.12}{2016/05/30}{Now centering by default}
+% \changes{v1.58}{2019/01/23}{Deleted spurious \cs{vspace} warning}
 %   The processing of the saved text
 %    \begin{macrocode}
-\long\def\@margintable#1{\bgroup\captionsetup{type=table}%
+\long\def\@margintable#1{\bgroup\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig\captionsetup{type=table}%
   \marginpar{\centering\small#1}\egroup}
 %    \end{macrocode}
 %
@@ -3205,12 +3220,14 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@dblfloat}
+% \changes{v1.58}{2019/01/23}{Deleted spurious \cs{vspace} warning}
 %   We redefine the double-float command.  First, we make the size
 %   bigger.  Second, our default position is going to be |tp| (to give
 %   marginalia a chance)
 %    \begin{macrocode}
 \if@ACM@sigchiamode
-\def\@dblfloat{\bgroup\columnwidth=\fulltextwidth
+\def\@dblfloat{\bgroup\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig\columnwidth=\fulltextwidth
   \let\@endfloatbox\@endwidefloatbox
   \def\@fpsadddefault{\def\@fps{tp}}%
   \@float}
@@ -4833,6 +4850,7 @@ Computing Machinery]
 % \changes{v1.48}{2017/11/18}{Added language and doctitle attributes
 % to PDF (Andreas Reichinger)}
 % \changes{v1.55}{2018/10/14}{Fixes topnum}
+% \changes{v1.58}{2019/01/23}{Original \cs{vspace} inside \cs{maketitle}}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -4847,6 +4865,8 @@ Computing Machinery]
     \ifnum\num@authorgroups=0\author{}\fi
   \fi
   \begingroup
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig
   \let\@footnotemark\@footnotemark@nolink
   \let\@footnotetext\@footnotetext@nolink
   \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
@@ -4972,9 +4992,13 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@specialsection}
+% \changes{v1.58}{2019/01/23}{Original \cs{vspace} in \cs{@specialsection}}
 %   This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
+  \bgroup
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig
   \ifcase\ACM@format@nr
   \relax % manuscript
     \par\medskip\small\noindent#1: %
@@ -4994,7 +5018,7 @@ Computing Machinery]
     \section*{#1}%
   \or % sigchi-a
     \section*{#1}%
-  \fi}
+  \fi\egroup}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -5768,9 +5792,12 @@ Computing Machinery]
 % \changes{v1.46}{2017/08/25}{Added subtitle}
 % \changes{v1.54}{2018/06/10}{Bug corrected (Ross Moore)}
 % \changes{v1.55}{2018/07/25}{Bug corrected}
+% \changes{v1.58}{2019/01/23}{Deleted spurious \cs{vspace} warning}
 %   Print the |bibcitation| format
 %    \begin{macrocode}
 \def\@mkbibcitation{\bgroup
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig
   \def\@pages@word{\ifnum\getrefnumber{TotPages}=1\relax page\else pages\fi}%
   \def\footnotemark{}%
   \def\\{\unskip{} \ignorespaces}%
@@ -5809,9 +5836,14 @@ Computing Machinery]
 %
 % \begin{macro}{\@printendtopmatter}
 % \changes{v1.46}{2017/08/28}{Made it \cs{par}\cs{bigskip} uniformly}
+% \changes{v1.58}{2019/01/23}{Deleted spurious \cs{vspace} warning}
 %   End the top matter
 %    \begin{macrocode}
-\def\@printendtopmatter{\par\bigskip}
+\def\@printendtopmatter{\bgroup
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig
+  \par\bigskip
+  \egroup}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -6787,8 +6819,12 @@ Computing Machinery]
 %
 % \begin{macro}{\vspace}
 % \changes{v1.57}{2018/12/16}{Added warning}
+% \changes{v1.58}{2019/01/23}{Preserved old versions as
+% \cs{@vspace@orig} and \cs{@vspace@orig}}
 % We do not disable \cs{vspace}, but add warning to it
 %    \begin{macrocode}
+\let\@vspace@orig=\@vspace
+\let\@vspacer@orig=\@vspacer
 \apptocmd{\@vspace}{\ClassWarning{\@classname}{\string\vspace\space should
     only be used to provide space above/below surrounding
     objects}}{}{} 
