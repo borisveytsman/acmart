@@ -1776,7 +1776,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/01/23 v1.58 Typesetting articles for the Association for
+[2019/01/25 v1.58 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -2627,11 +2627,13 @@ Computing Machinery]
 % \changes{v1.46}{2017/08/25}{Delayed hypersetup since journal options
 % may change screen mode}
 % \changes{v1.55}{2018/10/20}{Now we use purple color for links}
+% \changes{v1.58}{2019/26/01}{Suppressed \cs{addtocounter} in pdf subject}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
 \RequirePackage[bookmarksnumbered,unicode]{hyperref}
 \pdfstringdefDisableCommands{%
+  \def\addtocounter#1#2{}%
   \def\unskip{}%
   \def\textbullet{- }%
   \def\textrightarrow{ -> }%
