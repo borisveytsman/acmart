@@ -1777,7 +1777,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/02/09 v1.58 Typesetting articles for the Association for
+[2019/02/17 v1.58 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -4854,7 +4854,8 @@ Computing Machinery]
 % \changes{v1.48}{2017/11/18}{Added language and doctitle attributes
 % to PDF (Andreas Reichinger)}
 % \changes{v1.55}{2018/10/14}{Fixes topnum}
-% \changes{v1.58}{2019/01/23}{Original \cs{vspace} inside \cs{maketitle}}
+% \changes{v1.58}{2019/01/23}{Original \cs{vspace} inside
+% \cs{maketitle}}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -4955,7 +4956,7 @@ Computing Machinery]
   \setcounter{footnote}{0}%
   \@mkabstract
   \if@ACM@printccs
-    \ifx\@concepts\@empty\else\bgroup
+  \ifx\@concepts\@empty\else\bgroup
       {\@specialsection{CCS Concepts}%
          \@concepts\par}\egroup
      \fi
@@ -4996,13 +4997,9 @@ Computing Machinery]
 % \end{macro}
 %
 % \begin{macro}{\@specialsection}
-% \changes{v1.58}{2019/01/23}{Original \cs{vspace} in \cs{@specialsection}}
 %   This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
-  \bgroup
-  \let\@vspace\@vspace@orig
-  \let\@vspacer\@vspacer@orig
   \ifcase\ACM@format@nr
   \relax % manuscript
     \par\medskip\small\noindent#1: %
@@ -5022,7 +5019,7 @@ Computing Machinery]
     \section*{#1}%
   \or % sigchi-a
     \section*{#1}%
-  \fi\egroup}
+    \fi}
 %    \end{macrocode}
 %
 % \end{macro}
