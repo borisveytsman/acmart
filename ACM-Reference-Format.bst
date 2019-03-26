@@ -448,12 +448,12 @@ FUNCTION { format.articleno }
 }
 
 FUNCTION { format.year }
-{ % push year string or "[n. d.]" onto output stack
+{ % push year string or "[n.d.]" onto output stack
   %% Because year is a mandatory field, we always force SOMETHING
   %% to be output
   "\bibinfo{year}{"
   year empty.or.unknown
-    { "[n. d.]" }
+    { "[n.d.]" }
     { year }
   if$
   *  "}" *
@@ -732,7 +732,7 @@ FUNCTION { output.year.check }
   year empty.or.unknown
      { "empty year in " cite$ * warning$
        write$
-       " \bibinfo{year}{[n. d.]}"
+       " \bibinfo{year}{[n.d.]}"
        "\natexlab{" extra.label * "}" * *
        mid.sentence 'output.state :=
      }
@@ -1922,7 +1922,7 @@ FUNCTION { calc.basic.label }
   if$
   duplicate$
   year empty.or.unknown
-    { "[n. d.]" }
+    { "[n.d.]" }
     { year field.or.null purify$ #-1 #4 substring$}
   if$
   *
@@ -1970,7 +1970,7 @@ FUNCTION { calc.label }
   % save the year for sort processing afterwards (adding a, b, c, etc.)
   %
   year empty.or.unknown
-    { "[n. d.]" }
+    { "[n.d.]" }
     { year field.or.null purify$ #-1 #4 substring$}
   if$
   'label.year :=
