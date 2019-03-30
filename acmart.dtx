@@ -285,9 +285,9 @@
 %     \midrule
 %   manuscript & A manuscript. This is the default. \\
 %   acmsmall & Small single-column format.  Used for CIE, CSUR, DTRAP,
-%            JACM, JDIQ, JEA, JERIC,
+%            HEALTH, JACM, JDIQ, JEA, JERIC,
 %            JETC, PACMCGIT, PACMHCI, PACMPL, TAAS, TACCESS, TACO,
-%            TALG, TALLIP (formerly TALIP), TCPS, TDSCI,
+%            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
 %            TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
@@ -1693,6 +1693,7 @@
 %     CIE & ACM Computers in Entertainment \\
 %     CSUR & ACM Computing Surveys\\
 %     DTRAP &  Digital Threats: Research and Practice\\
+%     HEALTH & ACM Transactions on Computing for Healthcare\\
 %     IMWUT & PACM on Interactive, Mobile, Wearable and Ubiquitous
 %     Technologies\\
 %     JACM &  Journal of the ACM \\
@@ -1714,7 +1715,7 @@
 %     Information Processing\\
 %     TAP & ACM Transactions on Applied Perception \\
 %     TCPS & ACM Transactions on Cyber-Physical Systems\\
-%     TDSCI & ACM Transactions on Data Science\\
+%     TDS & ACM Transactions on Data Science\\
 %     TEAC & ACM Transactions on Economics and Computation\\
 %     TECS & ACM Transactions on Embedded Computing Systems \\
 %     THRI & ACM Transactions on Human-Robot Interaction\\
@@ -1777,7 +1778,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/02/17 v1.58 Typesetting articles for the Association for
+[2019/03/29 v1.59 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1864,6 +1865,8 @@ Computing Machinery]
 % \changes{1.56}{2018/11/11}{Documented \cs{Description}}
 % \changes{1.57}{2018/12/16}{Booktabs package is now the default}
 % \changes{1.58}{2019/02/09}{Changes in samples (Enrico Gregorio)}
+% \changes{1.58}{2019/03/29}{New journal: HEALTH.  TDS is renamed to
+% TDSCI} 
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -3383,6 +3386,7 @@ Computing Machinery]
 % \changes{v1.36}{2017/05/13}{Added PACMHCI journal options}
 % \changes{v1.46}{2017/08/25}{PACM now set screen to true}
 % \changes{v1.53}{2018/04/14}{Added PACMCGIT, TIOT, TDSCI}
+% \changes{v1.58}{2019/03/29}{Added HEALTH.  TDSCI is renamed to TDS}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
@@ -3391,6 +3395,7 @@ Computing Machinery]
   CIE,%
   CSUR,%
   DTRAP,%
+  HEALTH,%
   IMWUT,%
   JACM,%
   JDIQ,%
@@ -3409,7 +3414,7 @@ Computing Machinery]
   TALLIP,%
   TAP,%
   TCPS,%
-  TDSCI,%
+  TDS,%
   TEAC,%
   TECS,%
   THRI,%
@@ -3458,6 +3463,10 @@ Computing Machinery]
   \def\@journalName{Digital Threats: Research and Practice}%
   \def\@journalNameShort{Digit. Threat. Res. Pract.}%
   \def\@permissionCodeOne{2576-5337}%
+\or % HEALTH
+  \def\@journalName{ACM Transactions on Computing for Healthcare}%
+  \def\@journalNameShort{ACM Trans. Comput. Healthcare}%
+  \def\@permissionCodeOne{2637-8051}%
 \or % IMWUT
   \def\@journalName{Proceedings of the ACM on Interactive, Mobile,
     Wearable and Ubiquitous Technologies}%
@@ -3535,7 +3544,7 @@ Computing Machinery]
   \def\@journalName{ACM Transactions on Applied Perception}%
 \or % TCPS
   \def\@journalName{ACM Transactions on Cyber-Physical Systems}%
-\or % TDSCI
+\or % TDS
   \def\@journalName{ACM Transactions on Data Science}%
   \def\@journalNameShort{ACM Trans. Data Sci.}%
   \def\@permissionCodeOne{2577-3224}%
