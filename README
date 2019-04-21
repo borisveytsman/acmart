@@ -218,3 +218,4 @@ Version 1.58    Suppressed spurious warnings.
 
 Version 1.59    Now a journal format can be used for conference proceedings
 		All samples are now generated from the same .dtx file
+		Bug fixes
