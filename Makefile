@@ -8,22 +8,10 @@
 
 PACKAGE=acmart
 
-SAMPLES = \
-	samples/sample-manuscript.tex \
-	samples/sample-acmsmall.tex \
-	samples/sample-acmlarge.tex \
-	samples/sample-acmtog.tex \
-	samples/sample-sigconf.tex \
-	samples/sample-authordraft.tex \
-	samples/sample-xelatex.tex \
-	samples/sample-sigplan.tex \
-	samples/sample-sigchi.tex \
-	samples/sample-sigchi-a.tex
 
+PDF = $(PACKAGE).pdf acmguide.pdf
 
-PDF = $(PACKAGE).pdf ${SAMPLES:%.tex=%.pdf} acmguide.pdf
-
-all:  ${PDF}
+all:  ${PDF} ALLSAMPLES
 
 
 %.pdf:  %.dtx   $(PACKAGE).cls
@@ -47,39 +35,16 @@ acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
 %.cls:   %.ins %.dtx
 	pdflatex $<
 
+
+ALLSAMPLES:
+	cd samples; pdflatex samples.ins; cd ..
+	for texfile in samples/*.tex; do \
+		pdffile=$${texfile/.tex/.pdf}; \
+		${MAKE} $$pdffile; \
+	done
+
 samples/%: %
 	cp $^ samples
-
-samples/sample-acmsmall.tex: samples/sample-manuscript.tex
-	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[acmsmall]{acmart}/' $< > $@
-
-samples/sample-acmlarge.tex: samples/sample-manuscript.tex
-	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[acmlarge,screen]{acmart}/' $< > $@
-
-samples/sample-acmtog.tex: samples/sample-manuscript.tex
-	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[acmtog]{acmart}/' $< | sed 's/^%\\citestyle{acmauthoryear}/\\citestyle{acmauthoryear}/'      > $@
-
-samples/sample-sigconf.tex: samples/sample-manuscript.tex
-	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigconf]{acmart}/' $< | sed 's/^%%//'  > $@
-
-samples/sample-authordraft.tex: samples/sample-manuscript.tex
-	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigconf,authordraft]{acmart}/' $< | sed 's/^%%//'  > $@
-
-samples/sample-xelatex.tex: samples/sample-sigconf.tex
-	cp $< $@
-
-samples/sample-sigplan.tex: samples/sample-manuscript.tex
-	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigplan,screen]{acmart}/' $< | sed 's/^%%//'  > $@
-
-samples/sample-sigchi.tex: samples/sample-manuscript.tex
-	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigchi]{acmart}/' $< | sed 's/^%%//'  > $@
-
-samples/sample-sigchi-a.tex: samples/sample-manuscript.tex
-	sed 's/documentclass\[manuscript,screen\]{acmart}/documentclass[sigchi-a]{acmart}/' $< | \
-	sed 's/begin{figure}\[h\]/begin{marginfigure}/' | \
-	sed 's/end{figure}/end{marginfigure}/' | \
-	sed 's/begin{table}/begin{margintable}/' | \
-	sed 's/end{table}/end{margintable}/'   > $@
 
 
 samples/$(PACKAGE).cls: $(PACKAGE).cls
@@ -117,7 +82,7 @@ clean:
 	samples/*.bbl samples/*.blg samples/*.cut
 
 distclean: clean
-
+	$(RM) samples/*.tex *.pdf samples/sample-*.pdf
 
 #
 # Archive for the distribution. Includes typeset documentation

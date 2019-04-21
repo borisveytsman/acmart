@@ -215,3 +215,6 @@ Version 1.57    Change of \baselinestretch now produces an error
 Version 1.58    Suppressed spurious warnings.
 		New journal:  HEALTH.
 		TDSCI is renamed to TDS.
+
+Version 1.59    Now a journal format can be used for conference proceedings
+		All samples are now generated from the same .dtx file

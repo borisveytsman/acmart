@@ -1,0 +1,22 @@
+\def\batchfile{samples.ins}
+\input docstrip
+\keepsilent
+\showprogress
+
+
+\askforoverwritefalse
+
+\generate{%
+  \file{sample-manuscript.tex}{\from{samples.dtx}{manuscript}}
+  \file{sample-acmsmall.tex}{\from{samples.dtx}{acmsmall}}
+  \file{sample-acmlarge.tex}{\from{samples.dtx}{acmlarge}}
+  \file{sample-acmtog.tex}{\from{samples.dtx}{acmtog}}
+  \file{sample-sigconf.tex}{\from{samples.dtx}{sigconf}}
+  \file{sample-authordraft.tex}{\from{samples.dtx}{authordraft}}
+  \file{sample-xelatex.tex}{\from{samples.dtx}{sigconf}}
+  \file{sample-sigplan.tex}{\from{samples.dtx}{sigplan}}
+  \file{sample-sigchi.tex}{\from{samples.dtx}{sigchi}}
+  \file{sample-sigchi-a.tex}{\from{samples.dtx}{sigchi-a}}
+  \file{sample-acmsmall-conf.tex}{\from{samples.dtx}{acmsmall-conf}}
+}
+
