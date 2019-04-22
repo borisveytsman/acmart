@@ -110,6 +110,7 @@
 %  Ben Greenman,
 %  Enrico Gregorio,
 %  Jamie Davis,
+%  Peter Kemp,
 %  Luis Leiva,
 %  Ben Liblit,
 %  Rholais Lii,
@@ -355,6 +356,10 @@
 % it may lead to problems for some documents.  Set it to |false| if
 % you encounter compilation errors.
 %
+% The option |urlbreakonhyphens| determines whether URLs can be split
+% between lines after hyphens.  By default it is true.  Set it to
+% |false| to disallow these breaks.
+%
 % \begin{table}
 %   \centering
 %   \caption{Boolean options}
@@ -382,7 +387,8 @@
 %     acmthm & true & Whether to define theorem-like environments, see
 %                       Section~\ref{sec:ug_theorems}\\
 %     balance & true & Whether to balance the last page in two column
-%     mode\\ 
+%                        mode\\
+%     urlbreakonhyphens & true & Whether to break urls on hyphens\\ 
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1786,7 +1792,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/03/29 v1.59 Typesetting articles for the Association for
+[2019/04/22 v1.60 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -1875,6 +1881,7 @@ Computing Machinery]
 % \changes{1.58}{2019/02/09}{Changes in samples (Enrico Gregorio)}
 % \changes{1.58}{2019/03/29}{New journal: HEALTH.  TDS is renamed to
 % TDSCI} 
+% \changes{1.60}{2019/04/22}{New option: urlbreakonhyphens} 
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -1963,6 +1970,20 @@ Computing Machinery]
 \ExecuteOptionsX{screen=false}
 %    \end{macrocode}
 %
+% \end{macro}
+%
+% \begin{macro}{\if@ACM@urlbreakonhyphens}
+% \changes{1.60}{2019/04/22}{introduced macro} 
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{urlbreakonhyphens}[true]{%
+  \if@ACM@urlbreakonhyphens
+    \PackageInfo{\@classname}{Using breaking urls on hyphens}%
+  \else
+    \PackageInfo{\@classname}{Not breaking urls on hyphens}%
+  \fi}{\PackageError{\@classname}{The option urlbreakonhyphens can be either true or
+    false}}
+\ExecuteOptionsX{urlbreakonhyphens=true}
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\if@ACM@acmthm}
@@ -2684,6 +2705,9 @@ Computing Machinery]
   \urlstyle{sf}
 \fi
 \AtEndPreamble{%
+  \if@ACM@urlbreakonhyphens
+    \def\do@url@hyp{\do\-}%
+  \fi
   \if@ACM@screen
     \hypersetup{colorlinks,
       linkcolor=ACMPurple,
@@ -6040,9 +6064,10 @@ Computing Machinery]
 % \begin{macro}{\@headfootfont}
 % \changes{v1.16}{2016/07/07}{Added macro}
 % \changes{v1.48}{2017/09/16}{Deleted unnecessary switch (Michael D.~Adams)}
+% \changes{v1.60}{2019/04/22}{Moved to footnotesize}
 %   The font to typeset header and footer text.
 %    \begin{macrocode}
-\def\@headfootfont{\sffamily}
+\def\@headfootfont{\sffamily\footnotesize}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -6123,9 +6148,11 @@ Computing Machinery]
       \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
       \fancyhead[RE]{\@headfootfont\@shortauthors\ACM@linecountR}%
       \if@ACM@nonacm\else%
-        \fancyhead[LE]{\ACM@linecountL\@headfootfont\acmConference@shortname,
+        \fancyhead[LE]{\ACM@linecountL\@headfootfont\footnotesize
+          \acmConference@shortname,
           \acmConference@date, \acmConference@venue}%
-        \fancyhead[RO]{\@headfootfont\acmConference@shortname,
+        \fancyhead[RO]{\@headfootfont
+          \acmConference@shortname,
           \acmConference@date, \acmConference@venue\ACM@linecountR}%
       \fi
     \fi
@@ -6134,9 +6161,11 @@ Computing Machinery]
     \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
     \fancyhead[RE]{\@headfootfont\@shortauthors\ACM@linecountR}%
     \if@ACM@nonacm\else%
-      \fancyhead[LE]{\ACM@linecountL\@headfootfont\acmConference@shortname,
+      \fancyhead[LE]{\ACM@linecountL\@headfootfont
+        \acmConference@shortname,
         \acmConference@date, \acmConference@venue}%
-      \fancyhead[RO]{\@headfootfont\acmConference@shortname,
+      \fancyhead[RO]{\@headfootfont
+        \acmConference@shortname,
         \acmConference@date, \acmConference@venue\ACM@linecountR}%
     \fi
   \fi  
