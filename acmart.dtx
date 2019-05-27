@@ -1792,7 +1792,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/04/22 v1.60 Typesetting articles for the Association for
+[2019/05/26 v1.61 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
@@ -5594,10 +5594,12 @@ Computing Machinery]
 %
 % \begin{macro}{\@typeset@author@bx}
 % \changes{v1.15}{2016/07/04}{Moved to separate macro}
+% \changes{v1.61}{2019/05/26}{Added \cs{normalbaselines}}
 %   Typesetting the box with authors.  Note that in |sigchi-a| the box
 %   is not centered.
 %    \begin{macrocode}
-\def\@typeset@author@bx{\bgroup\hsize=\author@bx@wd\def\and{\par}%
+\def\@typeset@author@bx{\bgroup\hsize=\author@bx@wd
+  \def\and{\par}\normalbaselines
   \global\setbox\author@bx=\vtop{\if@ACM@sigchiamode\else\centering\fi
     \@authorfont\@currentauthors\par\@affiliationfont
     \@currentaffiliation}\egroup

@@ -222,3 +222,5 @@ Version 1.59    Now a journal format can be used for conference proceedings
 
 version 1.60    New option: urlbreakonhyphens (thanks to Peter Kemp)
 		Smaller header size for acmsmall
+
+Version 1.61    Bug fixes
