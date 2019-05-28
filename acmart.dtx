@@ -397,7 +397,7 @@
 %
 %
 %\subsection{Top matter}
-%\label{sec:ug_topmatter}
+\label{sec:ug_topmatter}
 %
 % A number of commands set up \emph{top matter} or (in
 % computer science jargon) \emph{metadata} for an article.  They
@@ -1442,8 +1442,8 @@
 % \end{verbatim}
 % See the examples at \url{http://arxiv.org/hypertex/bibstyles/}.
 %
-% There are the special entry types \path{online} and
-% \path{game} for Web pages and games, for example,
+% There are several  special entry types. Types \path{online} and
+% \path{game} are used for Web pages and games, for example,
 % \begin{verbatim}
 % @online{Thornburg01,
 %  author =       "Harry Thornburg",
@@ -1454,8 +1454,33 @@
 %  lastaccessed = "March 2, 2005",
 % }
 % \end{verbatim}
+% Entry types \path{artifactsoftware}, \path{artifactdataset} 
+% (with synonyms \path{software} and \path{dataset}) can be used to
+% cite software artifacts and datasets, for example,
+% \begin{verbatim}
+% @ArtifactSoftware{R,
+%    title = {R: A Language and Environment for Statistical Computing},
+%    author = {{R Core Team}},
+%    organization = {R Foundation for Statistical Computing},
+%    address = {Vienna, Austria},
+%    year = {2019},
+%    url = {https://www.R-project.org/},
+%}
+% @ArtifactDataset{UMassCitations,
+%  author    =  {Sam Anzaroot and Andrew McCallum},
+%  title     =  {{UMass} Citation Field Extraction Dataset},
+%  year      = 2013,
+%  url       =
+%     {http://www.iesl.cs.umass.edu/data/data-umasscitationfield},
+%  lastaccessed = {May 27, 2019}
+% }
+% \end{verbatim}
+% 
+%
 % For these entry types you can use the \path{lastaccessed} field to add
 % the access date for the URL.
+% 
+%
 %
 % There are two ways to enter video or audio sources in the
 % bibliograpy corresponding to two different possibilies.  For
@@ -1793,7 +1818,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/05/26 v1.61 Typesetting articles for the Association for
+[2019/05/27 v1.61 Typesetting articles for the Association for
 Computing Machinery]
 %    \end{macrocode}
 %
