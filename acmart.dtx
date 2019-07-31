@@ -290,7 +290,7 @@
 %            HEALTH, JACM, JDIQ, JEA, JERIC,
 %            JETC, PACMCGIT, PACMHCI, PACMPL, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
-%            TEAC, TECS, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
+%            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
 %            TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
 %            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS,
@@ -953,7 +953,7 @@
 % copyright status of the paper, for example,
 % \verb|\setcopyright{acmcopyright}|.  The possible values for this
 % command are listed in Table~\ref{tab:setcopyright}.  This command
-% must be placed in the preamble, before |\begin{document}.  
+% must be placed in the preamble, before |\begin{document}|.  
 %
 % \begin{table}
 %   \centering
@@ -1759,6 +1759,7 @@
 %     TDS & ACM Transactions on Data Science\\
 %     TEAC & ACM Transactions on Economics and Computation\\
 %     TECS & ACM Transactions on Embedded Computing Systems \\
+%     TELO & ACM Transactions on Evolutionary Learning \\
 %     THRI & ACM Transactions on Human-Robot Interaction\\
 %     TIIS & ACM Transactions on Interactive Intelligent Systems\\
 %     TIOT & ACM Transactions on Internet of Things \\
@@ -1819,8 +1820,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/06/01 v1.62 Typesetting articles for the Association for
-Computing Machinery]
+[2019/07/31 v1.62 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -1908,7 +1908,8 @@ Computing Machinery]
 % \changes{1.58}{2019/02/09}{Changes in samples (Enrico Gregorio)}
 % \changes{1.58}{2019/03/29}{New journal: HEALTH.  TDS is renamed to
 % TDSCI} 
-% \changes{1.60}{2019/04/22}{New option: urlbreakonhyphens} 
+% \changes{1.60}{2019/04/22}{New option: urlbreakonhyphens}
+% \changes{1.62}{2019/07/31}{New journal: TELO} 
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -3493,6 +3494,7 @@ Computing Machinery]
   TDS,%
   TEAC,%
   TECS,%
+  TELO,%
   THRI,%
   TIIS,%
   TIOT,%
@@ -3630,6 +3632,10 @@ Computing Machinery]
   \def\@journalName{ACM Transactions on Embedded Computing Systems}%
   \def\@journalNameShort{ACM Trans. Embedd. Comput. Syst.}%
   \def\@permissionCodeOne{1539-9087}%
+\or % TELO
+  \def\@journalName{ACM Transactions on Evolutionary Learning}%
+  \def\@journalNameShort{ACM Trans. Evol. Learn.}%
+  \def\@permissionCodeOne{2688-3007}%
 \or % THRI
   \def\@journalName{ACM Transactions on Human-Robot Interaction}%
   \def\@journalNameShort{ACM Trans. Hum.-Robot Interact.}%
