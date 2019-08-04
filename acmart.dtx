@@ -294,7 +294,7 @@
 %            TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
 %            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS,
-%            TOS, TOSEM, TOSN, TRETS,
+%            TOS, TOSEM, TOSN, TQUANT, TRETS,
 %            TSAS, TSC, TSLP and TWEB, including special issues. \\
 %   acmlarge  & Large single-column format.  Used for
 %           IMWUT, JOCCH, POMACS and TAP, including special issues. \\
@@ -1789,6 +1789,7 @@
 %     TOS & ACM Transactions on Storage\\
 %     TOSEM & ACM Transactions on Software Engineering and Methodology\\
 %     TOSN & ACM Transactions on Sensor Networks\\
+%     TQUANT & ACM Transactions on Quantum Computing\\
 %     TRETS & ACM Transactions on Reconfigurable Technology and Systems\\
 %     TSAS & ACM Transactions on Spatial Algorithms and Systems\\
 %     TSC & ACM Transactions on Social Computing\\
@@ -1796,6 +1797,10 @@
 %     TWEB & ACM Transactions on the Web\\
 % \end{longtable}
 %\egroup
+%
+% Besides the publications listed in Table~\ref{tab:pubs}, there is a
+% special ``publication'' type FACMP, a forthcoming ACM publication,
+% reserved for new journals which are not assigned an ISSN yet.  
 %
 % \StopEventually{
 % \clearpage
@@ -1820,7 +1825,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/07/31 v1.62 Typesetting articles for the Association for Computing Machinery]
+[2019/08/04 v1.63 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -1909,7 +1914,9 @@
 % \changes{1.58}{2019/03/29}{New journal: HEALTH.  TDS is renamed to
 % TDSCI} 
 % \changes{1.60}{2019/04/22}{New option: urlbreakonhyphens}
-% \changes{1.62}{2019/07/31}{New journal: TELO} 
+% \changes{1.62}{2019/07/31}{New journal: TELO}
+% \changes{1.63}{2019/08/04}{New journal: TQUANT}
+% \changes{1.63}{2019/08/04}{New journal: FACMP} 
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -3522,11 +3529,13 @@
   TOS,%
   TOSEM,%
   TOSN,%
+  TQUANT,%
   TRETS,%
   TSAS,%
   TSC,%
   TSLP,%
-  TWEB%
+  TWEB,%
+  FACMP%
 }{%
 \ifcase\@journalCode@nr
 \relax % CIE
@@ -3743,6 +3752,10 @@
   \def\@journalName{ACM Transactions on Sensor Networks}%
   \def\@journalNameShort{ACM Trans. Sensor Netw.}%
   \def\@permissionCodeOne{1550-4859}%
+\or % TQUANT
+  \def\@journalName{ACM Transactions on Quantum Computing}%
+  \def\@journalNameShort{ACM Trans. Quantum Comput.}%
+  \def\@permissionCodeOne{2643-6817}%
 \or % TRETS
   \def\@journalName{ACM Transactions on Reconfigurable Technology and Systems}%
   \def\@journalNameShort{ACM Trans. Reconfig. Technol. Syst.}%
@@ -3763,6 +3776,10 @@
   \def\@journalName{ACM Transactions on the Web}%
   \def\@journalNameShort{ACM Trans. Web}%
   \def\@permissionCodeOne{1559-1131}%
+\else % FACMP, a dummy journal
+  \def\@journalName{Forthcoming ACM Publication}%
+  \def\@journalNameShort{ACM Forthcoming}%
+  \def\@permissionCodeOne{XXXX-XXXX}%
 \fi
 \ClassInfo{\@classname}{Using journal code \@journalCode}%
 }{%
