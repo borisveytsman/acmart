@@ -1025,6 +1025,7 @@
 % \DescribeEnv{abstract}%
 % The environment |abstract| must \emph{precede} the \cs{maketitle}
 % command.  Again, this is different from the standard \LaTeX.
+% Putting |abstract| after \cs{maketitle} will trigger an error.
 %
 %
 % \DescribeEnv{teaserfigure}%
@@ -1825,7 +1826,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/08/05 v1.63a Typesetting articles for the Association for Computing Machinery]
+[2019/08/17 v1.64 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -1918,6 +1919,8 @@
 % \changes{1.63}{2019/08/04}{New journal: TQUANT}
 % \changes{1.63}{2019/08/04}{New journal: FACMP} 
 % \changes{1.63a}{2019/08/05}{Move: TQUANT to TQC}
+% \changes{1.64}{2019/08/17}{Putting abstract after \cs{maketitle} now
+% causes an error}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -3464,6 +3467,16 @@
 %\subsection{Top-matter data}
 %\label{sec:top_matter_data}
 %
+% \begin{macro}{\if@ACM@maketitle@typeset}
+% \changes{v1.64}{2019/08/17}{Introduced macro}
+% The switch to check whether \cs{maketitle} is already typeset.  It
+% is initally false, and setting top matter when it is true is wrong.
+%    \begin{macrocode}
+\newif\if@ACM@maketitle@typeset
+\@ACM@maketitle@typesetfalse
+%    \end{macrocode}
+% 
+% \end{macro}
 %
 % \changes{v1.24}{2016/11/16}{Add IMWUT journal option}
 % \changes{v1.25}{2016/12/03}{Updated PACMPL}
@@ -4383,7 +4396,10 @@
 % \begin{macro}{\@saveabstract}
 %   And saving the abstract
 %    \begin{macrocode}
-\long\def\@saveabstract#1{\long\gdef\@abstract{#1}}
+\long\def\@saveabstract#1{\if@ACM@maketitle@typeset
+  \ClassError{\@classname}{Abstract must be defined before maketitle
+    command. Please move it!}\fi
+  \long\gdef\@abstract{#1}}
 \@saveabstract{}
 %    \end{macrocode}
 %
@@ -4972,6 +4988,8 @@
 % \changes{v1.55}{2018/10/14}{Fixes topnum}
 % \changes{v1.58}{2019/01/23}{Original \cs{vspace} inside
 % \cs{maketitle}}
+% \changes{v1.64}{2019/08/17}{Added a switch setting to show that
+% \cs{maketitle} is typeset}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -4981,6 +4999,7 @@
 %  way, this was the default behavior of the old ACM classes.
 %    \begin{macrocode}
 \def\maketitle{%
+  \@ACM@maketitle@typesettrue
   \if@ACM@anonymous
     % Anonymize omission of \author-s
     \ifnum\num@authorgroups=0\author{}\fi

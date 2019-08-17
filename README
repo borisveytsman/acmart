@@ -233,3 +233,6 @@ Version 1.62    Documentation update
 Version 1.63	New journals: TQUANT, FACMP
 
 Version 1.63a   Moved TQUANT to TQC
+
+Version 1.64    Produce error if abstract is entered after maketitle
+		(previously abstract was silently dropped)
