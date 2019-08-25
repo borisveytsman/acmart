@@ -132,6 +132,7 @@
 %  David Shamma,
 %  Gabriel Scherer,
 %  Stephen Spencer,
+%  Shin Hwei Tan,
 %  Daniel Thomas,
 %  Zack Weinberg,
 %  John Wickerson
@@ -6039,6 +6040,8 @@
 % cmyk colors in boxes do not work}
 % \changes{v1.46}{2017/08/28}{Rearranged the code to get rid of
 % spurious underfull messages (Benjamin Byholm)}
+% \changes{v1.64}{2019/08/24}{Bug fix: made the spacing on the left
+% and the right size equal}
 %   This is the box displayed in review mode
 %    \begin{macrocode}
 \if@ACM@review
@@ -6047,7 +6050,8 @@
   \newcount\ACM@linecount
   \ACM@linecount\@ne\relax
   \def\ACM@mk@linecount{%
-    \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{%
+    \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{\normalfont
+        \normalsize
         \setlength{\ACM@linecount@bxht}{0pt}%
         \loop{\color{red}\scriptsize\the\ACM@linecount}\\
         \global\advance\ACM@linecount by \@ne
