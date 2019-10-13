@@ -112,6 +112,7 @@
 %  Enrico Gregorio,
 %  Jamie Davis,
 %  Peter Kemp,
+%  Kerry A. Seitz, Jr.,
 %  Luis Leiva,
 %  Ben Liblit,
 %  Rholais Lii,
@@ -1828,7 +1829,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/09/03 v1.65 Typesetting articles for the Association for Computing Machinery]
+[2019/10/13 v1.65 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -5826,6 +5827,7 @@
 %
 % \begin{macro}{\@mkauthorsaddresses}
 % \changes{v1.46}{2017/08/27}{Introduced macro}
+% \changes{v1.65}{2019/10/13}{Deleted cs{@addpunct}}
 % Typesetting authors' addresses in the footnote style
 %    \begin{macrocode}
 \def\@mkauthorsaddresses{%
@@ -5834,17 +5836,17 @@
   \ifnum\num@authorgroups>1\relax
   addresses: \else address: \fi
   \bgroup
-  \def\streetaddress##1{\unskip\@addpunct, ##1}%
-  \def\postcode##1{\unskip\@addpunct, ##1}%
+  \def\streetaddress##1{\unskip, ##1}%
+  \def\postcode##1{\unskip, ##1}%
   \def\position##1{\unskip\ignorespaces}%
-  \def\institution##1{\unskip\@addpunct, ##1}%
-  \def\city##1{\unskip\@addpunct, ##1}%
-  \def\state##1{\unskip\@addpunct, ##1}%
+  \def\institution##1{\unskip, ##1}%
+  \def\city##1{\unskip, ##1}%
+  \def\state##1{\unskip, ##1}%
   \renewcommand\department[2][0]{\unskip\@addpunct, ##2}%
-  \def\country##1{\unskip\@addpunct, ##1}%
-  \def\and{\unskip\@addpunct; }%
+  \def\country##1{\unskip, ##1}%
+  \def\and{\unskip; }%
   \def\@author##1{##1}%
-  \def\email##1##2{\unskip\@addpunct, \nolinkurl{##2}}%
+  \def\email##1##2{\unskip, \nolinkurl{##2}}%
   \addresses
   \egroup}
 %    \end{macrocode}
