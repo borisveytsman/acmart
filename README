@@ -239,3 +239,5 @@ Version 1.64    Produce error if abstract is entered after maketitle
 		Bug fixes for line numbering
 
 Version 1.65   Bug fixes
+	       New journal: DGOV
+	       DTRAP and HEALTH are now using acmlarge format
