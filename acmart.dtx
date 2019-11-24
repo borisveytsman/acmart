@@ -3176,7 +3176,10 @@
   \ClassWarningNoLine{\@classname}{Some images may lack descriptions}\fi}
 %    \end{macrocode}
 %
-% Hooks for figures and tables
+% Hooks for figures and tables.  We also patch |algorithm| and
+% |algorithm*| in case somebody uses them.
+% \changes{v1.66}{2019/11/23}{Patching algorithm and algorithm*
+% to prevent spurious space warnings}
 %    \begin{macrocode}
 \AtBeginEnvironment{figure}{\@Description@presentfalse
   \let\@vspace\@vspace@orig
@@ -3194,6 +3197,11 @@
   \let\@vspacer\@vspacer@orig}
 \AtBeginEnvironment{table*}{\let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{algorithm}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{algorithm*}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+
 %    \end{macrocode}
 % 
 %
@@ -5142,7 +5150,7 @@
 % \end{macro}
 %
 % \begin{macro}{\@specialsection}
-% \changes{v1.66}{2019/11/23}{Suppress warningg about \cs{vspace}}
+% \changes{v1.66}{2019/11/23}{Suppress warnings about \cs{vspace}}
 %   This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
