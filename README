@@ -241,3 +241,5 @@ Version 1.64    Produce error if abstract is entered after maketitle
 Version 1.65   Bug fixes
 	       New journal: DGOV
 	       DTRAP and HEALTH are now using acmlarge format
+
+Version 1.66   Bug fixes

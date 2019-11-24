@@ -1830,7 +1830,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/10/19 v1.65 Typesetting articles for the Association for Computing Machinery]
+[2019/11/23 v1.66 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -5142,9 +5142,13 @@
 % \end{macro}
 %
 % \begin{macro}{\@specialsection}
+% \changes{v1.66}{2019/11/23}{Suppress warningg about \cs{vspace}}
 %   This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
+  \bgroup
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig
   \ifcase\ACM@format@nr
   \relax % manuscript
     \par\medskip\small\noindent#1: %
@@ -5164,7 +5168,8 @@
     \section*{#1}%
   \or % sigchi-a
     \section*{#1}%
-    \fi}
+    \fi
+  \egroup}
 %    \end{macrocode}
 %
 % \end{macro}
