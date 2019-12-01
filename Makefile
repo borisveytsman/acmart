@@ -39,7 +39,7 @@ acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
 ALLSAMPLES:
 	cd samples; pdflatex samples.ins; cd ..
 	for texfile in samples/*.tex; do \
-		pdffile=$${texfile/.tex/.pdf}; \
+		pdffile=$${texfile%.tex}.pdf; \
 		${MAKE} $$pdffile; \
 	done
 
