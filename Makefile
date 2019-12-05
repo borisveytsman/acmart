@@ -100,3 +100,5 @@ zip:  all clean
 
 documents.zip: all docclean
 	zip -r $@ acmart.pdf acmguide.pdf samples *.cls ACM-Reference-Format.*
+
+.PHONY: all ALLSAMPLES docclean clean distclean archive zip
