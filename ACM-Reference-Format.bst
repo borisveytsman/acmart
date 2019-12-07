@@ -1232,6 +1232,8 @@ FUNCTION { format.btitle }
 FUNCTION { format.emphasize.booktitle }
 { booktitle format.a.title.with.edition }
 
+FUNCTION {location} {city}
+
 FUNCTION { format.city }
 {
   % jtb: if the preceding string (the title of the conference) is non-empty,

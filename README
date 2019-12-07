@@ -243,3 +243,5 @@ Version 1.65   Bug fixes
 	       DTRAP and HEALTH are now using acmlarge format
 
 Version 1.66   Bug fixes
+	       BibTeX change:  location is now a synonym for city (Feras Saad) 
+
