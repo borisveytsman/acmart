@@ -949,6 +949,10 @@
 % You just need to copy this code and paste it in your paper anywhere
 % before \verb|\maketitle|.
 %
+% CCS Concepts and user-defined keywords are required for all articles
+% over two pages in length, and are optional for one- and two-page
+% articles (or abstracts). 
+%
 % \DescribeMacro{\setcopyright}
 % There are several possibilities for the copyright of the papers
 % published by the ACM: the authors may transfer the rights to the ACM,
@@ -1069,6 +1073,11 @@
 % However, in most cases you should \emph{not} do this and should use the
 % default settings.  Setting |authorsperrow| to $0$ will revert it to the
 % default settings.
+%
+% The parameter |printacmref| specifies whether to print the ACM
+% bibliographic entry (default), or not.  Note that this entry is
+% required for all articles over one page in length, and is optional
+% for one-page articles (abstracts). 
 %
 % \begin{table}
 %   \centering
@@ -1832,7 +1841,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2019/11/23 v1.66 Typesetting articles for the Association for Computing Machinery]
+[2019/12/18 v1.66 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -1927,7 +1936,10 @@
 % \changes{1.63a}{2019/08/05}{Move: TQUANT to TQC}
 % \changes{1.64}{2019/08/17}{Putting abstract after \cs{maketitle} now
 % causes an error}
-% \changes{1.65}{2019/10/19}{New journal: DGOV} 
+% \changes{1.65}{2019/10/19}{New journal: DGOV}
+% \changes{1.66}{2019/12/18}{ACM reference format is now mandatory for
+% papers over one page;  CCS concepts and keywords are now mandatory for
+% papers over two pages}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -4398,9 +4410,18 @@
 %   sense to keep them for compatibility.
 %    \begin{macrocode}
 \def\keywords#1{\def\@keywords{#1}}
-\keywords{}
+\let\@keywords\@empty
 %    \end{macrocode}
 %
+% \changes{1.66}{2019/12/18}{Added warning for missing keywords}
+%    \begin{macrocode}
+\AtEndDocument{\if@ACM@nonacm\else\ifx\@keywords\@empty
+  \ifnum\getrefnumber{TotPages}>2\relax
+  \ClassWarningNoLine{\@classname}{ACM keywords are mandatory
+    for papers over two pages}%
+  \fi\fi\fi}
+%    \end{macrocode}
+% 
 % \end{macro}
 %
 %
@@ -4456,6 +4477,15 @@
   \else
     \ClassInfo{\@classname}{Suppressing bibformat}%
   \fi}{\ClassError{\@classname}{The option printacmref can be either true or false}}
+%    \end{macrocode}
+%
+% \changes{1.66}{2019/12/18}{Added warning for longer papers}
+%    \begin{macrocode}
+\AtEndDocument{\if@ACM@nonacm\else\if@ACM@printacmref\else
+  \ifnum\getrefnumber{TotPages}>1\relax
+  \ClassWarningNoLine{\@classname}{ACM reference format is mandatory
+    for papers over one page}%
+  \fi\fi\fi}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4608,6 +4638,14 @@
 \ccsdesc@parse@finish}
 %    \end{macrocode}
 %
+% \changes{1.66}{2019/12/18}{Added warning for missing concepts}
+%    \begin{macrocode}
+\AtEndDocument{\if@ACM@nonacm\else\ifx\@concepts\@empty\relax
+  \ifnum\getrefnumber{TotPages}>2\relax
+  \ClassWarningNoLine{\@classname}{CCS concepts are mandatory
+    for papers over two pages}%
+  \fi\fi\fi}
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\ccdesc@parse@finish}
