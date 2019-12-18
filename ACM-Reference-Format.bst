@@ -34,6 +34,7 @@ ENTRY
     institution
     journal
     key
+    location
     month
     note
     number
@@ -1232,7 +1233,7 @@ FUNCTION { format.btitle }
 FUNCTION { format.emphasize.booktitle }
 { booktitle format.a.title.with.edition }
 
-FUNCTION {location} {city}
+
 
 FUNCTION { format.city }
 {
@@ -1243,7 +1244,7 @@ FUNCTION { format.city }
   duplicate$ empty.or.unknown
     { }
     {
-      city empty.or.unknown
+      city empty.or.unknown location empty.or.unknown and
         {
           date empty.or.unknown
             { }
@@ -1251,10 +1252,18 @@ FUNCTION { format.city }
           if$
         }
         {
-          date empty.or.unknown
-            { " (" * city * ")" * }
-            { " (" * city * ", " * date * ")" * }
-          if$
+	  location empty.or.unknown
+	    {
+              date empty.or.unknown
+                { " (" * city * ")" * }
+                { " (" * city * ", " * date * ")" * }
+            }
+	    {
+              date empty.or.unknown
+                { " (" * location * ")" * }
+                { " (" * location * ", " * date * ")" * }
+            }
+            if$
         }
       if$
     }
