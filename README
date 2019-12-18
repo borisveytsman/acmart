@@ -246,4 +246,5 @@ Version 1.66   Bug fixes
 	       BibTeX change:  location is now a synonym for city (Feras Saad) 
 	       ACM reference format is now mandatory for papers over one page.
 	       CCS concepts and keywords are now mandatory for
-	       papers over two pages 
+	       papers over two pages.
+	       Authors' addresses are mandatory for journal articles.

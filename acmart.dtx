@@ -619,7 +619,7 @@
 % copy, but they \emph{are} necessary since they are used by the XML
 % metadata extraction programs.  Do \emph{not} put commas or |\\|
 % between the elements of \cs{affiliation}.  They will be provided
-% automatically.
+% automatically.  
 %
 %
 % An example of the author block:
@@ -724,7 +724,7 @@
 % 123456 Helm, Germany
 % \end{verbatim}
 %
-% Note that you should \emph{not} use this option for journals.
+% Note that you should \emph{not} use this option for journals.  
 %
 % It is expected that these commands are inserted by the author of the
 % manuscript.
@@ -756,7 +756,8 @@
 %  Moffett Field, California 94035.}
 % \end{verbatim}
 % You can \emph{suppress} printing authors' addresses by setting them
-% to an empty string:  |\authorsaddresses{}|.
+% to an empty string:  |\authorsaddresses{}|.  Please note that
+% authors' addresses are mandatory for journal articles.  
 %
 % \DescribeMacro{\titlenote}%
 % \DescribeMacro{\subtitlenote}%
@@ -1940,6 +1941,8 @@
 % \changes{1.66}{2019/12/18}{ACM reference format is now mandatory for
 % papers over one page;  CCS concepts and keywords are now mandatory for
 % papers over two pages}
+% \changes{1.66}{2019/12/18}{Authors' addresses are mandatory for
+% journal articles}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -5911,6 +5914,14 @@
   \egroup}
 %    \end{macrocode}
 %
+% \changes{1.66}{2019/12/18}{Added warning for missing addresses}
+%    \begin{macrocode}
+\AtEndDocument{\if@ACM@nonacm\else\if@ACM@journal
+  \ifx\@authorsaddresses\@empty
+  \ClassWarningNoLine{\@classname}{Authors'
+    addresses are mandatory for ACM journals}%
+  \fi\fi\fi}
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@setaddresses}
