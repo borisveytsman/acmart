@@ -1257,11 +1257,13 @@ FUNCTION { format.city }
               date empty.or.unknown
                 { " (" * city * ")" * }
                 { " (" * city * ", " * date * ")" * }
+              if$
             }
 	    {
               date empty.or.unknown
                 { " (" * location * ")" * }
                 { " (" * location * ", " * date * ")" * }
+              if$
             }
             if$
         }
