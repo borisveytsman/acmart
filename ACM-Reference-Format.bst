@@ -1252,18 +1252,20 @@ FUNCTION { format.city }
           if$
         }
         {
-	  location empty.or.unknown
-	    {
+          location empty.or.unknown
+            {
               date empty.or.unknown
                 { " (" * city * ")" * }
                 { " (" * city * ", " * date * ")" * }
+              if$
             }
-	    {
+            {
               date empty.or.unknown
                 { " (" * location * ")" * }
                 { " (" * location * ", " * date * ")" * }
+              if$
             }
-            if$
+          if$
         }
       if$
     }
