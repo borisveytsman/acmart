@@ -3197,6 +3197,8 @@
 % |algorithm*| in case somebody uses them.
 % \changes{v1.66}{2019/11/23}{Patching algorithm and algorithm*
 % to prevent spurious space warnings}
+% \changes{v1.67}{2020/01/11}{Patching lstlisting and lstlisting*
+% to prevent spurious space warnings}
 %    \begin{macrocode}
 \AtBeginEnvironment{figure}{\@Description@presentfalse
   \let\@vspace\@vspace@orig
@@ -3217,6 +3219,10 @@
 \AtBeginEnvironment{algorithm}{\let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig}
 \AtBeginEnvironment{algorithm*}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{lstlisting}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{lstlisting*}{\let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig}
 
 %    \end{macrocode}
