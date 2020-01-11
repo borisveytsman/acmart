@@ -248,3 +248,7 @@ Version 1.66   Bug fixes
 	       CCS concepts and keywords are now mandatory for
 	       papers over two pages.
 	       Authors' addresses are mandatory for journal articles.
+
+Version 1.67   Urgent bug fixes:
+	       BibTeX style bug fixed (Michael D. Adams)
+	       Sigplan special section bugfix
