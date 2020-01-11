@@ -5160,7 +5160,7 @@
   \if@ACM@printccs
   \ifx\@concepts\@empty\else\bgroup
       {\@specialsection{CCS Concepts}%
-         \@concepts\par}\egroup
+         \noindent\@concepts\par}\egroup
      \fi
    \fi
    \ifx\@keywords\@empty\else\bgroup
@@ -5169,7 +5169,7 @@
        \else
          \@specialsection{Keywords}%
        \fi
-         \@keywords}\par\egroup
+         \noindent\@keywords}\par\egroup
    \fi
   \andify\authors
   \andify\shortauthors
@@ -5222,7 +5222,7 @@
   \or % siggraph
     \section*{#1}%
   \or % sigplan
-     \paragraph*{#1}\rule{0pt}{0pt}%
+     \noindent\emph{\bfseries#1.}~%
   \or % sigchi
     \section*{#1}%
   \or % sigchi-a
