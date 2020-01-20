@@ -426,6 +426,44 @@ FUNCTION { output.coden }       % UTAH
   if$
 }
 
+%
+% Sometimes articleno starts with the word 'Article' or 'Paper.
+% (this is a bug of acmdl, sigh)
+% We strip them.  We assume eid or articleno is already on stack
+%
+
+FUNCTION { strip.articleno.or.eid }
+{
+  't :=
+  t #1 #7 substring$ "Article" = 
+    {t #8 t text.length$ substring$ 't :=}
+    { }
+  if$
+  t #1 #7 substring$ "article" = 
+    {t #8 t text.length$ substring$ 't :=}
+    { }
+  if$
+  t #1 #5 substring$ "Paper" = 
+    {t #6 t text.length$ substring$ 't :=}
+    { }
+  if$
+  t #1 #5 substring$ "paper" = 
+    {t #6 t text.length$ substring$ 't :=}
+    { }
+  if$
+  % Strip any left trailing space or ~
+  t #1 #1 substring$ " " =
+    {t #2 t text.length$ substring$ 't :=}
+    { }
+  if$ 
+  t #1 #1 substring$ "~" =
+    {t #2 t text.length$ substring$ 't :=}
+    { }
+  if$
+  t 
+}
+
+
 FUNCTION { format.articleno }
 {
   articleno empty.or.unknown not eid empty.or.unknown not and
@@ -441,8 +479,8 @@ FUNCTION { format.articleno }
           { }
         if$
         eid empty.or.unknown
-          { "Article \bibinfo{articleno}{" articleno * "}" * }
-          { "Article \bibinfo{articleno}{" eid * "}" * }
+          { "Article \bibinfo{articleno}{" articleno strip.articleno.or.eid * "}" * }
+          { "Article \bibinfo{articleno}{" eid strip.articleno.or.eid * "}" * }
         if$
      }
   if$
