@@ -1842,7 +1842,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/01/11 v1.67 Typesetting articles for the Association for Computing Machinery]
+[2020/01/19 v1.68 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -5202,12 +5202,10 @@
 % \changes{v1.66}{2019/11/23}{Suppress warnings about \cs{vspace}}
 % \changes{v1.67}{2020/01/11}{Paragraph inside group does not print
 % its argument.  Added a bugfix}
+% \changes{v1.68}{2020/01/19}{Deleted grouping altogether}
 %   This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
-  \bgroup
-  \let\@vspace\@vspace@orig
-  \let\@vspacer\@vspacer@orig
   \ifcase\ACM@format@nr
   \relax % manuscript
     \par\medskip\small\noindent#1: %
@@ -5222,13 +5220,13 @@
   \or % siggraph
     \section*{#1}%
   \or % sigplan
-     \noindent\emph{\bfseries#1.}~%
+     \noindentparagraph*{#1}%
   \or % sigchi
     \section*{#1}%
   \or % sigchi-a
     \section*{#1}%
     \fi
-  \egroup}
+}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -6568,6 +6566,7 @@
 %
 % \changes{v1.54}{2018/05/27}{Deleted indent for subsubsection}
 % \changes{v1.54}{2018/06/17}{Added Ross's patch for sectioning}
+% \changes{v1.68}{2020/01/19}{New command for unindent paras}
 %   Sectioning is different for different levels
 %    \begin{macrocode}
 \renewcommand\section{\@startsection{section}{1}{\z@}%
@@ -6583,6 +6582,10 @@
   {-3.5\p@}%
   {\ACM@NRadjust{\@subsubsecfont\@adddotafter}}}
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
+  {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
+  {-3.5\p@}%
+  {\ACM@NRadjust{\@parfont\@adddotafter}}}
+\newcommand\noindentparagraph{\@startsection{paragraph}{4}{\z@}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\ACM@NRadjust{\@parfont\@adddotafter}}}

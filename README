@@ -252,3 +252,5 @@ Version 1.66   Bug fixes
 Version 1.67   Urgent bug fixes:
 	       BibTeX style bug fixed (Michael D. Adams)
 	       Sigplan special section bugfix
+
+Version 1.68   Bug fixes
