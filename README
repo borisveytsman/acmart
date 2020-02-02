@@ -254,3 +254,7 @@ Version 1.67   Urgent bug fixes:
 	       Sigplan special section bugfix
 
 Version 1.68   Bug fixes
+               BST now recognizes words `Paper' or 'Article' in
+	       eid or articleno
+
+Version 1.69   Bug fixes

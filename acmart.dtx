@@ -1842,7 +1842,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/01/19 v1.68 Typesetting articles for the Association for Computing Machinery]
+[2020/02/02 v1.69 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -5203,6 +5203,7 @@
 % \changes{v1.67}{2020/01/11}{Paragraph inside group does not print
 % its argument.  Added a bugfix}
 % \changes{v1.68}{2020/01/19}{Deleted grouping altogether}
+% \changes{v1.69}{2020/02/02}{Changed dot to colon for sigplan}
 %   This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
@@ -5220,7 +5221,7 @@
   \or % siggraph
     \section*{#1}%
   \or % sigplan
-     \noindentparagraph*{#1}%
+     \noindentparagraph*{#1:~}%
   \or % sigchi
     \section*{#1}%
   \or % sigchi-a
@@ -6056,13 +6057,16 @@
 % \begin{macro}{\@printendtopmatter}
 % \changes{v1.46}{2017/08/28}{Made it \cs{par}\cs{bigskip} uniformly}
 % \changes{v1.58}{2019/01/23}{Deleted spurious \cs{vspace} warning}
+% \changes{v1.69}{2020/02/02}{Deleted grouping}
 %   End the top matter
 %    \begin{macrocode}
-\def\@printendtopmatter{\bgroup
+\def\@printendtopmatter{%
   \let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig
   \par\bigskip
-  \egroup}
+  \let\@vspace\@vspace@acm
+  \let\@vspacer\@vspacer@acm
+  }
 %    \end{macrocode}
 %
 % \end{macro}
@@ -6567,6 +6571,7 @@
 % \changes{v1.54}{2018/05/27}{Deleted indent for subsubsection}
 % \changes{v1.54}{2018/06/17}{Added Ross's patch for sectioning}
 % \changes{v1.68}{2020/01/19}{New command for unindent paras}
+% \changes{v1.69}{2020/02/02}{No dots for unindented paragraphs}
 %   Sectioning is different for different levels
 %    \begin{macrocode}
 \renewcommand\section{\@startsection{section}{1}{\z@}%
@@ -6588,7 +6593,7 @@
 \newcommand\noindentparagraph{\@startsection{paragraph}{4}{\z@}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
-  {\ACM@NRadjust{\@parfont\@adddotafter}}}
+  {\ACM@NRadjust{\@parfont}}}
 
 \renewcommand\part{\@startsection{part}{9}{\z@}%
   {-10\p@ \@plus -4\p@ \@minus -2\p@}%
@@ -7073,6 +7078,7 @@
 % \changes{v1.57}{2018/12/16}{Added warning}
 % \changes{v1.58}{2019/01/23}{Preserved old versions as
 % \cs{@vspace@orig} and \cs{@vspace@orig}}
+% \changes{1.69}{2020/02/02}{Added the changed command to avoid grouping}
 % We do not disable \cs{vspace}, but add warning to it
 %    \begin{macrocode}
 \let\@vspace@orig=\@vspace
@@ -7082,7 +7088,9 @@
     objects}}{}{} 
 \apptocmd{\@vspacer}{\ClassWarning{\@classname}{\string\vspace\space should
     only be used to provide space above/below surrounding
-    objects}}{}{} 
+    objects}}{}{}
+\let\@vspace@acm=\@vspace
+\let\@vspacer@acm=\@vspacer
 %    \end{macrocode}
 % 
 % \end{macro}
