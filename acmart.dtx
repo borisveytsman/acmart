@@ -6166,14 +6166,35 @@
 % \begin{macro}{\ACM@linecountR}
 % \changes{v1.33}{2017/03/29}{Added macro}
 % \changes{v1.34}{2017/04/10}{Rulers now are continuous}
-%   How to display the box on the right
+% \changes{v1.69}{2020/02/02}{Do not increase numbers in one column format}
+%   How to display the box on the right.  In one column formats we do
+%   not step the numbers.
 %    \begin{macrocode}
 \def\ACM@linecountR{%
   \if@ACM@review
-  \ACM@mk@linecount
-  \begin{picture}(0,0)%
-    \put(20,-22){\usebox{\ACM@linecount@bx}}%
-  \end{picture}%
+    \ifcase\ACM@format@nr
+    \relax % manuscript
+         \relax
+       \or % acmsmall
+         \relax
+       \or % acmlarge
+         \relax
+       \or % acmtog
+          \ACM@mk@linecount
+       \or % sigconf
+          \ACM@mk@linecount
+       \or % siggraph
+          \ACM@mk@linecount
+       \or % sigplan
+          \ACM@mk@linecount
+       \or % sigchi
+          \ACM@mk@linecount
+       \or % sigchi-a
+          \ACM@mk@linecount
+    \fi
+    \begin{picture}(0,0)%
+      \put(20,-22){\usebox{\ACM@linecount@bx}}%
+     \end{picture}%
   \fi}
 %    \end{macrocode}
 %
