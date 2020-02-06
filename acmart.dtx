@@ -4620,12 +4620,11 @@
 % \changes{v1.40}{2017/05/27}{Now we can parse |Significance~General| nodes}
 % \changes{v1.56}{2018/10/23}{End the concepts list with a period
 % (Philip Quinn)}
-% \changes{v1.69}{2019/02/05}{Added option |warn| to textcomp}
+% \changes{v1.69}{2019/02/06}{Use math right arrow in text}
 %   The parser of the expression |Significance~General~Specific| (we need
 %   |textcomp| for |\textrightarrow|).  Note that |Specific| can be empty!
 %    \begin{macrocode}
-\RequirePackage{textcomp}
-\gdef\tc@errorwarn#1#2{}
+\def\textrightarrow{$\rightarrow$}
 \def\ccsdesc@parse#1~#2~#3~{%
   \stepcounter{@concepts}%
   \expandafter\ifx\csname CCS@General@#2\endcsname\relax
