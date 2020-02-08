@@ -51,20 +51,20 @@ samples/$(PACKAGE).cls: $(PACKAGE).cls
 samples/ACM-Reference-Format.bst: ACM-Reference-Format.bst
 
 samples/%.pdf:  samples/%.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
-	cd $(dir $@) && pdflatex $(notdir $<)
+	cd $(dir $@) && pdflatex-dev $(notdir $<)
 	- cd $(dir $@) && bibtex $(notdir $(basename $<))
-	cd $(dir $@) && pdflatex $(notdir $<)
-	cd $(dir $@) && pdflatex $(notdir $<)
+	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	cd $(dir $@) && pdflatex-dev $(notdir $<)
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
-	  do cd $(dir $@) && pdflatex $(notdir $<); done
+	  do cd $(dir $@) && pdflatex-dev $(notdir $<); done
 
 samples/sample-xelatex.pdf:  samples/sample-xelatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
-	cd $(dir $@) && xelatex $(notdir $<)
+	cd $(dir $@) && xelatex-dev $(notdir $<)
 	- cd $(dir $@) && bibtex $(notdir $(basename $<))
-	cd $(dir $@) && xelatex $(notdir $<)
-	cd $(dir $@) && xelatex $(notdir $<)
+	cd $(dir $@) && xelatex-dev $(notdir $<)
+	cd $(dir $@) && xelatex-dev $(notdir $<)
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
-	  do cd $(dir $@) && xelatex $(notdir $<); done
+	  do cd $(dir $@) && xelatex-dev $(notdir $<); done
 
 
 
