@@ -1773,7 +1773,7 @@
 %     Information Processing\\
 %     TAP & ACM Transactions on Applied Perception \\
 %     TCPS & ACM Transactions on Cyber-Physical Systems\\
-%     TDS & ACM Transactions on Data Science\\
+%     TDS & ACM/IMS Transactions on Data Science\\
 %     TEAC & ACM Transactions on Economics and Computation\\
 %     TECS & ACM Transactions on Embedded Computing Systems \\
 %     TELO & ACM Transactions on Evolutionary Learning \\
@@ -1842,7 +1842,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/02/08 v1.69 Typesetting articles for the Association for Computing Machinery]
+[2020/02/22 v1.70 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -3521,6 +3521,7 @@
 % \changes{v1.46}{2017/08/25}{PACM now set screen to true}
 % \changes{v1.53}{2018/04/14}{Added PACMCGIT, TIOT, TDSCI}
 % \changes{v1.58}{2019/03/29}{Added HEALTH.  TDSCI is renamed to TDS}
+% \changes{1.70}{2020/02/22}{Name change for TDS}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
@@ -3687,8 +3688,8 @@
 \or % TCPS
   \def\@journalName{ACM Transactions on Cyber-Physical Systems}%
 \or % TDS
-  \def\@journalName{ACM Transactions on Data Science}%
-  \def\@journalNameShort{ACM Trans. Data Sci.}%
+  \def\@journalName{ACM/IMS Transactions on Data Science}%
+  \def\@journalNameShort{ACM/IMS Trans. Data Sci.}%
   \def\@permissionCodeOne{2577-3224}%
 \or % TEAC
   \def\@journalName{ACM Transactions on Economics and Computation}%
@@ -7076,17 +7077,16 @@
 %
 % \begin{macro}{\showeprint}
 % \changes{v1.21}{2016/09/04}{Added macro}
-% The command \cs{showeprint} has two arguments: the (optional) prefix
-% and the eprint number.  Right now the only prefix we understand is
-% the (lowercase) word `arxiv' (see
-% \url{http://arxiv.org/hypertex/bibstyles/}).
+% The command \cs{showeprint} has two arguments: the (optional)
+% prefix and the eprint number.  Right now the only prefix we understand is
+% the (lowercase) word `arxiv'. 
 %    \begin{macrocode}
 \newcommand\showeprint[2][arxiv]{%
   \def\@tempa{#1}%
   \ifx\@tempa\@empty\def\@tempa{arxiv}\fi
   \def\@tempb{arxiv}%
   \ifx\@tempa\@tempb
-     arXiv:\href{http://arxiv.org/abs/#2}{#2}\else arXiv:#2%
+     arXiv:\href{https://arxiv.org/abs/#2}{#2}\else arXiv:#2%
   \fi}
 %    \end{macrocode}
 %

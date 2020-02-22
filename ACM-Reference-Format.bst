@@ -717,16 +717,15 @@ FUNCTION { output.eprint } %
            }
            { "[" archiveprefix "l" change.case$ "]" * * * }
          if$
-         "{" *
+	 "{" eprint "}" * * *
          primaryclass empty.or.unknown
            { eprintclass empty.or.unknown
              { }
-             { eprintclass "/" * * }
+             { "~[" eprintclass "]" * * * }
              if$
            }
-           { primaryclass "/" * * }
+           { "~[" primaryclass "]" * * * }
          if$
-         eprint "}" * *
          writeln
     }
   if$
