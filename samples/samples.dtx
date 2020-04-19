@@ -512,6 +512,12 @@ in the printed output of this document.
   \end{tabular}
 \end{table*}
 
+Always use midrule to separate table header rows from data rows, and
+use it only for this purpose. This enables assistive technologies to
+recognise table headers and support their users in navigating tables
+more easily.
+
+
 \section{Math Equations}
 You may want to display math equations in three distinct styles:
 inline, numbered or non-numbered display.  Each of the three are
@@ -570,16 +576,35 @@ in the example below.
   \caption{1907 Franklin Model D roadster. Photograph by Harris \&
     Ewing, Inc. [Public domain], via Wikimedia
     Commons. (\url{https://goo.gl/VLCRBB}).}
-  \Description{The 1907 Franklin Model D roadster.}
+  \Description{A woman and a girl in white dresses sit in an open car.}
 %<!sigchi-a>\end{figure}
 %<sigchi-a>\end{marginfigure}
 
 Your figures should contain a caption which describes the figure to
-the reader. Figure captions go below the figure. Your figures should
-{\bfseries also} include a description suitable for screen readers, to
-assist the visually-challenged to better understand your work.
+the reader.
 
 Figure captions are placed {\itshape below} the figure.
+
+Every figure should also have a figure description unless it is purely
+decorative. These descriptions convey what’s in the image to someone
+who cannot see it. They are also used by search engine crawlers for
+indexing images, and when images cannot be loaded.
+
+A figure description must be unformatted plain text less than 2000
+characters long (including spaces).  {\bfseries Figure descriptions
+  should not repeat the figure caption – their purpose is to capture
+  important information that is not already provided in the caption or
+  the main text of the paper.} For figures that convey important and
+complex new information, a short text description may not be
+adequate. More complex alternative descriptions can be placed in an
+appendix and referenced in a short figure description. For example,
+provide a data table capturing the information in a bar chart, or a
+structured list representing a graph.  For additional information
+regarding how best to write figure descriptions and why doing this is
+so important, please see:
+\url{https://www.acm.org/publications/taps/latex-best-practices} and
+\url{http://www.sigaccess.org/welcome-to-sigaccess/resources/describing-figures/}.
+
 
 \subsection{The ``Teaser Figure''}
 
