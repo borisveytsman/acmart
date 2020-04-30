@@ -102,6 +102,7 @@
 %  Leif Andersen,
 %  Lawrence Christopher Angrave,
 %  Dirk Beyer,
+%  Andrew Black,
 %  Joachim Breitner,
 %  Benjamin Byholm,
 %  Nils Anders Danielsson,
@@ -111,6 +112,7 @@
 %  Ben Greenman,
 %  Enrico Gregorio,
 %  Jamie Davis,
+%  Jason Hemann,
 %  Peter Kemp,
 %  Luis Leiva,
 %  Ben Liblit,
@@ -1842,7 +1844,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/02/22 v1.70 Typesetting articles for the Association for Computing Machinery]
+[2020/04/30 v1.71 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2667,9 +2669,10 @@
 % \end{macro}
 % \begin{macro}{\l@subsubsection}
 % \changes{v1.31}{2017/03/04}{Redefined macro}
+% \changes{v1.71}{2020/04/30}{Bug fixed (thanks to Andrew Black)}
 %   The spacing in |amsart| is too large
 %    \begin{macrocode}
-\def\l@subsubsection{\@tocline{2}{0pt}{1pc}{5pc}{}}
+\def\l@subsubsection{\@tocline{3}{0pt}{1pc}{5pc}{}}
 %    \end{macrocode}
 %
 % \end{macro}
