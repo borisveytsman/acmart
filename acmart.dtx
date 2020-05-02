@@ -315,7 +315,10 @@
 % \end{table}
 %
 % Starting in 2020, ACM retired formats |sigchi| and |sigchi-a|.
-% SIGCHI conferences now use |sigconf| format for their publications.  
+% SIGCHI conferences now use |sigconf| format for their publications.
+% If a file uses |sigchi| format, a warning is issued, and the format
+% is automatically switched to |sigconf|.  Format |sigchi-a| can be
+% used for non-ACM documents only (see Section~\ref{sec:sigchi-a}).  
 %
 % There are several Boolean options that can take |true| or |false|
 % values.  They are listed in Table~\ref{tab:opts_bool}.  The words
@@ -1802,6 +1805,48 @@
 % Besides the publications listed in Table~\ref{tab:pubs}, there is a
 % special ``publication'' type FACMP, a forthcoming ACM publication,
 % reserved for new journals which are not assigned an ISSN yet.  
+%
+%
+%\subsection{A note about \texttt{sigchi-a} format}
+%\label{sec:sigchi-a}
+%
+% Starting in Spring 2020 ACM retired SIGCHI Extended Abstract format
+% (|sigchi-a|).  ACM will not, under any circumstances, accept
+% documents in this format for publication and will not offer
+% technical support to the authors who use this template.
+%
+% You may use this format in the |nonacm| mode only, as in
+% \begin{verbatim}
+% \documentclass[sigchi-a, nonacm]{acmart}
+% \end{verbatim}
+%
+% 
+%
+% \DescribeEnv{sidebar}%
+% \DescribeEnv{marginfigure}%
+% \DescribeEnv{margintable}%
+% This format has large margin uses for special figures and
+% tables. This package provides three environments for this with
+% optional captions:
+% \begin{description}
+% \item[sidebar:] textual information in the margin,
+% \item[marginfigure:] a figure in the margin,
+% \item[margintable:] a table in the margin.
+% \end{description}
+%
+% The environments |figure| and |table| produce figures and tables
+% with the width of the text column.  The environments |figure*| and
+% |table*| produce ``wide'' figures and tables, which take a large
+% part of the margin.  
+%
+% The horizontal sizes of figures are:
+% \begin{enumerate}
+% \item |figure|:  \cs{columnwidth},
+% \item |marginfigure|: \cs{marginparwidth},
+% \item |figure*|: \cs{fulltextwidth}.
+% \end{enumerate}
+% 
+% 
 %
 % \StopEventually{
 % \clearpage
