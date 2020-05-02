@@ -1,6 +1,6 @@
 % \iffalse
 %
-% Copyright 2016-2019, Association for Computing Machinery
+% Copyright 2016-2020, Association for Computing Machinery
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
 % version 1.3 of this license or (at your option) any
@@ -19,7 +19,6 @@
 % acmart.cls, the files ACM-Reference-Format.bst, and templates
 % sample-acmlarge.tex, sample-acmsmall.tex, sample-acmtog.tex,
 % samplebody-conf.tex, samplebody-journals.tex, sample-manuscript.tex,
-% sample-sigchi-a.tex, sample-sigchi.tex,
 % sample-sigconf-authordraft.tex, sample-sigconf.tex,
 % sample-sigplan.tex
 %
@@ -58,7 +57,7 @@
 % \ifx\currentjob\guide\OnlyDescription\fi
 % \GetFileInfo{acmart.dtx}
 % \title{\LaTeX{} Class for the \emph{Association for Computing
-% Machinery}\thanks{\copyright 2016--2019, Association for Computing Machinery}}
+% Machinery}\thanks{\copyright 2016--2020, Association for Computing Machinery}}
 % \author{Boris Veytsman\thanks{%
 % \href{mailto:borisv@lk.net}{\texttt{borisv@lk.net}},
 % \href{mailto:boris@varphi.com}{\texttt{boris@varphi.com}}}}
@@ -311,11 +310,12 @@
 %          conferences (with the exceptions listed below) and all ICPS
 %          volumes.\\
 %   sigplan & Proceedings format for SIGPLAN conferences.\\
-%   sigchi  & Proceedings format for SIGCHI conferences.\\
-%   sigchi-a & Format for SIGCHI extended abstracts.\\
 %   \bottomrule
 %   \end{tabularx}
 % \end{table}
+%
+% Starting in 2020, ACM retired formats |sigchi| and |sigchi-a|.
+% SIGCHI conferences now use |sigconf| format for their publications.  
 %
 % There are several Boolean options that can take |true| or |false|
 % values.  They are listed in Table~\ref{tab:opts_bool}.  The words
@@ -877,13 +877,12 @@
 % \cs{acmBadgeR}\oarg{url}\marg{graphics} and
 % \cs{acmBadgeL}\oarg{url}\marg{graphics}.  The first command puts the
 % badge to the right of the title, and the second one---to the left.
-% The exception is the |sigchi-a| mode for SIGCHI extended abstracts,
-% which puts the badges on the left margin.  The arguments have the
-% following meaning: \oarg{url}, if provided, sets the link to the
-% badge authority in the screen version, while \marg{graphics} sets
-% the graphics file with the badge image.  The file must be a cropped
-% square, which is scaled to a standard size in the output.  For
-% example, if the badge image is |ae-logo.pdf|, the command is
+% The arguments have the following meaning: \oarg{url}, if provided,
+% sets the link to the badge authority in the screen version, while
+% \marg{graphics} sets the graphics file with the badge image.  The
+% file must be a cropped square, which is scaled to a standard size in
+% the output.  For example, if the badge image is |ae-logo.pdf|, the
+% command is
 % \begin{verbatim}
 % \acmBadgeR[http://ctuning.org/ae/ppopp2016.html]{ae-logo}
 % \end{verbatim}
@@ -1156,8 +1155,6 @@
 % \item[figure*, table*] in two-column formats, a special figure or
 % table taking a full text width.
 % \item[teaserfigure:] a special figure before \cs{maketitle}.
-% \item[sidebar, marginfigure, margintable:] in the |sigchi-a| format,
-%   special sidebars, tables and figures in the margin.
 % \end{description}
 %
 % \item Accordingly, when scaling images, one should use the
@@ -1168,9 +1165,6 @@
 %   use \cs{columnwidth}, which coincides with \cs{textwidth} in this
 %   case.
 % \item For |figure| in two-column mode, use \cs{columnwidth}.
-% \item For |marginfigure|, use \cs{marginparwidth}.
-% \item For |figure*| in SIGCHI extended
-% abstracts, use \cs{fulltextwidth}.
 % \end{enumerate}
 %
 % \end{enumerate}
@@ -1219,23 +1213,11 @@
 % \end{table}
 % \end{verbatim}
 %
-% \DescribeEnv{sidebar}%
-% \DescribeEnv{marginfigure}%
-% \DescribeEnv{margintable}%
-% SIGCHI extended abstracts use margin space extensively.  This package
-% provides three environments for this with optional captions:
-% \begin{description}
-% \item[sidebar:] textual information in the margin
-% \item[marginfigure:] a figure in the margin
-% \item[margintable:] a table in the margin
-% \end{description}
 %
-%
-% Tables and figures (including margin tables and margin figures) are
-% by default centered.  However, in some cases (for example, when you
-% use several subimages per figure) you may need to override this.
-% A good way to do so is to put the contents into a
-% \cs{minipage} of the width \cs{columnwidth}.
+% Tables and figures are by default centered.  However, in some cases
+% (for example, when you use several subimages per figure) you may
+% need to override this.  A good way to do so is to put the contents
+% into a \cs{minipage} of the width \cs{columnwidth}.
 %
 %
 %\subsection{Descriptions of images}
@@ -1945,6 +1927,7 @@
 % papers over two pages}
 % \changes{1.66}{2019/12/18}{Authors' addresses are mandatory for
 % journal articles}
+% \changes{1.71}{2020/05/01}{Retired sigchi and sigchi-a}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -2278,9 +2261,29 @@
 % Setting up switches
 %    \begin{macrocode}
 \ifnum\ACM@format@nr=5\relax % siggraph
-  \ClassWarning{\@classname}{The format siggraph is now obsolete.
-    I am switching to sigconf.}
+\ClassWarning{\@classname}{%
+  The format siggraph is now obsolete.\MessageBreak
+  I am switching to sigconf.}
   \setkeys{acmart.cls}{format=sigconf}
+\fi
+\ifnum\ACM@format@nr=7\relax % sigchi
+\ClassWarning{\@classname}{%
+  The format sigchi is now obsolete.\MessageBreak
+  I am switching to sigconf.}
+  \setkeys{acmart.cls}{format=sigconf}
+\fi
+\ifnum\ACM@format@nr=8\relax % sigchi
+\ClassWarning{\@classname}{%
+  ACM SIGCHI has retired the SIGCHI-A template\MessageBreak
+  effective immediately. ACM is keeping this template\MessageBreak
+  option available to authors who are working on legacy\MessageBreak
+  documents only. ACM will not, under any circumstances,\MessageBreak
+  accept documents in this format for publication and\MessageBreak
+  will not offer technical support to the authors who use\MessageBreak
+  this template.\MessageBreak
+  ACM SIGCHI is directing Conference leaders and\MessageBreak
+  authors to publish their articles using the SIGCONF\MessageBreak
+  template call.}
 \fi
 \ifnum\ACM@format@nr=0\relax
   \@ACM@manuscripttrue
@@ -2344,7 +2347,7 @@
    \or % sigplan
     \def\ACM@fontsize{10pt}%
    \or % sigchi
-    \def\ACM@fontsize{10pt}%
+    \def\ACM@fontsize{9pt}%
   \or % sigchi-a
     \def\ACM@fontsize{10pt}%
   \fi
@@ -2850,7 +2853,7 @@
 %    \end{macrocode}
 %
 %
-% Author-draft mode
+% Author-draft mode or sigchi-a mode
 %    \begin{macrocode}
 \if@ACM@authordraft
   \RequirePackage{draftwatermark}
@@ -2859,6 +2862,17 @@
   \SetWatermarkText{\parbox{12em}{\centering
       Unpublished working draft.\\
       Not for distribution.}}
+\else
+  \if@ACM@sigchiamode
+    \if@ACM@nonacm\else
+      \RequirePackage{draftwatermark}
+      \SetWatermarkFontSize{0.5in}
+      \SetWatermarkColor[gray]{.9}
+      \SetWatermarkText{\parbox{12em}{\centering
+          Legacy document. \\
+          Not for publication in an ACM venue}}
+    \fi
+  \fi  
 \fi
 %    \end{macrocode}
 %
