@@ -1358,7 +1358,19 @@ FUNCTION { format.series }
 {
   series empty.or.unknown
     {""}
-    {" \emph{(\bibinfo{series}{" * series "})}" *}
+    {" \emph{(\bibinfo{series}{" * series "}" *
+     volume empty.or.unknown
+       {
+         number empty.or.unknown
+            {")}" *}
+            {", \bibinfo{number}{" number "})}" * * *}
+          if$
+       }
+       {", Vol.~\bibinfo{volume}{" volume "})}" * * *
+        "volume and number" number either.or.check
+       }
+     if$
+    }
   if$
 }
 
@@ -2290,7 +2302,10 @@ FUNCTION { inproceedings }
         { format.in.emphasize.booktitle format.city "booktitle"  output.check.dot.space
           format.series output.removenospace
           format.editors.fml output % BV 2011/09/27 Moved dot to comma
-          format.bvolume.noseries output
+          series empty.or.unknown
+              { format.bvolume.noseries output }
+              {}
+          if$
           new.sentence
           organization output
           publisher "publisher" bibinfo.output.check % jtb: require publisher (?)
