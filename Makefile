@@ -66,6 +66,14 @@ samples/sample-xelatex.pdf:  samples/sample-xelatex.tex   samples/$(PACKAGE).cls
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
 	  do cd $(dir $@) && xelatex-dev $(notdir $<); done
 
+samples/sample-lualatex.pdf:  samples/sample-lualatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
+	cd $(dir $@) && lualatex-dev $(notdir $<)
+	- cd $(dir $@) && bibtex $(notdir $(basename $<))
+	cd $(dir $@) && lualatex-dev $(notdir $<)
+	cd $(dir $@) && lualatex-dev $(notdir $<)
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
+	  do cd $(dir $@) && lualatex-dev $(notdir $<); done
+
 
 
 .PRECIOUS:  $(PACKAGE).cfg $(PACKAGE).cls

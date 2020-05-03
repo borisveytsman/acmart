@@ -223,8 +223,7 @@
 % \item \textsl{geometry}, \url{http://www.ctan.org/pkg/geometry}
 % \item \textsl{graphics}, \url{http://www.ctan.org/pkg/graphics}
 % \item \textsl{hyperref}, \url{http://www.ctan.org/pkg/hyperref}
-% \item \textsl{ifluatex}, \url{http://www.ctan.org/pkg/ifluatex}
-% \item \textsl{ifxetex}, \url{http://www.ctan.org/pkg/ifxetex}
+% \item \textsl{iftex}, \url{http://www.ctan.org/pkg/iftex}
 % \item \textsl{inconsolata}, \url{http://www.ctan.org/pkg/inconsolata}
 % \item \textsl{libertine}, \url{http://www.ctan.org/pkg/libertine}
 % \item \textsl{manyfoot}, \url{http://www.ctan.org/pkg/manyfoot}
@@ -1974,6 +1973,9 @@
 % \changes{1.66}{2019/12/18}{Authors' addresses are mandatory for
 % journal articles}
 % \changes{1.71}{2020/05/01}{Retired sigchi and sigchi-a}
+% \changes{1.71}{2020/05/02}{Bibliography change: volume for
+% @inproceedings is now in brackets together with series}
+% \changes{1.71}{2020/05/02}{LuaTeX now uses the OTF versions of fonts}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -2023,6 +2025,11 @@
 \RequirePackage{xstring}
 %    \end{macrocode}
 %
+% We need |iftex| to check the engine
+%    \begin{macrocode}
+\RequirePackage{iftex}
+%    \end{macrocode}
+% 
 % 
 %
 % \begin{macro}{format}
@@ -3188,14 +3195,19 @@
 %    \begin{macrocode}
 \if@ACM@newfonts
   \RequirePackage[T1]{fontenc}
-\ifxetex
-  \RequirePackage[tt=false]{libertine}
-  \setmonofont{inconsolata}
-\else
-  \RequirePackage[tt=false, type1=true]{libertine}
-\fi
-\RequirePackage[varqu]{zi4}
-\RequirePackage[libertine]{newtxmath}
+  \ifxetex
+    \RequirePackage[tt=false]{libertine}
+    \setmonofont[StylisticSet=3]{inconsolata}
+  \else
+    \ifluatex
+      \RequirePackage[tt=false]{libertine}
+      \setmonofont[StylisticSet=3]{inconsolata}
+    \else
+       \RequirePackage[tt=false, type1=true]{libertine}
+       \RequirePackage[varqu]{zi4}
+    \fi
+  \fi
+  \RequirePackage[libertine]{newtxmath}
 \fi
 %    \end{macrocode}
 %
