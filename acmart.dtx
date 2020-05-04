@@ -4058,7 +4058,7 @@
 %   Adding an author to the list of authors and addresses
 %    \begin{macrocode}
 \renewcommand\author[2][]{%
-  \IfSubStr{#2}{,}{\ClassWarning{\@classname}{Do not put several
+  \IfSubStr{\detokenize{#2}}{,}{\ClassWarning{\@classname}{Do not put several
       authors in the same \string\author\space macro!}}{}%
   \global\advance\num@authors by 1\relax
   \if@insideauthorgroup\else
