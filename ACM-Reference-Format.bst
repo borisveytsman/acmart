@@ -1454,7 +1454,12 @@ FUNCTION { format.pages.check.without.articleno }
   articleno empty.or.unknown eid empty.or.unknown and
     {
       pages missing$
-        { numpages }
+        {
+	   numpages empty.or.unknown
+	     {""}
+             { "\bibinfo{numpages}{" numpages * "}~pages" * }
+	  if$
+	}
         { format.pages }
       if$
     }
