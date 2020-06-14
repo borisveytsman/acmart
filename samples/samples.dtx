@@ -1,8 +1,9 @@
-%<*manuscript|acmsmall|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
+%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
 %% 
 %% The first command in your LaTeX source must be the \documentclass command.
-%<manuscript>\documentclass[manuscript,screen]{acmart}
+%<manuscript>\documentclass[manuscript,screen,review]{acmart}
 %<acmsmall|acmsmall-conf>\documentclass[acmsmall]{acmart}
+%<acmsmall-submission>\documentclass[acmsmall,screen,review]{acmart}
 %<acmlarge>\documentclass[acmlarge]{acmart}
 %<acmtog>\documentclass[acmtog]{acmart}
 %<sigconf>\documentclass[sigconf]{acmart}
@@ -28,7 +29,7 @@
 \acmYear{2018}
 \acmDOI{10.1145/1122445.1122456}
 
-%</manuscript|acmsmall|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
+%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
 %<*manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
 %% These commands are for a PROCEEDINGS abstract or paper.
 \acmConference[Woodstock '18]{Woodstock '18: ACM Symposium on Neural
@@ -39,18 +40,18 @@
 \acmISBN{978-1-4503-XXXX-X/18/06}
 %</manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
 
-%<*acmsmall|acmlarge|acmtog>
+%<*acmsmall|acmsmall-submission|acmlarge|acmtog>
 %%
 %% These commands are for a JOURNAL article.
-%<acmsmall>\acmJournal{JACM}
+%<acmsmall|acmsmall-submission>\acmJournal{JACM}
 %<acmlarge>\acmJournal{POMACS}
 %<acmtog>\acmJournal{TOG}
 \acmVolume{37}
 \acmNumber{4}
 \acmArticle{111}
 \acmMonth{8}
-%</acmsmall|acmlarge|acmtog>
-%<*manuscript|acmsmall|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
+%</acmsmall|acmsmall-submission|acmlarge|acmtog>
+%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
 
 
 %%
@@ -213,7 +214,7 @@
 %% the work being presented. Separate the keywords with commas.
 \keywords{datasets, neural networks, gaze detection, text tagging}
 
-%</manuscript|acmsmall|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
+%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
 %<*sigconf|authordraft|sigplan|acmsmall-conf>
 %% A "teaser" image appears between the author and affiliation
 %% information and the body of the document, and typically spans the
@@ -226,7 +227,7 @@
   \label{fig:teaser}
 \end{teaserfigure}
 %</sigconf|authordraft|sigplan|acmsmall-conf>
-%<*manuscript|acmsmall|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
+%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
 
 %%
 %% This command processes the author and affiliation and title
@@ -312,8 +313,9 @@ Frequently-used parameters, or combinations of parameters, include:
 This document uses the following string as the first command in the
 source file:
 \begin{verbatim}
-%<manuscript>\documentclass[manuscript,screen]{acmart}
+%<manuscript>\documentclass[manuscript,screen,review]{acmart}
 %<acmsmall|acmsmall-conf>\documentclass[acmsmall]{acmart}
+%<acmsmall-submission>\documentclass[acmsmall,screen,review]{acmart}
 %<acmlarge>\documentclass[acmlarge]{acmart}
 %<acmtog>\documentclass[acmtog]{acmart}
 %<sigconf>\documentclass[sigconf]{acmart}
@@ -777,4 +779,4 @@ rhoncus. Maecenas eu arcu ac neque placerat aliquam. Nunc pulvinar
 massa et mattis lacinia.
 
 \end{document}
-%</manuscript|acmsmall|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
+%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
