@@ -271,3 +271,5 @@ Version 1.71   Bug fixes
 	       LuaLaTeX now uses the same OTF fonts as XeLaTeX
 
 Version 1.72   Bug fixes.  Better handling of metadata.
+
+Version 1.73   Bug fixes

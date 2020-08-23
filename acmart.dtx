@@ -226,6 +226,7 @@
 % \item \textsl{geometry}, \url{http://www.ctan.org/pkg/geometry}
 % \item \textsl{graphics}, \url{http://www.ctan.org/pkg/graphics}
 % \item \textsl{hyperref}, \url{http://www.ctan.org/pkg/hyperref}
+% \item \textsl{hyperxmp}, \url{http://www.ctan.org/pkg/hyperxmp}
 % \item \textsl{iftex}, \url{http://www.ctan.org/pkg/iftex}
 % \item \textsl{inconsolata}, \url{http://www.ctan.org/pkg/inconsolata}
 % \item \textsl{libertine}, \url{http://www.ctan.org/pkg/libertine}
@@ -1881,7 +1882,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/06/13 v1.72 Typesetting articles for the Association for Computing Machinery]
+[2020/08/23 v1.73 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2803,12 +2804,13 @@
 % \end{macro}
 %
 %
-% And now, |hyperref|
+% And now, |hyperref| 
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
 % \changes{v1.46}{2017/08/25}{Delayed hypersetup since journal options
 % may change screen mode}
 % \changes{v1.55}{2018/10/20}{Now we use purple color for links}
-% \changes{v1.58}{2019/26/01}{Suppressed \cs{addtocounter} in pdf subject}
+% \changes{v1.58}{2019/26/01}{Suppressed \cs{addtocounter} in pdf
+% subject}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
@@ -2850,6 +2852,13 @@
   \hypersetup{pdflang={en},
     pdfdisplaydoctitle}}
 %    \end{macrocode}
+%
+% And |hyperxmp|
+% \changes{v1.72}{2020/06/14}{Added hyperxmp}
+%    \begin{macrocode}
+\RequirePackage{hyperxmp}
+%    \end{macrocode}
+% 
 %
 % Bibliography mangling.
 % \changes{v1.33}{2017/03/23}{Moved \cs{citename} definition for
@@ -3284,6 +3293,8 @@
 % to prevent spurious space warnings}
 % \changes{v1.67}{2020/01/11}{Patching lstlisting and lstlisting*
 % to prevent spurious space warnings}
+% \changes{v1.73}{2020/08/23}{Patching minted and minted*
+% to prevent spurious space warnings}
 %    \begin{macrocode}
 \AtBeginEnvironment{figure}{\@Description@presentfalse
   \let\@vspace\@vspace@orig
@@ -3308,6 +3319,14 @@
 \AtBeginEnvironment{lstlisting}{\let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig}
 \AtBeginEnvironment{lstlisting*}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{minted}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{minted*}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{listing}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{listing*}{\let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig}
 
 %    \end{macrocode}
