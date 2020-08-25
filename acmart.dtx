@@ -3166,7 +3166,6 @@
 %
 % The code below is by Ross Moore.
 %    \begin{macrocode}
-\RequirePackage{iftex}
 \ifPDFTeX
 \input{glyphtounicode}
 \pdfglyphtounicode{f_f}{FB00}
@@ -3177,8 +3176,8 @@
 \pdfglyphtounicode{f_t}{0066 0074}
 \pdfglyphtounicode{T_h}{0054 0068}
 \pdfgentounicode=1
-\fi
 \RequirePackage{cmap}
+\fi
 %    \end{macrocode}
 %
 %
@@ -3214,6 +3213,7 @@
 %    \begin{macrocode}
 \if@ACM@newfonts
   \RequirePackage[T1]{fontenc}
+  \RequirePackage[libertine]{newtxmath}
   \ifxetex
     \RequirePackage[tt=false]{libertine}
     \setmonofont[StylisticSet=3]{inconsolata}
@@ -3226,7 +3226,6 @@
        \RequirePackage[varqu]{zi4}
     \fi
   \fi
-  \RequirePackage[libertine]{newtxmath}
 \fi
 %    \end{macrocode}
 %
