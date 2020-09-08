@@ -632,7 +632,11 @@
 % copy, but they \emph{are} necessary since they are used by the XML
 % metadata extraction programs.  Do \emph{not} put commas or |\\|
 % between the elements of \cs{affiliation}.  They will be provided
-% automatically.  
+% automatically.
+%
+% The fields \cs{institution}, \cs{city} and \cs{country} are
+% mandatory.  If they are not provided, the warning is issued.  In the
+% future ACM might decide to change the warning to the error.  
 %
 %
 % An example of the author block:
@@ -1882,7 +1886,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/08/23 v1.73 Typesetting articles for the Association for Computing Machinery]
+[2020/09/07 v1.73 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -5165,6 +5169,8 @@
 % \cs{maketitle} is typeset}
 % \changes{v1.72}{2020/06/14}{Do not andify authors for pdf metadata
 % (Scott Pakin)} 
+% \changes{v1.73}{2020/09/07}{Do not check again the presense of
+% address fields} 
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -5281,6 +5287,7 @@
    \fi
   \let\metadata@authors=\authors
   \nxandlist{, }{, }{, }\metadata@authors
+  \def\@ACM@checkaffil{}%
   \hypersetup{%
     pdfauthor={\metadata@authors},
     pdftitle={\@title},
@@ -5610,6 +5617,7 @@
 % \begin{macro}{\institution}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
+% \changes{v1.73}{2020/09/07}{Check the presence in affil}
 % \begin{macro}{\position}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
@@ -5625,6 +5633,7 @@
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/15}{We now do not print this even in SIG}
+% \changes{v1.73}{2020/09/07}{Check the presence in affil}
 % \begin{macro}{\state}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
@@ -5639,6 +5648,7 @@
 % \changes{v1.40}{2017/05/27}{Fixed bugs with extra spaces}
 % \changes{v1.43}{2017/07/11}{Added comma before country for journals}
 % \changes{v1.46}{2017/08/30}{Corrected spacing for institution}
+% \changes{v1.73}{2020/09/07}{Check the presence in affil}
 %   Theoretically we can define the macros for \cs{affiliation} inside
 %   the \cs{@mkauthors}-style commands.  However, this would lead to a
 %   strange error if an author uses them outside \cs{affiliation}.  Of
@@ -5648,21 +5658,24 @@
 \def\postcode#1{\unskip\ignorespaces}
 \if@ACM@journal
   \def\position#1{\unskip\ignorespaces}
-  \def\institution#1{\unskip~#1\ignorespaces}
-  \def\city#1{\unskip\ignorespaces}
+  \def\institution#1{\global\@ACM@instpresenttrue
+    \unskip~#1\ignorespaces}
+  \def\city#1{\global\@ACM@citypresenttrue\unskip\ignorespaces}
   \def\state#1{\unskip\ignorespaces}
   \newcommand\department[2][0]{\unskip\ignorespaces}
-  \def\country#1{\if@ACM@affiliation@obeypunctuation\else, \fi#1\ignorespaces}
+  \def\country#1{\global\@ACM@countrypresenttrue
+    \if@ACM@affiliation@obeypunctuation\else, \fi#1\ignorespaces}
 \else
   \def\position#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
-  \def\institution#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
+  \def\institution#1{\global\@ACM@instpresenttrue
+    \if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
   \newcommand\department[2][0]{\if@ACM@affiliation@obeypunctuation
     #2\else#2\par\fi}%
 %  \def\streetaddress#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
-  \let\city\@ACM@addtoaddress
+  \def\city#1{\global\@ACM@citypresenttrue\@ACM@addtoaddress{#1}}%
   \let\state\@ACM@addtoaddress
 %  \def\postcode#1{\if@ACM@affiliation@obeypunctuation#1\else\unskip\space#1\fi}%
-  \let\country\@ACM@addtoaddress
+  \def\country#1{\global\@ACM@countrypresenttrue\@ACM@addtoaddress{#1}}%
 \fi
 %    \end{macrocode}
 %
@@ -5771,11 +5784,78 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\if@ACM@instpresent}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Whether the given affiliation has institution
+%    \begin{macrocode}
+\newif\if@ACM@instpresent
+\@ACM@instpresenttrue
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+%
+% \begin{macro}{\if@ACM@citypresent}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Whether the given affiliation has city
+%    \begin{macrocode}
+\newif\if@ACM@citypresent
+\@ACM@citypresenttrue
+%    \end{macrocode}
+% 
+% \end{macro}
+% \begin{macro}{\if@ACM@countrypresent}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Whether the given affiliation has country
+%    \begin{macrocode}
+\newif\if@ACM@countrypresent
+\@ACM@countrypresenttrue
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+%
+% \begin{macro}{\@ACM@resetaffil}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Reset affiliation flags
+%    \begin{macrocode}
+\def\@ACM@resetaffil{%
+  \global\@ACM@instpresentfalse
+  \global\@ACM@citypresentfalse
+  \global\@ACM@countrypresentfalse
+}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+% \begin{macro}{\@ACM@checkaffil}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Check affiliation flags
+%    \begin{macrocode}
+\def\@ACM@checkaffil{%
+  \if@ACM@instpresent\else
+  \ClassWarningNoLine{\@classname}{No institution present for an affiliation}%
+  \fi
+  \if@ACM@citypresent\else
+  \ClassWarningNoLine{\@classname}{No city present for an affiliation}%
+  \fi
+  \if@ACM@countrypresent\else
+  \ClassWarningNoLine{\@classname}{No country present for an affiliation}%
+  \fi
+}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+%
+%
 %
 % \begin{macro}{\@mkauthors@i}
 % \changes{v1.18}{2016/07/12}{Now we andify affiliations}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/04}{Switched to MakeTextUppercase}
+% \changes{v1.73}{2020/09/07}{Check the presence of required elements
+% for affiliations}
 %   This version is used in most journal formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
@@ -5797,11 +5877,13 @@
           \gdef\@currentaffiliations{%
             \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
             \setkeys{@ACM@affiliation@}{##1}%
-            \@affiliationfont##2}%
+            \@ACM@resetaffil
+            \@affiliationfont##2\@ACM@checkaffil}%
        \else
          \g@addto@macro{\@currentaffiliations}{\and
            \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-           \setkeys{@ACM@affiliation@}{##1}##2}%
+           \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+           ##2\@ACM@checkaffil}%
       \fi
     \fi
      \global\let\and\@typeset@author@line}%
@@ -5868,6 +5950,8 @@
 % \changes{v1.15}{2016/07/04}{New authors system}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
+% \changes{v1.73}{2020/09/07}{Check the presence of required elements
+% for affiliations}
 %   The |sigconf| version.  Here we use a centered design with each
 %   author in a separate box.
 %    \begin{macrocode}
@@ -5919,11 +6003,13 @@
   \def\affiliation##1##2{\ifx\@currentaffiliation\@empty
     \gdef\@currentaffiliation{%
       \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-      \setkeys{@ACM@affiliation@}{##1}##2}%
+      \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+      ##2\@ACM@checkaffil}%
   \else
     \g@addto@macro\@currentaffiliation{\par
       \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-      \setkeys{@ACM@affiliation@}{##1}##2}%
+      \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+      ##2\@ACM@checkaffil}%
   \fi
   \global\let\and\@typeset@author@bx
 }%
@@ -5943,6 +6029,8 @@
 % \begin{macro}{\@mkauthors@iv}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
+% \changes{v1.73}{2020/09/07}{Check the presence of required elements
+% for affiliations}
 %   The |sigchi-a| version.  We put authors in the main text with
 %   no more than 2 authors per line, unless overriden.
 %    \begin{macrocode}
@@ -5986,11 +6074,13 @@
   \def\affiliation##1##2{\ifx\@currentaffiliation\@empty
     \gdef\@currentaffiliation{%
       \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-           \setkeys{@ACM@affiliation@}{##1}##2}%
+      \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+      ##2\@ACM@checkaffil}%
   \else
     \g@addto@macro\@currentaffiliation{\par
       \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-      \setkeys{@ACM@affiliation@}{##1}##2}%
+      \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+      ##2\@ACM@checkaffil}%
   \fi
   \global\let\and\@typeset@author@bx}%
 %
