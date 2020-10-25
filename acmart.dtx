@@ -3217,6 +3217,10 @@
 %    \begin{macrocode}
 \if@ACM@newfonts
   \RequirePackage[T1]{fontenc}
+  % Note that the order in which packages are loaded matters,
+  % and the correct order depends on the LaTeX engine used.
+  % See https://github.com/borisveytsman/acmart/issues/402
+  % and https://github.com/borisveytsman/acmart/issues/410
   \ifxetex
     \RequirePackage[libertine]{newtxmath}
     \RequirePackage[tt=false]{libertine}
