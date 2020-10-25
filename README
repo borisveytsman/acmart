@@ -275,4 +275,5 @@ Version 1.72   Bug fixes.  Better handling of metadata.
 Version 1.73   Bug fixes
 	       The elements institution, city and country are now obligatory
 	       for affiliations
-	       
+
+Verision 1.74  Switch to Libertinus fonts

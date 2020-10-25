@@ -229,7 +229,7 @@
 % \item \textsl{hyperxmp}, \url{http://www.ctan.org/pkg/hyperxmp}
 % \item \textsl{iftex}, \url{http://www.ctan.org/pkg/iftex}
 % \item \textsl{inconsolata}, \url{http://www.ctan.org/pkg/inconsolata}
-% \item \textsl{libertine}, \url{http://www.ctan.org/pkg/libertine}
+% \item \textsl{libertinus}, \url{http://www.ctan.org/pkg/libertinus}
 % \item \textsl{manyfoot}, \url{http://www.ctan.org/pkg/manyfoot}
 % \item \textsl{microtype}, \url{http://www.ctan.org/pkg/microtype}
 % \item \textsl{mmap}, \url{http://www.ctan.org/pkg/mmap}
@@ -1886,7 +1886,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/09/13 v1.73 Typesetting articles for the Association for Computing Machinery]
+[2020/09/27 v1.74 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -1997,7 +1997,7 @@
 %<*gobble>
 \documentclass{ltxdoc}
 \usepackage{array,booktabs,amsmath,graphicx,fancyvrb,tabularx, longtable}
-\usepackage[tt=false, type1=true]{libertine}
+\usepackage{libertinus}
 \usepackage[varqu]{zi4}
 \usepackage[libertine]{newtxmath}
 \usepackage[tableposition=top]{caption}
@@ -2464,6 +2464,12 @@
 \RequirePackage{textcase}
 %    \end{macrocode}
 %
+% \changes{v1.74}{2020/09/27}{We pass option force to filehook}
+% LuaTeX uses filehook\ldots
+%    \begin{macrocode}
+\PassOptionsToPackage{force}{filehook}
+%    \end{macrocode}
+% 
 %
 %\subsection{Citations}
 % \changes{v1.19}{2016/07/28}{Include 'References' in PDF bookmarks
@@ -3187,12 +3193,13 @@
 %
 % \begin{macro}{\if@ACM@newfonts}
 % \changes{v1.12}{2016/05/30}{Added macro}%
+% \changes{v1.74}{2020/09/27}{Switched libertinus}%
 %   Whether we load the new fonts
 %    \begin{macrocode}
 \newif\if@ACM@newfonts
 \@ACM@newfontstrue
-\IfFileExists{libertine.sty}{}{\ClassWarning{\@classname}{You do not
-    have the libertine package installed.  Please upgrade your
+\IfFileExists{libertinus.sty}{}{\ClassWarning{\@classname}{You do not
+    have the libertinus package installed.  Please upgrade your
     TeX}\@ACM@newfontsfalse}
 \IfFileExists{zi4.sty}{}{\ClassWarning{\@classname}{You do not
     have the inconsolata (zi4.sty) package installed.  Please upgrade your
@@ -3213,20 +3220,21 @@
 % \changes{v1.54}{2018/07/16}{XeTeX now uses T1 encoding}
 % \changes{v1.56}{2018/11/11}{Looks like XeTeX requires explicit
 % monotype font delcaration}
+% \changes{v1.74}{2020/09/27}{Switched to libertinus}
 % We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
-  \RequirePackage[T1]{fontenc}
-  \RequirePackage[libertine]{newtxmath}
   \ifxetex
-    \RequirePackage[tt=false]{libertine}
+    \RequirePackage{libertinus-otf}
     \setmonofont[StylisticSet=3]{inconsolata}
   \else
     \ifluatex
-      \RequirePackage[tt=false]{libertine}
+      \RequirePackage{libertinus-otf}
       \setmonofont[StylisticSet=3]{inconsolata}
     \else
-       \RequirePackage[tt=false, type1=true]{libertine}
+       \RequirePackage[T1]{fontenc}
+       \RequirePackage[libertine]{newtxmath}
+       \RequirePackage{libertinus-type1}
        \RequirePackage[varqu]{zi4}
     \fi
   \fi
@@ -3234,13 +3242,15 @@
 %    \end{macrocode}
 %
 % \begin{macro}{\liningnums}
-% \changes{v1.46}{2017/08/28}{Workaround for compatibility with fontspec}
+% \changes{v1.46}{2017/08/28}{Workaround for compatibility with
+% fontspec}
+% \changes{v1.74}{2020/09/27}{Deleted macro}
 % Libertine defines \cs{liningnums}, which makes |fontspec| unhappy.
-% While we do not use |fontspec|, some users do.
+% While we do not use |fontspec|, some users do.  \emph{No longer needed}
 %    \begin{macrocode}
-\let\liningnums\@undefined
-\AtEndPreamble{%
-  \DeclareTextFontCommand{\liningnums}{\libertineLF}}
+% \let\liningnums\@undefined
+% \AtEndPreamble{%
+% \DeclareTextFontCommand{\liningnums}{\libertineLF}}
 %    \end{macrocode}
 %
 % \end{macro}
