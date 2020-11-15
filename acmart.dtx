@@ -104,6 +104,7 @@
 %  Andrew Black,
 %  Joachim Breitner,
 %  Benjamin Byholm,
+%  John Collins,
 %  Nils Anders Danielsson,
 %  Michael Ekstrand,
 %  Matthew Fluet,
@@ -635,8 +636,9 @@
 % automatically.
 %
 % The fields \cs{institution}, \cs{city} and \cs{country} are
-% mandatory.  If they are not provided, the warning is issued.  In the
-% future ACM might decide to change the warning to the error.  
+% mandatory.  If they are not provided, an error or a warning  is
+% issued. Currently the absence of \cs{country} produces and error;
+% ACM may change this in the future.
 %
 %
 % An example of the author block:
@@ -1686,7 +1688,7 @@
 % You should not load |amssymb| package since the package |acmart|
 % defines the corresponding symbols itself.
 %
-%\subsection{A note for wizards: \texttt{acmart-preload-hook.tex}}
+%\subsection{Notes for wizards}
 %\label{sec:ug_preload}
 %
 % Sometimes you need to change the behavior of |acmart|.  The
@@ -1886,7 +1888,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/10/25 v1.74 Typesetting articles for the Association for Computing Machinery]
+[2020/11/15 v1.75 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -1990,7 +1992,9 @@
 % \changes{1.71}{2020/05/01}{Retired sigchi and sigchi-a}
 % \changes{1.71}{2020/05/02}{Bibliography change: volume for
 % @inproceedings is now in brackets together with series}
-% \changes{1.71}{2020/05/02}{LuaTeX now uses the OTF versions of fonts}
+% \changes{1.71}{2020/05/02}{LuaTeX now uses the OTF versions of
+% fonts}
+% \changes{1.75}{2020/10/29}{Documentation update}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -5837,6 +5841,7 @@
 %
 % \begin{macro}{\@ACM@checkaffil}
 % \changes{v1.73}{2020/09/07}{Added macro}
+% \changes{v1.75}{2020/11/15}{Changed warning to error for country}
 % Check affiliation flags
 %    \begin{macrocode}
 \def\@ACM@checkaffil{%
@@ -5847,7 +5852,8 @@
   \ClassWarningNoLine{\@classname}{No city present for an affiliation}%
   \fi
   \if@ACM@countrypresent\else
-  \ClassWarningNoLine{\@classname}{No country present for an affiliation}%
+  \ClassError{\@classname}{No country present for an affiliation}{ACM
+    requires each author to indicate their country using country macro.}%
   \fi
 }
 %    \end{macrocode}
