@@ -1730,6 +1730,13 @@
 % \emph{do not ask for support.}  If you decide to use this hook, you
 % are on your own.
 %
+% \DescribeMacro{\AtBeginMaketitle}%
+% Another hook is \cs{AtBeginMaketitle}.  The commands in this hook
+% are executed before \cs{maketitle}, for example,
+% \begin{verbatim}
+% \AtBeginMaketitle{\acmPrice{125.00}}
+% \end{verbatim}
+% 
 %
 %\subsection{Currently supported publications}
 %\label{sec:pubs}
@@ -5134,8 +5141,34 @@
 %
 % \end{macro}
 %
+%
+%\subsection{Maketitle hook}
+%\label{sec:hook}
+%
+% The current \LaTeX\ provides a nice |lthooks| mechanism.  However,
+% since it is relatively new, we will use oldfashioned approach---at
+% least for now.
+%
+% \begin{macro}{\@beginmaketitlehook}
+% \changes{v1.75}{2020/11/15}{Introduced macro}
+% The hook
+%    \begin{macrocode}
+\ifx\@beginmaketitlehook\@undefined
+  \let\@beginmaketitlehook\@empty
+\fi
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\AtBeginMaketitle}
+% \changes{v1.75}{2020/11/15}{Introduced macro}
+% Adding to the hook
+%    \begin{macrocode}
+\def\AtBeginMaketitle{\g@addto@macro\@beginmaketitlehook}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Typesetting top matter}
-% \label{sec:makefile}
+% \label{sec:maketitle}
 %
 % \begin{macro}{\mktitle@bx}
 %   Some of our formats use a two-column design.  Some use a one-column
@@ -5182,6 +5215,7 @@
 % (Scott Pakin)} 
 % \changes{v1.73}{2020/09/07}{Do not check again the presense of
 % address fields} 
+% \changes{v1.75}{2020/11/15}{Added \cs{@beginmaketitlehook}} 
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -5190,7 +5224,7 @@
 %  and therefore belong to the copyright/permission block.  By the
 %  way, this was the default behavior of the old ACM classes.
 %    \begin{macrocode}
-\def\maketitle{%
+\def\maketitle{\@beginmaketitlehook
   \@ACM@maketitle@typesettrue
   \if@ACM@anonymous
     % Anonymize omission of \author-s

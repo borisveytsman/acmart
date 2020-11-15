@@ -280,4 +280,4 @@ Version 1.74   Bug fixes.  A regression introduced in the font changes
 	       is reverted.
 
 Version 1.75.  \country is now obligatory for addresses.
-
+	       Added \AtBeginMaketitle
