@@ -1,0 +1,53 @@
+name: Build LaTeX and deploy on GitHub Releases
+on:
+  push:
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  Build-LaTeX:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Fetch tags
+        shell: bash
+        run: git fetch --tags -f
+      - name: Install TeXLive
+        uses: DanySK/setup-texlive-action@master
+      - name: Compile LaTeX
+        uses: DanySK/compile-latex-action@master
+      - name: Autotag
+        uses: DanySK/semver-autotag-action@master
+      - name: Deploy
+        if: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/master' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG=$(git describe --tags --exact-match HEAD)
+          hub release create -m "$(git tag -l --format='%(contents)' "$TAG")" "$TAG" || true
+          while IFS= read -r file; do
+            pdf="${file%.*}.pdf"
+            echo "Delivering file $pdf"
+            gh release upload "$TAG" "$pdf" --clobber
+          done <"success-list"
+  Automerge:
+    needs: Build-LaTeX
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: automerge
+        uses: "DanySK/yaagha@master"
+        env:
+          GITHUB_TOKEN: "${{ secrets.AUTOMERGE_TOKEN }}"
+          MERGE_FORKS: "false"
+          MERGE_LABELS: "version-upgrade"
+          BLOCK_LABELS: "blocked, wontfix, invalid"
+          MERGE_METHOD: "rebase"
+          CLOSE_ON_CONFLICT: "true"
+          DELETE_BRANCH_ON_CLOSE: "true"
+          GIT_USER_NAME: "Danilo Pianini"
+          GIT_USER_EMAIL: "danilo.pianini@gmail.com"
