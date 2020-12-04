@@ -1,0 +1,3 @@
+texlive-full
+texlive-latex-recommended
+texlive-publishers
