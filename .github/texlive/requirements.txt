@@ -1,1 +1,2 @@
+texlive-latex-recommended
 texlive-publishers
