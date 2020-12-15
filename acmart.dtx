@@ -859,10 +859,11 @@
 % \end{verbatim}
 % Note that you do not need to put the dollar sign here, just the
 % amount.  By default the price is \$15.00, unless the copyright is
-% set to |usgov|, |rightsretained|, |iw3c2w3|, or |iw3c2w3g|, when it
-% is suppressed.  Note that to override the defaults you need to set
-% the price \emph{after} the \cs{setcopyright} command.  Also, the
-% command |\acmPrice{}| suppresses the printing of the price.
+% set to |usgov|, |rightsretained|, |rightsretainedccbysa|, |iw3c2w3|,
+% or |iw3c2w3g|, when it is suppressed.  Note that to override the
+% defaults you need to set the price \emph{after} the
+% \cs{setcopyright} command.  Also, the command |\acmPrice{}|
+% suppresses the printing of the price.
 %
 % \DescribeMacro{\acmISBN}%
 % Book-like volumes have ISBN numbers attached to them.  The macro
@@ -999,6 +1000,11 @@
 %     license the publication rights to ACM\@. \\
 %     \texttt{rightsretained} & The authors retain the copyright and
 %     publication rights to themselves or somebody else. \\
+%     \texttt{rightsretainedccbysa} & The authors retain the copyright
+%     and publication rights, and publish their publication
+%     under CC-BY-SA 4.0. \\ & (The copyright description of this option
+%     leaves some blank space to take the same height as \texttt{rightsretained},
+%     which is assumed by some conference publishing tools.) \\
 %     \texttt{usgov} & All the authors are employees of the US
 %     government. \\
 %     \texttt{usgovmixed} & Some authors are employees of the US
@@ -4839,7 +4845,7 @@
     acmcopyright,acmlicensed,rightsretained,%
     usgov,usgovmixed,cagov,cagovmixed,licensedusgovmixed,%
     licensedcagov,licensedcagovmixed,othergov,licensedothergov,%
-    iw3c2w3,iw3c2w3g}{%
+    iw3c2w3,iw3c2w3g,rightsretainedccbysa}{%
   \@printpermissiontrue
   \@printcopyrighttrue
   \@acmownedtrue
@@ -4886,6 +4892,9 @@
   \ifnum\acm@copyrightmode=14\relax % iw3c2w3g
    \@acmownedfalse
    \AtBeginDocument{\acmPrice{}}%
+  \ifnum\acm@copyrightmode=15\relax % rightsretainedccbysa
+  \@acmownedfalse
+  \AtBeginDocument{\acmPrice{}}%
   \fi}
 %    \end{macrocode}
 %
@@ -4941,6 +4950,8 @@
   \or % ic2w3wwwgoogle
   IW3C2 (International World Wide Web Conference Committee), published
   under Creative Commons CC-BY-NC-ND~4.0 License.
+  \or % rightsretainedccbysa
+  Copyright held by the owner/author(s).
   \fi}
 %    \end{macrocode}
 %
@@ -5085,6 +5096,16 @@
    (CC-BY-NC-ND~4.0) license. Authors reserve their rights to
    disseminate the work on their personal and corporate Web sites with
    the appropriate attribution.
+  \or % rightsretainedccbysa
+   This work is published under the Creative Commons Attribution ShareAlike~4.0
+   International (CC-BY-SA~4.0) license.
+
+   \vspace*{3\baselineskip}
+   % This spacing of three text lines ensures that the page layout is exactly
+   % identical to the one of the {rightsretained} option. This assumption
+   % is made by publisher-side post-processing tools that will replace
+   % the copyright block with something else, typically a CC-BY-SA logo
+   % and license text.
  \fi}
 %    \end{macrocode}
 %
