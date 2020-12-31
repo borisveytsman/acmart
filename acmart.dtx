@@ -4022,9 +4022,12 @@
 %   The book title of the conference:
 %    \begin{macrocode}
 \def\acmBooktitle#1{\gdef\@acmBooktitle{#1}}
+\acmBooktitle{}
+\ifx\acmConference@name\@undefined\else
 \acmBooktitle{Proceedings of \acmConference@name
        \ifx\acmConference@name\acmConference@shortname\else
-         \ (\acmConference@shortname)\fi}
+       \ (\acmConference@shortname)\fi}
+\fi     
 %    \end{macrocode}
 %
 % \end{macro}
