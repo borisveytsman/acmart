@@ -281,3 +281,5 @@ Version 1.74   Bug fixes.  A regression introduced in the font changes
 
 Version 1.75.  \country is now obligatory for addresses.
 	       Added \AtBeginMaketitle
+
+Version 1.76.  Added many journal abbreviations to the bst.
