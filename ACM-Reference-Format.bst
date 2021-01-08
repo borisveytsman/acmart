@@ -2612,6 +2612,99 @@ MACRO {nov}             {"Nov."}
 
 MACRO {dec}             {"Dec."}
 
+%%% ACM journal names
+
+MACRO {cie}  {"ACM Computers in Entertainment"}
+MACRO {csur}  {"ACM Computing Surveys"}
+MACRO {dgov}  {"Digital Government: Research and Practice"}
+MACRO {dtrap}  {"Digital Threats: Research and Practice"}
+MACRO {health}  {"ACM Transactions on Computing for Healthcare"}
+MACRO {imwut}  {"PACM on Interactive, Mobile, Wearable and Ubiquitous Technologies"}
+MACRO {jacm}  {"Journal of the ACM"}
+MACRO {jdiq}  {"ACM Journal of Data and Information Quality"}
+MACRO {jea}  {"ACM Journal of Experimental Algorithmics"}
+MACRO {jeric}  {"ACM Journal of Educational Resources in Computing"}
+MACRO {jetc}  {"ACM Journal on Emerging Technologies in Computing Systems"}
+MACRO {jocch}  {"ACM Journal on Computing and Cultural Heritage"}
+MACRO {pacmcgit}  {"Proceedings of the ACM on Computer Graphics and Interactive Techniques"}
+MACRO {pacmhci}  {"PACM on Human-Computer Interaction"}
+MACRO {pacmpl}  {"PACM on Programming Languages"}
+MACRO {pomacs}  {"PACM on Measurement and Analysis of Computing Systems"}
+MACRO {taas}  {"ACM Transactions on Autonomous and Adaptive Systems"}
+MACRO {taccess}  {"ACM Transactions on Accessible Computing"}
+MACRO {taco}  {"ACM Transactions on Architecture and Code Optimization"}
+MACRO {talg}  {"ACM Transactions on Algorithms"}
+MACRO {tallip}  {"ACM Transactions on Asian and Low-Resource Language Information Processing"}
+MACRO {tap}  {"ACM Transactions on Applied Perception"}
+MACRO {tcps}  {"ACM Transactions on Cyber-Physical Systems"}
+MACRO {tds}  {"ACM/IMS Transactions on Data Science"}
+MACRO {teac}  {"ACM Transactions on Economics and Computation"}
+MACRO {tecs}  {"ACM Transactions on Embedded Computing Systems"}
+MACRO {telo}  {"ACM Transactions on Evolutionary Learning"}
+MACRO {thri}  {"ACM Transactions on Human-Robot Interaction"}
+MACRO {tiis}  {"ACM Transactions on Interactive Intelligent Systems"}
+MACRO {tiot}  {"ACM Transactions on Internet of Things"}
+MACRO {tissec}  {"ACM Transactions on Information and System Security"}
+MACRO {tist}  {"ACM Transactions on Intelligent Systems and Technology"}
+MACRO {tkdd}  {"ACM Transactions on Knowledge Discovery from Data"}
+MACRO {tmis}  {"ACM Transactions on Management Information Systems"}
+MACRO {toce}  {"ACM Transactions on Computing Education"}
+MACRO {tochi}  {"ACM Transactions on Computer-Human Interaction"}
+MACRO {tocl}  {"ACM Transactions on Computational Logic"}
+MACRO {tocs}  {"ACM Transactions on Computer Systems"}
+MACRO {toct}  {"ACM Transactions on Computation Theory"}
+MACRO {todaes}  {"ACM Transactions on Design Automation of Electronic Systems"}
+MACRO {tods}  {"ACM Transactions on Database Systems"}
+MACRO {tog}  {"ACM Transactions on Graphics"}
+MACRO {tois}  {"ACM Transactions on Information Systems"}
+MACRO {toit}  {"ACM Transactions on Internet Technology"}
+MACRO {tomacs}  {"ACM Transactions on Modeling and Computer Simulation"}
+MACRO {tomm}   {"ACM Transactions on Multimedia Computing, Communications and Applications"}
+MACRO {tompecs}  {"ACM Transactions on Modeling and Performance Evaluation of Computing Systems"}
+MACRO {toms}  {"ACM Transactions on Mathematical Software"}
+MACRO {topc}  {"ACM Transactions on Parallel Computing"}
+MACRO {toplas}  {"ACM Transactions on Programming Languages and Systems"}
+MACRO {tops}  {"ACM Transactions on Privacy and Security"}
+MACRO {tos}  {"ACM Transactions on Storage"}
+MACRO {tosem}  {"ACM Transactions on Software Engineering and Methodology"}
+MACRO {tosn}  {"ACM Transactions on Sensor Networks"}
+MACRO {tqc}  {"ACM Transactions on Quantum Computing"}
+MACRO {trets}  {"ACM Transactions on Reconfigurable Technology and Systems"}
+MACRO {tsas}  {"ACM Transactions on Spatial Algorithms and Systems"}
+MACRO {tsc}  {"ACM Transactions on Social Computing"}
+MACRO {tslp}  {"ACM Transactions on Speech and Language Processing"}
+MACRO {tweb}  {"ACM Transactions on the Web"}
+
+%%% Some traditional macros
+MACRO {acmcs} {"ACM Computing Surveys"}
+
+MACRO {acta} {"Acta Informatica"}
+
+MACRO {cacm} {"Communications of the ACM"}
+
+MACRO {ibmjrd} {"IBM Journal of Research and Development"}
+
+MACRO {ibmsj} {"IBM Systems Journal"}
+
+MACRO {ieeese} {"IEEE Transactions on Software Engineering"}
+
+MACRO {ieeetc} {"IEEE Transactions on Computers"}
+
+MACRO {ieeetcad}
+ {"IEEE Transactions on Computer-Aided Design of Integrated Circuits"}
+
+MACRO {ipl} {"Information Processing Letters"}
+
+MACRO {jcss} {"Journal of Computer and System Sciences"}
+
+MACRO {scp} {"Science of Computer Programming"}
+
+MACRO {sicomp} {"SIAM Journal on Computing"}
+
+MACRO {toois} {"ACM Transactions on Office Information Systems"}
+
+MACRO {tcs} {"Theoretical Computer Science"}
+
 
 
 READ
