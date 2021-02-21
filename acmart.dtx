@@ -2824,6 +2824,14 @@
 %
 % \end{macro}
 %
+% Adding |hyperxmp|
+% \changes{v1.72}{2020/06/14}{Added hyperxmp}
+% \changes{v1.77}{2021/02/21}{Moved before hyperref, see
+% https://github.com/borisveytsman/acmart/issues/425} 
+%    \begin{macrocode}
+\RequirePackage{hyperxmp}
+%    \end{macrocode}
+% 
 %
 % And now, |hyperref| 
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
@@ -2874,12 +2882,6 @@
     pdfdisplaydoctitle}}
 %    \end{macrocode}
 %
-% And |hyperxmp|
-% \changes{v1.72}{2020/06/14}{Added hyperxmp}
-%    \begin{macrocode}
-\RequirePackage{hyperxmp}
-%    \end{macrocode}
-% 
 %
 % Bibliography mangling.
 % \changes{v1.33}{2017/03/23}{Moved \cs{citename} definition for
