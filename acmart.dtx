@@ -374,7 +374,9 @@
 % column mode has balanced columns.  By default it is |true|; however,
 % it may lead to problems for some documents.  Set it to |false| if
 % you encounter compilation errors.  Note that for one page documents
-% \cs{balance} command might cause problems.
+% \cs{balance} command might cause problems.  An alternative is the
+% (experimental) option |pbalance|, which uses the new package
+% |pbalance| for this end.
 %
 % The option |urlbreakonhyphens| determines whether URLs can be split
 % between lines after hyphens.  By default it is true.  Set it to
@@ -408,6 +410,8 @@
 %                       Section~\ref{sec:ug_theorems}\\
 %     balance & true & Whether to balance the last page in two column
 %                        mode\\
+%     pbalance & false & Whether to balance the last page in two column
+%                        mode using pbalance package\\
 %     urlbreakonhyphens & true & Whether to break urls on hyphens\\ 
 %     \bottomrule
 %   \end{tabularx}
@@ -2201,6 +2205,19 @@
 % 
 % \end{macro}
 %
+%
+% \begin{macro}{\if@ACM@pbalance}
+% \changes{v1.77}{2021/03/16}{Added macro}
+% Whether to balance the last page
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{pbalance}[true]{}{%
+  \PackageError{\@classname}{The option pbalance can be either true or
+    false}}
+\ExecuteOptionsX{pbalance=false}
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
 %
 % \begin{macro}{\if@ACM@natbib@override}
 % \changes{v1.12}{2016/05/30}{Added macro}
@@ -7230,9 +7247,29 @@
 %\label{sec:balancing}
 %
 % We need balancing only if the user did not disable it, and we use a
-% two column format
+% two column format.  Note that |pbalance| uses a different
+% mechanism. 
 %    \begin{macrocode}
 \AtEndPreamble{%
+  \if@ACM@pbalance
+    \global\@ACM@balancefalse
+    \ifcase\ACM@format@nr
+    \relax % manuscript
+       \or % acmsmall
+       \or % acmlarge
+       \or % acmtog
+          \RequirePackage{pbalance}%
+       \or % sigconf
+          \RequirePackage{pbalance}%
+       \or % siggraph
+          \RequirePackage{pbalance}%
+       \or % sigplan
+          \RequirePackage{pbalance}%
+       \or % sigchi
+          \RequirePackage{pbalance}%
+       \or % sigchi-a
+    \fi  
+  \fi
   \if@ACM@balance
     \ifcase\ACM@format@nr
     \relax % manuscript
