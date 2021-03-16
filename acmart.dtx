@@ -4134,7 +4134,15 @@
 % \changes{v1.54}{2018/06/23}{Added submission id in anonymous mode}
 % \changes{v1.57}{2018/12/09}{Added warning if \cs{author} has comma}
 % \changes{v1.72}{2020/05/04}{Added \cs{detokenize} (Kuldeep S. Meel)}
-%   Adding an author to the list of authors and addresses
+% \changes{v1.77}{2021/03/15}{Added code for orcid links}
+% Adding an author to the list of authors and addresses.
+%
+% Note that we want to typeset the link to the author's orcid if
+% known.  The problem is, we know the orcid only after the author is
+% entered.  The trick is based on the idea that |\csname...\endcsname|
+% is \cs{relax} unless defined.  Therefore we typeset authors by the
+% special macro |\csname typeset@author\the\num@authors\endcsname|,
+% which is defined by \cs{orcid} command.  
 %    \begin{macrocode}
 \renewcommand\author[2][]{%
   \IfSubStr{\detokenize{#2}}{,}{\ClassWarning{\@classname}{Do not put several
@@ -4151,12 +4159,16 @@
           \@acmSubmissionID\fi}}%
       \gdef\authors{Anonymous Author(s)}%
     \else
-      \gdef\addresses{\@author{#2}}%
+      \expandafter\gdef\expandafter\addresses\expandafter{%
+        \expandafter\@author\expandafter{%
+          \csname typeset@author\the\num@authors\endcsname{#2}}}%
       \gdef\authors{#2}%
     \fi
   \else
     \if@ACM@anonymous\else
-      \g@addto@macro\addresses{\and\@author{#2}}%
+    \expandafter\g@addto@macro\expandafter\addresses\expandafter{%
+      \expandafter\and\expandafter\@author\expandafter{%
+        \csname typeset@author\the\num@authors\endcsname{#2}}}%
       \g@addto@macro\authors{\and#2}%
     \fi
   \fi
@@ -4260,9 +4272,17 @@
 %
 % \begin{macro}{\orcid}
 % \changes{v1.15}{2016/06/25}{Introduced macro}
-%   Right now we do not typeset ORCIDs
+% \changes{v1.77}{2021/03/15}{Added code for orcid links}
+%   We rededine the command to typeset the current author
 %    \begin{macrocode}
-\def\orcid#1{\unskip\ignorespaces}
+\def\orcid#1{\unskip\ignorespaces%
+  \IfBeginWith{#1}{http}{%
+    \expandafter\gdef\csname
+        typeset@author\the\num@authors\endcsname##1{%
+          \href{#1}{##1}}}{%
+    \expandafter\gdef\csname
+        typeset@author\the\num@authors\endcsname##1{%
+          \href{https://orcid.org/#1}{##1}}}}        
 %    \end{macrocode}
 %
 % \end{macro}
