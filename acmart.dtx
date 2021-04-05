@@ -112,6 +112,7 @@
 %  Ben Greenman,
 %  Enrico Gregorio,
 %  Jamie Davis,
+%  Ulrike Fischer,
 %  Jason Hemann,
 %  Peter Kemp,
 %  Luis Leiva,
@@ -5263,7 +5264,8 @@
 % (Scott Pakin)} 
 % \changes{v1.73}{2020/09/07}{Do not check again the presense of
 % address fields} 
-% \changes{v1.75}{2020/11/15}{Added \cs{@beginmaketitlehook}} 
+% \changes{v1.75}{2020/11/15}{Added \cs{@beginmaketitlehook}}
+% \changes{v1.77}{2021/04/05}{Put \cs{par} inside group for keywords}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -5376,7 +5378,7 @@
        \else
          \@specialsection{Keywords}%
        \fi
-         \noindent\@keywords}\par\egroup
+         \noindent\@keywords\par}\egroup
    \fi
   \let\metadata@authors=\authors
   \nxandlist{, }{, }{, }\metadata@authors
