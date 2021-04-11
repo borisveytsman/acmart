@@ -283,9 +283,6 @@ Version 1.75.  \country is now obligatory for addresses.
 	       Added \AtBeginMaketitle
 
 Version 1.76.  Added many journal abbreviations to the bst.
-	       Bug fixes
-
-Version 1.77.  Bug fixes
 	       New experimental option: pbalance
 	       ORCID linking code
 	       

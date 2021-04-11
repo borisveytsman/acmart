@@ -1906,7 +1906,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2021/02/21 v1.77 Typesetting articles for the Association for Computing Machinery]
+[2021/02/21 v1.76 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2208,7 +2208,7 @@
 %
 %
 % \begin{macro}{\if@ACM@pbalance}
-% \changes{v1.77}{2021/03/16}{Added macro}
+% \changes{v1.76}{2021/03/16}{Added macro}
 % Whether to balance the last page
 %    \begin{macrocode}
 \define@boolkey+{acmart.cls}[@ACM@]{pbalance}[true]{}{%
@@ -2844,7 +2844,7 @@
 %
 % Adding |hyperxmp|
 % \changes{v1.72}{2020/06/14}{Added hyperxmp}
-% \changes{v1.77}{2021/02/21}{Moved before hyperref, see
+% \changes{v1.76}{2021/02/21}{Moved before hyperref, see
 % https://github.com/borisveytsman/acmart/issues/425} 
 %    \begin{macrocode}
 \RequirePackage{hyperxmp}
@@ -4135,7 +4135,7 @@
 % \changes{v1.54}{2018/06/23}{Added submission id in anonymous mode}
 % \changes{v1.57}{2018/12/09}{Added warning if \cs{author} has comma}
 % \changes{v1.72}{2020/05/04}{Added \cs{detokenize} (Kuldeep S. Meel)}
-% \changes{v1.77}{2021/03/15}{Added code for orcid links}
+% \changes{v1.76}{2021/03/15}{Added code for orcid links}
 % Adding an author to the list of authors and addresses.
 %
 % Note that we want to typeset the link to the author's orcid if
@@ -4273,7 +4273,7 @@
 %
 % \begin{macro}{\orcid}
 % \changes{v1.15}{2016/06/25}{Introduced macro}
-% \changes{v1.77}{2021/03/15}{Added code for orcid links}
+% \changes{v1.76}{2021/03/15}{Added code for orcid links}
 %   We rededine the command to typeset the current author
 %    \begin{macrocode}
 \def\orcid#1{\unskip\ignorespaces%
@@ -5265,7 +5265,7 @@
 % \changes{v1.73}{2020/09/07}{Do not check again the presense of
 % address fields} 
 % \changes{v1.75}{2020/11/15}{Added \cs{@beginmaketitlehook}}
-% \changes{v1.77}{2021/04/05}{Put \cs{par} inside group for keywords}
+% \changes{v1.76}{2021/04/05}{Put \cs{par} inside group for keywords}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -6567,7 +6567,7 @@
 % \changes{v1.59}{2019/04/20}{Added logic for conference papers using
 % journal format}
 % \changes{v1.59}{2019/04/20}{Moved page styles to \cs{AtBeginDocument}}
-% \changes{v1.77}{2021/02/21}{Fixed bug with no line numbers for nonacm}
+% \changes{v1.76}{2021/02/21}{Fixed bug with no line numbers for nonacm}
 %   The page style for all pages but the first one
 %    \begin{macrocode}
 \AtBeginDocument{%
