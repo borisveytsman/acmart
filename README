@@ -285,4 +285,5 @@ Version 1.75.  \country is now obligatory for addresses.
 Version 1.76.  Added many journal abbreviations to the bst.
 	       New experimental option: pbalance
 	       ORCID linking code
-	       
+
+Version 1.77.  Changed the way to typset multiple affiliations (Christoph Sommer)
