@@ -1679,6 +1679,36 @@
 % uppercasing.
 %
 %
+%\subsection{Counting words}
+%\label{sec:ug_counting}
+%
+% Some ACM conferences use word count limits for papers.  The
+% calculation of word number for a paper with math, tables and figures
+% is not a trivial task.  Currently the authoritative word count is
+% done by translating the PDF to text and using |wc -w| on the
+% output.  Authors can use the package |texcount| (used by Overleaf)
+% to get an estimate of the word count.  To faciliate this one adds to the
+% beginning of the package metacomments
+% \begin{verbatim}
+% %TC:macro \cite [option:text,text]
+% %TC:macro \citep [option:text,text]
+% %TC:macro \citet [option:text,text]
+% %TC:envir table 0 1
+% %TC:envir table* 0 1
+% %TC:envir tabular [ignore] word
+% %TC:envir displaymath 0 word
+% %TC:envir math 0 word
+% %TC:envir comment 0 0
+% \end{verbatim}
+% and uses |\begin{math}...\end{math}| instead of dollar signs for
+% math.  Note that the count is in any case approximate, and the final
+% decision of editors is based on PDF count.
+%
+% The script |texcount| provides a report of word count in the
+% document.
+%
+% 
+%
 %
 %\subsection{Disabled or forbidden commands}
 %\label{sec:ug_disabled}
@@ -1907,7 +1937,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2021/04/16 v1.77 Typesetting articles for the Association for Computing Machinery]
+[2021/05/01 v1.78 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2014,6 +2044,7 @@
 % \changes{1.71}{2020/05/02}{LuaTeX now uses the OTF versions of
 % fonts}
 % \changes{1.75}{2020/10/29}{Documentation update}
+% \changes{1.78}{2021/05/01}{Documentation update: Word count}
 %
 % And the driver code:
 %    \begin{macrocode}
