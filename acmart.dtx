@@ -5448,9 +5448,12 @@
 % its argument.  Added a bugfix}
 % \changes{v1.68}{2020/01/19}{Deleted grouping altogether}
 % \changes{v1.69}{2020/02/02}{Changed dot to colon for sigplan}
+% \changes{v1.78}{2021/05/02}{Again suppressed \cs{vspace} warning}
 %   This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig
   \ifcase\ACM@format@nr
   \relax % manuscript
     \par\medskip\small\noindent#1: %
@@ -5471,6 +5474,8 @@
   \or % sigchi-a
     \section*{#1}%
     \fi
+  \let\@vspace\@vspace@acm
+  \let\@vspacer\@vspacer@acm    
 }
 %    \end{macrocode}
 %

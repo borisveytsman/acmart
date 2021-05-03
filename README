@@ -288,4 +288,5 @@ Version 1.76.  Added many journal abbreviations to the bst.
 
 Version 1.77.  Changed the way to typset multiple affiliations (Christoph Sommer)
 
-Version 1.78.  Documentation update.  Magic texcount comments for samples. 
+Version 1.78.  Documentation update.  Magic texcount comments for samples.
+	       Bug fixes
