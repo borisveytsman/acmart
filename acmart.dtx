@@ -4700,8 +4700,11 @@
 %    \begin{macrocode}
 \AtEndDocument{\if@ACM@nonacm\else\if@ACM@printacmref\else
   \ifnum\getrefnumber{TotPages}>1\relax
-  \ClassWarningNoLine{\@classname}{ACM reference format is mandatory
-    for papers over one page}%
+  \ClassWarningNoLine{\@classname}{%
+    ACM reference format is mandatory \MessageBreak
+    for papers over one page. \MessageBreak
+    Please add printacmref=true to the \MessageBreak
+    \string\settopmatter\space command.}%
   \fi\fi\fi}
 %    \end{macrocode}
 %
