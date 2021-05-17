@@ -5488,15 +5488,32 @@
 % \begin{macro}{\@printtopmatter}
 % \changes{v1.06}{2016/05/01}{Added processing badges}
 % \changes{v1.46}{2017/08/29}{Deleted rule}
+% \changes{v1.78}{2021/05/16}{Added processing the overflowing title box}
 %   The printing of top matter starts a new page and uses the given
 %   title box.  Note that for |sigchi-a| we print badges here rather
 %   than in \cs{mktitle} since we want them in the margins.
+%
+% Note that if there are too many authors, |\mktitle@bx| might
+% overflow the page.  Therefore we start with checking this and if
+% this happens, we split the box and print it page by page.
 %    \begin{macrocode}
 \def\@printtopmatter{%
   \ifx\@startPage\@empty
      \gdef\@startPage{1}%
   \else
      \setcounter{page}{\@startPage}%
+  \fi
+  \@tempdima=\ht\mktitle@bx
+  \advance\@tempdima by \dp\mktitle@bx
+  \ifdim\@tempdima>0.9\textheight
+    \loop     
+      \setbox\@tempboxa=\vsplit \mktitle@bx to 0.9\textheight
+      \thispagestyle{firstpagestyle}%
+      \noindent\unvbox\@tempboxa
+      \clearpage
+      \@tempdima=\ht\mktitle@bx
+      \advance\@tempdima by \dp\mktitle@bx
+    \ifdim\@tempdima>0.9\textheight\repeat
   \fi
   \thispagestyle{firstpagestyle}%
   \noindent
@@ -5993,6 +6010,7 @@
 % \changes{v1.40}{2017/06/04}{Switched to MakeTextUppercase}
 % \changes{v1.73}{2020/09/07}{Check the presence of required elements
 % for affiliations}
+% \changes{v1.78}{2021/05/16}{Unboxing \cs{mktitle@bx}}
 %   This version is used in most journal formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
@@ -6024,7 +6042,7 @@
       \fi
     \fi
      \global\let\and\@typeset@author@line}%
-  \global\setbox\mktitle@bx=\vbox{\noindent\box\mktitle@bx\par\medskip
+  \global\setbox\mktitle@bx=\vbox{\noindent\unvbox\mktitle@bx\par\medskip
     \noindent\addresses\@typeset@author@line
    \par\medskip}%
 }
@@ -6089,6 +6107,7 @@
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
 % \changes{v1.73}{2020/09/07}{Check the presence of required elements
 % for affiliations}
+% \changes{v1.78}{2021/05/16}{Unboxing \cs{mktitle@bx}}
 %   The |sigconf| version.  Here we use a centered design with each
 %   author in a separate box.
 %    \begin{macrocode}
@@ -6155,7 +6174,7 @@
 %    \begin{macrocode}
   \hsize=\textwidth
   \global\setbox\mktitle@bx=\vbox{\noindent
-    \box\mktitle@bx\par\medskip\leavevmode
+    \unvbox\mktitle@bx\par\medskip\leavevmode
     \lineskip=1pc\relax\centering\hspace*{-1em}%
     \addresses\let\and\@typeset@author@bx\and\par\bigskip}}
 %    \end{macrocode}
@@ -6300,12 +6319,13 @@
 % \begin{macro}{\@mkteasers}
 % Typesetting the teasers
 % \changes{v1.56}{2018/11/1}{Added check for description}
+% \changes{v1.78}{2021/05/16}{Unboxing \cs{mktitle@bx}}
 %    \begin{macrocode}
 \def\@mkteasers{%
   \ifx\@teaserfigures\@empty\else
     \def\@teaser##1{\par\bigskip\bgroup
       \captionsetup{type=figure}##1\egroup\par}
-    \global\setbox\mktitle@bx=\vbox{\noindent\box\mktitle@bx\par
+    \global\setbox\mktitle@bx=\vbox{\noindent\unvbox\mktitle@bx\par
       \noindent\@Description@presentfalse
       \@teaserfigures\par\if@Description@present\else
          \global\@undescribed@imagestrue
