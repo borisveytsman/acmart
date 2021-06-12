@@ -692,7 +692,7 @@ FUNCTION { output.note } % UTAH
 { % return with stack empty
   note empty.or.unknown
     { }
-    { "\shownote{" note add.period$ * "}" * writeln }
+    { "\shownote{" note * "}" add.period$ * writeln }
   if$
 }
 
@@ -700,7 +700,7 @@ FUNCTION { output.note.check } % UTAH
 { % return with stack empty
   note empty.or.unknown
     { "empty note in " cite$ * warning$ }
-    { "\shownote{" note add.period$ * "}" * writeln }
+    { "\shownote{" note * "}" add.period$ * writeln }
   if$
 }
 
