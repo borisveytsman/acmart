@@ -292,4 +292,6 @@ Version 1.78.  Documentation update.
 	       Magic texcount comments for samples.
 	       Title page now is split if there are too many authors
 	       Bug fixes.
-	       
+
+Version 1.79.  Fixed pages with index
+	       (https://github.com/borisveytsman/acmart/issues/440)

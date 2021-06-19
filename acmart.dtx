@@ -1937,7 +1937,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2021/05/01 v1.78 Typesetting articles for the Association for Computing Machinery]
+[2021/06/16 v1.79 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -7482,6 +7482,26 @@
 %    \end{macrocode}
 %
 %
+% \end{macro}
+%
+%
+%\subsection{Index}
+%\label{sec:index}
+%
+% \begin{macro}{\theindex}
+% Standard |amsart| uses plain page style in index pages.  This
+% clashes with line numbering for |review| option, so we redefine it.
+%    \begin{macrocode}
+\def\theindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+  \columnseprule\z@ \columnsep 35\p@
+  \@indextitlestyle
+  \let\item\@idxitem
+  \parindent\z@  \parskip\z@\@plus.3\p@\relax
+  \raggedright
+  \hyphenpenalty\@M
+  \footnotesize}
+%    \end{macrocode}
+% 
 % \end{macro}
 %
 %\subsection{End of Class}
