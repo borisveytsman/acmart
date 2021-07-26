@@ -770,7 +770,7 @@ FUNCTION { output.year.check }
   year empty.or.unknown
      { "empty year in " cite$ * warning$
        write$
-       " \bibinfo{year}{[n.d.]}"
+       " \bibinfo{year}{[n.\,d.]}"
        "\natexlab{" extra.label * "}" * *
        mid.sentence 'output.state :=
      }
@@ -1989,7 +1989,7 @@ FUNCTION { calc.basic.label }
   if$
   duplicate$
   year empty.or.unknown
-    { "[n.d.]" }
+    { "[n.\,d.]" }
     { year field.or.null purify$ #-1 #4 substring$}
   if$
   *
@@ -2037,7 +2037,7 @@ FUNCTION { calc.label }
   % save the year for sort processing afterwards (adding a, b, c, etc.)
   %
   year empty.or.unknown
-    { "[n.d.]" }
+    { "[n.\,d.]" }
     { year field.or.null purify$ #-1 #4 substring$}
   if$
   'label.year :=
@@ -2429,7 +2429,7 @@ FUNCTION { phdthesis }
   new.block
   format.title emphasize "title" output.check  % NB: ACM style requires emphasized thesis title
   new.block
-  "\bibinfo{thesistype}{Ph.D. Dissertation}" format.thesis.type output
+  "\bibinfo{thesistype}{Ph.\,D. Dissertation}" format.thesis.type output
   new.sentence
   school "school" bibinfo.output.check
   address empty.or.unknown
