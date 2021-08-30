@@ -276,4 +276,24 @@ Version 1.73   Bug fixes
 	       The elements institution, city and country are now obligatory
 	       for affiliations
 
-Verision 1.74  Switch to Libertinus fonts
+Version 1.74   Bug fixes.  A regression introduced in the font changes
+	       is reverted.
+
+Version 1.75.  \country is now obligatory for addresses.
+	       Added \AtBeginMaketitle
+
+Version 1.76.  Added many journal abbreviations to the bst.
+	       New experimental option: pbalance
+	       ORCID linking code
+
+Version 1.77.  Changed the way to typeset multiple affiliations (Christoph Sommer)
+
+Version 1.78.  Documentation update.
+	       Magic texcount comments for samples.
+	       Title page now is split if there are too many authors
+	       Bug fixes.
+
+Version 1.79.  Fixed pages with index
+	       (https://github.com/borisveytsman/acmart/issues/440)
+	       Updated information for TAP, TCPS, TEAC
+

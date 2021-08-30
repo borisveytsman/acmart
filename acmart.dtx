@@ -1,6 +1,6 @@
 % \iffalse
 %
-% Copyright 2016-2020, Association for Computing Machinery
+% Copyright 2016-2021, Association for Computing Machinery
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
 % version 1.3 of this license or (at your option) any
@@ -57,7 +57,7 @@
 % \ifx\currentjob\guide\OnlyDescription\fi
 % \GetFileInfo{acmart.dtx}
 % \title{\LaTeX{} Class for the \emph{Association for Computing
-% Machinery}\thanks{\copyright 2016--2020, Association for Computing Machinery}}
+% Machinery}\thanks{\copyright 2016--2021, Association for Computing Machinery}}
 % \author{Boris Veytsman\thanks{%
 % \href{mailto:borisv@lk.net}{\texttt{borisv@lk.net}},
 % \href{mailto:boris@varphi.com}{\texttt{boris@varphi.com}}}}
@@ -104,6 +104,7 @@
 %  Andrew Black,
 %  Joachim Breitner,
 %  Benjamin Byholm,
+%  John Collins,
 %  Nils Anders Danielsson,
 %  Michael Ekstrand,
 %  Matthew Fluet,
@@ -111,6 +112,7 @@
 %  Ben Greenman,
 %  Enrico Gregorio,
 %  Jamie Davis,
+%  Ulrike Fischer,
 %  Jason Hemann,
 %  Peter Kemp,
 %  Luis Leiva,
@@ -138,6 +140,7 @@
 %  David Shamma,
 %  Gabriel Scherer,
 %  Kartik Singhal,
+%  Christoph Sommer,
 %  Stephen Spencer,
 %  Shin Hwei Tan,
 %  Daniel Thomas,
@@ -373,7 +376,9 @@
 % column mode has balanced columns.  By default it is |true|; however,
 % it may lead to problems for some documents.  Set it to |false| if
 % you encounter compilation errors.  Note that for one page documents
-% \cs{balance} command might cause problems.
+% \cs{balance} command might cause problems.  An alternative is the
+% (experimental) option |pbalance|, which uses the new package
+% |pbalance| for this end.
 %
 % The option |urlbreakonhyphens| determines whether URLs can be split
 % between lines after hyphens.  By default it is true.  Set it to
@@ -407,6 +412,8 @@
 %                       Section~\ref{sec:ug_theorems}\\
 %     balance & true & Whether to balance the last page in two column
 %                        mode\\
+%     pbalance & false & Whether to balance the last page in two column
+%                        mode using pbalance package\\
 %     urlbreakonhyphens & true & Whether to break urls on hyphens\\ 
 %     \bottomrule
 %   \end{tabularx}
@@ -635,8 +642,9 @@
 % automatically.
 %
 % The fields \cs{institution}, \cs{city} and \cs{country} are
-% mandatory.  If they are not provided, the warning is issued.  In the
-% future ACM might decide to change the warning to the error.  
+% mandatory.  If they are not provided, an error or a warning  is
+% issued. Currently the absence of \cs{country} produces an error;
+% ACM may change this in the future.
 %
 %
 % An example of the author block:
@@ -1456,7 +1464,7 @@
 %  eprint =       "960935712",
 %  primaryclass = "cs",
 % \end{verbatim}
-% See the examples at \url{http://arxiv.org/hypertex/bibstyles/}.
+% See the examples at \url{https://arxiv.org/help/hypertex/bibstyles}.
 %
 % There are several  special entry types. Types \path{online} and
 % \path{game} are used for Web pages and games, for example,
@@ -1585,6 +1593,12 @@
 % This will make the author to be sorted as ``Beethoven'' rather than
 % ``van Beethoven''.
 %
+% The current bst style defines a number of macros for common journal
+% names.  In particular, all journals listed in Table~\ref{tab:pubs}
+% are includes, so you can use strings like |journal = taccess| for
+% \emph{ACM Transactions on Accessible Computing}.  
+% 
+%
 %\subsection{Colors}
 %\label{sec:ug_colors}
 %
@@ -1665,6 +1679,36 @@
 % uppercasing.
 %
 %
+%\subsection{Counting words}
+%\label{sec:ug_counting}
+%
+% Some ACM conferences use word count limits for papers.  The
+% calculation of word number for a paper with math, tables and figures
+% is not a trivial task.  Currently the authoritative word count is
+% done by translating the PDF to text and using |wc -w| on the
+% output.  Authors can use the package |texcount| (used by Overleaf)
+% to get an estimate of the word count.  To faciliate this one adds to the
+% beginning of the package metacomments
+% \begin{verbatim}
+% %TC:macro \cite [option:text,text]
+% %TC:macro \citep [option:text,text]
+% %TC:macro \citet [option:text,text]
+% %TC:envir table 0 1
+% %TC:envir table* 0 1
+% %TC:envir tabular [ignore] word
+% %TC:envir displaymath 0 word
+% %TC:envir math 0 word
+% %TC:envir comment 0 0
+% \end{verbatim}
+% and uses |\begin{math}...\end{math}| instead of dollar signs for
+% math.  Note that the count is in any case approximate, and the final
+% decision of editors is based on PDF count.
+%
+% The script |texcount| provides a report of word count in the
+% document.
+%
+% 
+%
 %
 %\subsection{Disabled or forbidden commands}
 %\label{sec:ug_disabled}
@@ -1686,7 +1730,7 @@
 % You should not load |amssymb| package since the package |acmart|
 % defines the corresponding symbols itself.
 %
-%\subsection{A note for wizards: \texttt{acmart-preload-hook.tex}}
+%\subsection{Notes for wizards}
 %\label{sec:ug_preload}
 %
 % Sometimes you need to change the behavior of |acmart|.  The
@@ -1728,6 +1772,13 @@
 % \emph{do not ask for support.}  If you decide to use this hook, you
 % are on your own.
 %
+% \DescribeMacro{\AtBeginMaketitle}%
+% Another hook is \cs{AtBeginMaketitle}.  The commands in this hook
+% are executed before \cs{maketitle}, for example,
+% \begin{verbatim}
+% \AtBeginMaketitle{\acmPrice{125.00}}
+% \end{verbatim}
+% 
 %
 %\subsection{Currently supported publications}
 %\label{sec:pubs}
@@ -1886,7 +1937,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/09/27 v1.74 Typesetting articles for the Association for Computing Machinery]
+[2021/08/29 v1.79 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -1990,7 +2041,10 @@
 % \changes{1.71}{2020/05/01}{Retired sigchi and sigchi-a}
 % \changes{1.71}{2020/05/02}{Bibliography change: volume for
 % @inproceedings is now in brackets together with series}
-% \changes{1.71}{2020/05/02}{LuaTeX now uses the OTF versions of fonts}
+% \changes{1.71}{2020/05/02}{LuaTeX now uses the OTF versions of
+% fonts}
+% \changes{1.75}{2020/10/29}{Documentation update}
+% \changes{1.78}{2021/05/01}{Documentation update: Word count}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -2184,6 +2238,19 @@
 % 
 % \end{macro}
 %
+%
+% \begin{macro}{\if@ACM@pbalance}
+% \changes{v1.76}{2021/03/16}{Added macro}
+% Whether to balance the last page
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{pbalance}[true]{}{%
+  \PackageError{\@classname}{The option pbalance can be either true or
+    false}}
+\ExecuteOptionsX{pbalance=false}
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
 %
 % \begin{macro}{\if@ACM@natbib@override}
 % \changes{v1.12}{2016/05/30}{Added macro}
@@ -2813,6 +2880,14 @@
 %
 % \end{macro}
 %
+% Adding |hyperxmp|
+% \changes{v1.72}{2020/06/14}{Added hyperxmp}
+% \changes{v1.76}{2021/02/21}{Moved before hyperref, see
+% https://github.com/borisveytsman/acmart/issues/425} 
+%    \begin{macrocode}
+\RequirePackage{hyperxmp}
+%    \end{macrocode}
+% 
 %
 % And now, |hyperref| 
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
@@ -2863,12 +2938,6 @@
     pdfdisplaydoctitle}}
 %    \end{macrocode}
 %
-% And |hyperxmp|
-% \changes{v1.72}{2020/06/14}{Added hyperxmp}
-%    \begin{macrocode}
-\RequirePackage{hyperxmp}
-%    \end{macrocode}
-% 
 %
 % Bibliography mangling.
 % \changes{v1.33}{2017/03/23}{Moved \cs{citename} definition for
@@ -3219,22 +3288,27 @@
 % Breitner)}
 % \changes{v1.54}{2018/07/16}{XeTeX now uses T1 encoding}
 % \changes{v1.56}{2018/11/11}{Looks like XeTeX requires explicit
-% monotype font delcaration}
-% \changes{v1.74}{2020/09/27}{Switched to libertinus}
+% monotype font declaration}
+% \changes{v1.74}{2020/10/25}{Changed the order of font loading}%
 % We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
+  \RequirePackage[T1]{fontenc}
+  % Note that the order in which packages are loaded matters,
+  % and the correct order depends on the LaTeX engine used.
+  % See https://github.com/borisveytsman/acmart/issues/402
+  % and https://github.com/borisveytsman/acmart/issues/410
   \ifxetex
-    \RequirePackage{libertinus-otf}
+    \RequirePackage[math]{libertinus-otf}
     \setmonofont[StylisticSet=3]{inconsolata}
   \else
     \ifluatex
-      \RequirePackage{libertinus-otf}
+      \RequirePackage[math]{libertinus-otf}
       \setmonofont[StylisticSet=3]{inconsolata}
     \else
        \RequirePackage[T1]{fontenc}
-       \RequirePackage[libertine]{newtxmath}
        \RequirePackage{libertinus-type1}
+       \RequirePackage{libertinust1math}
        \RequirePackage[varqu]{zi4}
     \fi
   \fi
@@ -3639,6 +3713,7 @@
 % \changes{v1.53}{2018/04/14}{Added PACMCGIT, TIOT, TDSCI}
 % \changes{v1.58}{2019/03/29}{Added HEALTH.  TDSCI is renamed to TDS}
 % \changes{1.70}{2020/02/22}{Name change for TDS}
+% \changes{1.79}{2021/08/29}{Updated indormation for TAP, TCPS, TEAC}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
@@ -3802,14 +3877,20 @@
   \def\@permissionCodeOne{2375-4699}%
 \or % TAP
   \def\@journalName{ACM Transactions on Applied Perception}%
+  \def\@journalNameShort{ACM Trans. Appl. Percept.}%
+  \def\@permissionCodeOne{1544-3558}%
 \or % TCPS
   \def\@journalName{ACM Transactions on Cyber-Physical Systems}%
+  \def\@journalNameShort{ACM Trans. Cyber-Phys. Syst.}%
+  \def\@permissionCodeOne{2378-962X}%
 \or % TDS
   \def\@journalName{ACM/IMS Transactions on Data Science}%
   \def\@journalNameShort{ACM/IMS Trans. Data Sci.}%
   \def\@permissionCodeOne{2577-3224}%
 \or % TEAC
   \def\@journalName{ACM Transactions on Economics and Computation}%
+  \def\@journalNameShort{ACM Trans. Econ. Comput.}%
+  \def\@permissionCodeOne{2167-8375}%
 \or % TECS
   \def\@journalName{ACM Transactions on Embedded Computing Systems}%
   \def\@journalNameShort{ACM Trans. Embedd. Comput. Syst.}%
@@ -4008,9 +4089,12 @@
 %   The book title of the conference:
 %    \begin{macrocode}
 \def\acmBooktitle#1{\gdef\@acmBooktitle{#1}}
+\acmBooktitle{}
+\ifx\acmConference@name\@undefined\else
 \acmBooktitle{Proceedings of \acmConference@name
        \ifx\acmConference@name\acmConference@shortname\else
-         \ (\acmConference@shortname)\fi}
+       \ (\acmConference@shortname)\fi}
+\fi     
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4098,7 +4182,15 @@
 % \changes{v1.54}{2018/06/23}{Added submission id in anonymous mode}
 % \changes{v1.57}{2018/12/09}{Added warning if \cs{author} has comma}
 % \changes{v1.72}{2020/05/04}{Added \cs{detokenize} (Kuldeep S. Meel)}
-%   Adding an author to the list of authors and addresses
+% \changes{v1.76}{2021/03/15}{Added code for orcid links}
+% Adding an author to the list of authors and addresses.
+%
+% Note that we want to typeset the link to the author's orcid if
+% known.  The problem is, we know the orcid only after the author is
+% entered.  The trick is based on the idea that |\csname...\endcsname|
+% is \cs{relax} unless defined.  Therefore we typeset authors by the
+% special macro |\csname typeset@author\the\num@authors\endcsname|,
+% which is defined by \cs{orcid} command.  
 %    \begin{macrocode}
 \renewcommand\author[2][]{%
   \IfSubStr{\detokenize{#2}}{,}{\ClassWarning{\@classname}{Do not put several
@@ -4115,12 +4207,16 @@
           \@acmSubmissionID\fi}}%
       \gdef\authors{Anonymous Author(s)}%
     \else
-      \gdef\addresses{\@author{#2}}%
+      \expandafter\gdef\expandafter\addresses\expandafter{%
+        \expandafter\@author\expandafter{%
+          \csname typeset@author\the\num@authors\endcsname{#2}}}%
       \gdef\authors{#2}%
     \fi
   \else
     \if@ACM@anonymous\else
-      \g@addto@macro\addresses{\and\@author{#2}}%
+    \expandafter\g@addto@macro\expandafter\addresses\expandafter{%
+      \expandafter\and\expandafter\@author\expandafter{%
+        \csname typeset@author\the\num@authors\endcsname{#2}}}%
       \g@addto@macro\authors{\and#2}%
     \fi
   \fi
@@ -4224,9 +4320,17 @@
 %
 % \begin{macro}{\orcid}
 % \changes{v1.15}{2016/06/25}{Introduced macro}
-%   Right now we do not typeset ORCIDs
+% \changes{v1.76}{2021/03/15}{Added code for orcid links}
+%   We rededine the command to typeset the current author
 %    \begin{macrocode}
-\def\orcid#1{\unskip\ignorespaces}
+\def\orcid#1{\unskip\ignorespaces%
+  \IfBeginWith{#1}{http}{%
+    \expandafter\gdef\csname
+        typeset@author\the\num@authors\endcsname##1{%
+          \href{#1}{##1}}}{%
+    \expandafter\gdef\csname
+        typeset@author\the\num@authors\endcsname##1{%
+          \href{https://orcid.org/#1}{##1}}}}        
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4611,8 +4715,11 @@
 %    \begin{macrocode}
 \AtEndDocument{\if@ACM@nonacm\else\if@ACM@printacmref\else
   \ifnum\getrefnumber{TotPages}>1\relax
-  \ClassWarningNoLine{\@classname}{ACM reference format is mandatory
-    for papers over one page}%
+  \ClassWarningNoLine{\@classname}{%
+    ACM reference format is mandatory \MessageBreak
+    for papers over one page. \MessageBreak
+    Please add printacmref=true to the \MessageBreak
+    \string\settopmatter\space command.}%
   \fi\fi\fi}
 %    \end{macrocode}
 %
@@ -5133,8 +5240,34 @@
 %
 % \end{macro}
 %
+%
+%\subsection{Maketitle hook}
+%\label{sec:hook}
+%
+% The current \LaTeX\ provides a nice |lthooks| mechanism.  However,
+% since it is relatively new, we will use oldfashioned approach---at
+% least for now.
+%
+% \begin{macro}{\@beginmaketitlehook}
+% \changes{v1.75}{2020/11/15}{Introduced macro}
+% The hook
+%    \begin{macrocode}
+\ifx\@beginmaketitlehook\@undefined
+  \let\@beginmaketitlehook\@empty
+\fi
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\AtBeginMaketitle}
+% \changes{v1.75}{2020/11/15}{Introduced macro}
+% Adding to the hook
+%    \begin{macrocode}
+\def\AtBeginMaketitle{\g@addto@macro\@beginmaketitlehook}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Typesetting top matter}
-% \label{sec:makefile}
+% \label{sec:maketitle}
 %
 % \begin{macro}{\mktitle@bx}
 %   Some of our formats use a two-column design.  Some use a one-column
@@ -5181,6 +5314,8 @@
 % (Scott Pakin)} 
 % \changes{v1.73}{2020/09/07}{Do not check again the presense of
 % address fields} 
+% \changes{v1.75}{2020/11/15}{Added \cs{@beginmaketitlehook}}
+% \changes{v1.76}{2021/04/05}{Put \cs{par} inside group for keywords}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -5189,7 +5324,7 @@
 %  and therefore belong to the copyright/permission block.  By the
 %  way, this was the default behavior of the old ACM classes.
 %    \begin{macrocode}
-\def\maketitle{%
+\def\maketitle{\@beginmaketitlehook
   \@ACM@maketitle@typesettrue
   \if@ACM@anonymous
     % Anonymize omission of \author-s
@@ -5293,7 +5428,7 @@
        \else
          \@specialsection{Keywords}%
        \fi
-         \noindent\@keywords}\par\egroup
+         \noindent\@keywords\par}\egroup
    \fi
   \let\metadata@authors=\authors
   \nxandlist{, }{, }{, }\metadata@authors
@@ -5331,9 +5466,12 @@
 % its argument.  Added a bugfix}
 % \changes{v1.68}{2020/01/19}{Deleted grouping altogether}
 % \changes{v1.69}{2020/02/02}{Changed dot to colon for sigplan}
+% \changes{v1.78}{2021/05/02}{Again suppressed \cs{vspace} warning}
 %   This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
+  \let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig
   \ifcase\ACM@format@nr
   \relax % manuscript
     \par\medskip\small\noindent#1: %
@@ -5354,6 +5492,8 @@
   \or % sigchi-a
     \section*{#1}%
     \fi
+  \let\@vspace\@vspace@acm
+  \let\@vspacer\@vspacer@acm    
 }
 %    \end{macrocode}
 %
@@ -5363,15 +5503,32 @@
 % \begin{macro}{\@printtopmatter}
 % \changes{v1.06}{2016/05/01}{Added processing badges}
 % \changes{v1.46}{2017/08/29}{Deleted rule}
+% \changes{v1.78}{2021/05/16}{Added processing the overflowing title box}
 %   The printing of top matter starts a new page and uses the given
 %   title box.  Note that for |sigchi-a| we print badges here rather
 %   than in \cs{mktitle} since we want them in the margins.
+%
+% Note that if there are too many authors, |\mktitle@bx| might
+% overflow the page.  Therefore we start with checking this and if
+% this happens, we split the box and print it page by page.
 %    \begin{macrocode}
 \def\@printtopmatter{%
   \ifx\@startPage\@empty
      \gdef\@startPage{1}%
   \else
      \setcounter{page}{\@startPage}%
+  \fi
+  \@tempdima=\ht\mktitle@bx
+  \advance\@tempdima by \dp\mktitle@bx
+  \ifdim\@tempdima>0.9\textheight
+    \loop     
+      \setbox\@tempboxa=\vsplit \mktitle@bx to 0.9\textheight
+      \thispagestyle{firstpagestyle}%
+      \noindent\unvbox\@tempboxa
+      \clearpage
+      \@tempdima=\ht\mktitle@bx
+      \advance\@tempdima by \dp\mktitle@bx
+    \ifdim\@tempdima>0.9\textheight\repeat
   \fi
   \thispagestyle{firstpagestyle}%
   \noindent
@@ -5840,6 +5997,7 @@
 %
 % \begin{macro}{\@ACM@checkaffil}
 % \changes{v1.73}{2020/09/07}{Added macro}
+% \changes{v1.75}{2020/11/15}{Changed warning to error for country}
 % Check affiliation flags
 %    \begin{macrocode}
 \def\@ACM@checkaffil{%
@@ -5850,7 +6008,8 @@
   \ClassWarningNoLine{\@classname}{No city present for an affiliation}%
   \fi
   \if@ACM@countrypresent\else
-  \ClassWarningNoLine{\@classname}{No country present for an affiliation}%
+  \ClassError{\@classname}{No country present for an affiliation}{ACM
+    requires each author to indicate their country using country macro.}%
   \fi
 }
 %    \end{macrocode}
@@ -5866,6 +6025,7 @@
 % \changes{v1.40}{2017/06/04}{Switched to MakeTextUppercase}
 % \changes{v1.73}{2020/09/07}{Check the presence of required elements
 % for affiliations}
+% \changes{v1.78}{2021/05/16}{Unboxing \cs{mktitle@bx}}
 %   This version is used in most journal formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
@@ -5897,7 +6057,7 @@
       \fi
     \fi
      \global\let\and\@typeset@author@line}%
-  \global\setbox\mktitle@bx=\vbox{\noindent\box\mktitle@bx\par\medskip
+  \global\setbox\mktitle@bx=\vbox{\noindent\unvbox\mktitle@bx\par\medskip
     \noindent\addresses\@typeset@author@line
    \par\medskip}%
 }
@@ -5962,6 +6122,7 @@
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
 % \changes{v1.73}{2020/09/07}{Check the presence of required elements
 % for affiliations}
+% \changes{v1.78}{2021/05/16}{Unboxing \cs{mktitle@bx}}
 %   The |sigconf| version.  Here we use a centered design with each
 %   author in a separate box.
 %    \begin{macrocode}
@@ -6028,7 +6189,7 @@
 %    \begin{macrocode}
   \hsize=\textwidth
   \global\setbox\mktitle@bx=\vbox{\noindent
-    \box\mktitle@bx\par\medskip\leavevmode
+    \unvbox\mktitle@bx\par\medskip\leavevmode
     \lineskip=1pc\relax\centering\hspace*{-1em}%
     \addresses\let\and\@typeset@author@bx\and\par\bigskip}}
 %    \end{macrocode}
@@ -6108,6 +6269,7 @@
 % \begin{macro}{\@mkauthorsaddresses}
 % \changes{v1.46}{2017/08/27}{Introduced macro}
 % \changes{v1.65}{2019/10/13}{Deleted cs{@addpunct}}
+% \changes{v1.77}{2021/04/16}{New separator of institutions}
 % Typesetting authors' addresses in the footnote style
 %    \begin{macrocode}
 \def\@mkauthorsaddresses{%
@@ -6119,12 +6281,13 @@
   \def\streetaddress##1{\unskip, ##1}%
   \def\postcode##1{\unskip, ##1}%
   \def\position##1{\unskip\ignorespaces}%
-  \def\institution##1{\unskip, ##1}%
+  \gdef\@ACM@institution@separator{, }%
+  \def\institution##1{\unskip\@ACM@institution@separator ##1\gdef\@ACM@institution@separator{ and }}%
   \def\city##1{\unskip, ##1}%
   \def\state##1{\unskip, ##1}%
   \renewcommand\department[2][0]{\unskip\@addpunct, ##2}%
   \def\country##1{\unskip, ##1}%
-  \def\and{\unskip; }%
+  \def\and{\unskip; \gdef\@ACM@institution@separator{, }}%
   \def\@author##1{##1}%
   \def\email##1##2{\unskip, \nolinkurl{##2}}%
   \addresses
@@ -6171,12 +6334,13 @@
 % \begin{macro}{\@mkteasers}
 % Typesetting the teasers
 % \changes{v1.56}{2018/11/1}{Added check for description}
+% \changes{v1.78}{2021/05/16}{Unboxing \cs{mktitle@bx}}
 %    \begin{macrocode}
 \def\@mkteasers{%
   \ifx\@teaserfigures\@empty\else
     \def\@teaser##1{\par\bigskip\bgroup
       \captionsetup{type=figure}##1\egroup\par}
-    \global\setbox\mktitle@bx=\vbox{\noindent\box\mktitle@bx\par
+    \global\setbox\mktitle@bx=\vbox{\noindent\unvbox\mktitle@bx\par
       \noindent\@Description@presentfalse
       \@teaserfigures\par\if@Description@present\else
          \global\@undescribed@imagestrue
@@ -6480,6 +6644,7 @@
 % \changes{v1.59}{2019/04/20}{Added logic for conference papers using
 % journal format}
 % \changes{v1.59}{2019/04/20}{Moved page styles to \cs{AtBeginDocument}}
+% \changes{v1.76}{2021/02/21}{Fixed bug with no line numbers for nonacm}
 %   The page style for all pages but the first one
 %    \begin{macrocode}
 \AtBeginDocument{%
@@ -6538,7 +6703,10 @@
       \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
       \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
       \fancyhead[RE]{\@headfootfont\@shortauthors\ACM@linecountR}%
-      \if@ACM@nonacm\else%
+      \if@ACM@nonacm
+        \fancyhead[LE]{\ACM@linecountL}%
+        \fancyhead[RO]{\ACM@linecountR}%
+      \else%
         \fancyhead[LE]{\ACM@linecountL\@headfootfont\footnotesize
           \acmConference@shortname,
           \acmConference@date, \acmConference@venue}%
@@ -6551,7 +6719,10 @@
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
     \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
     \fancyhead[RE]{\@headfootfont\@shortauthors\ACM@linecountR}%
-    \if@ACM@nonacm\else%
+    \if@ACM@nonacm
+      \fancyhead[LE]{\ACM@linecountL}%
+      \fancyhead[RO]{\ACM@linecountR}%
+    \else%
       \fancyhead[LE]{\ACM@linecountL\@headfootfont
         \acmConference@shortname,
         \acmConference@date, \acmConference@venue}%
@@ -7175,9 +7346,29 @@
 %\label{sec:balancing}
 %
 % We need balancing only if the user did not disable it, and we use a
-% two column format
+% two column format.  Note that |pbalance| uses a different
+% mechanism. 
 %    \begin{macrocode}
 \AtEndPreamble{%
+  \if@ACM@pbalance
+    \global\@ACM@balancefalse
+    \ifcase\ACM@format@nr
+    \relax % manuscript
+       \or % acmsmall
+       \or % acmlarge
+       \or % acmtog
+          \RequirePackage{pbalance}%
+       \or % sigconf
+          \RequirePackage{pbalance}%
+       \or % siggraph
+          \RequirePackage{pbalance}%
+       \or % sigplan
+          \RequirePackage{pbalance}%
+       \or % sigchi
+          \RequirePackage{pbalance}%
+       \or % sigchi-a
+    \fi  
+  \fi
   \if@ACM@balance
     \ifcase\ACM@format@nr
     \relax % manuscript
@@ -7293,12 +7484,39 @@
   \def\@tempa{#1}%
   \ifx\@tempa\@empty\def\@tempa{arxiv}\fi
   \def\@tempb{arxiv}%
-  \ifx\@tempa\@tempb
-     arXiv:\href{https://arxiv.org/abs/#2}{#2}\else arXiv:#2%
+  \ifx\@tempa\@tempb\relax
+     arXiv:\href{https://arxiv.org/abs/#2}{#2}%
+  \else
+     \def\@tempb{arXiv}%
+     \ifx\@tempa\@tempb\relax
+       arXiv:\href{https://arxiv.org/abs/#2}{#2}%
+     \else
+       arXiv:#2%
+    \fi
   \fi}
 %    \end{macrocode}
 %
 %
+% \end{macro}
+%
+%
+%\subsection{Index}
+%\label{sec:index}
+%
+% \begin{macro}{\theindex}
+% Standard |amsart| uses plain page style in index pages.  This
+% clashes with line numbering for |review| option, so we redefine it.
+%    \begin{macrocode}
+\def\theindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+  \columnseprule\z@ \columnsep 35\p@
+  \@indextitlestyle
+  \let\item\@idxitem
+  \parindent\z@  \parskip\z@\@plus.3\p@\relax
+  \raggedright
+  \hyphenpenalty\@M
+  \footnotesize}
+%    \end{macrocode}
+% 
 % \end{macro}
 %
 %\subsection{End of Class}

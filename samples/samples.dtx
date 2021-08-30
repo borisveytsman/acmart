@@ -1,4 +1,19 @@
 %<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf>
+%%
+%% 
+%% Commands for TeXCount
+%<<TCMACROS
+%TC:macro \cite [option:text,text]
+%TC:macro \citep [option:text,text]
+%TC:macro \citet [option:text,text]
+%TC:envir table 0 1
+%TC:envir table* 0 1
+%TC:envir tabular [ignore] word
+%TC:envir displaymath 0 word
+%TC:envir math 0 word
+%TC:envir comment 0 0
+%TCMACROS
+%% 
 %% 
 %% The first command in your LaTeX source must be the \documentclass command.
 %<manuscript>\documentclass[manuscript,screen,review]{acmart}
@@ -573,6 +588,20 @@ and follow it with another numbered equation:
   \sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f
 \end{equation}
 just to demonstrate \LaTeX's able handling of numbering.
+
+
+More display math:
+\begin{displaymath}
+  \mathit{TyVar}, \mathit{TyBnd}, \mathit{ExpVar}, \mathit{ExpBnd}
+\end{displaymath}
+
+Bold vs non-bold math:
+\begin{displaymath}
+  \text{Scalar~} x, \text{vector~} \mathbf{x}.\quad
+  \text{Scalar~} A, \text{vector~} \mathbf{A}.\quad
+  \text{Scalar~} \mu, \text{vector~} \boldsymbol{\mu}.\quad
+\end{displaymath}
+
 
 \section{Figures}
 
