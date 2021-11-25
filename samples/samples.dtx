@@ -301,17 +301,17 @@ brackets and is a part of the {\verb|documentclass|} command:
 Journals use one of three template styles. All but three ACM journals
 use the {\verb|acmsmall|} template style:
 \begin{itemize}
-\item {\verb|acmsmall|}: The default journal template style.
-\item {\verb|acmlarge|}: Used by JOCCH and TAP.
-\item {\verb|acmtog|}: Used by TOG.
+\item {\texttt{acmsmall}}: The default journal template style.
+\item {\texttt{acmlarge}}: Used by JOCCH and TAP.
+\item {\texttt{acmtog}}: Used by TOG.
 \end{itemize}
 
 The majority of conference proceedings documentation will use the {\verb|acmconf|} template style.
 \begin{itemize}
-\item {\verb|acmconf|}: The default proceedings template style.
-\item{\verb|sigchi|}: Used for SIGCHI conference articles.
-\item{\verb|sigchi-a|}: Used for SIGCHI ``Extended Abstract'' articles.
-\item{\verb|sigplan|}: Used for SIGPLAN conference articles.
+\item {\texttt{acmconf}}: The default proceedings template style.
+\item{\texttt{sigchi}}: Used for SIGCHI conference articles.
+\item{\texttt{sigchi-a}}: Used for SIGCHI ``Extended Abstract'' articles.
+\item{\texttt{sigplan}}: Used for SIGPLAN conference articles.
 \end{itemize}
 
 \subsection{Template Parameters}
@@ -323,13 +323,13 @@ of these parameters can be found in the {\itshape \LaTeX\ User's Guide.}
 
 Frequently-used parameters, or combinations of parameters, include:
 \begin{itemize}
-\item {\verb|anonymous,review|}: Suitable for a ``double-blind''
+\item {\texttt{anonymous,review}}: Suitable for a ``double-blind''
   conference submission. Anonymizes the work and includes line
-  numbers. Use with the \verb|\acmSubmissionID| command to print the
+  numbers. Use with the \texttt{\acmSubmissionID} command to print the
   submission's unique ID on each page of the work.
-\item{\verb|authorversion|}: Produces a version of the work suitable
+\item{\texttt{authorversion}}: Produces a version of the work suitable
   for posting by the author.
-\item{\verb|screen|}: Produces colored hyperlinks.
+\item{\texttt{screen}}: Produces colored hyperlinks.
 \end{itemize}
 
 This document uses the following string as the first command in the
@@ -745,11 +745,11 @@ not in Word) produces a landscape-orientation formatted article, with
 a wide left margin. Three environments are available for use with the
 ``\verb|sigchi-a|'' template style, and produce formatted output in
 the margin:
-\begin{itemize}
-\item {\verb|sidebar|}:  Place formatted text in the margin.
-\item {\verb|marginfigure|}: Place a figure in the margin.
-\item {\verb|margintable|}: Place a table in the margin.
-\end{itemize}
+\begin{description}
+\item[\texttt{sidebar}:]  Place formatted text in the margin.
+\item[\texttt{marginfigure}:] Place a figure in the margin.
+\item[\texttt{margintable}:] Place a table in the margin.
+\end{description}
 
 %%
 %% The acknowledgments section is defined using the "acks" environment
