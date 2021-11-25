@@ -2048,10 +2048,12 @@ FUNCTION { calc.label }
 FUNCTION { output.bibitem }
 {
   newline$
-  "\bibitem[\protect\citeauthoryear{" write$
-  calc.label write$
+  "\bibitem[" write$
+  calc.basic.label write$
+  "(" write$
   sort.year write$
-  "}]%" writeln
+  ")" write$
+  "]%" writeln
   "        {" write$
   cite$ write$
   "}" writeln
