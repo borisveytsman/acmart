@@ -3047,7 +3047,7 @@ FUNCTION { begin.bib }
   "\providecommand\bibfield[2]{#2}" writeln
   "\providecommand\bibinfo[2]{#2}" writeln
   "\providecommand\natexlab[1]{#1}" writeln
-  "\providecommand\showeprint[2][]{arXiv:#2}" writeln
+  "\providecommand\showeprint[2][arxiv]{#1:#2}" writeln
 }
 
 EXECUTE {begin.bib}
