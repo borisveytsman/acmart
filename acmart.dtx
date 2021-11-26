@@ -1457,6 +1457,10 @@
 %  doi =          "10.1145/1188913.1188915",
 %  url =          "http://ccrma.stanford.edu/~jos/bayes/bayes.pdf",
 % \end{verbatim}
+% Normally the printing of URL is suppressed if DOI is present.
+% However, there is a special field \path{distinctURL}.  If it is
+% present and is not zero, URL is printed even if DOI is present. 
+%
 %
 % The style supports the arXiv-recommended fields \path{eprint} and
 % (optionally) \path{primaryclass}, for example,
@@ -1939,7 +1943,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2021/09/24 v1.80 Typesetting articles for the Association for Computing Machinery]
+[2021/11/26 v1.80 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}

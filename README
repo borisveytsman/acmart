@@ -12,6 +12,9 @@ The production version is the one on CTAN and ACM sites.
 
 Changes
 
+Version 1.81   Bug fixes
+	       New bib field distinctURL to print URL even if doi is present.
+
 Version 1.80   New journals: DLT, FAC
 
 Version 1.79   Fixed pages with index

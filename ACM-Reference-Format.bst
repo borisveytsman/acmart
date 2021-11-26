@@ -64,6 +64,7 @@ ENTRY
         isbn-13       % UTAH
         issn          % UTAH
         lccn          % UTAH
+	distinctURL   % whether to print url if doi is present
   }
   {}
   { label.year extra.label sort.year sort.label basic.label.year}
@@ -149,6 +150,16 @@ FUNCTION { empty.or.unknown }
     { #1 #2 substring$ "??" = }
   if$
 }
+
+FUNCTION { empty.or.zero }
+{ 
+  %% Examine the top entry and push 1 if it is empty, or is zero
+  duplicate$ empty$
+    { pop$ #1 }
+    { "0" = }
+  if$
+}
+
 
 FUNCTION { writeln }
 {
@@ -737,10 +748,14 @@ FUNCTION { output.eprint } %
 % Changes by BV 2011/04/15.  Do not output
 % url if doi is defined
 %
+%
+% Changes by BV 2021/11/26.  Output url even if doi is defined
+% if distinctURL is not zero.
+%
 FUNCTION { output.url } % UTAH
 { % return with stack untouched
   % output URL and associated lastaccessed fields
-  doi empty.or.unknown
+  doi empty.or.unknown distinctURL empty.or.zero not or
   {
     url empty.or.unknown
       { }
@@ -3047,7 +3062,7 @@ FUNCTION { begin.bib }
   "\providecommand\bibfield[2]{#2}" writeln
   "\providecommand\bibinfo[2]{#2}" writeln
   "\providecommand\natexlab[1]{#1}" writeln
-  "\providecommand\showeprint[2][arXiv]{#1:#2}" writeln
+  "\providecommand\showeprint[2][]{arXiv:#2}" writeln
 }
 
 EXECUTE {begin.bib}
