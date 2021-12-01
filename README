@@ -14,6 +14,7 @@ Changes
 
 Version 1.81   Bug fixes
 	       New bib field distinctURL to print URL even if doi is present.
+	       Reworded samples
 
 Version 1.80   New journals: DLT, FAC
 
