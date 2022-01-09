@@ -263,7 +263,18 @@
   \usebibmacro{issue}%
   \newunit}
 
-
+\renewbibmacro*{doi+eprint+url}{%
+  \iftoggle{bbx:url}
+    {\iffieldundef{doi}{\usebibmacro{url+urldate}}{}}
+    {}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+  \iftoggle{bbx:doi}
+    {\printfield{doi}}
+    {}}
 
 
 %%% Definitions for drivers (alphabetical)
