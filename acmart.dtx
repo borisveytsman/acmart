@@ -103,6 +103,7 @@
 %  Dirk Beyer,
 %  Andrew Black,
 %  Joachim Breitner,
+%  Yegor Bugayenko,
 %  Benjamin Byholm,
 %  John Collins,
 %  Nils Anders Danielsson,
@@ -1340,6 +1341,16 @@
 % |\begin{anonsuppress}| and |\end{anonsuppress}| should start on a
 % line of their own with no leading or trailing spaces.
 %
+% \DescribeMacro{\anon}%
+% To suppress short snippets of information, use the command
+% \cs{anon}\oarg{substitute}\marg{suppressed-text}.  By default
+% \oarg{substitute} is the word ANONYMOUS. Examples:
+% \begin{verbatim}
+% This work was performed at \anon{NSA}.
+% This work was performed at \anon[No Such Agency]{NSA}.
+% \end{verbatim}
+% 
+%
 %\subsection{Acknowledgments}
 %\label{sec:ug_acks}
 %
@@ -1943,7 +1954,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2021/12/05 v1.81 Typesetting articles for the Association for Computing Machinery]
+[2022/01/11 v1.82 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -5250,7 +5261,8 @@
 % \end{macro}
 %
 % \begin{macro}{\anon}
-%   We provide \cs{anon} command, which blinds parts of the text
+% \changes{v1.82}{2022/01/11}{Introduced macro}%
+% We provide \cs{anon} command, which blinds parts of the text
 %   if the package option |anonymous| is set
 %    \begin{macrocode}
 \newcommand{\anon}[2][ANONYMIZED]{%
