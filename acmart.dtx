@@ -1295,6 +1295,17 @@
 % defined, the option |acmthm=false| in the preamble will suppress
 % them.
 %
+% Sometimes authors want to define new theorem-like constructs that
+% use |theorem| counters.  They must be defined either after
+% |\begin{document}|, or delayed using \cs{AtEndPreamble} construct,
+%   for example,
+% \begin{verbatim}
+% \AtEndPreamble{%
+%   \theoremstyle{acmdefinition}
+%   \newtheorem{remark}[theorem]{Remark}}
+% \end{verbatim}
+% 
+%
 %\subsection{Online-only and offline-only material}
 %\label{sec:ug_screen}
 %
@@ -1954,7 +1965,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/01/11 v1.82 Typesetting articles for the Association for Computing Machinery]
+[2022/02/05 v1.82 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}

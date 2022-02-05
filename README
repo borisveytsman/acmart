@@ -14,6 +14,7 @@ Changes
 
 Version 1.82   Bug fixes.
 	       New command \anon for anonymization of short strings.
+	       Documentation update.
 
 Version 1.81   Bug fixes
 	       New bib field distinctURL to print URL even if doi is present.
