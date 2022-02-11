@@ -1,9 +1,9 @@
-\ProvidesFile{acmnumeric.bbx}[2020-05-18 v0.2 biblatex bibliography style]
+\ProvidesFile{acmnumeric.bbx}[2017-09-27 v0.1 biblatex bibliography style]
 
 % Inherit a default style
 \RequireBibliographyStyle{trad-plain}
 
-\renewcommand{\bibfont}{\Small}
+
 
 %%% Localisation strings for ACM
 
@@ -263,7 +263,18 @@
   \usebibmacro{issue}%
   \newunit}
 
-
+\renewbibmacro*{doi+eprint+url}{%
+  \iftoggle{bbx:url}
+    {\iffieldundef{doi}{\usebibmacro{url+urldate}}{}}
+    {}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+  \iftoggle{bbx:doi}
+    {\printfield{doi}}
+    {}}
 
 
 %%% Definitions for drivers (alphabetical)
