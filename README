@@ -12,6 +12,9 @@ The production version is the one on CTAN and ACM sites.
 
 Changes
 
+Version 1.83   Support for multilanguage papers
+	       ISSN changes for some journals
+
 Version 1.82   Bug fixes.
 	       New command \anon for anonymization of short strings.
 	       Documentation update.

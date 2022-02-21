@@ -420,7 +420,9 @@
 %   \end{tabularx}
 % \end{table}
 %
-%
+% The option |language| is used to define the languages for the
+% multi-language papers.  It is discussed in
+% Section~\ref{sec:ug_i13n}. 
 %
 %\subsection{Top matter}
 %\label{sec:ug_topmatter}
@@ -1152,6 +1154,82 @@
 % \renewcommand{\shortauthors}{Zhou et al.}
 % \end{verbatim}
 %
+%
+%
+%\subsection{Internationalization}
+%\label{sec:ug_i13n}
+%
+% ACM accepts publications in languages other than English, as well as
+% papers in English with translations of titles, subtitles, keywords
+% and abstracts into other languages.  Papers in languages other than
+% English usually have titles, subtitles (if applicable), keywords and
+% abstracts in English.  Note that CCS concepts are always typeset in
+% English.
+%
+% To submit these papers you need to set the option |language| in the
+% \cs{documentclass} command.  This option can be repeated, for
+% example, 
+% \begin{verbatim}
+% \documentclass[sigconf, language=french, language=english]{acmart}
+% \end{verbatim}
+% The last language in the list is the main language of the paper,
+% i.e. the one for the main title, abstract, body, etc.  The other
+% languages are \emph{secondary,} and used for translated titles,
+% keywords, abstracts.  Thus the paper above is written in English,
+% and has a secondary abstract and a secondary title in French.  On
+% the other hand, a paper in French wih secondary titles and abstracts
+% in English and German should use, for example
+% \begin{verbatim}
+% \documentclass[sigconf,
+%                language=german, 
+%                language=english, 
+%                language=french]{acmart}
+% \end{verbatim}
+% 
+%
+% This key can use any language defined in \textsl{babel}
+% package~\cite{Braams22:Babel} (currently the package is tested with
+% English, French, German and Spanish languages; other languages may
+% require a translation of \cs{keywordsname} macro).  Actually
+% \textsl{acmart} loads \textsl{babel} internally, so you can use  the
+% facilities provided by this package.
+%
+%
+% If this key is set, you have access to several additional top matter
+% commands.
+%
+% \DescribeMacro{\translatedtitle}%
+% \DescribeMacro{\translatedsubtitle}%
+% \DescribeMacro{\translatedkeywords}%
+% The commands \cs{translatedtitle}\marg{language}{title},
+% \cs{translatedsubtitle}\marg{language}{subtitle} and
+% \cs{translatedkeywords}{language}{keywords} are used to set title,
+% subtitle and keywords in the secondary language.  For example, a
+% paper in English with French title and abstract may set 
+% \begin{verbatim}
+% \title{A note on computational complexity}
+% \translatedtitle{french}{Remarque sur la complexit\'e de calcul}
+% \end{verbatim}
+% while a paper in French should set
+% \begin{verbatim}
+% \title{Remarque sur la complexit\'e de calcul}
+% \translatedtitle{english}{A note on computational complexity}
+% \end{verbatim}
+%
+% \DescribeEnv{translatedabstract}%
+% Similarly, |translatedabstract| environment has a mandatory language
+% argument, for example,
+% \begin{verbatim}
+% \begin{translatedastract}{english}
+%   This is the English version of the abstract
+% \end{translatedastract}
+% \end{verbatim}
+%
+% You can repeat these commands if a paper has more than one secondary
+% language. 
+%
+% Use the standard commands (\cs{title}, \cs{subtitle},
+% \cs{keywords}, |abstract|) for the main language of the paper.  
 %
 %\subsection{Algorithms}
 %\label{sec:ug_algorithms}
@@ -1965,7 +2043,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/02/05 v1.82 Typesetting articles for the Association for Computing Machinery]
+[2022/02/19 v1.83 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2367,6 +2445,21 @@
 %
 % \end{macro}
 %
+% 
+%
+% \begin{macro}{\ACM@languages}
+% \changes{v1.83}{2022/02/19}{Introduced macro}
+% The languages of the document
+%    \begin{macrocode}
+\def\ACM@languages{}
+\DeclareOptionX{language}{%
+  \ifx\ACM@languages\@empty
+  \gdef\ACM@languages{english}\fi
+  \g@addto@macro\ACM@languages{, #1}}
+%    \end{macrocode}
+% 
+%
+% \end{macro}
 %
 % \changes{v1.01}{2016/04/18}{Explicitly put draft option
 % (closes \url{https://github.com/borisveytsman/acmart/issues/4})}
@@ -2560,6 +2653,9 @@
 %    \end{macrocode}
 %
 %
+%
+%
+%
 %\subsection{Citations}
 % \changes{v1.19}{2016/07/28}{Include 'References' in PDF bookmarks
 % (Matthew Fluet)}
@@ -2690,6 +2786,166 @@
 \citestyle{acmnumeric}
 \fi
 %    \end{macrocode}
+%
+%
+%\subsection{Internationalization}
+%\label{sec:i13n}
+%
+%
+% 
+% \changes{v1.83}{2022/02/19}{Use babel for multilanguage papers}
+%    \begin{macrocode}
+\if@ACM@journal
+  \renewcommand\keywordsname{Additional Key Words and Phrases}%
+\else
+  \renewcommand\keywordsname{Keywords}%
+\fi 
+\ifx\ACM@languages\@empty
+\else
+  \RequirePackage[\ACM@languages]{babel}%
+  \addto\captionsenglish{%
+      \if@ACM@journal
+        \renewcommand\keywordsname{Additional Key Words and Phrases}%
+      \else
+        \renewcommand\keywordsname{Keywords}%
+      \fi 
+      \renewcommand\acksname{Acknowledgements}%
+  }%
+  \addto\captionsfrench{%
+      \if@ACM@journal
+        \renewcommand\keywordsname{Mots Clés et Phrases Supplémentaires}%
+      \else
+        \renewcommand\keywordsname{Mots clés}%
+      \fi 
+      \renewcommand\acksname{Remerciements}%
+  }%
+  \addto\captionsgerman{%
+      \if@ACM@journal
+        \renewcommand\keywordsname{Zusätzliche Schlüsselwörter und Phrasen}%
+      \else
+        \renewcommand\keywordsname{Schlüsselwörter}%
+      \fi 
+      \renewcommand\acksname{Danksagungen}%
+  }%
+  \addto\captionsspanish{%
+      \if@ACM@journal
+        \renewcommand\keywordsname{Palabras y Frases Claves Adicionales}%
+      \else
+        \renewcommand\keywordsname{Palabras claves}%
+      \fi 
+      \renewcommand\acksname{Expresiones de gratitud}%
+  }%
+\fi
+%    \end{macrocode}
+%
+% \begin{macro}{\ACM@lang@check}
+% \changes{v1.83}{2022/02/20}{Added macro}
+% Some commands should not be used if the document is monlingual
+%    \begin{macrocode}
+\newcommand\ACM@lang@check[1]{%
+  \ifx\ACM@languages\@empty\relax
+  \ClassError{\@classname}{%
+    Command \string#1 \MessageBreak is used in monlingual document}{%
+    You used a command (\string#1) \MessageBreak
+    that does not have a meaning \MessageBreak
+    unless are languages are defined. \MessageBreak
+    Please choose the languages in \string\documentclass
+    \MessageBreak
+    (e.g. \string\documentclass[languages={french, english}]{acmart}), 
+    \MessageBreak
+    or delete the command.}%
+  \fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@translatedtitle}
+% \changes{v1.83}{2022/02/20}{Added macro}
+%    \begin{macrocode}
+\def\@translatedtitle{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\translatedtitle}
+% \changes{v1.83}{2022/02/20}{Added macro}
+% The title of the paper in a different language
+%    \begin{macrocode}
+\newcommand\translatedtitle[2]{\ACM@lang@check{\translatedtitle}%
+\g@addto@macro\@translatedtitle{\par\foreignlanguage{#1}{#2}}}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+% \begin{macro}{\@translatedsubtitle}
+% \changes{v1.83}{2022/02/20}{Added macro}
+%    \begin{macrocode}
+\def\@translatedsubtitle{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\translatedsubtitle}
+% \changes{v1.83}{2022/02/20}{Added macro}
+% The subtitle of the paper in a different language
+%    \begin{macrocode}
+\newcommand\translatedsubtitle[2]{\ACM@lang@check{\translatedsubtitle}%
+\g@addto@macro\@translatedsubtitle{\par\foreignlanguage{#1}{#2}}}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+% \begin{macro}{\@translatedkeywords}
+% \changes{v1.83}{2022/02/20}{Added macro}
+%    \begin{macrocode}
+\def\@translatedkeywords{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\translatedkeywords}
+% \changes{v1.83}{2022/02/20}{Added macro}
+% Add keywords to the paper in the language specified
+%    \begin{macrocode}
+\newcommand\translatedkeywords[2]{\ACM@lang@check{\translatedkeywords}%
+\g@addto@macro\@translatedkeywords{\@mktranslatedkeywords{#1}{#2}}}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+% \begin{macro}{\@translatedabstracts}
+% \changes{v1.83}{2022/02/20}{Added macro}
+% The container for translated abstracts.
+%    \begin{macrocode}
+\def\@translatedabstracts{}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+% \begin{macro}{translatedabstract}
+% \changes{v1.83}{2022/02/20}{Added macro}
+%   We save translated abstracts into \cs{@translatedabstracts} 
+%    \begin{macrocode}
+\newenvironment{translatedabstract}[1]{\Collect@Body
+  \@savetranslatedabstract\@mktranslatedabstract{#1}}{}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
+% \begin{macro}{\@savetranslatedabstract}
+%   And saving the abstract
+%    \begin{macrocode}
+\long\def\@savetranslatedabstract#1{\if@ACM@maketitle@typeset
+  \ClassError{\@classname}{Abstract must be defined before maketitle
+    command. Please move it!}\fi
+  \ACM@lang@check{translatedabstract}%
+  \g@addto@macro\@translatedabstracts{\bgroup#1\egroup}}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+%
+%\subsection{Sectioning}
+%\label{sec:sectioning}
+%
+%
 %
 % \begin{macro}{\@startsection}
 % \changes{v1.31}{2017/03/04}{Added \cs{tochangmeasure}}
@@ -2902,6 +3158,12 @@
 %
 % \end{macro}
 %
+%
+%\subsection{Hyperxmp and hyperref}
+%\label{sec:hyper}
+%
+%
+%
 % Adding |hyperxmp|
 % \changes{v1.72}{2020/06/14}{Added hyperxmp}
 % \changes{v1.76}{2021/02/21}{Moved before hyperref, see
@@ -3004,6 +3266,11 @@
 %    \end{macrocode}
 %
 % \end{macro}
+%
+%
+%\subsection{Other packages}
+%\label{sec:packages}
+%
 %
 %
 % Graphics and color.
@@ -3866,6 +4133,8 @@
 \or % JOCCH
   \def\@journalName{ACM Journal on Computing and Cultural Heritage}%
   \def\@journalNameShort{ACM J. Comput. Cult. Herit.}%
+  \def\@permissionCodeOne{1556-4673}%
+  \def\@permissionCodeTwo{1556-4711}%
 \or % PACMCGIT
   \def\@journalName{Proceedings of the ACM on Computer Graphics and Interactive Techniques}%
   \def\@journalNameShort{Proc. ACM Comput. Graph. Interact. Tech.}%
@@ -4012,7 +4281,7 @@
   \def\@journalName{ACM Transactions on Multimedia Computing, Communications and Applications}%
   \def\@journalNameShort{ACM Trans. Multimedia Comput. Commun. Appl.}%
   \def\@permissionCodeOne{1551-6857}%
-  \def\@permissionCodeTwo{0100}%
+  \def\@permissionCodeTwo{1551-6865}%
 \or % TOMPECS
   \def\@journalName{ACM Transactions on Modeling and Performance Evaluation of Computing Systems}%
   \def\@journalNameShort{ACM Trans. Model. Perform. Eval. Comput. Syst.}%
@@ -4070,8 +4339,8 @@
   \def\@journalNameShort{ACM Trans. Web}%
   \def\@permissionCodeOne{1559-1131}%
 \else % FACMP, a dummy journal
-  \def\@journalName{Forthcoming ACM Publication}%
-  \def\@journalNameShort{ACM Forthcoming}%
+  \def\@journalName{ACM Just Accepted}%
+  \def\@journalNameShort{ACM Accepted}%
   \def\@permissionCodeOne{XXXX-XXXX}%
 \fi
 \ClassInfo{\@classname}{Using journal code \@journalCode}%
@@ -4384,6 +4653,18 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\@mktranslatedkeywords}
+% \changes{v1.83}{2022/02/20}{Added macro}
+% We have two argument: the language to typeset keywords and the
+% keywords.
+%    \begin{macrocode}
+\newcommand\@mktranslatedkeywords[2]{\bgroup
+  \selectlanguage{#1}%
+  {\@specialsection{\keywordsname}%
+    \noindent#2\par}\egroup}
+%    \end{macrocode}
+% 
+% \end{macro}
 %
 % \begin{macro}{\@titlenotes}
 %   The title notes
@@ -5370,6 +5651,7 @@
 % address fields}
 % \changes{v1.75}{2020/11/15}{Added \cs{@beginmaketitlehook}}
 % \changes{v1.76}{2021/04/05}{Put \cs{par} inside group for keywords}
+% \changes{v1.83}{2022/02/20}{I13n}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -5470,6 +5752,8 @@
   \endgroup
   \setcounter{footnote}{0}%
   \@mkabstract
+  \ifx\@translatedabstracts\@empty\else
+  \@translatedabstracts\fi
   \if@ACM@printccs
   \ifx\@concepts\@empty\else\bgroup
       {\@specialsection{CCS Concepts}%
@@ -5477,13 +5761,12 @@
      \fi
    \fi
    \ifx\@keywords\@empty\else\bgroup
-      {\if@ACM@journal
-         \@specialsection{Additional Key Words and Phrases}%
-       \else
-         \@specialsection{Keywords}%
-       \fi
+      {\@specialsection{\keywordsname}%
          \noindent\@keywords\par}\egroup
    \fi
+  \ifx\@translatedkeywords\@empty\else
+     \@translatedkeywords
+  \fi
   \let\metadata@authors=\authors
   \nxandlist{, }{, }{, }\metadata@authors
   \def\@ACM@checkaffil{}%
@@ -5716,6 +5999,8 @@
 % \begin{macro}{\@mktitle@i}
 % \changes{v1.06}{2016/05/01}{Made generic}
 % \changes{v1.06}{2016/05/01}{Added processing badges}
+% \changes{v1.83}{2022/02/20}{Added \cs{translatedtitle} and
+% \cs{translatedsubtitle}}
 %   The version of \cs{mktitle} for most journals
 %    \begin{macrocode}
 \def\@mktitle@i{\hsize=\textwidth
@@ -5736,9 +6021,9 @@
     \fi
     \parbox[t]{\@ACM@title@width}{\raggedright
       \@titlefont\noindent
-      \@title
+      \@title\@translatedtitle%
   \ifx\@subtitle\@empty\else
-    \par\noindent{\@subtitlefont\@subtitle}
+    \par\noindent{\@subtitlefont\@subtitle\@translatedsubtitle}%
   \fi}%
   \ifx\@acmBadgeR@image\@empty\else
     \hskip\@ACM@badge@skip
@@ -5760,6 +6045,8 @@
 % \begin{macro}{\@mktitle@iii}
 % \changes{v1.06}{2016/05/01}{Made more generic}
 % \changes{v1.06}{2016/05/01}{Added processing badges}
+% \changes{v1.83}{2022/02/20}{Added \cs{translatedtitle} and
+% \cs{translatedsubtitle}} 
 %   The version of \cs{@mktitle} for SIG proceedings.  Note that since
 %   the title is centered, we leave space for the left badge even if
 %   only the right badge is defined.
@@ -5778,9 +6065,9 @@
         \hskip\@ACM@badge@skip
       \fi
       \parbox[t]{\@ACM@title@width}{\centering\@titlefont
-        \@title
+        \@title\@translatedtitle%
         \ifx\@subtitle\@empty\else
-          \par\noindent{\@subtitlefont\@subtitle}
+          \par\noindent{\@subtitlefont\@subtitle\@translatedsubtitle}
         \fi
       }%
       \if@ACM@badge
@@ -5799,14 +6086,16 @@
 %
 % \begin{macro}{\@mktitle@iv}
 % \changes{v1.06}{2016/05/01}{Made more generic}
+% \changes{v1.83}{2022/02/20}{Added \cs{translatedtitle} and
+% \cs{translatedsubtitle}} 
 %   The version of \cs{@mktitle} for |sigchi-a|
 %    \begin{macrocode}
 \def\@mktitle@iv{\hsize=\textwidth
     \setbox\mktitle@bx=\vbox{\raggedright\leftskip5pc\@titlefont
       \noindent\leavevmode\leaders\hrule height 2pt\hfill\kern0pt\par
-      \noindent\@title
+      \noindent\@title\@translatedtitle%
      \ifx\@subtitle\@empty\else
-       \par\noindent\@subtitlefont\@subtitle
+       \par\noindent\@subtitlefont\@subtitle\@translatedsubtitle%
      \fi
      \par\bigskip}}%
 %    \end{macrocode}
@@ -6414,11 +6703,12 @@
 % Wickerson)}
 % \changes{v1.48}{2017/09/16}{Removed spurious indentation if abstract
 % is followed by an empty line}
+% \changes{v1.83}{2022/02/20}{I13n}
 %   Typesetting the abstract
 %    \begin{macrocode}
 \def\@mkabstract{\bgroup
   \ifx\@abstract\@lempty\else
-  {\phantomsection\addcontentsline{toc}{section}{Abstract}%
+  {\phantomsection\addcontentsline{toc}{section}{\abstractname}%
     \if@ACM@journal
        \everypar{\setbox\z@\lastbox\everypar{}}\small
     \else
@@ -6430,6 +6720,22 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\@mktranslatedabstract}
+% \changes{v1.83}{2022/02/20}{Added macro}
+%   Typesetting a translated abstract
+%    \begin{macrocode}
+\def\@mktranslatedabstract#1{\selectlanguage{#1}%
+    \if@ACM@journal
+       \everypar{\setbox\z@\lastbox\everypar{}}\small
+    \else
+       \section*{\abstractname}%
+    \fi
+   \ignorespaces}
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% 
 % \begin{macro}{\@mkbibcitation}
 % \changes{v1.17}{2016/07/10}{Changed format for sigs}
 % \changes{v1.17}{2016/07/10}{Added \cs{nobreak}}
