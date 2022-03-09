@@ -8,11 +8,12 @@
 
 PACKAGE=acmart
 
-
-PDF = $(PACKAGE).pdf acmguide.pdf
+BIBLATEXFILES= $(wildcard *.bbx) $(wildcard *.cbx) $(wildcard *.dbx) $(wildcard *.lbx)
+SAMPLEBIBLATEXFILES=$(patsubst %,samples/%,$(BIBLATEXFILES))
 
 all:  ${PDF} ALLSAMPLES
 
+test: $(SAMPLEBIBLATEXFILES)
 
 %.pdf:  %.dtx   $(PACKAGE).cls
 	pdflatex $<
@@ -50,9 +51,22 @@ samples/%: %
 samples/$(PACKAGE).cls: $(PACKAGE).cls
 samples/ACM-Reference-Format.bst: ACM-Reference-Format.bst
 
+samples/%.bbx: %.bbx
+samples/%.cbx: %.cbx
+samples/%.dbx: %.dbx
+samples/%.lbx: %.lbx
+
 samples/%.pdf:  samples/%.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
 	cd $(dir $@) && pdflatex-dev $(notdir $<)
 	- cd $(dir $@) && bibtex $(notdir $(basename $<))
+	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
+	  do cd $(dir $@) && pdflatex-dev $(notdir $<); done
+
+samples/%biblatex.pdf: samples/%biblatex.tex $(SAMPLEBIBLATEXFILES)
+	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	- cd $(dir $@) && biber $(notdir $(basename $<))
 	cd $(dir $@) && pdflatex-dev $(notdir $<)
 	cd $(dir $@) && pdflatex-dev $(notdir $<)
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
@@ -86,8 +100,8 @@ docclean:
 	*.dvi *.ps *.thm *.tgz *.zip *.rpi \
 	samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst \
 	samples/*.log samples/*.aux samples/*.out \
-	samples/*.bbl samples/*.blg samples/*.cut 
-
+	samples/*.bbl samples/*.blg samples/*.cut \
+	samples/*.run.xml samples/*.bcf $(SAMPLEBIBLATEXFILES)
 
 
 clean: docclean
