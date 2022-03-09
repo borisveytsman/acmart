@@ -1,0 +1,357 @@
+\ProvidesFile{software.bbx}[2020/04/02 bibliography driver extension for software entries, Roberto Di Cosmo]
+%
+% Reference implementation of a BibLaTeX style for the software family of bibliographic entries
+%
+% 2020/04/02 Roberto Di Cosmo <roberto@dicosmo.org>
+%
+\RequireBiber[3]
+\RequirePackage{xurl}
+%
+% Toggles for typesetting additional ids and printing labels
+%
+\newtoggle{bbx:halid}
+\newtoggle{bbx:swhid}
+\newtoggle{bbx:shortswhid}
+\newtoggle{bbx:vcs}
+\newtoggle{bbx:swlabels}
+\newtoggle{bbx:license}
+
+\DeclareBibliographyOption[boolean]{halid}[true]{%
+  \settoggle{bbx:halid}{#1}}
+\DeclareBibliographyOption[boolean]{swhid}[true]{%
+  \settoggle{bbx:swhid}{#1}}
+\DeclareBibliographyOption[boolean]{shortswhid}[false]{%
+  \settoggle{bbx:shortswhid}{#1}}
+\DeclareBibliographyOption[boolean]{swlabels}[true]{%
+  \settoggle{bbx:swlabels}{#1}}
+\DeclareBibliographyOption[boolean]{vcs}[true]{%
+  \settoggle{bbx:vcs}{#1}}
+\DeclareBibliographyOption[boolean]{license}[true]{%
+  \settoggle{bbx:license}{#1}}
+
+\ExecuteBibliographyOptions{halid,swhid,shortswhid,swlabels,vcs,license}
+
+%
+% Declare inheritance rules (valid only in LaTeX preamble!)
+%
+\DeclareDataInheritance{software}{softwareversion,softwaremodule,codefragment}{\inherit{*}{*}}
+\DeclareDataInheritance{softwareversion}{softwaremodule,codefragment}{\inherit{*}{*}}
+\DeclareDataInheritance{softwaremodule}{codefragment}{\inherit{*}{*}}
+
+%
+% Localization
+%
+\DeclareLanguageMapping{english}{english-software}
+\DeclareLanguageMapping{french}{french-software}
+
+%
+% Macros
+%
+
+%
+% Notice the use of \edef to force expansion of the macro parameters before calling \nolinkurl
+%
+\newbibmacro*{swurl+urldate}{%
+  \mkbibacro{URL}\addcolon\addspace%
+     \ifhyperref%
+        {\href{\strfield{url}}{\nolinkurl{\strfield{url}}}}%
+        {\edef\temp{\noexpand\nolinkurl{\strfield{url}}}\temp}%
+  \iffieldundef{urlyear}%
+    {}%
+    {\setunit*{\addspace}%
+     \usebibmacro{urldate}}}
+
+%
+% Support multiline SWHIDs and create swhidcore field from swhid if missing
+%
+\DeclareStyleSourcemap{
+  \maps[datatype=bibtex,overwrite=true]{
+    \map{
+      \step[fieldsource=swhid, match=\regexp{\s}, replace={}]
+    }
+    \map{
+      \step[fieldsource=swhid]
+      \step[fieldset=swhidcore, origfieldval]
+      \step[fieldsource=swhidcore, match=\regexp{;.*}, replace={}]
+    }
+  }
+}
+
+%
+% Formatting fields for the software entries
+%
+
+\DeclareFieldFormat[softwaremodule,codefragment]{subtitle}{\mkbibquote{#1\isdot}}
+\DeclareFieldFormat[software,softwareversion,softwaremodule,codefragment]{url}{
+  \iftoggle{bbx:url}%
+	   {\usebibmacro{swurl+urldate}}
+           {}%
+}
+\DeclareFieldFormat[software,softwareversion,softwaremodule,codefragment]{hal_id}{
+  \iftoggle{bbx:halid}%
+           {\mkbibacro{HAL}\addcolon\addspace%
+             \ifhyperref%
+                 {\href{https://hal.archives-ouvertes.fr/#1\thefield{hal_version}}{\(\langle\)\nolinkurl{#1\thefield{hal_version}}\(\rangle\)}}%
+                 {\(\langle\)\nolinkurl{#1}\thefield{hal_version}\(\rangle\)}%
+           }%
+           {}%
+}
+\DeclareFieldFormat[software,softwareversion,softwaremodule,codefragment]{swhid}{%
+  \iftoggle{bbx:swhid}%
+           {\mkbibacro{SWHID}\addcolon\addspace%
+             \ifhyperref%
+                 {\href{http://archive.softwareheritage.org/#1}{\(\langle\)\nolinkurl{%
+  		    \iftoggle{bbx:shortswhid}{\thefield{swhidcore}}{#1}%
+		    }\(\rangle\)}}%
+                 {\(\langle\)\nolinkurl{%
+  		    \iftoggle{bbx:shortswhid}{\thefield{swhidcore}}{#1}%
+		    }\(\rangle\)}%
+           }%
+           {}%
+}
+\DeclareFieldFormat[software,softwareversion,softwaremodule,codefragment]{repository}{%
+  \iftoggle{bbx:vcs}%
+           {\mkbibacro{VCS}\addcolon\addspace%
+               \ifhyperref%
+                   {\href{#1}{\nolinkurl{#1}}}%
+                   {\nolinkurl{#1}}%
+           }%
+           {}%
+}
+\DeclareListFormat[software,softwareversion,softwaremodule,codefragment]{license}{%
+  \usebibmacro{list:delim}{#1}%
+  #1\isdot
+  \usebibmacro{list:andothers}}
+
+%
+% Add here special eprint formats
+%
+
+%
+% ASCL
+%
+\DeclareFieldFormat{eprint:ascl}{%
+ \mkbibacro{ASCL}\addcolon\addspace%
+  \ifhyperref
+    {\href{https://ascl.net/#1}{%
+         \(\langle\)ascl\addcolon\nolinkurl{#1}\(\rangle\)%
+       \iffieldundef{eprintclass}
+         {}
+         {\addspace\texttt{\mkbibbrackets{\thefield{eprintclass}}}}}}
+    {\(\langle\)ascl\addcolon\nolinkurl{#1}\(\rangle\)%
+     \iffieldundef{eprintclass}
+       {}
+       {\addspace\texttt{\mkbibbrackets{\thefield{eprintclass}}}}}
+}
+
+%
+% swMATH
+%
+\DeclareFieldFormat{eprint:swmath}{%
+ \mkbibacro{SWMATH}\addcolon\addspace%
+  \ifhyperref
+    {\href{https://www.swmath.org/software/#1}{%
+         \(\langle\)swmath\addcolon\nolinkurl{#1}\(\rangle\)%
+       \iffieldundef{eprintclass}
+         {}
+         {\addspace\texttt{\mkbibbrackets{\thefield{eprintclass}}}}}}
+    {\(\langle\)swmath\addcolon\nolinkurl{#1}\(\rangle\)%
+     \iffieldundef{eprintclass}
+       {}
+       {\addspace\texttt{\mkbibbrackets{\thefield{eprintclass}}}}}
+}
+
+%
+% Macros to format output
+%
+\newbibmacro*{swtitleauthoreditoryear}{%
+  \printnames{author}\addcomma%
+  \setunit{\addspace}%
+  \printfield{title}\addspace%
+  \printfield{version}\addspace%
+  \ifnameundef{editor}%
+    {}%
+    {\printtext[parens]{%
+        \bibstring{edited}\addspace%
+        \printnames{editor}}}%
+    \setunit*{\addcomma\addspace}%
+    \printdate%
+}
+
+%
+\newbibmacro*{swsubtitleauthoreditoryear}{%
+  \printnames{author}\addcomma%
+  \setunit{\addspace}%
+  \iffieldundef{subtitle}%
+               {}
+               {\printfield{subtitle}\addcomma\addspace%
+                 \bibstring{swpartof}\addspace
+               }%
+  \printfield{title}\addspace%
+  \printfield{version}\addspace%
+  \ifnameundef{editor}%
+    {}
+    {\printtext[parens]{%
+        \bibstring{edited}\addspace%
+        \printnames{editor}}}%
+    \setunit*{\addcomma\addspace}%
+    \printdate%
+}
+
+\newbibmacro*{codefragmenttitleauthoreditoryear}{%
+  \printnames{author}\addcomma%
+  \setunit{\addspace}%
+  \iffieldundef{subtitle}%
+               {}
+               {\printfield{subtitle}\addcomma\addspace%
+                 \bibstring{swexc}\addspace
+               }%
+  \printfield{title}\addspace%
+  \printfield{version}\addspace%
+  \ifnameundef{editor}%
+    {}
+    {\printtext[parens]{%
+        \bibstring{edited}\addspace%
+        \printnames{editor}}}%
+    \setunit*{\addcomma\addspace}%
+    \printdate%
+}
+
+\newbibmacro{licenses}{%
+  \iflistundef{license}
+               {}
+               {\iftoggle{bbx:license}%
+                 {\newunitpunct
+                   \mkbibacro{Lic}\addcolon
+                   \printlist{license}
+                 }%
+                 {}%
+               }
+}
+  
+\newbibmacro*{swids}{%
+  \printfield{doi}%
+  \setunit*{\addcomma\addspace}%
+  \printfield{hal_id}%
+  \setunit*{\addcomma\addspace}%
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%  
+  \setunit*{\addcomma\addspace}%
+  \printfield{url}%
+  \setunit*{\addcomma\addspace}%
+  \printfield{repository}%
+  \setunit*{\addcomma\addspace}%
+  \printfield{swhid}%
+  %
+  % If only the url is present, output it regardless of bbx:url directive
+  %
+  \ifboolexpr{%
+    not test {\iftoggle{bbx:url}}%
+    and
+    not test {\iffieldundef{url}}%
+    and 
+    test {\iffieldundef{doi}}%
+    and 
+    test {\iffieldundef{eprint}}%
+    and 
+    test {\iffieldundef{hal_id}}%
+    and
+    test {\iffieldundef{swhid}}%
+    and
+    test {\iffieldundef{repository}}%
+  }%
+   {\usebibmacro{swurl+urldate}}%
+   {}%
+}               
+
+\newbibmacro*{swrelated}{%
+  \iffieldundef{related}%
+               {}%
+               {\iftoggle{bbx:related}
+	         {\usebibmacro{related:init}%
+	         \usebibmacro{related}
+		 }
+	         {}%
+	       }%
+}               
+
+%
+% Formatting the entries
+%
+
+\DeclareBibliographyDriver{software}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \iftoggle{bbx:swlabels}{\bibstring{software}{\addspace}}{}%
+  \usebibmacro{swtitleauthoreditoryear}%
+  \newunit\newblock%
+  \printlist{institution}
+  \newunit\newblock%
+  \printlist{organization}
+  \newunit\newblock%
+  \usebibmacro{licenses}%
+  \newunit\newblock%
+  \usebibmacro{swids}%
+  \newunit\newblock%
+  \usebibmacro{swrelated}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{softwareversion}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \iftoggle{bbx:swlabels}{\bibstring{swversion}\addspace}{}%
+  \usebibmacro{swsubtitleauthoreditoryear}%
+  \newunit\newblock%
+  \printlist{institution}
+  \newunit\newblock%
+  \printlist{organization}
+  \newunit\newblock%
+  \usebibmacro{licenses}%
+  \newunit\newblock%
+  \usebibmacro{swids}%
+  \newunit\newblock%
+  \usebibmacro{swrelated}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{softwaremodule}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \iftoggle{bbx:swlabels}{\bibstring{swmodule}\addspace}{}%
+  \usebibmacro{swsubtitleauthoreditoryear}%
+  \newblock\newblock%
+  \printlist{institution}
+  \newunit\newblock%
+  \printlist{organization}
+  \newunit\newblock%
+  \usebibmacro{licenses}%
+  \newunit\newblock%
+  \usebibmacro{swids}%
+  \newunit\newblock%
+  \usebibmacro{swrelated}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{codefragment}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \iftoggle{bbx:swlabels}{\bibstring{swexcerpt}\addspace}{}%
+  \usebibmacro{codefragmenttitleauthoreditoryear}%
+  \newunit\newblock%
+  \printlist{institution}
+  \newunit\newblock%
+  \printlist{organization}
+  \newunit\newblock%
+  \usebibmacro{licenses}%
+  \newunit\newblock%
+  \usebibmacro{swids}%
+  \newunit\newblock%
+  \usebibmacro{swrelated}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \usebibmacro{finentry}}
