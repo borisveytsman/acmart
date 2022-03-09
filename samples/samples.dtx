@@ -86,6 +86,19 @@
 %%\acmSubmissionID{123-A56-BU3}
 %</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
+%%
+%% For managing citations, it is recommended to use bibliography
+%% files in BibTeX format.
+%%
+%% You can then either use BibTeX with the ACM-Reference-Format style,
+%% or BibLaTeX with the acmnumeric or acmauthoryear sytles, that include
+%% support for advanced citation of software artefact from the
+%% biblatex-software package, also separately available on CTAN.
+%%
+%% Look at the sample-*-biblatex.tex files for templates showcasing
+%% the biblatex styles.
+%%
+
 %<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %%
 %% The majority of ACM publications use numbered citations and
@@ -762,10 +775,12 @@ document with the following command, placed just before the \verb|\end{document}
   \printbibliography
 \end{verbatim}
 
-The \BibTeX\ file(s) to use are declared with the command \verb|\addbibresource{bibfile}| 
+The command \verb|\addbibresource{bibfile}| declares the \BibTeX\ file to use
 in the {\bfseries preamble} (before the command
 ``\verb|\begin{document}|'') of your \LaTeX\ source
 where ``\verb|bibfile|'' is the name, \emph{with} the ``\verb|.bib|'' suffix.
+Notice that \verb|\addbibresource| takes only one argument: to declare multiple files,
+use multiple instances of the command.
 
 Citations and references are numbered by default. A small number of
 ACM publications have citations and references formatted in the
@@ -805,9 +820,16 @@ to the \verb|biblatex| package loaded in the {\bfseries preamble} (before the co
   multi-volume works as books \cite{MR781536} and \cite{MR781537}. A
   couple of citations with DOIs:
   \cite{2004:ITE:1009386.1010128,Kirschmer:2010:AEI:1958016.1958018}. Online
-  citations: \cite{TUGInstmem, Thornburg01, CTANacmart}. Artifacts:
-  \cite{R} and \cite{UMassCitations}.
+  citations: \cite{TUGInstmem, Thornburg01, CTANacmart}.
+%<*!(acmsmall-biblatex|sigconf-biblatex)>
+  Artifacts: \cite{R} and \cite{UMassCitations}.
+%</!(acmsmall-biblatex|sigconf-biblatex)>
+%<*acmsmall-biblatex|sigconf-biblatex>
+  Data Artifacts: \cite{UMassCitations}.  
+  Software project: ~\cite{cgal,delebecque:hal-02090402}. Software Version: ~\cite{gf-tag-sound-repo,}. Software Module: ~\cite{cgal:lp-gi-20a}. Code fragment: ~\cite{simplemapper}.
+%</acmsmall-biblatex|sigconf-biblatex>
 
+  
 \section{Acknowledgments}
 
 Identification of funding sources and other support, and thanks to
