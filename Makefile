@@ -51,6 +51,12 @@ samples/%: %
 samples/$(PACKAGE).cls: $(PACKAGE).cls
 samples/ACM-Reference-Format.bst: ACM-Reference-Format.bst
 
+samples/abbrev.bib: ACM-Reference-Format.bst
+	perl -pe 's/MACRO ({[^}]*}) *\n/MACRO \1/' ACM-Reference-Format.bst \
+	| grep MACRO | sed 's/MACRO {/@STRING{/' \
+	| sed 's/}  *{/ = /' > samples/abbrev.bib 
+
+
 samples/%.bbx: %.bbx
 samples/%.cbx: %.cbx
 samples/%.dbx: %.dbx
