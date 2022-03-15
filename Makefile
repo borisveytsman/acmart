@@ -16,8 +16,6 @@ SAMPLEBIBLATEXFILES=$(patsubst %,samples/%,$(BIBLATEXFILES))
 
 all:  ${PDF} ALLSAMPLES
 
-test: $(SAMPLEBIBLATEXFILES)
-
 %.pdf:  %.dtx   $(PACKAGE).cls
 	pdflatex $<
 	- bibtex $*
@@ -40,7 +38,7 @@ acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
 	pdflatex $<
 
 
-ALLSAMPLES:
+ALLSAMPLES: $(SAMPLEBIBLATEXFILES)
 	cd samples; pdflatex samples.ins; cd ..
 	for texfile in samples/*.tex; do \
 		pdffile=$${texfile%.tex}.pdf; \
