@@ -1506,7 +1506,11 @@
 %\subsection{Bibliography}
 %\label{sec:ug_bibliography}
 %
-% The ACM uses the |natbib| package for formatting references and
+% The ACM lets you use either Bib\TeX\ or Bib\LaTeX\ to process your references:
+% they require slightly different setup of your \LaTeX\ file, as detailed in
+% the following subsections.
+%\subsubsection{Processing using Bib\TeX}
+% This uses the |natbib| package for formatting references and
 % the Bib\TeX\ style file \path{ACM-Reference-Format.bst} for Bib\TeX\
 % processing.  You can disable loading of |natbib| using the
 % option |natbib=false| in \cs{documentclass}.  However, it is not
@@ -1702,7 +1706,43 @@
 % are includes, so you can use strings like |journal = taccess| for
 % \emph{ACM Transactions on Accessible Computing}.
 %
+%\subsubsection{Processing using Bib\LaTeX}
+% You will find in this package two sets of style files for Bib\LaTeX,
+% \verb|acmnumeric| and \verb|acmauthoryear|, that mimic the behaviour
+% of the ACM-Reference-Format.bst Bib\TeX\ sytle. They provide you
+% access to all the power of Bib\LaTeX\ and already include
+% support for advanced citation of software artefact from the
+% \verb|biblatex-software| package, also separately available on CTAN.
+% Look at the \verb|biblatex-software| documentation to learn more about
+% what it offers.
+% 
+% There are a few key differences in how the \LaTeX\ sources are set up
+% when using Bib\LaTeX\ instead of Bib\TeX, that we summarize briefly
+% here (please refer to the official Bib\LaTeX\ documentation for more details).
 %
+% In the preamble of your document you need to load the Bib\LaTeX\ package
+% and select the approriate bibliography style, as follows
+% \begin{verbatim}
+% \RequirePackage[
+%  style=acmnumeric, % use style=acmauthoryear for publications that require it
+%  ]{biblatex}
+% \end{verbatim}
+%
+% Also in the preamble, you need to declare the bibliography sources files
+% using the \verb|\addbibresouce| directe (one \verb|\addbibresource|
+% command per source file), e.g.:
+% \begin{verbatim}
+% \addbibresource{software.bib}
+% \addbibresource{sample-base.bib}
+% \end{verbatim}
+%
+% At the end of the document, where you want the bibliography to appear,
+% you need to place the command \verb|\printbibliography|.
+%
+% Look at the \verb|sample-*-biblatex.tex| files that can be found in the samples
+% directory after running \verb|make| for templates showcasing
+% these Bib\LaTeX\ styles.
+
 %\subsection{Colors}
 %\label{sec:ug_colors}
 %

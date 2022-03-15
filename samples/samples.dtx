@@ -1,4 +1,4 @@
-%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %%
 %% 
 %% Commands for TeXCount
@@ -18,10 +18,12 @@
 %% The first command in your LaTeX source must be the \documentclass command.
 %<manuscript>\documentclass[manuscript,screen,review]{acmart}
 %<acmsmall|acmsmall-conf>\documentclass[acmsmall]{acmart}
+%<acmsmall-biblatex>\documentclass[acmsmall,natbib=false]{acmart}
 %<acmsmall-submission>\documentclass[acmsmall,screen,review]{acmart}
 %<acmlarge>\documentclass[acmlarge]{acmart}
 %<acmtog>\documentclass[acmtog]{acmart}
 %<sigconf>\documentclass[sigconf]{acmart}
+%<sigconf-biblatex>\documentclass[sigconf,natbib=false]{acmart}
 %<authordraft>\documentclass[sigconf,authordraft]{acmart}
 %<sigplan>\documentclass[sigplan,screen]{acmart}
 %<sigchi>\documentclass[sigchi]{acmart}
@@ -46,7 +48,7 @@
 \acmYear{2018}
 \acmDOI{XXXXXXX.XXXXXXX}
 
-%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %<*manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %% These commands are for a PROCEEDINGS abstract or paper.
 \acmConference[Conference acronym 'XX]{Make sure to enter the correct
@@ -62,18 +64,18 @@
 \acmISBN{978-1-4503-XXXX-X/18/06}
 %</manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
-%<*acmsmall|acmsmall-submission|acmlarge|acmtog>
+%<*acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog>
 %%
 %% These commands are for a JOURNAL article.
-%<acmsmall|acmsmall-submission>\acmJournal{JACM}
+%<acmsmall|acmsmall-submission|acmsmall-biblatex>\acmJournal{JACM}
 %<acmlarge>\acmJournal{POMACS}
 %<acmtog>\acmJournal{TOG}
 \acmVolume{37}
 \acmNumber{4}
 \acmArticle{111}
 \acmMonth{8}
-%</acmsmall|acmsmall-submission|acmlarge|acmtog>
-%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
 
 %%
@@ -82,8 +84,22 @@
 %% receive a unique submission ID from the organizers
 %% of the event, and this ID should be used as the parameter to this command.
 %%\acmSubmissionID{123-A56-BU3}
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
+%%
+%% For managing citations, it is recommended to use bibliography
+%% files in BibTeX format.
+%%
+%% You can then either use BibTeX with the ACM-Reference-Format style,
+%% or BibLaTeX with the acmnumeric or acmauthoryear sytles, that include
+%% support for advanced citation of software artefact from the
+%% biblatex-software package, also separately available on CTAN.
+%%
+%% Look at the sample-*-biblatex.tex files for templates showcasing
+%% the biblatex styles.
+%%
 
+%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %%
 %% The majority of ACM publications use numbered citations and
 %% references.  The command \citestyle{authoryear} switches to the
@@ -96,6 +112,30 @@
 %<!acmtog>%% the next command will enable that style.
 %<!acmtog>%%\citestyle{acmauthoryear}
 %<acmtog>\citestyle{acmauthoryear}
+%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+
+%<*acmsmall-biblatex|sigconf-biblatex>
+%%
+%% The majority of ACM publications use numbered citations and
+%% references, obtained by selecting the acmnumeric BibLaTeX style.
+%% The acmauthoryear BibLaTeX style switches to the "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the acmauthoryear style of
+%% citations and references.
+%%
+%% Bibliography style
+\RequirePackage[
+%<!acmsmall-biblatex>  style=acmnumeric,
+%<acmsmall-biblatex>  style=acmauthoryear,
+  ]{biblatex}
+
+%% Declare bibliography sources (one \addbibresource command per source)
+\addbibresource{software.bib}
+\addbibresource{sample-base.bib}
+%</acmsmall-biblatex|sigconf-biblatex>
+
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
 %%
 %% end of the preamble, start of the body of the document source.
@@ -206,7 +246,7 @@
   as many of the formatting elements an author may use in the
   preparation of the documentation of their work.
 \end{abstract}
-%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %<*sigconf-i13n>
 
 \begin{translatedabstract}{french}
@@ -239,7 +279,7 @@
   trabajo.
  \end{translatedabstract}
 %</sigconf-i13n>
-%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
 %%
 %% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
@@ -286,8 +326,7 @@
 %<sigconf-i13n> neuronale Netze, Blickerkennung, Text-Tagging}
 %<sigconf-i13n> \translatedkeywords{spanish}{conjuntos de datos,
 %<sigconf-i13n> redes neuronales, detección de mirada, etiquetado de texto} 
-
-%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %<*sigconf|authordraft|sigplan|acmsmall-conf|sigconf-i13n>
 %% A "teaser" image appears between the author and affiliation
 %% information and the body of the document, and typically spans the
@@ -300,7 +339,7 @@
   \label{fig:teaser}
 \end{teaserfigure}
 %</sigconf|authordraft|sigplan|acmsmall-conf|sigconf-i13n>
-%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
 %%
 %% This command processes the author and affiliation and title
@@ -709,6 +748,7 @@ references is strongly recommended. Authors' names should be complete
 reference should be included: title, year, volume, number, pages,
 article DOI, etc.
 
+%<*!(acmsmall-biblatex|sigconf-biblatex)>
 The bibliography is included in your source document with these two
 commands, placed just before the \verb|\end{document}| command:
 \begin{verbatim}
@@ -726,6 +766,31 @@ command in the {\bfseries preamble} (before the command
 \begin{verbatim}
   \citestyle{acmauthoryear}
 \end{verbatim}
+%</!(acmsmall-biblatex|sigconf-biblatex)>
+
+%<*acmsmall-biblatex|sigconf-biblatex>
+Using the BibLaTeX system, the bibliography is included in your source
+document with the following command, placed just before the \verb|\end{document}| command:
+\begin{verbatim}
+  \printbibliography
+\end{verbatim}
+
+The command \verb|\addbibresource{bibfile}| declares the \BibTeX\ file to use
+in the {\bfseries preamble} (before the command
+``\verb|\begin{document}|'') of your \LaTeX\ source
+where ``\verb|bibfile|'' is the name, \emph{with} the ``\verb|.bib|'' suffix.
+Notice that \verb|\addbibresource| takes only one argument: to declare multiple files,
+use multiple instances of the command.
+
+Citations and references are numbered by default. A small number of
+ACM publications have citations and references formatted in the
+``author year'' style; for these exceptions, please pass the option \verb|style=acmauthoryear|
+to the \verb|biblatex| package loaded in the {\bfseries preamble} (before the command
+``\verb|\begin{document}|'') of your \LaTeX\ source.
+
+%</acmsmall-biblatex|sigconf-biblatex>
+
+
 
   Some examples.  A paginated journal article \cite{Abril07}, an
   enumerated journal article \cite{Cohen07}, a reference to an entire
@@ -755,9 +820,16 @@ command in the {\bfseries preamble} (before the command
   multi-volume works as books \cite{MR781536} and \cite{MR781537}. A
   couple of citations with DOIs:
   \cite{2004:ITE:1009386.1010128,Kirschmer:2010:AEI:1958016.1958018}. Online
-  citations: \cite{TUGInstmem, Thornburg01, CTANacmart}. Artifacts:
-  \cite{R} and \cite{UMassCitations}.
+  citations: \cite{TUGInstmem, Thornburg01, CTANacmart}.
+%<*!(acmsmall-biblatex|sigconf-biblatex)>
+  Artifacts: \cite{R} and \cite{UMassCitations}.
+%</!(acmsmall-biblatex|sigconf-biblatex)>
+%<*acmsmall-biblatex|sigconf-biblatex>
+  Data Artifacts: \cite{UMassCitations}.  
+  Software project: ~\cite{cgal,delebecque:hal-02090402}. Software Version: ~\cite{gf-tag-sound-repo,}. Software Module: ~\cite{cgal:lp-gi-20a}. Code fragment: ~\cite{simplemapper}.
+%</acmsmall-biblatex|sigconf-biblatex>
 
+  
 \section{Acknowledgments}
 
 Identification of funding sources and other support, and thanks to
@@ -838,11 +910,20 @@ the margin:
 To Robert, for the bagels and explaining CMYK and color spaces.
 \end{acks}
 
+%<*!(acmsmall-biblatex|sigconf-biblatex)>
 %%
 %% The next two lines define the bibliography style to be used, and
 %% the bibliography file.
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{sample-base}
+%</!(acmsmall-biblatex|sigconf-biblatex)>
+
+%<*(acmsmall-biblatex|sigconf-biblatex)>
+%%
+%% Print the bibliography
+%%
+\printbibliography
+%</(acmsmall-biblatex|sigconf-biblatex)>
 
 %% 
 %% If your work has an appendix, this is the place to put it.
@@ -879,4 +960,4 @@ rhoncus. Maecenas eu arcu ac neque placerat aliquam. Nunc pulvinar
 massa et mattis lacinia.
 
 \end{document}
-%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>

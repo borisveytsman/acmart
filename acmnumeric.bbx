@@ -1,4 +1,4 @@
-\ProvidesFile{ACM-Reference-Format.bbx}[2017-09-27 v0.1 biblatex bibliography style]
+\ProvidesFile{acmnumeric.bbx}[2017-09-27 v0.1 biblatex bibliography style]
 
 % Inherit a default style
 \RequireBibliographyStyle{trad-plain}
@@ -33,7 +33,7 @@
 \DeclareFieldFormat{key}{#1}
 
 \DeclareFieldFormat{urldate}{Retrieved\space{}#1\space{}from}
-\DeclareFieldAlias{lastaccessed}{urldate}
+\DeclareFieldFormat{lastaccessed}{Retrieved\space{}#1\space{}from}
 
 \DeclareFieldFormat{url}{\url{#1}}
 
@@ -78,12 +78,15 @@
 
 
 \renewbibmacro*{url+urldate}{\iffieldundef{urlyear}
-    {}
+    {\iffieldundef{lastaccessed}
+     {}
+     {\printfield{lastaccessed}%
+     \setunit*{\addspace}}%
+    }
     {\usebibmacro{urldate}%
      \setunit*{\addspace}}%
      \usebibmacro{url}%
   }
-
 
 \renewbibmacro*{journal+issuetitle}{%
   \usebibmacro{journal}%
@@ -265,8 +268,13 @@
 
 \renewbibmacro*{doi+eprint+url}{%
   \iftoggle{bbx:url}
-    {\iffieldundef{doi}{\usebibmacro{url+urldate}}{}}
-    {}%
+    {\iffieldundef{doi}{
+      \usebibmacro{url+urldate}
+      }{\iffieldundef{distinctURL}
+      {}
+      {\usebibmacro{url+urldate}}
+      }
+    }%
   \newunit\newblock
   \iftoggle{bbx:eprint}
     {\usebibmacro{eprint}}
@@ -305,7 +313,7 @@
   \printfield{note}%
   \newunit\newblock%
   \iftoggle{bbx:isbn}
-    {\printfield{issn}}
+    {\printfield{isbn}}
     {}%
   \newunit\newblock%
   \usebibmacro{doi+eprint+url}%
@@ -827,4 +835,51 @@
     {}%
   \usebibmacro{finentry}}
 
+%
+% Include support for software entries
+%
+\blx@inputonce{software.bbx}{biblatex style for software}{}{}{}{}
 
+%
+% Handle ACM specific ArtifactSoftware entry exactly as the software entry (a soft alias will not work)
+%
+\DeclareStyleSourcemap{
+  \maps[datatype=bibtex]{
+   \map{
+     \step[typesource=artifactsoftware,typetarget=software]
+     \step[typesource=artifactdataset,typetarget=dataset]
+   }
+  }
+}     
+
+%
+% Show given name first in the reference list
+%
+\DeclareNameAlias{sortname}{given-family}
+
+%
+% Produce a bibliography with small font size
+%
+\renewcommand*{\bibfont}{\bibliofont\footnotesize}
+
+%%% Set option values for ACM style
+
+\ExecuteBibliographyOptions{
+  labeldate=year,
+  abbreviate=true,
+  dateabbrev=true,
+  isbn=true,
+  doi=true,
+  urldate=comp,
+  url=true,
+  maxbibnames=9,
+  maxcitenames=2,
+  backref=false,
+  sorting=nty,
+  halid=true,
+  swhid=true,
+  swlabels=true,
+  vcs=true,
+  license=false,
+  language=american
+  }

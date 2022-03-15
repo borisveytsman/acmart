@@ -16,3 +16,18 @@
 
 \DeclareDatamodelFields[type=field, datatype=literal]{key}
 \DeclareDatamodelEntryfields{key}
+
+% Teach biblatex about lastaccessed field
+\DeclareDatamodelFields[type=field,datatype=literal]{lastaccessed}
+\DeclareDatamodelEntryfields{lastaccessed}
+
+% Teach biblatex about distincturl field
+\DeclareDatamodelFields[type=field, datatype=literal]{distinctURL}
+\DeclareDatamodelEntryfields{distinctURL}
+
+
+%
+% include software data model from biblatex-software
+%
+
+\blx@inputonce{software.dbx}{biblatex data model extension for software}{}{}{}{}
