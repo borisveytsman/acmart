@@ -8,6 +8,9 @@
 
 PACKAGE=acmart
 
+
+PDF = $(PACKAGE).pdf acmguide.pdf
+
 BIBLATEXFILES= $(wildcard *.bbx) $(wildcard *.cbx) $(wildcard *.dbx) $(wildcard *.lbx)
 SAMPLEBIBLATEXFILES=$(patsubst %,samples/%,$(BIBLATEXFILES))
 
