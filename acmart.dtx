@@ -302,7 +302,7 @@
 %     \midrule
 %   manuscript & A manuscript. This is the default. \\
 %   acmsmall & Small single-column format.  Used for CIE, CSUR,
-%            DLT, FAC, JACM, JDIQ, JEA, JERIC,
+%            DLT, FAC, GAMES, JACM, JDIQ, JDS, JEA, JERIC,
 %            JETC, PACMCGIT, PACMHCI, PACMPL, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
@@ -1951,11 +1951,13 @@
 %     DGOV & Digital Government: Research and Practice \\
 %     DTRAP &  Digital Threats: Research and Practice\\
 %     FAC & Formal Aspects of Computing \\
+%     GAMES & ACM Games: Research and Practice\\
 %     HEALTH & ACM Transactions on Computing for Healthcare\\
 %     IMWUT & PACM on Interactive, Mobile, Wearable and Ubiquitous
 %     Technologies\\
 %     JACM &  Journal of the ACM \\
 %     JDIQ & ACM Journal of Data and Information Quality \\
+%     JDS & ACM/IMS Journal of Data Science \\
 %     JEA & ACM Journal of Experimental Algorithmics \\
 %     JERIC & ACM Journal of Educational Resources in Computing\\
 %     JETC & ACM Journal on Emerging Technologies in Computing Systems \\
@@ -2192,6 +2194,7 @@
 % fonts}
 % \changes{1.75}{2020/10/29}{Documentation update}
 % \changes{1.78}{2021/05/01}{Documentation update: Word count}
+% \changes{1.84}{2022/04/09}{New journals: JDS, GAMES}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -4045,6 +4048,7 @@
 % \changes{1.80}{2021/09/24}{Added DLT and FAC}
 % \changes{1.82}{2022/02/05}{Updated abbreviations and codes for
 % several journals}
+% \changes{1.84}{2022/04/09}{New journals: JDS, GAMES}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
@@ -4056,10 +4060,12 @@
   DLT,%
   DTRAP,%
   FAC,%
+  GAMES,%
   HEALTH,%
   IMWUT,%
   JACM,%
   JDIQ,%
+  JDS,%
   JEA,%
   JERIC,%
   JETC,%
@@ -4140,6 +4146,9 @@
   \def\@journalNameShort{Form. Asp. Comput.}%
   \def\@permissionCodeOne{0934-5043}%
   \def\@permissionCodeTwo{1433-299X}%
+\or % GAMES
+  \def\@journalName{ACM Games: Research and Practice}%
+  \def\@journalNameShort{ACM Games}%
 \or % HEALTH
   \def\@journalName{ACM Transactions on Computing for Healthcare}%
   \def\@journalNameShort{ACM Trans. Comput. Healthcare}%
@@ -4159,6 +4168,11 @@
   \def\@journalName{ACM Journal of Data and Information Quality}%
   \def\@journalNameShort{ACM J. Data Inform. Quality}%
   \def\@permissionCodeOne{1936-1955}%
+\or % JDS
+  \def\@journalName{ACM/JMS Journal of Data Science}%
+  \def\@journalNameShort{ACM/IMS J. Data Sci.}%
+  \def\@permissionCodeOne{2831-3194}%
+  \def\@permissionCodeTwo{2831-3194}%
 \or % JEA
   \def\@journalName{ACM Journal of Experimental Algorithmics}%
   \def\@journalNameShort{ACM J. Exp. Algor.}%

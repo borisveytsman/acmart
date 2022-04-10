@@ -13,7 +13,9 @@ The production version is the one on CTAN and ACM sites.
 Changes
 
 Version 1.84   Support for BibLaTeX rewritten (thanks to
-	       Roberto Di Cosmo and Kartik Singhal) 
+	       Roberto Di Cosmo and Kartik Singhal)
+	       Corrected German translation (thanks to Dirk Beyer)
+	       New journals
 
 Version 1.83   Support for multilanguage papers
 	       ISSN changes for some journals
