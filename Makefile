@@ -71,7 +71,15 @@ samples/%.pdf:  samples/%.tex   samples/$(PACKAGE).cls samples/ACM-Reference-For
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
 	  do cd $(dir $@) && pdflatex-dev $(notdir $<); done
 
-samples/%biblatex.pdf: samples/%biblatex.tex $(SAMPLEBIBLATEXFILES)
+samples/sample-sigconf-biblatex.pdf: samples/sample-sigconf-biblatex.tex $(SAMPLEBIBLATEXFILES)
+	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	- cd $(dir $@) && biber $(notdir $(basename $<))
+	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
+	  do cd $(dir $@) && pdflatex-dev $(notdir $<); done
+
+samples/sample-acmsmall-biblatex.pdf: samples/sample-acmsmall-biblatex.tex $(SAMPLEBIBLATEXFILES)
 	cd $(dir $@) && pdflatex-dev $(notdir $<)
 	- cd $(dir $@) && biber $(notdir $(basename $<))
 	cd $(dir $@) && pdflatex-dev $(notdir $<)
