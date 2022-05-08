@@ -152,7 +152,7 @@ FUNCTION { empty.or.unknown }
 }
 
 FUNCTION { empty.or.zero }
-{ 
+{
   %% Examine the top entry and push 1 if it is empty, or is zero
   duplicate$ empty$
     { pop$ #1 }
@@ -2005,7 +2005,7 @@ FUNCTION { calc.basic.label }
   if$
   duplicate$
   year empty.or.unknown
-    { "[n.\,d.]" }
+    { "{[}n.\,d.{]}" }
     { year field.or.null purify$ #-1 #4 substring$}
   if$
   *
@@ -2053,7 +2053,7 @@ FUNCTION { calc.label }
   % save the year for sort processing afterwards (adding a, b, c, etc.)
   %
   year empty.or.unknown
-    { "[n.\,d.]" }
+    { "{[}n.\,d.{]}" }
     { year field.or.null purify$ #-1 #4 substring$}
   if$
   'label.year :=
