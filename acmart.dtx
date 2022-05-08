@@ -222,6 +222,7 @@
 % \item \textsl{comment}, \url{http://www.ctan.org/pkg/comment}
 % \item \textsl{cm-super}, \url{http://www.ctan.org/pkg/cm-super}
 % \item \textsl{cmap}, \url{http://www.ctan.org/pkg/cmap}
+% \item \textsl{doclicense}, \url{http://www.ctan.org/pkg/doclicense}
 % \item \textsl{draftwatermark}, \url{http://www.ctan.org/pkg/draftwatermark}
 % \item \textsl{environ}, \url{http://www.ctan.org/pkg/environ}
 % \item \textsl{etoolbox}, \url{http://www.ctan.org/pkg/etoolbox}
@@ -1033,9 +1034,23 @@
 %     by IW3C2.\\
 %     \texttt{iw3c2w3g} & Special statement for conferences organized
 %     by IW3C2, when some authors are approved Google employees.\\
+%     \texttt{cc} & Creative Commons license.  If this key is set,
+%     \textsl{doclicense} images are used to typeset the license. See
+%     also \cs{setcctype} command.\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
+%
+% \DescribeMacro{\setcctype}%
+%  If Creative Commons license is used, the package by default chooses
+%  CC-BY 4.0 Attribution 4.0 International license.  You can override
+%  this choice by the command \cs{setcctype}\oarg{version}\marg{type},
+%  where \oarg{version} can be either 3.0 or 4.0 (4.0 by default), and
+%  \marg{type} can be one of |zero|, |by|, |by-sa|, |by-nd|,
+%  |by-nc|, |by-nc-sa|, |by-nc-nd| (see
+%  \url{https://creativecommons.org/licenses/} for the explanation).
+%  This command should be used in the preamble only.
+%
 % The ACM submission software should generate the right command for you
 % to paste into your file.
 %
@@ -2087,7 +2102,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/04/09 v1.84 Typesetting articles for the Association for Computing Machinery]
+[2022/05/08 v1.85 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2196,6 +2211,7 @@
 % \changes{1.75}{2020/10/29}{Documentation update}
 % \changes{1.78}{2021/05/01}{Documentation update: Word count}
 % \changes{1.84}{2022/04/09}{New journals: JDS, GAMES}
+% \changes{1.85}{2022/05/08}{Added CC licenses}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -5307,6 +5323,7 @@
 % \changes{v1.51}{2018/04/05}{Suppress price if the copyright is set
 % to iw3c2w3 or iw3c2w3g}
 % \changes{v1.51}{2018/04/05}{Corrected the bug with price suppression}
+% \changes{v1.85}{2022/05/08}{Added CC licenses}
 % Keys:
 %    \begin{macrocode}
 \define@choicekey*{ACM@}{acmcopyrightmode}[%
@@ -5314,7 +5331,7 @@
     acmcopyright,acmlicensed,rightsretained,%
     usgov,usgovmixed,cagov,cagovmixed,licensedusgovmixed,%
     licensedcagov,licensedcagovmixed,othergov,licensedothergov,%
-    iw3c2w3,iw3c2w3g}{%
+    iw3c2w3,iw3c2w3g,cc}{%
   \@printpermissiontrue
   \@printcopyrighttrue
   \@acmownedtrue
@@ -5361,6 +5378,10 @@
   \ifnum\acm@copyrightmode=14\relax % iw3c2w3g
    \@acmownedfalse
    \AtBeginDocument{\acmPrice{}}%
+  \fi
+  \ifnum\acm@copyrightmode=15\relax % cc
+   \@acmownedfalse
+   \AtBeginDocument{\acmPrice{}}%
   \fi}
 %    \end{macrocode}
 %
@@ -5373,11 +5394,23 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\setcctype}
+% \changes{v1.85}{2022/05/08}{Added macro}
+% The type of Creative Commons license used
+%    \begin{macrocode}
+\newcommand\setcctype[2][4.0]{%
+  \def\ACM@cc@version{#1}%
+  \def\ACM@cc@type{#2}}
+\setcctype{by}
+%    \end{macrocode}
+% 
+% \end{macro}
 %
 % \begin{macro}{\@copyrightowner}
 % \changes{v1.40}{2017/06/16}{Added new copyright version:
 % licensedcagov}
 % \changes{v1.52}{2018/04/09}{Rewording of licenses}
+% \changes{v1.85}{2022/05/08}{Added CC licenses}
 %   Here is the owner of the copyright
 %    \begin{macrocode}
 \def\@copyrightowner{%
@@ -5416,6 +5449,8 @@
   \or % ic2w3wwwgoogle
   IW3C2 (International World Wide Web Conference Committee), published
   under Creative Commons CC-BY-NC-ND~4.0 License.
+  \or % cc
+  Copyright held by the owner/author(s).
   \fi}
 %    \end{macrocode}
 %
@@ -5436,6 +5471,7 @@
 % \changes{v1.50}{2018/02/07}{New copyright statements for iw3c2w3[g]}
 % \changes{v1.52}{2018/04/09}{Another rewording of copyright
 % statements for iw3c2w3[g]}
+% \changes{v1.85}{2022/05/08}{Added CC licenses}
 %   The canned permission block.
 %    \begin{macrocode}
 \def\@copyrightpermission{%
@@ -5560,6 +5596,19 @@
    (CC-BY-NC-ND~4.0) license. Authors reserve their rights to
    disseminate the work on their personal and corporate Web sites with
    the appropriate attribution.
+ \or % CC
+   \includegraphics[height=5ex]{doclicense-CC-\ACM@cc@type-88x31}\\
+   This work is licensed under a Creative Commons
+   \IfEq{\ACM@cc@type}{zero}{CC0 1.0 Universal}{%
+     \IfEq{\ACM@cc@type}{by}{Attribution}{}%
+     \IfEq{\ACM@cc@type}{by-sa}{Attribution-ShareAlike}{}%
+     \IfEq{\ACM@cc@type}{by-nd}{Attribution-NoDerivatives}{}%
+     \IfEq{\ACM@cc@type}{by-nc}{Attribution-NonCommercial}{}%
+     \IfEq{\ACM@cc@type}{by-nc-sa}{Attribution-NonCommercial-ShareAlike}{}%
+     \IfEq{\ACM@cc@type}{by-nc-nd}{Attribution-NonCommercial-NoDerivatives}{}%
+     ~\IfEq{\ACM@cc@version}{4.0}{4.0 International}{3.0 Unported}%
+   }
+   License.
  \fi}
 %    \end{macrocode}
 %
