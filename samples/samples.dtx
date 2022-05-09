@@ -54,12 +54,12 @@
 \acmConference[Conference acronym 'XX]{Make sure to enter the correct
   conference title from your rights confirmation emai}{June 03--05,
   2018}{Woodstock, NY}
-%
-%  Uncomment \acmBooktitle if th title of the proceedings is different
-%  from ``Proceedings of ...''!
-%
-%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
-%  June 03--05, 2018, Woodstock, NY} 
+%%
+%%  Uncomment \acmBooktitle if the title of the proceedings is different
+%%  from ``Proceedings of ...''!
+%%
+%%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
+%%  June 03--05, 2018, Woodstock, NY} 
 \acmPrice{15.00}
 \acmISBN{978-1-4503-XXXX-X/18/06}
 %</manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
@@ -960,3 +960,163 @@ massa et mattis lacinia.
 
 \end{document}
 %</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%
+% ACM Engage course material
+%
+%<*acmengage>
+%%
+%% 
+%% Commands for TeXCount
+%<<TCMACROS
+%TC:macro \cite [option:text,text]
+%TC:macro \citep [option:text,text]
+%TC:macro \citet [option:text,text]
+%TC:envir table 0 1
+%TC:envir table* 0 1
+%TC:envir tabular [ignore] word
+%TC:envir displaymath 0 word
+%TC:envir math 0 word
+%TC:envir comment 0 0
+%TCMACROS
+%% 
+%% 
+%% The first command in your LaTeX source must be the \documentclass command.
+\documentclass[acmengage]{acmart}
+%% Rights management information.  This information is sent to you
+%% when you complete the rights form.  These commands have SAMPLE
+%% values in them; it is your responsibility as an author to replace
+%% the commands and values with those provided to you when you
+%% complete the rights form.  Note that by default course materials
+%% use Creative Commons license
+%
+\setcopyright{cc}
+\setcctype{by}
+\copyrightyear{2022}
+\acmYear{May 2022}
+\acmBooktitle{EngageCSEdu}
+\acmDOI{XXXXXXX.XXXXXXX}
+%% Normally we suppress ISBN for course materials
+\acmISBN{}
+
+\begin{document}
+\title{Introduction to Data, Functions, and Mathematical
+  Reasoning}
+\author{David Liu}
+\email{david@cs.toronto.edu}
+\affiliation{%
+  \institution{University of Toronto}
+  \city{Toronto}
+  \country{Canada}}
+
+\author{Mario Badr}
+\email{mario.badr@toronto.edu}
+\affiliation{%
+  \institution{University of Toronto}
+  \city{Toronto}
+  \country{Canada}}
+
+\author{Shannon Komguem}
+\email{s.komguem@mail.toronto.edu}
+\affiliation{%
+  \institution{University of Toronto}
+  \city{Toronto}
+  \country{Canada}}
+
+%% The synopsis is a name for the abstract
+\begin{abstract}
+  This assignment is composed of a series of exercises that give
+  students an opportunity to practice skills fundamental to reasoning
+  in computer science. Designed for those with no background in
+  computer science, the questions give students an introduction not
+  only to computer programming, but also to the field of computer
+  science as a whole. For example, the comprehension and regression
+  exercises introduce the use of mathematics and statistics in CS,
+  while the written exercises demonstrate how to translate real-world
+  problems into problems solvable by a computer. We have also
+  included debugging exercises that encourage students to start
+  thinking through their own coding roadblocks. 
+\end{abstract}
+
+%% Metadata for the course
+\setengagemetadata{Course}{CS1}
+\setengagemetadata{Programming Language}{Python}
+\setengagemetadata{Knowledge Unit}{Programming Concepts}
+\setengagemetadata{CS Topics}{Functions, Data Types, Expressions,
+  Mathematical Reasoning}
+
+%% Keywords
+\keywords{Arithmetic Operators, Assignment Statements, Comprehension,
+  Integers, Strings, Lists, Sets, Dictionaries, Logic, Reasoning,
+  Debugging, Statistics, Modules, Data} 
+
+\maketitle
+
+\section{Engagement Highlights}
+
+The assignment is meant to be used in beginner programming courses
+where it is expected that students have little to no programming
+background and are curious to see what is in store for them in future
+CS courses and projects. The exercises aim at teaching a variety of
+core CS topics while only requiring basic coding skills. For example,
+since Python comprehension syntax is reminiscent of set builder
+notation, the comprehension exercise provides an intriguing crossover
+between CS and mathematics. Furthermore, the assignment is punctuated
+with an exercise that uses a seemingly complicated regression model
+and graphing library that students implement using very simple
+code. This serves to show them that they can create sophisticated
+projects with basic code, and hopefully leaves them wondering what
+they will be able to build after months, years, and even decades of
+studying computer science. The regression exercise also uses
+real-world datasets and interdisciplinary concepts that may be
+familiar to them, such as the “line of best fit”. This gives students
+an opportunity to relate their work in this assignment to their
+lived-experiences and interests.
+
+\section{Recommendations}
+
+The project can be assigned very early in the course. Students are
+ready to start it as soon as they have learned about Python
+expressions, data types, functions, and comprehension. The
+comprehension exercises can also be converted to loop exercises
+depending on the course content. The assignment encourages students to
+exercise multiple skills that are pertinent to computer science,
+including following instructions, using mathematical reasoning (as
+seen in the written and comprehension exercises), and critical
+thinking (as seen in the regression exercise).
+
+The assignment lets students practice converting mathematical
+expressions to Python, and importing and using modules. The regression
+exercise and the use of the plotly library can be modified to an
+activity that is more relevant to your group. For example, it can be
+replaced with an animation exercise for which students write equations
+to determine movement, among many other creative alternatives which
+allow students to practice the same skills. The datasets for the
+regression exercise can be replaced with ones of more interest to
+students in order to increase
+
+It is important to emphasize that students should not get caught up in
+the helper functions provided in the starter code and should focus on
+following the instructions in the handout. Instructing them to not
+over-analyze the implementation of the helper functions can also serve
+as a lesson on code abstraction.
+
+\section{Resource Details}
+
+In the zip file, \path{assignment.zip}, you will find the following
+files:
+\begin{itemize}
+\item the assignment handout in markdown
+\item starter code files
+\item a \LaTeX\ template for students’ written answers \cite{Lamport:LaTeX}
+\item a folder containing datasets for the regression exercise.
+\end{itemize}
+The assignment handout is expected to be edited and reviewed by the
+instructor before being shared with students.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{sample-base}
+
+
+
+\end{document}
+%</acmengage>

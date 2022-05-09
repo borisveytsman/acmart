@@ -16,6 +16,7 @@ Version 1.85.  Bug fixes
 	       Added support for Creative Commons licenses (requires
 	       doclicense images)
 	       New journals
+	       New format acmengage for ACM Engage CSEdu course materials 
 
 Version 1.84   Support for BibLaTeX rewritten (thanks to
 	       Roberto Di Cosmo and Kartik Singhal)

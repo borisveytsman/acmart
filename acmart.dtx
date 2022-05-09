@@ -283,10 +283,10 @@
 % \begin{verbatim}
 %   \documentclass[acmtog, review=false]{acmart}
 % \end{verbatim}
-% The possible formats are listed in
-% Table~\ref{tab:opts_format}.  Note that formats starting with |acm|
-% are intended for journals and transactions, while formats starting
-% with |sig| are intended for proceedings published as books.
+% The possible formats are listed in Table~\ref{tab:opts_format}.
+% Note that formats starting with |acm| are intended for journals,
+% transactions, and course materials, while formats starting with
+% |sig| are intended for proceedings published as books.
 %
 % Note that sometimes conference proceedings are published as a
 % special issue (or issues) of an ACM journal.  In this case, you
@@ -320,6 +320,7 @@
 %          conferences (with the exceptions listed below) and all ICPS
 %          volumes.\\
 %   sigplan & Proceedings format for SIGPLAN conferences.\\
+%.  acmengage & ACM EngageCSEdu Course materials.\\
 %   \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -489,6 +490,7 @@
 % Art, Science and Engineering of Programming (Programming '17)}
 % \end{verbatim}
 %
+%
 % An ACM paper should have either \cs{acmJournal} or
 % \cs{acmConference} command.  If it has both (or more) commands, the
 % last one takes precedence.  Note that if you have the command
@@ -496,6 +498,11 @@
 % will use conference format for bibstrip and reference citation
 % formatting.  In the samples directory there is a file
 % |sample-acmsmall-conf.tex| with the example of this usage.
+%
+% An ACM Engage material should \emph{not} use \cs{acmJournal} or
+% \cs{acmConference} command.  It may use \cs{acmBooktitle} to
+% override the default \emph{EngageCSEdu}.  It should use \cs{acmYear}
+% to set the date of the material.
 %
 %
 %
@@ -1171,6 +1178,31 @@
 % \end{verbatim}
 %
 %
+%\subsection{Top matter of ACM Engage materials}
+%\label{sec:ug_engage}
+%
+% ACM Engage materials resemble conference proceedings, but have some
+% special features.  First, as a rule, they are released under a
+% Creative Commons license.  By default CC-BY is used.  However, if
+% you want to use another variant of CC license, use \cs{setcctype}
+% command, for example, |\setcctype{by-nc}|.  Second, abstract is
+% called \emph{synopsis}.  Third, there are special top matter items
+% used for the materials, such as \emph{Course,} \emph{Resource Type,}
+% \emph{Programming Language,} \emph{CS Topics}.
+%
+% \DescribeMacro{\setengagemetadata}%
+% These items are set with the command
+% \cs{setengagemetadata}\marg{name}\marg{value}, for example,
+% \begin{verbatim}
+% \setengagemetadata{Course}{CS1}
+% \setengagemetadata{Programming Language}{Python}
+% \setengagemetadata{Knowledge Unit}{Programming Concepts}
+% \setengagemetadata{CS Topics}{Functions, Data Types, Expressions,
+% Mathematical Reasoning}
+% \end{verbatim}
+%
+% Note that the type of Creative Commons license, if such license is
+% used, is automatically added to the metadata.
 %
 %\subsection{Internationalization}
 %\label{sec:ug_i13n}
@@ -2270,11 +2302,12 @@
 %
 %
 % \begin{macro}{format}
+% \changes{1.85}{2022/05/08}{New format: acmengage}
 %   The possible formats
 %    \begin{macrocode}
 \define@choicekey*+{acmart.cls}{format}[\ACM@format\ACM@format@nr]{%
   manuscript, acmsmall, acmlarge, acmtog, sigconf, siggraph,
-  sigplan, sigchi, sigchi-a}[manuscript]{}{%
+  sigplan, sigchi, sigchi-a, acmengage}[manuscript]{}{%
   \ClassError{\@classname}{The option format must be manuscript,
     acmsmall, acmlarge, acmtog, sigconf, siggraph,
     sigplan, sigchi or sigchi-a}}
@@ -2288,6 +2321,7 @@
 \@DeclareACMFormat{sigplan}
 \@DeclareACMFormat{sigchi}
 \@DeclareACMFormat{sigchi-a}
+\@DeclareACMFormat{acmengage}
 \ExecuteOptionsX{format}
 %    \end{macrocode}
 %
@@ -2575,6 +2609,15 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\if@ACM@engage}
+% \changes{v1.85}{2022/05/05}{Introduced macro}
+% ACM Engage course materials have special formatting
+%    \begin{macrocode}
+\newif\if@ACM@engage
+\@ACM@engagefalse
+%    \end{macrocode}
+% 
+% \end{macro}
 %
 % Setting up switches
 %    \begin{macrocode}
@@ -2629,6 +2672,9 @@
 \or % sigchi-a
   \@ACM@journalfalse
   \@ACM@sigchiamodetrue
+\or % acmengage
+  \@ACM@journalfalse
+  \@ACM@engagetrue
 \fi
 \if@ACM@journal
  \@ACM@journal@bibstriptrue
@@ -2862,6 +2908,9 @@
 \else
   \renewcommand\keywordsname{Keywords}%
 \fi 
+\if@ACM@engage
+   \renewcommand\abstractname{Synopsis}%
+\fi
 \ifx\ACM@languages\@empty
 \else
   \RequirePackage[\ACM@languages]{babel}%
@@ -2872,6 +2921,9 @@
         \renewcommand\keywordsname{Keywords}%
       \fi 
       \renewcommand\acksname{Acknowledgements}%
+      \if@ACM@engage
+         \renewcommand\abstractname{Synopsis}%
+      \fi
   }%
   \addto\captionsfrench{%
       \if@ACM@journal
@@ -3242,6 +3294,7 @@
 % \changes{v1.55}{2018/10/20}{Now we use purple color for links}
 % \changes{v1.58}{2019/26/01}{Suppressed \cs{addtocounter} in pdf
 % subject}
+% \changes{1.85}{2022/05/08}{Added: acmengage}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
@@ -3266,6 +3319,7 @@
 \or % sigchi
 \or % sigchi-a
   \urlstyle{sf}
+\or % acmengage
 \fi
 \AtEndPreamble{%
   \if@ACM@urlbreakonhyphens
@@ -3453,13 +3507,21 @@
      }%
      \@mparswitchfalse
      \reversemarginpar
+\or % acmengage
+   \geometry{twoside=true, head=13pt,
+     paperwidth=8.5in, paperheight=11in,
+     includeheadfoot, columnsep=2pc,
+     top=57pt, bottom=73pt, inner=54pt, outer=54pt,
+     marginparwidth=2pc,heightrounded
+     }%
 \fi
 %    \end{macrocode}
 %
 %
 % \begin{macro}{\parindent}
 % \begin{macro}{\parskip}
-%   Paragraphing
+% \changes{1.85}{2022/05/08}{Added: acmengage}
+% Paragraphing
 %    \begin{macrocode}
 \setlength\parindent{10\p@}
 \setlength\parskip{\z@}
@@ -3474,6 +3536,7 @@
 \or % sigplan
 \or % sigchi
 \or % sigchi-a
+\or % acmengage
 \fi
 %    \end{macrocode}
 %
@@ -3580,6 +3643,8 @@
 \or % sigchi
   \flushbottom
 \or % sigchi-a
+\or % acmengage
+  \flushbottom
 \fi
 %    \end{macrocode}
 %
@@ -3805,6 +3870,7 @@
       textfont={bf, small}}
     \captionsetup[table]{labelfont={bf, small},
       textfont={bf, small}}
+  \or % acmengage
   \fi
 \fi
 %    \end{macrocode}
@@ -3955,6 +4021,7 @@
 \def\labelenumiv{\theenumiv.}
 \or % sigchi
 \or % sigchi-a
+\or % acmengage
 \fi
 %    \end{macrocode}
 %
@@ -5713,6 +5780,30 @@
 %    \end{macrocode}
 % \end{macro}
 %
+%
+%\subsection{ACM Engage top matter}
+%\label{sec:acmengagetop}
+%
+% \begin{macro}{\@acmengagemetadata}
+% \changes{v1.85}{2022/05/08}{Introduced macro}
+% The special metadata for ACM engage course materials
+%    \begin{macrocode}
+\def\@acmengagemetadata{}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+% \begin{macro}{\setengagemetadata}
+% \changes{v1.85}{2022/05/08}{Introduced macro}
+% Adding topic to engage metadata
+%    \begin{macrocode}
+\def\setengagemetadata#1#2{%
+  \g@addto@macro{\@acmengagemetadata}{%
+    \@setengagemetadata{#1}{#2}}}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
 % \subsection{Typesetting top matter}
 % \label{sec:maketitle}
 %
@@ -5764,6 +5855,7 @@
 % \changes{v1.75}{2020/11/15}{Added \cs{@beginmaketitlehook}}
 % \changes{v1.76}{2021/04/05}{Put \cs{par} inside group for keywords}
 % \changes{v1.83}{2022/02/20}{I13n}
+% \changes{v1.85}{2022/05/08}{acmengage}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -5821,7 +5913,11 @@
     \fi
     \if@ACM@manuscript\else
        \if@ACM@journal@bibstrip\else % Print the conference information
+         \if@ACM@engage
+            {\itshape \@acmBooktitle, \@acmYear.}\par
+         \else 
          {\itshape \acmConference@shortname, \acmConference@date, \acmConference@venue}\par
+         \fi
        \fi
     \fi
     \if@printcopyright
@@ -5862,6 +5958,7 @@
       \fi}
     \fi
   \endgroup
+  \if@ACM@engage\@typesetengagemetadata\fi  
   \setcounter{footnote}{0}%
   \@mkabstract
   \ifx\@translatedabstracts\@empty\else
@@ -5916,7 +6013,8 @@
 % \changes{v1.68}{2020/01/19}{Deleted grouping altogether}
 % \changes{v1.69}{2020/02/02}{Changed dot to colon for sigplan}
 % \changes{v1.78}{2021/05/02}{Again suppressed \cs{vspace} warning}
-%   This macro starts sections for proceedings and uses \cs{small} for journals
+% \changes{1.85}{2022/05/08}{Added: acmengage}
+% This macro starts sections for proceedings and uses \cs{small} for journals
 %    \begin{macrocode}
 \def\@specialsection#1{%
   \let\@vspace\@vspace@orig
@@ -5940,6 +6038,8 @@
     \section*{#1}%
   \or % sigchi-a
     \section*{#1}%
+  \or % acmengage
+    \section*{#1}%
     \fi
   \let\@vspace\@vspace@acm
   \let\@vspacer\@vspacer@acm
@@ -5953,7 +6053,8 @@
 % \changes{v1.06}{2016/05/01}{Added processing badges}
 % \changes{v1.46}{2017/08/29}{Deleted rule}
 % \changes{v1.78}{2021/05/16}{Added processing the overflowing title box}
-%   The printing of top matter starts a new page and uses the given
+% \changes{1.85}{2022/05/08}{Added: acmengage}
+% The printing of top matter starts a new page and uses the given
 %   title box.  Note that for |sigchi-a| we print badges here rather
 %   than in \cs{mktitle} since we want them in the margins.
 %
@@ -6012,6 +6113,8 @@
              \includegraphics[width=\@ACM@badge@width]{\@acmBadgeR@image}}%
           \fi}%
     \fi
+  \or % acmengage
+    \twocolumn[\box\mktitle@bx]%
   \fi
 }
 %    \end{macrocode}
@@ -6019,7 +6122,8 @@
 % \end{macro}
 %
 % \begin{macro}{\@mktitle}
-%   The title of the article
+% \changes{1.85}{2022/05/08}{Added: acmengage}
+% The title of the article
 %    \begin{macrocode}
 \def\@mktitle{%
   \ifcase\ACM@format@nr
@@ -6041,6 +6145,8 @@
     \@mktitle@iii
   \or % sigchi-a
     \@mktitle@iv
+  \or % acmengage
+    \@mktitle@iii
   \fi
 }
 %    \end{macrocode}
@@ -6051,7 +6157,8 @@
 % \changes{v1.06}{2016/05/01}{Added macro}
 % \changes{v1.45}{2017/08/15}{Switched \cs{bfeseries}\cs{sffamily} to
 % \cs{sffamily}\cs{bfseries}}
-%   The font to typeset the title
+% \changes{1.85}{2022/05/08}{Added: acmengage}
+% The font to typeset the title
 %    \begin{macrocode}
 \def\@titlefont{%
   \ifcase\ACM@format@nr
@@ -6073,6 +6180,8 @@
     \Huge\sffamily\bfseries
   \or % sigchi-a
      \Huge\bfseries
+  \or % acmengage
+    \Huge\sffamily\bfseries
   \fi}
 %    \end{macrocode}
 %
@@ -6081,7 +6190,8 @@
 % \begin{macro}{\@subtitlefont}
 % \changes{v1.06}{2016/05/01}{Added macro}
 % \changes{v1.33}{2017/03/12}{Added \cs{normalsize}}
-%   The font to typeset the subtitle
+% \changes{1.85}{2022/05/08}{Added: acmengage}
+% The font to typeset the subtitle
 %    \begin{macrocode}
 \def\@subtitlefont{\normalsize
   \ifcase\ACM@format@nr
@@ -6103,6 +6213,8 @@
      \LARGE\mdseries
   \or % sigchi-a
      \mdseries
+  \or % acmengage
+     \LARGE\mdseries
   \fi}
 %    \end{macrocode}
 %
@@ -6313,7 +6425,8 @@
 % \begin{macro}{\@mkauthors}
 % \changes{v1.17}{2016/07/09}{TOG now uses the same authors block as
 % other journals}
-%   Typesetting the authors
+% \changes{1.85}{2022/05/08}{Added: acmengage}
+% Typesetting the authors
 %    \begin{macrocode}
 \def\@mkauthors{\begingroup
   \hsize=\textwidth
@@ -6336,6 +6449,8 @@
     \@mkauthors@iii
   \or % sigchi-a
     \@mkauthors@iv
+  \or % acmengage
+    \@mkauthors@iii
   \fi
   \endgroup
 }
@@ -6386,6 +6501,9 @@
 \or % sigchi-a
   \def\@authorfont{\bfseries}
   \def\@affiliationfont{\mdseries}
+\or % acmengage
+  \def\@authorfont{\LARGE}
+  \def\@affiliationfont{\large}
 \fi
 %    \end{macrocode}
 %
@@ -6933,7 +7051,20 @@
 %
 % \end{macro}
 %
-%
+% \begin{macro}{\@typesetengagemetadata}
+% \changes{v1.85}{2022/05/08}{Introduced macro}
+% Typesetting special metadata for ACM Engage
+%    \begin{macrocode}
+\def\@typesetengagemetadata{%
+  \def\@setengagemetadata##1##2{\par\noindent\textbf{##1} ##2\par}%
+  \@acmengagemetadata
+  \ifnum\acm@copyrightmode=15\relax
+  \@setengagemetadata{Creative Commons License}{%
+    \textsc{cc \ACM@cc@type}}%
+  \fi}
+%    \end{macrocode}
+% 
+% \end{macro}
 %
 %\subsection{Headers and Footers}
 %\label{sec:head_foot}
@@ -7013,7 +7144,8 @@
 % \changes{v1.33}{2017/03/29}{Added macro}
 % \changes{v1.34}{2017/04/10}{Rulers now are continuous}
 % \changes{v1.69}{2020/02/02}{Do not increase numbers in one column format}
-%   How to display the box on the right.  In one column formats we do
+% \changes{1.85}{2022/05/08}{Added: acmengage}
+% How to display the box on the right.  In one column formats we do
 %   not step the numbers.
 %    \begin{macrocode}
 \def\ACM@linecountR{%
@@ -7036,6 +7168,8 @@
        \or % sigchi
           \ACM@mk@linecount
        \or % sigchi-a
+          \ACM@mk@linecount
+       \or % acmengage
           \ACM@mk@linecount
     \fi
     \begin{picture}(0,0)%
@@ -7498,6 +7632,7 @@
 % \changes{v1.45}{2017/08/15}{Switched \cs{bfeseries}\cs{sffamily} to
 % \cs{sffamily}\cs{bfseries}}
 % \changes{v1.67}{2020/01/11}{Deleted redefinitions of sections}
+% \changes{1.85}{2022/05/08}{Added: acmengage}
 % Fonts for sections etc. are different for different formats.
 %    \begin{macrocode}
 \def\@secfont{\sffamily\bfseries\section@raggedright\MakeTextUppercase}
@@ -7534,6 +7669,9 @@
  \setcounter{secnumdepth}{0}
  \def\@secfont{\sffamily\bfseries\section@raggedright\MakeTextUppercase}
  \def\@subsecfont{\sffamily\bfseries\section@raggedright}
+\or % acmengage
+ \def\@secfont{\bfseries\Large\section@raggedright\MakeTextUppercase}
+ \def\@subsecfont{\bfseries\Large\section@raggedright}
 \fi
 %    \end{macrocode}
 %
@@ -7625,6 +7763,7 @@
   \def\@acmplainnotefont{\normalfont}
 \or % sigchi
 \or % sigchi-a
+\or % acmengage
 \fi
 %    \end{macrocode}
 %
@@ -7695,6 +7834,7 @@
   \def\@acmdefinitionnotefont{\normalfont}
 \or % sigchi
 \or % sigchi-a
+\or % acmengage
 \fi
 %    \end{macrocode}
 %
@@ -7793,6 +7933,7 @@
   \def\@proofindent{\noindent}
 \or % sigchi
 \or % sigchi-a
+\or % acmengage
 \fi
 %    \end{macrocode}
 %
@@ -7839,6 +7980,8 @@
        \or % sigchi
           \RequirePackage{pbalance}%
        \or % sigchi-a
+       \or % acmengage
+          \RequirePackage{pbalance}%
     \fi
   \fi
   \if@ACM@balance
@@ -7861,6 +8004,8 @@
           \RequirePackage{balance}%
        \or % sigchi-a
           \global\@ACM@balancefalse
+       \or % acmengage
+          \RequirePackage{balance}%
     \fi
   \fi
 }
