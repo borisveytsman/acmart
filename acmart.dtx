@@ -304,7 +304,7 @@
 %   manuscript & A manuscript. This is the default. \\
 %   acmsmall & Small single-column format.  Used for CIE, CSUR,
 %            DLT, FAC, GAMES, JACM, JDIQ, JDS, JEA, JERIC,
-%            JETC, PACMCGIT, PACMHCI, PACMPL, TAAS, TACCESS, TACO,
+%            JETC, JRC, PACMCGIT, PACMHCI, PACMPL, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
 %            TOCE, TOCHI, TOCL,
@@ -1978,6 +1978,7 @@
 %     JERIC & ACM Journal of Educational Resources in Computing\\
 %     JETC & ACM Journal on Emerging Technologies in Computing Systems \\
 %     JOCCH & ACM Journal on Computing and Cultural Heritage \\
+%     JRC & ACM Journal on Responsible Computing \\
 %     PACMCGIT & Proceedings of the ACM on Computer Graphics and
 %     Interactive Techniques\\
 %     PACMHCI & PACM on Human-Computer Interaction\\
@@ -4066,6 +4067,7 @@
 % \changes{1.82}{2022/02/05}{Updated abbreviations and codes for
 % several journals}
 % \changes{1.84}{2022/04/09}{New journals: JDS, GAMES}
+% \changes{1.85}{2022/05/08}{New journal: JRC}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
@@ -4087,6 +4089,7 @@
   JERIC,%
   JETC,%
   JOCCH,%
+  JRC,%
   PACMCGIT,%
   PACMHCI,%
   PACMPL,%
@@ -4207,6 +4210,10 @@
   \def\@journalNameShort{ACM J. Comput. Cult. Herit.}%
   \def\@permissionCodeOne{1556-4673}%
   \def\@permissionCodeTwo{1556-4711}%
+\or % JRC
+  \def\@journalName{ACM Journal on Responsible Computing}%
+  \def\@journalNameShort{ACM J. Resp. Comput.}%
+  \def\@permissionCodeOne{2832-0565}%
 \or % PACMCGIT
   \def\@journalName{Proceedings of the ACM on Computer Graphics and Interactive Techniques}%
   \def\@journalNameShort{Proc. ACM Comput. Graph. Interact. Tech.}%
