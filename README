@@ -51,7 +51,7 @@ Version 1.76   Added many journal abbreviations to the bst.
 	       New experimental option: pbalance
 	       ORCID linking code
 
-Version 1.75   \country is now obligatory for addresses.
+Version 1.75   Omitted \country now produces error.
 	       Added \AtBeginMaketitle
 
 Version 1.74   Bug fixes.  A regression introduced in the font changes
@@ -59,7 +59,7 @@ Version 1.74   Bug fixes.  A regression introduced in the font changes
 
 Version 1.73   Bug fixes
 	       The elements institution, city and country are now obligatory
-	       for affiliations
+	       for affiliations.  The absence of them produces a warning
 
 Version 1.72   Bug fixes.  Better handling of metadata.
 
