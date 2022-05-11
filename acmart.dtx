@@ -2103,7 +2103,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/05/08 v1.85 Typesetting articles for the Association for Computing Machinery]
+[2022/05/10 v1.85 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -4212,7 +4212,7 @@
   \def\@permissionCodeTwo{1556-4711}%
 \or % JRC
   \def\@journalName{ACM Journal on Responsible Computing}%
-  \def\@journalNameShort{ACM J. Resp. Comput.}%
+  \def\@journalNameShort{ACM J. Responsib. Comput.}%
   \def\@permissionCodeOne{2832-0565}%
 \or % PACMCGIT
   \def\@journalName{Proceedings of the ACM on Computer Graphics and Interactive Techniques}%
@@ -5604,7 +5604,11 @@
    disseminate the work on their personal and corporate Web sites with
    the appropriate attribution.
  \or % CC
-   \includegraphics[height=5ex]{doclicense-CC-\ACM@cc@type-88x31}\\
+   \IfEq{\ACM@cc@type}{zero}{%
+     \def\ACM@CC@Url{https://creativecommons.org/publicdomain/zero/1.0/legalcode}}{%
+  \edef\ACM@CC@Url{https://creativecommons.org/licenses/\ACM@cc@type/\ACM@cc@version/legalcode}}%
+   \href{\ACM@CC@Url}{\includegraphics[height=5ex]{doclicense-CC-\ACM@cc@type-88x31}}\\
+   \href{\ACM@CC@Url}{%
    This work is licensed under a Creative Commons
    \IfEq{\ACM@cc@type}{zero}{CC0 1.0 Universal}{%
      \IfEq{\ACM@cc@type}{by}{Attribution}{}%
@@ -5615,7 +5619,7 @@
      \IfEq{\ACM@cc@type}{by-nc-nd}{Attribution-NonCommercial-NoDerivatives}{}%
      ~\IfEq{\ACM@cc@version}{4.0}{4.0 International}{3.0 Unported}%
    }
-   License.
+   License.}%
  \fi}
 %    \end{macrocode}
 %
