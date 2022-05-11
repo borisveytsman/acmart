@@ -501,7 +501,7 @@
 %
 % An ACM Engage material should \emph{not} use \cs{acmJournal} or
 % \cs{acmConference} command.  It may use \cs{acmBooktitle} to
-% override the default \emph{EngageCSEdu}.  It should use \cs{acmYear}
+% override the default \emph{ACM EngageCSEdu}.  It should use \cs{acmYear}
 % to set the date of the material.
 %
 %
@@ -7061,11 +7061,7 @@
 %    \begin{macrocode}
 \def\@typesetengagemetadata{%
   \def\@setengagemetadata##1##2{\par\noindent\textbf{##1} ##2\par}%
-  \@acmengagemetadata
-  \ifnum\acm@copyrightmode=15\relax
-  \@setengagemetadata{Creative Commons License}{%
-    \textsc{cc \ACM@cc@type}}%
-  \fi}
+  \@acmengagemetadata}
 %    \end{macrocode}
 % 
 % \end{macro}
