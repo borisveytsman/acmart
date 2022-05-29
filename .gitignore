@@ -29,3 +29,6 @@ samples/sample-*.pdf
 *.run.xml
 samples/ACM-Reference-Format.bst
 samples/*.tex
+samples/*.bbx
+samples/*.cbx
+samples/*.dbx
