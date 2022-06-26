@@ -12,6 +12,8 @@ The production version is the one on CTAN and ACM sites.
 
 Changes
 
+Version 1.86.  Empty country in affiliation now produces an error
+
 Version 1.85.  Bug fixes
 	       Added support for Creative Commons licenses (requires
 	       doclicense images)

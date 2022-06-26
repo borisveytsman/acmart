@@ -2142,7 +2142,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/05/10 v1.85 Typesetting articles for the Association for Computing Machinery]
+[2022/06/26 v1.86 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -6394,6 +6394,7 @@
 % \changes{v1.43}{2017/07/11}{Added comma before country for journals}
 % \changes{v1.46}{2017/08/30}{Corrected spacing for institution}
 % \changes{v1.73}{2020/09/07}{Check the presence in affil}
+% \changes{v1.86}{2022/06/26}{Error if country is empty}
 %   Theoretically we can define the macros for \cs{affiliation} inside
 %   the \cs{@mkauthors}-style commands.  However, this would lead to a
 %   strange error if an author uses them outside \cs{affiliation}.  Of
@@ -6408,7 +6409,9 @@
   \def\city#1{\global\@ACM@citypresenttrue\unskip\ignorespaces}
   \def\state#1{\unskip\ignorespaces}
   \newcommand\department[2][0]{\unskip\ignorespaces}
-  \def\country#1{\global\@ACM@countrypresenttrue
+  \def\country#1{\StrDel{#1}{ }[\@tempa]%
+    \ifx\@tempa\@empty\else
+    \global\@ACM@countrypresenttrue\fi
     \if@ACM@affiliation@obeypunctuation\else, \fi#1\ignorespaces}
 \else
   \def\position#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
