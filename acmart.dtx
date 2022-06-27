@@ -7260,7 +7260,9 @@
 % \changes{v1.59}{2019/04/20}{Added logic for conference papers using
 % journal format}
 % \changes{v1.59}{2019/04/20}{Moved page styles to \cs{AtBeginDocument}}
-% \changes{v1.76}{2021/02/21}{Fixed bug with no line numbers for nonacm}
+% \changes{v1.76}{2021/02/21}{Fixed bug with no line numbers for
+% nonacm}
+% \changes{v1.86}{2022/06/26}{Special treatment of ACM Engage materials}
 %   The page style for all pages but the first one
 %    \begin{macrocode}
 \AtBeginDocument{%
@@ -7323,12 +7325,20 @@
         \fancyhead[LE]{\ACM@linecountL}%
         \fancyhead[RO]{\ACM@linecountR}%
       \else%
-        \fancyhead[LE]{\ACM@linecountL\@headfootfont\footnotesize
-          \acmConference@shortname,
-          \acmConference@date, \acmConference@venue}%
-        \fancyhead[RO]{\@headfootfont
-          \acmConference@shortname,
-          \acmConference@date, \acmConference@venue\ACM@linecountR}%
+        \if@ACM@engage
+          \fancyhead[LE]{\ACM@linecountL\@headfootfont\footnotesize
+            EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi}%
+          \fancyhead[RO]{\@headfootfont
+            EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi
+            \ACM@linecountR}%
+        \else
+          \fancyhead[LE]{\ACM@linecountL\@headfootfont\footnotesize
+            \acmConference@shortname,
+            \acmConference@date, \acmConference@venue}%
+          \fancyhead[RO]{\@headfootfont
+            \acmConference@shortname,
+            \acmConference@date, \acmConference@venue\ACM@linecountR}%
+         \fi
       \fi
     \fi
   \else % Proceedings
@@ -7339,12 +7349,20 @@
       \fancyhead[LE]{\ACM@linecountL}%
       \fancyhead[RO]{\ACM@linecountR}%
     \else%
-      \fancyhead[LE]{\ACM@linecountL\@headfootfont
-        \acmConference@shortname,
-        \acmConference@date, \acmConference@venue}%
-      \fancyhead[RO]{\@headfootfont
-        \acmConference@shortname,
-        \acmConference@date, \acmConference@venue\ACM@linecountR}%
+      \if@ACM@engage
+        \fancyhead[LE]{\ACM@linecountL\@headfootfont
+          EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi}%
+        \fancyhead[RO]{\@headfootfont
+          EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi
+          \ACM@linecountR}%
+      \else
+        \fancyhead[LE]{\ACM@linecountL\@headfootfont
+          \acmConference@shortname,
+          \acmConference@date, \acmConference@venue}%
+        \fancyhead[RO]{\@headfootfont
+          \acmConference@shortname,
+          \acmConference@date, \acmConference@venue\ACM@linecountR}%
+       \fi
     \fi
   \fi
   \if@ACM@sigchiamode
