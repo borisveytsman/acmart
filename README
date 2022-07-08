@@ -14,6 +14,7 @@ Changes
 
 Version 1.86.  Empty country in affiliation now produces an error
                Bug fixes
+	       New samples for acmengage
 
 Version 1.85.  Bug fixes
 	       Added support for Creative Commons licenses (requires
