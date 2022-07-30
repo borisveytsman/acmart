@@ -408,7 +408,8 @@
 %     Section~\ref{sec:ug_topmatter})\\
 %     nonacm & false & Use the class typesetting options for
 %     a non-ACM document, which will not include the conference/journal
-%     header and footers or permission statements\\
+%     header and footers.  Currenly such documents allow only a
+%     Creative Commons license.\\
 %     timestamp & false & Whether to put a time stamp in the
 %     footer of each page\\
 %     authordraft & false & Whether author's-draft mode is enabled\\
@@ -1043,7 +1044,9 @@
 %     by IW3C2, when some authors are approved Google employees.\\
 %     \texttt{cc} & Creative Commons license.  If this key is set,
 %     \textsl{doclicense} images are used to typeset the license. See
-%     also \cs{setcctype} command.\\
+%     also \cs{setcctype} command.  Note that at present this license
+%     can be used only for \texttt{acmengage} format or for
+%     \texttt{nonacm} publications.\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -2142,7 +2145,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/06/26 v1.86 Typesetting articles for the Association for Computing Machinery]
+[2022/07/30 v1.87 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -5547,12 +5550,40 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\@ACM@copyright@check@cc}
+% \changes{v1.87}{2022/07/30}{Added macro}
+% At present cC licenses can be used only for acmengage format or for
+% non-acm stuff.  This macro checks whether the CC license is
+% applicable and generates an error if not.
+%    \begin{macrocode}
+\def\@ACM@copyright@check@cc{%
+  \if@ACM@nonacm
+     \ClassInfo{\@classname}{Using CC license with a non-acm
+       material}%
+  \else
+     \if@ACM@engage   
+        \ClassInfo{\@classname}{Using CC license with ACM Enage
+          material}%
+      \else
+      \ClassError{\@classname}{%
+        Sorry, Creative Commons licenses are\MessageBreak
+        currently not used with ACM publications\MessageBreak
+        typeset by the authors}{Please use nonacm 
+           option or ACM Engage class to enable CC licenses}%
+      \fi
+  \fi}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
 % \begin{macro}{\@copyrightpermission}
 % \changes{v1.40}{2017/06/16}{Added new copyright version: licensedcagov}
 % \changes{v1.50}{2018/02/07}{New copyright statements for iw3c2w3[g]}
 % \changes{v1.52}{2018/04/09}{Another rewording of copyright
 % statements for iw3c2w3[g]}
 % \changes{v1.85}{2022/05/08}{Added CC licenses}
+% \changes{v1.87}{2022/07/30}{CC licenses now are allowed only for
+% non-acm or ACM engage publications}
 %   The canned permission block.
 %    \begin{macrocode}
 \def\@copyrightpermission{%
@@ -5678,6 +5709,7 @@
    disseminate the work on their personal and corporate Web sites with
    the appropriate attribution.
  \or % CC
+   \@ACM@copyright@check@cc
    \IfEq{\ACM@cc@type}{zero}{%
      \def\ACM@CC@Url{https://creativecommons.org/publicdomain/zero/1.0/legalcode}}{%
   \edef\ACM@CC@Url{https://creativecommons.org/licenses/\ACM@cc@type/\ACM@cc@version/legalcode}}%
@@ -5867,6 +5899,7 @@
 % \changes{v1.76}{2021/04/05}{Put \cs{par} inside group for keywords}
 % \changes{v1.83}{2022/02/20}{I13n}
 % \changes{v1.85}{2022/05/08}{acmengage}
+% \changes{v1.87}{2022/07/30}{CC license are allowed for non-acm publications}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -5912,7 +5945,11 @@
        \fi
      \fi
   \fi
-  \if@ACM@nonacm\else\footnotetextcopyrightpermission{%
+  \if@ACM@nonacm
+    \ifnum\acm@copyrightmode=15\relax % cc
+       \footnotetextcopyrightpermission{\@copyrightpermission}%
+    \fi
+  \else\footnotetextcopyrightpermission{%
     \if@ACM@authordraft
         \raisebox{-2ex}[\z@][\z@]{\makebox[0pt][l]{\large\bfseries
             Unpublished working draft. Not for distribution.}}%

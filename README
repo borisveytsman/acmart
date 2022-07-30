@@ -12,6 +12,9 @@ The production version is the one on CTAN and ACM sites.
 
 Changes
 
+Version 1.87   CC license is allowed for non-acm documents and ACM Engage
+	       documents only	
+
 Version 1.86.  Empty country in affiliation now produces an error
                Bug fixes
 	       New samples for acmengage
