@@ -1,4 +1,4 @@
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
 %%
 %% 
 %% Commands for TeXCount
@@ -15,7 +15,17 @@
 %TCMACROS
 %% 
 %% 
-%% The first command in your LaTeX source must be the \documentclass command.
+%% The first command in your LaTeX source must be the \documentclass
+%% command.
+%%
+%% For submission and review of your manuscript please change the
+%% command to \documentclass[manuscript, screen, review]{acmart}.
+%%
+%% When submitting camera ready or to TAPS, please change the command
+%% to \documentclass[sigconf]{acmart} or whichever template is required
+%% for your publication. 
+%%
+%%
 %<manuscript>\documentclass[manuscript,screen,review]{acmart}
 %<acmsmall|acmsmall-conf>\documentclass[acmsmall]{acmart}
 %<acmsmall-biblatex>\documentclass[acmsmall,natbib=false]{acmart}
@@ -30,6 +40,7 @@
 %<sigchi-a>\documentclass[sigchi-a, nonacm]{acmart}
 %<sigconf-i13n>\documentclass[sigconf, language=french,
 %<sigconf-i13n>language=german, language=spanish, language=english]{acmart}
+%<acmcp>\documentclass[acmcp]{acmart}
 
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
@@ -48,7 +59,7 @@
 \acmYear{2018}
 \acmDOI{XXXXXXX.XXXXXXX}
 
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
 %<*manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %% These commands are for a PROCEEDINGS abstract or paper.
 \acmConference[Conference acronym 'XX]{Make sure to enter the correct
@@ -64,18 +75,19 @@
 \acmISBN{978-1-4503-XXXX-X/18/06}
 %</manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
-%<*acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog>
+%<*acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|acmcp>
 %%
 %% These commands are for a JOURNAL article.
 %<acmsmall|acmsmall-submission|acmsmall-biblatex>\acmJournal{JACM}
 %<acmlarge>\acmJournal{POMACS}
 %<acmtog>\acmJournal{TOG}
+%<acmcp>\acmJournal{JDS}
 \acmVolume{37}
 \acmNumber{4}
 \acmArticle{111}
 \acmMonth{8}
-%</acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog>
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|acmcp>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
 
 
 %%
@@ -84,8 +96,9 @@
 %% receive a unique submission ID from the organizers
 %% of the event, and this ID should be used as the parameter to this command.
 %%\acmSubmissionID{123-A56-BU3}
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
 
+%<*!acmcp>
 %%
 %% For managing citations, it is recommended to use bibliography
 %% files in BibTeX format.
@@ -98,6 +111,7 @@
 %% Look at the sample-*-biblatex.tex files for templates showcasing
 %% the biblatex styles.
 %%
+%</!acmcp>
 
 %<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %%
@@ -135,8 +149,7 @@
 \addbibresource{software.bib}
 \addbibresource{sample-base.bib}
 %</acmsmall-biblatex|sigconf-biblatex>
-
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
 
 %%
 %% end of the preamble, start of the body of the document source.
@@ -157,11 +170,11 @@
 %% "authornote" and "authornotemark" commands 
 %% used to denote shared contribution to the research.
 \author{Ben Trovato}
-\authornote{Both authors contributed equally to this research.}
+%<!acmcp>\authornote{Both authors contributed equally to this research.}
 \email{trovato@corporation.com}
 \orcid{1234-5678-9012}
 \author{G.K.M. Tobin}
-\authornotemark[1]
+%<!acmcp>\authornotemark[1]
 \email{webmaster@marysville-ohio.com}
 \affiliation{%
   \institution{Institute for Clarity in Documentation}
@@ -235,6 +248,23 @@
 %% the author to define a more concise list 
 %% of authors' names for this purpose.
 \renewcommand{\shortauthors}{Trovato et al.}
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
+%<*acmcp>
+%%
+%% Article type: Research, Review, Discussion, Invited or position
+\acmArticleType{Review}
+%%
+%% Links to code and data
+\acmCodeLink{https://github.com/borisveytsman/acmart}
+\acmDataLink{htps://zenodo.org/link}
+%% 
+\acmContributions{BT and GKMT designed the study; LT, VB, and AP
+  conducted the experiments, BR, HC, CP and JS analyzed the results,
+  JPK developed analytical predictions, all authors participated in
+  writing the manuscript.}
+%%
+%</acmcp>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
 %%
 %% The abstract is a short summary of the work to be presented in the
@@ -315,6 +345,8 @@
 \ccsdesc{Computer systems organization~Robotics}
 \ccsdesc[100]{Networks~Network reliability}
 
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
 %%
 %% Keywords. The author(s) should pick words that accurately describe
 %% the work being presented. Separate the keywords with commas.
@@ -326,7 +358,7 @@
 %<sigconf-i13n> neuronale Netze, Blickerkennung, Textklassifizierung}
 %<sigconf-i13n> \translatedkeywords{spanish}{conjuntos de datos,
 %<sigconf-i13n> redes neuronales, detección de mirada, etiquetado de texto} 
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
 %<*sigconf|authordraft|sigplan|acmsmall-conf|sigconf-i13n>
 %% A "teaser" image appears between the author and affiliation
 %% information and the body of the document, and typically spans the
@@ -1217,3 +1249,29 @@ a numbered list of URLs with an optional brief description of the content found 
 
 \end{document}
 %</acmengage>
+%<*acmcp>
+
+\maketitle
+
+
+\section{Problem statement}
+
+In this document we discuss how to write an ACM article.
+
+\section{Methods}
+
+This document provides \LaTeX\ templates for the article.
+
+\section{Results}
+
+We hope the resulting templates help the reader to write ACM papers
+and proceedings.
+
+\section{Significance}
+
+This document is important for anybody wanting to comply with the
+requirements of ACM publishing.
+
+
+\end{document}
+%</acmcp>
