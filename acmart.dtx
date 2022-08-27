@@ -1242,22 +1242,15 @@
 %
 % \DescribeMacro{\acmCodeLink}%
 % \DescribeMacro{\acmDataLink}%
-% The commands \cs{acmCodeLink}\marg{link} and
+% The commands \cs{acmCodeDataLink}\marg{link} and
 % \cs{acmDataLink}\marg{link} set the links to the data and code
 % accompanying the paper, for example,
 % \begin{verbatim}
 % \acmCodeLink{https://github.com/repository/code}
 % \acmDataLink{https://datadryad.org/stash/dataset/doi:DOI}
 % \end{verbatim}
+% You may repeat these commands if you have several repositories. 
 %
-%
-% \cs{acmContributions}%
-% The command \cs{acmContributions}\marg{contributions} sets the
-% contributions of the authors, for example,
-% \begin{verbatim}
-% \acmContributions{AW designed the study, CD performed it, all
-% authors contributed to the writing.}
-% \end{verbatim}
 %
 % ACM cover page should have the following obligatory sections:
 % \begin{itemize}
@@ -1267,7 +1260,17 @@
 % \item Significance.
 % \end{itemize}
 % 
+% Sometimes the addresses extracted from the authors' data are too
+% long to fit on the page.  In this case the command
+% \cs{authorsaddresses} can be use to override them, for example,
+% \begin{verbatim}
+% \authorsaddresses{Corresponding author: Ben Trovato,
+% \href{mailto:trovato@corporation.com}{trovato@corporation.com};
+% Institute for Clarity in Documentation, P.O. Box 1212, Dublin,
+% Ohio, USA, 43017-6221} 
+% \end{verbatim}
 % 
+%
 %
 %\subsection{Internationalization}
 %\label{sec:ug_i13n}
@@ -2223,7 +2226,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/07/30 v1.87 Typesetting articles for the Association for Computing Machinery]
+[2022/08/27 v1.87 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2623,7 +2626,9 @@
 % \begin{macro}{\ACM@fontsize}
 %   The font size to pass to the base class
 %    \begin{macrocode}
+% \changes{v1.87}{2022/08/27}{Added fontsize 8pt}
 \def\ACM@fontsize{}
+\DeclareOptionX{8pt}{\edef\ACM@fontsize{\CurrentOption}}
 \DeclareOptionX{9pt}{\edef\ACM@fontsize{\CurrentOption}}
 \DeclareOptionX{10pt}{\edef\ACM@fontsize{\CurrentOption}}
 \DeclareOptionX{11pt}{\edef\ACM@fontsize{\CurrentOption}}
@@ -2798,6 +2803,7 @@
 %
 % \changes{v1.13}{2016/06/06}{Increased font size for ACM Large}
 % \changes{v1.38}{2017/05/13}{Increase default font size for SIGPLAN}
+% \changes{v1.87}{2022/08/27}{Set font sizes for |acmengage| and |acmcp|}
 %
 %
 % At this point we either have \cs{ACM@fontsize} or use defaults
@@ -2822,6 +2828,10 @@
     \def\ACM@fontsize{9pt}%
   \or % sigchi-a
     \def\ACM@fontsize{10pt}%
+  \or % acmengage
+    \def\ACM@fontsize{10pt}%
+  \or % acmcp  
+    \def\ACM@fontsize{9pt}%
   \fi
 \fi
 \ClassInfo{\@classname}{Using fontsize \ACM@fontsize}
@@ -5438,32 +5448,31 @@
 %
 % \begin{macro}{\acmCodeLink}
 % \changes{v1.87}{2022/08/13}{Introduced macro}
+% \changes{v1.87}{2022/08/28}{Added possibility to have several links}
 % The code link
 %    \begin{macrocode}
-\def\acmCodeLink#1{\gdef\@acmCodeLink{#1}}
+\def\acmCodeLink#1{%
+  \ifx\@acmCodeDataLink\@empty
+     \gdef\@acmCodeDataLink{\url{#1}}%
+  \else
+     \g@addto@macro{\@acmCodeDataLink}{\\ \url{#1}}%
+  \fi}
+\def\@acmCodeDataLink{}
 %    \end{macrocode}
 % 
 % \end{macro}
 %
 % \begin{macro}{\acmDataLink}
 % \changes{v1.87}{2022/08/13}{Introduced macro}
+% \changes{v1.87}{2022/08/28}{Now this is the same as the code link}
 % The code link
 %    \begin{macrocode}
-\def\acmDataLink#1{\gdef\@acmDataLink{#1}}
+\let\acmDataLink\acmCodeLink
 %    \end{macrocode}
 % 
 % \end{macro}
 %
 %
-% \begin{macro}{\acmContributions}
-% \changes{v1.87}{2022/08/13}{Introduced macro}
-% The code link
-%    \begin{macrocode}
-\def\acmContributions#1{\gdef\@acmContributions{#1}}
-\acmContributions{}
-%    \end{macrocode}
-% 
-% \end{macro}
 % 
 %\subsection{Concepts system}
 %\label{sec:concepts}
@@ -6257,17 +6266,14 @@
   \global\setbox\@ACM@acmcpbox=\vtop to \textheight{%
     \setlength{\parindent}{\z@}%
     {\Large LOGO\par}%
-    \tiny
+    \scriptsize
     \vfill
-    \ifx\@acmCodeLink\@empty\else\url{\@acmCodeLink}\par\vfill
-    \fi
-    \ifx\@acmDataLink\@empty\else\url{\@acmDataLink}\par\vfill
+    \ifx\@acmCodeDataLink\@empty\else
+    Code and data links:\\ \@acmCodeDataLink\par\vfill
     \fi
     \ifx\@keywords\@empty\else Keywords:
     \@keywords\par\vfill
     \fi
-    \ifx\@acmContributions\@empty\else
-    \@acmContributions\vfill\fi
     \ifx\@empty\@authorsaddresses\else\@setauthorsaddresses\vfill\fi
   }
 \egroup}
