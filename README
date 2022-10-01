@@ -15,6 +15,7 @@ Changes
 Version 1.87   CC license is allowed for non-acm documents and ACM Engage
 	       documents only
 	       New format acmcp for the cover page
+	       Bug fixes
 
 Version 1.86.  Empty country in affiliation now produces an error
                Bug fixes
