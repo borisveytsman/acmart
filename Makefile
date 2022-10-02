@@ -139,8 +139,9 @@ zip:  all clean
 distros: all docclean
 	zip -r acm-distro.zip  \
 	acmart.pdf acmguide.pdf samples *.cls ACM-Reference-Format.* \
-	--exclude samples/acmengage*
-	zip -r acmengage-distro.zip samples/acmengage* \
+	--exclude samples/sample-acmengage*
+	zip -r acmengage-distro.zip samples/sample-acmengage* \
+	samples/*.bib \
 	acmart.pdf acmguide.pdf  *.cls ACM-Reference-Format.*
 
 
