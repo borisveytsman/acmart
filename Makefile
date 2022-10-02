@@ -135,7 +135,13 @@ archive:  all clean
 zip:  all clean
 	zip -r  $(PACKAGE).zip * -x '*~' -x '*.tgz' -x '*.zip' -x CVS -x 'CVS/*'
 
-documents.zip: all docclean
-	zip -r $@ acmart.pdf acmguide.pdf samples *.cls ACM-Reference-Format.*
+# distros
+distros: all docclean
+	zip -r acm-distro.zip  \
+	acmart.pdf acmguide.pdf samples *.cls ACM-Reference-Format.* \
+	--exclude samples/acmengage*
+	zip -r acmengage-distro.zip samples/acmengage* \
+	acmart.pdf acmguide.pdf  *.cls ACM-Reference-Format.*
+
 
 .PHONY: all ALLSAMPLES docclean clean distclean archive zip
