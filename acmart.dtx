@@ -303,13 +303,13 @@
 %     \midrule
 %   manuscript & A manuscript. This is the default. \\
 %   acmsmall & Small single-column format.  Used for CIE, CSUR,
-%            DLT, FAC, GAMES, JACM, JDIQ, JDS, JEA, JERIC,
+%            DLT, FAC, GAMES, JACM, JATS, JCSS, JDIQ, JDS, JEA, JERIC,
 %            JETC, JRC, PACMCGIT, PACMHCI, PACMPL, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
 %            TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
-%            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS,
+%            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS, TORS
 %            TOS, TOSEM, TOSN, TQC, TRETS,
 %            TSAS, TSC, TSLP and TWEB, including special issues. \\
 %   acmlarge  & Large single-column format.  Used for DTRAP, HEALTH,
@@ -2095,6 +2095,8 @@
 %     IMWUT & PACM on Interactive, Mobile, Wearable and Ubiquitous
 %     Technologies\\
 %     JACM &  Journal of the ACM \\
+%     JATS &  ACM Journal on Autonomous Transportation Systems \\
+%     JCCS &  ACM Journal on Computing and Sustainable Societies \\
 %     JDIQ & ACM Journal of Data and Information Quality \\
 %     JDS & ACM/IMS Journal of Data Science \\
 %     JEA & ACM Journal of Experimental Algorithmics \\
@@ -2145,6 +2147,7 @@
 %     TOPC & ACM Transactions on Parallel Computing\\
 %     TOPLAS & ACM Transactions on Programming Languages and Systems\\
 %     TOPS & ACM Transactions on Privacy and Security\\
+%     TORS & ACM Transactions on Recommender Systems\\
 %     TOS & ACM Transactions on Storage\\
 %     TOSEM & ACM Transactions on Software Engineering and Methodology\\
 %     TOSN & ACM Transactions on Sensor Networks\\
@@ -2226,7 +2229,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/08/27 v1.87 Typesetting articles for the Association for Computing Machinery]
+[2022/19/17 v1.87 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -4288,6 +4291,8 @@
   HEALTH,%
   IMWUT,%
   JACM,%
+  JATS,%
+  JCSS,%
   JDIQ,%
   JDS,%
   JEA,%
@@ -4334,6 +4339,7 @@
   TOPC,%
   TOPS,%
   TOPLAS,%
+  TORS,%
   TOS,%
   TOSEM,%
   TOSN,%
@@ -4389,6 +4395,14 @@
   \def\@journalName{Journal of the ACM}%
   \def\@journalNameShort{J. ACM}%
   \def\@permissionCodeOne{0004-5411}%
+\or % JATS
+  \def\@journalName{Journal on Autonomous Transportation Systems}%
+  \def\@journalNameShort{ACM J. Auton. Transport. Syst.}%
+  \def\@permissionCodeOne{2833-0528}%
+\or % JCCS
+  \def\@journalName{ACM Journal on Computing and Sustainable Societies}%
+  \def\@journalNameShort{ACM J. Comput. Sustain. Soc.}%
+  \def\@permissionCodeOne{}%
 \or % JDIQ
   \def\@journalName{ACM Journal of Data and Information Quality}%
   \def\@journalNameShort{ACM J. Data Inform. Quality}%
@@ -4587,6 +4601,10 @@
   \def\@journalName{ACM Transactions on Programming Languages and Systems}%
   \def\@journalNameShort{ACM Trans. Program. Lang. Syst.}%
   \def\@permissionCodeOne{0164-0925}%
+\or % TORS
+  \def\@journalName{ACM Transactions on Recommender Systems}%
+  \def\@journalNameShort{ACM Trans. Recomm. Syst.}%
+  \def\@permissionCodeOne{2770-6699}%
 \or % TOS
   \def\@journalName{ACM Transactions on Storage}%
   \def\@journalNameShort{ACM Trans. Storage}%
