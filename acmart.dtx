@@ -302,8 +302,8 @@
 %     \normalfont Value & Meaning\\
 %     \midrule
 %   manuscript & A manuscript. This is the default. \\
-%   acmsmall & Small single-column format.  Used for CIE, CSUR,
-%            DLT, FAC, GAMES, JACM, JATS, JCSS, JDIQ, JDS, JEA, JERIC,
+%   acmsmall & Small single-column format.  Used for ACMJCSS, CIE, CSUR,
+%            DLT, FAC, GAMES, JACM, JATS,  JDIQ, JDS, JEA, JERIC,
 %            JETC, JRC, PACMCGIT, PACMHCI, PACMPL, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
@@ -2083,7 +2083,8 @@
 %     \midrule
 % \endhead
 % \bottomrule
-% \endfoot
+%     \endfoot
+%     ACMJCSS &  ACM Journal on Computing and Sustainable Societies \\
 %     CIE & ACM Computers in Entertainment \\
 %     CSUR & ACM Computing Surveys\\
 %     DLT & Distributed Ledger Technologies: Research and Practice\\
@@ -2096,7 +2097,6 @@
 %     Technologies\\
 %     JACM &  Journal of the ACM \\
 %     JATS &  ACM Journal on Autonomous Transportation Systems \\
-%     JCCS &  ACM Journal on Computing and Sustainable Societies \\
 %     JDIQ & ACM Journal of Data and Information Quality \\
 %     JDS & ACM/IMS Journal of Data Science \\
 %     JEA & ACM Journal of Experimental Algorithmics \\
@@ -2229,7 +2229,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/19/17 v1.87 Typesetting articles for the Association for Computing Machinery]
+[2022/10/18 v1.87 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -4276,11 +4276,13 @@
 % several journals}
 % \changes{1.84}{2022/04/09}{New journals: JDS, GAMES}
 % \changes{1.85}{2022/05/08}{New journal: JRC}
+% \changes{1.85}{2022/10/18}{New journals: ACMJCSS, JATS, TORS}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
 %    \begin{macrocode}
 \define@choicekey*+{ACM}{acmJournal}[\@journalCode\@journalCode@nr]{%
+  ACMJCSS,%
   CIE,%
   CSUR,%
   DGOV,%
@@ -4292,7 +4294,6 @@
   IMWUT,%
   JACM,%
   JATS,%
-  JCSS,%
   JDIQ,%
   JDS,%
   JEA,%
@@ -4352,7 +4353,11 @@
   FACMP%
 }{%
 \ifcase\@journalCode@nr
-\relax % CIE
+\relax % ACMJCSS
+  \def\@journalName{ACM Journal on Computing and Sustainable Societies}%
+  \def\@journalNameShort{ACM J. Comput. Sustain. Soc.}%
+  \def\@permissionCodeOne{}%
+\or % CIE
   \def\@journalName{ACM Computers in Entertainment}%
   \def\@journalNameShort{ACM Comput. Entertain.}%
   \def\@permissionCodeOne{1544-3574}%
@@ -4399,10 +4404,6 @@
   \def\@journalName{Journal on Autonomous Transportation Systems}%
   \def\@journalNameShort{ACM J. Auton. Transport. Syst.}%
   \def\@permissionCodeOne{2833-0528}%
-\or % JCCS
-  \def\@journalName{ACM Journal on Computing and Sustainable Societies}%
-  \def\@journalNameShort{ACM J. Comput. Sustain. Soc.}%
-  \def\@permissionCodeOne{}%
 \or % JDIQ
   \def\@journalName{ACM Journal of Data and Information Quality}%
   \def\@journalNameShort{ACM J. Data Inform. Quality}%
