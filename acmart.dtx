@@ -568,6 +568,14 @@
 % Note that some formats do not typeset e-mails or ORCID identifiers.
 % Do not worry: the metadata tools will get them.
 %
+% ACM strongly encourages that you include ORCIDs for all authors
+% before compiling or submitting for review and/or production
+% processing.
+%
+% If you do not have an ORCID, you may get one for free by
+% registering at \url{http://www.orcid.org/}.  
+%
+%
 % Sometimes an author has several affiliations.  In this case, the
 % \cs{affiliation} command should be repeated:
 % \begin{verbatim}
@@ -3293,7 +3301,7 @@
 % \end{macro}
 %
 % \begin{macro}{\@startsection}
-% \changes{v1.31}{2017/03/04}{Rededined macro}
+% \changes{v1.31}{2017/03/04}{Redefined macro}
 % \changes{v1.43}{2017/07/09}{Added \cs{makeatletter}}
 %   The |amsart| package redefines \cs{startsection}.  Here we redefine
 %   it again to make the table of contents work.
@@ -4278,6 +4286,7 @@
 % \changes{1.85}{2022/05/08}{New journal: JRC}
 % \changes{1.87}{2022/10/18}{New journals: ACMJCSS, JATS, TORS}
 % \changes{1.88}{2022/10/19}{Added ISSN for GAMES}
+% \changes{1.88}{2022/10/23}{Added ISSN for ACMJCSS}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
@@ -4357,7 +4366,7 @@
 \relax % ACMJCSS
   \def\@journalName{ACM Journal on Computing and Sustainable Societies}%
   \def\@journalNameShort{ACM J. Comput. Sustain. Soc.}%
-  \def\@permissionCodeOne{}%
+  \def\@permissionCodeOne{2834-5533}%
 \or % CIE
   \def\@journalName{ACM Computers in Entertainment}%
   \def\@journalNameShort{ACM Comput. Entertain.}%
@@ -4935,7 +4944,7 @@
 % \begin{macro}{\orcid}
 % \changes{v1.15}{2016/06/25}{Introduced macro}
 % \changes{v1.76}{2021/03/15}{Added code for orcid links}
-%   We rededine the command to typeset the current author
+%   We redefine the command to typeset the current author
 %    \begin{macrocode}
 \def\orcid#1{\unskip\ignorespaces%
   \IfBeginWith{#1}{http}{%
