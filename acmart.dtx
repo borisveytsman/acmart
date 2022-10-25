@@ -304,7 +304,8 @@
 %   manuscript & A manuscript. This is the default. \\
 %   acmsmall & Small single-column format.  Used for ACMJCSS, CIE, CSUR,
 %            DLT, FAC, GAMES, JACM, JATS,  JDIQ, JDS, JEA, JERIC,
-%            JETC, JRC, PACMCGIT, PACMHCI, PACMPL, TAAS, TACCESS, TACO,
+%            JETC, JRC, PACMCGIT, PACMHCI, PACMNET,
+%            PACMPL, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
 %            TOCE, TOCHI, TOCL,
@@ -2115,6 +2116,7 @@
 %     PACMCGIT & Proceedings of the ACM on Computer Graphics and
 %     Interactive Techniques\\
 %     PACMHCI & PACM on Human-Computer Interaction\\
+%     PACMNET & PACM on Networking\\
 %     PACMPL & PACM on Programming Languages \\
 %     POMACS & PACM on Measurement and Analysis of Computing Systems \\
 %     TAAS & ACM Transactions on Autonomous and Adaptive Systems\\
@@ -2237,7 +2239,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2022/10/19 v1.88 Typesetting articles for the Association for Computing Machinery]
+[2022/10/24 v1.88 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -4287,6 +4289,7 @@
 % \changes{1.87}{2022/10/18}{New journals: ACMJCSS, JATS, TORS}
 % \changes{1.88}{2022/10/19}{Added ISSN for GAMES}
 % \changes{1.88}{2022/10/23}{Added ISSN for ACMJCSS}
+% \changes{1.88}{2022/10/24}{Added PACMNET}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
@@ -4313,6 +4316,7 @@
   JRC,%
   PACMCGIT,%
   PACMHCI,%
+  PACMNET,%
   PACMPL,%
   POMACS,%
   TAAS,%
@@ -4457,6 +4461,10 @@
   \def\@permissionCodeOne{2573-0142}%
   \@ACM@screentrue
   \PackageInfo{\@classname}{Using screen mode due to \@journalCode}%
+\or % PACMNET
+  \def\@journalName{Proceedings of the ACM on Networkng}%
+  \def\@journalNameShort{Proc. ACM Netw.}%
+  \def\@permissionCodeOne{2834-5509}%
 \or % PACMPL
   \def\@journalName{Proceedings of the ACM on Programming Languages}%
   \def\@journalNameShort{Proc. ACM Program. Lang.}%
@@ -6543,6 +6551,7 @@
 % \changes{v1.83}{2022/02/20}{Added \cs{translatedtitle} and
 % \cs{translatedsubtitle}}
 % \changes{v1.87}{2022/08/14}{Special treatment for acmcp}
+% \changes{v1.88}{2022/10/24}{Moved down title for acmcp}
 %   The version of \cs{mktitle} for most journals
 %    \begin{macrocode}
 \def\@mktitle@i{\hsize=\textwidth
@@ -6563,6 +6572,9 @@
       \raisebox{-.5\baselineskip}[\z@][\z@]{\href{\@acmBadgeL@url}{%
           \includegraphics[width=\@ACM@badge@width]{\@acmBadgeL@image}}}%
       \hskip\@ACM@badge@skip
+    \fi
+    \if@ACM@acmcp
+    \vspace*{108.5\p@}\par\noindent
     \fi
     \parbox[t]{\@ACM@title@width}{\raggedright
       \@titlefont\noindent
