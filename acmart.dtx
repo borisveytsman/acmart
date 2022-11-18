@@ -1485,6 +1485,7 @@
 %   |theorem|,
 %   |conjecture|,
 %   |proposition|,
+%   |axiom|,
 %   |lemma| and
 %   |corollary|, and
 % \item[acmdefinition:] this is the style used for
@@ -8293,6 +8294,9 @@
   }{}
   \@ifundefined{lemma}{%
   \newtheorem{lemma}[theorem]{Lemma}
+  }{}
+  \@ifundefined{axiom}{%
+  \newtheorem{axiom}[theorem]{Axiom}
   }{}
   \@ifundefined{corollary}{%
   \newtheorem{corollary}[theorem]{Corollary}
