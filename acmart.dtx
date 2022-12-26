@@ -193,7 +193,8 @@
 % \begin{enumerate}
 % \item Run |latex acmart.ins|.  This will produce the file
 % |acmart.cls|
-% \item Put the files |acmart.cls| and |ACM-Reference-Format.bst|
+% \item Put the files |acmart.cls|, |acm-jdslogo.png|,
+%   and |ACM-Reference-Format.bst|
 %   in places where \LaTeX{} can find them (see \cite{TeXFAQ} or
 %   the documentation for your \TeX{} system).\label{item:install}
 % \item Update the database of file names.  Again, see \cite{TeXFAQ}
@@ -1279,7 +1280,8 @@
 % Ohio, USA, 43017-6221} 
 % \end{verbatim}
 % 
-%
+% The design of the cover page may require additional runs of latex to
+% make the elements of the page align.
 %
 %\subsection{Internationalization}
 %\label{sec:ug_i13n}
@@ -2893,14 +2895,23 @@
 %
 %
 % \changes{v1.87}{2022/08/14}{Added `framed' package for acmcp}
+% \changes{v1.89}{2022/12/25}{Added `zref-savepos' package for acmcp}
 %    \begin{macrocode}
 \if@ACM@acmcp
 \RequirePackage{framed}
+\RequirePackage{zref-savepos, zref-user}
 \fi
 %    \end{macrocode}
 % 
 %
-%
+% \begin{macro}{\@ACM@acmcp@delta}
+% \changes{v1.89}{2022/12/25}{Added dimen}
+% We need to store the dimen to store the insert length of amcp box
+%    \begin{macrocode}
+\newdimen\@ACM@acmcp@delta
+\@ACM@acmcp@delta=0pt\relax
+%    \end{macrocode}
+% \end{macro}
 %
 %\subsection{Citations}
 % \changes{v1.19}{2016/07/28}{Include 'References' in PDF bookmarks
@@ -5474,13 +5485,23 @@
  \ClassError{\@classname}{Article Type must be Research, Review,\MessageBreak
    Discussion, Invited, or Position}}
 \def\acmArticleType#1{\setkeys{ACM}{articletype=#1}}
-\newenvironment{@ACM@color@frame}{%
-  \def\FrameCommand{\hspace*{-6.5pc}%
-    \colorbox{@ACM@Article@color!10!white}}%
-  \MakeFramed {\advance\hsize -6.5pc\relax\FrameRestore}}{\endMakeFramed}
 \if@ACM@acmcp
 \acmArticleType{Research}%
 \fi
+ %    \end{macrocode}
+% 
+% \end{macro}
+% \begin{macro}{\@ACM@color@frame}
+% \changes{v1.87}{2022/08/13}{Introduced macro}
+% \changes{v1.89}{2022/12/25}{Added saving the position of the bottom}
+% The colored frame for the acmcp
+%    \begin{macrocode}
+\newenvironment{@ACM@color@frame}{%
+  \def\FrameCommand{\hspace*{-6.5pc}%
+    \colorbox{@ACM@Article@color!10!white}}%
+  \MakeFramed {\advance\hsize
+    -6.5pc\relax\FrameRestore}}{\zsaveposy{@ACM@acmcpframe@y}%
+  \endMakeFramed}
 %    \end{macrocode}
 % 
 % \end{macro}
@@ -6296,24 +6317,38 @@
 %
 % \begin{macro}{\set@ACM@acmcpbox}
 % \changes{v1.87}{2022/08/14}{Added macro}
+% \changes{v1.89}{2022/12/25}{Added logo}
+% \changes{v1.89}{2022/12/25}{Added zref position of the bottom}
 % Setting infobox for acmcp
 %    \begin{macrocode}
 \newbox\@ACM@acmcpbox
 \def\set@ACM@acmcpbox{%
   \bgroup
   \hsize=5pc
-  \global\setbox\@ACM@acmcpbox=\vtop to \textheight{%
+  \global\setbox\@ACM@acmcpbox=\vbox{%
     \setlength{\parindent}{\z@}%
-    {\Large LOGO\par}%
+    {\includegraphics[width=\hsize]{acm-jdslogo}\par}%
     \scriptsize
-    \vfill
-    \ifx\@acmCodeDataLink\@empty\else
-    Code and data links:\\ \@acmCodeDataLink\par\vfill
+    \ifnum\getrefnumber{TotPages}>1\else
+      \zrefused{@ACM@acmcpbox@y}%
+      \zrefused{@ACM@acmcpframe@y}%
+      \@tempdima=\dimexpr\zposy{@ACM@acmcpbox@y}sp -
+      \zposy{@ACM@acmcpframe@y}sp+0.3\FrameSep+
+      \@ACM@acmcp@delta\relax
+      \ifdim\@tempdima>0pt\relax         
+         \vspace*{\@tempdima}%
+         \protected@write\@auxout{}%
+         {\string\global\@ACM@acmcp@delta=\the\@tempdima\relax}%
+      \fi
     \fi
-    \ifx\@keywords\@empty\else Keywords:
-    \@keywords\par\vfill
+    \ifx\@acmCodeDataLink\@empty\else\bigskip
+    Code and data links:\\ \@acmCodeDataLink\par\bigskip
     \fi
-    \ifx\@empty\@authorsaddresses\else\@setauthorsaddresses\vfill\fi
+    \ifx\@keywords\@empty\else\bigskip
+      Keywords: \@keywords\par
+    \fi
+    \ifx\@empty\@authorsaddresses\else\bigskip\@setauthorsaddresses\fi
+    \zsaveposy{@ACM@acmcpbox@y}%
   }
 \egroup}
 %    \end{macrocode}
