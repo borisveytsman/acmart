@@ -116,6 +116,7 @@ docclean:
 	samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst \
 	samples/*.log samples/*.aux samples/*.out \
 	samples/*.bbl samples/*.blg samples/*.cut \
+	samples/acm-jdslogo.png \
 	samples/*.run.xml samples/*.bcf $(SAMPLEBIBLATEXFILES)
 
 
