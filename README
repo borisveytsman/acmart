@@ -13,6 +13,8 @@ The production version is the one on CTAN and ACM sites.
 Changes
 
 Version 1.89   Bug fixes
+	       Redesign of ACMCP
+	       New positioning of badges
 
 Version 1.88   New ISSNs
 	       Documentation updates
