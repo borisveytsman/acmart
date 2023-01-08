@@ -5324,7 +5324,7 @@
 % \end{macro}
 %
 % \begin{macro}{\acmBadge}
-% \changes{v1.89}{2022/12/27}{Added macro}
+% \changes{v1.89}{2023/01/07}{Added macro}
 % Just a syntax sugar for \cs{acmBadgeR}
 %    \begin{macrocode}
 \let\acmBadge=\acmBadgeR
@@ -6636,6 +6636,7 @@
 % \changes{v1.87}{2022/08/14}{Special treatment for acmcp}
 % \changes{v1.88}{2022/10/24}{Moved down title for acmcp}
 % \changes{v1.89}{2022/12/27}{Moved badges to top header}
+% \changes{v1.89}{2023/01/07}{Moved up acmcp title}
 %   The version of \cs{mktitle} for most journals
 %    \begin{macrocode}
 \def\@mktitle@i{\hsize=\textwidth
@@ -6644,9 +6645,6 @@
   \fi
   \@ACM@title@width=\hsize
   \setbox\mktitle@bx=\vbox{\noindent\@titlefont
-    \if@ACM@acmcp
-    \vspace*{108.5\p@}\par\noindent
-    \fi
     \parbox[t]{\@ACM@title@width}{\raggedright
       \@titlefont\noindent
       \@title\@translatedtitle%
