@@ -917,16 +917,13 @@
 % string, as |\acmDOI{}|, suppresses the DOI.
 %
 %
-% \DescribeMacro{\acmBadgeR}%
-% \DescribeMacro{\acmBadgeL}%
+% \DescribeMacro{\acmBadge}%
 % Some conference articles get special distinctions, for example, the
 % artifact evaluation for PPoPP~2016
 % (see~\url{http://ctuning.org/ae/ppopp2016.html}).  These articles
 % display special badges supplied by the conference organizers.  This
-% class provides commands to add these badges:
-% \cs{acmBadgeR}\oarg{url}\marg{graphics} and
-% \cs{acmBadgeL}\oarg{url}\marg{graphics}.  The first command puts the
-% badge to the right of page, and the second one---to the left.
+% class provides command to add these badges:
+% \cs{acmBadge}\oarg{url}\marg{graphics}.
 % The arguments have the following meaning: \oarg{url}, if provided,
 % sets the link to the badge authority in the screen version, while
 % \marg{graphics} sets the graphics file with the badge image.  The
@@ -936,7 +933,7 @@
 % \begin{verbatim}
 % \acmBadgeR[http://ctuning.org/ae/ppopp2016.html]{ae-logo}
 % \end{verbatim}
-% The commands can be repeated, if a paper has several badges.  
+% The command can be repeated, if a paper has several badges.  
 %
 %
 % \DescribeMacro{\startPage}%
@@ -1914,6 +1911,35 @@
 %    palettes.
 %  \end{enumerate}
 %
+%
+%
+%\subsubsection{Manual bibliography}
+%\label{sec:ug_manual_bibliography}
+%
+% Some people create bibliographies manually, writing down
+% \cs{bibitem} commands explicitly.  This approach is \emph{not}
+% recommended for ACM styles.  The reason is, ACM submissions, besides
+% being typeset, are also processed by special programs that extract
+% metadata and references.  Bibliographies created automatically with
+% ACM styles contain customized macros for these programs, for
+% example,
+% \begin{verbatim}
+% \bibitem[Ablamowicz and Fauser(2007)]%
+%         {Ablamowicz07}
+% \bibfield{author}{\bibinfo{person}{Rafal Ablamowicz} {and}
+%   \bibinfo{person}{Bertfried Fauser}.} \bibinfo{year}{2007}\natexlab{}.
+% \newblock \bibinfo{booktitle}{\emph{CLIFFORD: a Maple 11 Package for Clifford
+%   Algebra Computations, version 11}}.
+% \newblock
+% \urldef\tempurl%
+% \url{http://math.tntech.edu/rafal/cliff11/index.html}
+% \showURL{%
+% Retrieved February 28, 2008 from \tempurl} 
+% \end{verbatim}
+%
+% Manual bibliographies without these macros may slow down the
+% publication process, and thus are not recommended for ACM
+% submissions. 
 %
 %\subsection{Other notable packages and typographic remarks}
 %\label{sec:ug_other}
@@ -5297,7 +5323,13 @@
 %
 % \end{macro}
 %
-%
+% \begin{macro}{\acmBadge}
+% \changes{v1.89}{2022/12/27}{Added macro}
+% Just a syntax sugar for \cs{acmBadgeR}
+%    \begin{macrocode}
+\let\acmBadge=\acmBadgeR
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\startPage}
 %   The start page of the paper
