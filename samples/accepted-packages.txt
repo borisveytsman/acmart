@@ -33,7 +33,7 @@ changes
 checkend
 CJK
 clean
-cleverref
+cleveref
 cmap
 color
 colortbl
