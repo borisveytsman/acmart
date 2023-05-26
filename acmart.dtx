@@ -426,7 +426,9 @@
 %     pbalance & false & Whether to balance the last page in two column
 %                        mode using pbalance package\\
 %     urlbreakonhyphens & true & Whether to break urls on hyphens\\
-%     \bottomrule
+%     tagged & false & The experimental tagged code is enabled, see
+%     Section~\ref{sec:ug_tagged}. Do not use it for production code. \\
+%     \bottomrule 
 %   \end{tabularx}
 % \end{table}
 %
@@ -2245,6 +2247,15 @@
 % \end{enumerate}
 %
 %
+%\subsection{Experimental tagged option}
+%\label{sec:ug_tagged}
+%
+% ACM is firmly committed to produce fully tagged PDFs compliant with
+% the accessibility standards.  At present the work of \LaTeX3 team is
+% exprerimental~\cite{Fischer2023:tagpdf}.  We provide an interface
+% for such experiments.  The sample file
+% \path{sample-acmsmall-tagged.tex} provides more information about
+% these experiments.
 %
 % \StopEventually{
 % \clearpage
@@ -2665,6 +2676,20 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\if@ACM@tagged}
+% \changes{v1.91}{2023/05/21}{Introduced macro}
+% Are we tagging the ms?
+%    \begin{macrocode}
+\define@boolkey+{acmart.cls}[@ACM@]{tagged}[true]{%
+  \if@ACM@tagged
+    \PackageInfo{\@classname}{Using HIGHLY experimental tagging mode!}%
+  \fi}{\PackageError{\@classname}{The option tagged can be either true or
+    false}}
+\ExecuteOptionsX{tagged=false}
+%    \end{macrocode}
+% \end{macro}
+% 
+%
 %
 % \begin{macro}{\ACM@fontsize}
 %   The font size to pass to the base class
@@ -2768,8 +2793,6 @@
 % 
 % \end{macro}
 %
-%
-% 
 %
 % Setting up switches
 %    \begin{macrocode}
@@ -3846,6 +3869,14 @@
 %
 % Somehow PDFTeX and XeTeX require different incantations to make a PDF
 % compliant with the current Acrobat bugs.  Xpdf is much better.
+%
+%
+% For tagged version we undefine this
+%    \begin{macrocode}
+\if@ACM@tagged
+\newcount\pdfgentounicode
+\fi
+%    \end{macrocode}
 %
 % The code below is by Ross Moore.
 %    \begin{macrocode}

@@ -1,4 +1,16 @@
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
+%<*acmsmall-tagged>
+%% The tagged file should start with the metadata commands.
+%% We also need currently use lualatex-dev for compilation!
+\ifx\HCode\Undef
+\DocumentMetadata{
+ %pdfversion=2.0,
+ pdfversion=1.7,pdfstandard=ua-1,
+ testphase=phase-III}
+\else
+\DocumentMetadata{}
+\fi
+%</acmsmall-tagged>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp|acmsmall-tagged> 
 %%
 %% 
 %% Commands for TeXCount
@@ -41,6 +53,7 @@
 %<sigconf-i13n>\documentclass[sigconf, language=french,
 %<sigconf-i13n>language=german, language=spanish, language=english]{acmart}
 %<acmcp>\documentclass[acmcp]{acmart}
+%<acmsmall-tagged>\documentclass[acmsmall,tagged]{acmart}
 
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
@@ -59,7 +72,7 @@
 \acmYear{2018}
 \acmDOI{XXXXXXX.XXXXXXX}
 
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp|acmsmall-tagged>
 %<*manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 %% These commands are for a PROCEEDINGS abstract or paper.
 \acmConference[Conference acronym 'XX]{Make sure to enter the correct
@@ -75,10 +88,10 @@
 \acmISBN{978-1-4503-XXXX-X/18/06}
 %</manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
-%<*acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|acmcp>
+%<*acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|acmcp|acmsmall-tagged>
 %%
 %% These commands are for a JOURNAL article.
-%<acmsmall|acmsmall-submission|acmsmall-biblatex>\acmJournal{JACM}
+%<acmsmall|acmsmall-submission|acmsmall-biblatex|acmsmall-tagged>\acmJournal{JACM}
 %<acmlarge>\acmJournal{POMACS}
 %<acmtog>\acmJournal{TOG}
 %<acmcp>\acmJournal{JDS}
@@ -86,8 +99,8 @@
 \acmNumber{4}
 \acmArticle{111}
 \acmMonth{8}
-%</acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|acmcp>
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
+%</acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|acmcp|acmsmall-tagged>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp|acmsmall-tagged>
 
 
 %%
@@ -96,7 +109,7 @@
 %% receive a unique submission ID from the organizers
 %% of the event, and this ID should be used as the parameter to this command.
 %%\acmSubmissionID{123-A56-BU3}
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp|acmsmall-tagged>
 
 %<*!acmcp>
 %%
@@ -113,7 +126,7 @@
 %%
 %</!acmcp>
 
-%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmsmall-tagged>
 %%
 %% The majority of ACM publications use numbered citations and
 %% references.  The command \citestyle{authoryear} switches to the
@@ -126,7 +139,7 @@
 %<!acmtog>%% the next command will enable that style.
 %<!acmtog>%%\citestyle{acmauthoryear}
 %<acmtog>\citestyle{acmauthoryear}
-%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmlarge|acmtog|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmsmall-tagged>
 
 %<*acmsmall-biblatex|sigconf-biblatex>
 %%
@@ -149,7 +162,7 @@
 \addbibresource{software.bib}
 \addbibresource{sample-base.bib}
 %</acmsmall-biblatex|sigconf-biblatex>
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp|acmsmall-tagged>
 
 %%
 %% end of the preamble, start of the body of the document source.
@@ -248,7 +261,7 @@
 %% the author to define a more concise list 
 %% of authors' names for this purpose.
 \renewcommand{\shortauthors}{Trovato et al.}
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp|acmsmall-tagged>
 %<*acmcp>
 %%
 %% Article type: Research, Review, Discussion, Invited or position
@@ -268,7 +281,7 @@
 %% Ohio, USA, 43017-6221} 
 %%
 %</acmcp>
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmsmall-tagged>
 
 %%
 %% The abstract is a short summary of the work to be presented in the
@@ -281,7 +294,7 @@
   as many of the formatting elements an author may use in the
   preparation of the documentation of their work.
 \end{abstract}
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmsmall-tagged>
 %<*sigconf-i13n>
 
 \begin{translatedabstract}{french}
@@ -313,7 +326,7 @@
   trabajo.
  \end{translatedabstract}
 %</sigconf-i13n>
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmsmall-tagged>
 
 %%
 %% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
@@ -349,8 +362,8 @@
 \ccsdesc{Computer systems organization~Robotics}
 \ccsdesc[100]{Networks~Network reliability}
 
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmsmall-tagged>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp|acmsmall-tagged>
 %%
 %% Keywords. The author(s) should pick words that accurately describe
 %% the work being presented. Separate the keywords with commas.
@@ -362,7 +375,7 @@
 %<sigconf-i13n> neuronale Netze, Blickerkennung, Textklassifizierung}
 %<sigconf-i13n> \translatedkeywords{spanish}{conjuntos de datos,
 %<sigconf-i13n> redes neuronales, detección de mirada, etiquetado de texto} 
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmcp|acmsmall-tagged>
 %<*sigconf|authordraft|sigplan|acmsmall-conf|sigconf-i13n>
 %% A "teaser" image appears between the author and affiliation
 %% information and the body of the document, and typically spans the
@@ -375,7 +388,7 @@
   \label{fig:teaser}
 \end{teaserfigure}
 %</sigconf|authordraft|sigplan|acmsmall-conf|sigconf-i13n>
-%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%<*manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmsmall-tagged>
 
 \received{20 February 2007}
 \received[revised]{12 March 2009}
@@ -476,6 +489,7 @@ source file:
 %<sigchi-a>\documentclass[sigchi-a]{acmart}
 %<sigconf-i13n>\documentclass[sigconf, language=french,
 %<sigconf-i13n>language=german, language=spanish, language=english]{acmart}
+%<acmsmall-tagged>\documentclass[acmsmall,tagged]{acmart}
 \end{verbatim}
 
 
@@ -999,7 +1013,7 @@ rhoncus. Maecenas eu arcu ac neque placerat aliquam. Nunc pulvinar
 massa et mattis lacinia.
 
 \end{document}
-%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
+%</manuscript|acmsmall|acmsmall-submission|acmsmall-biblatex|acmlarge|acmtog|sigconf|sigconf-biblatex|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n|acmsmall-tagged>
 %
 % ACM Engage course material
 %

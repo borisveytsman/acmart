@@ -103,6 +103,14 @@ samples/sample-lualatex.pdf:  samples/sample-lualatex.tex   samples/$(PACKAGE).c
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
 	  do cd $(dir $@) && lualatex-dev $(notdir $<); done
 
+samples/sample-acmsmall-tagged.pdf:  samples/sample-acmsmall-tagged.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
+	cd $(dir $@) && lualatex-dev $(notdir $<)
+	- cd $(dir $@) && bibtex $(notdir $(basename $<))
+	cd $(dir $@) && lualatex-dev $(notdir $<)
+	cd $(dir $@) && lualatex-dev $(notdir $<)
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
+	  do cd $(dir $@) && lualatex-dev $(notdir $<); done
+
 samples/sample-acmcp.pdf: samples/acm-jdslogo.png
 
 .PRECIOUS:  $(PACKAGE).cfg $(PACKAGE).cls
