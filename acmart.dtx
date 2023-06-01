@@ -6111,12 +6111,15 @@
 % We provide \cs{anon} command, which blinds parts of the text
 %   if the package option |anonymous| is set
 %    \begin{macrocode}
-\newcommand{\anon}[2][ANONYMIZED]{%
+\NewDocumentCommand{\ACM@orange}{m}{\textcolor{ACMOrange}{#1}}
+\pdfstringdefDisableCommands{\let\ACM@orange\@firstofone}
+\RenewExpandableDocumentCommand{\anon}{O{ANONYMIZED}m}{%
   \if@ACM@anonymous%
-    {\color{ACMOrange}#1}%
+    \ACM@orange{#1}%
   \else%
     #2%
-  \fi}
+  \fi%
+}
 %    \end{macrocode}
 %
 % \end{macro}
