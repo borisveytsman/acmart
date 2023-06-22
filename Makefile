@@ -113,6 +113,10 @@ samples/sample-acmsmall-tagged.pdf:  samples/sample-acmsmall-tagged.tex   sample
 
 samples/sample-acmcp.pdf: samples/acm-jdslogo.png
 
+samples/%.tex: samples/samples.dtx samples/samples.ins
+	cd samples; pdflatex samples.ins; cd ..
+
+
 .PRECIOUS:  $(PACKAGE).cfg $(PACKAGE).cls
 
 docclean:
@@ -151,6 +155,12 @@ distros: all docclean
 	--exclude samples/sample-acmengage*
 	zip -r acmengage-distro.zip samples/sample-acmengage* \
 	samples/*.bib \
+	acmart.pdf acmguide.pdf  *.cls ACM-Reference-Format.*
+
+tagged: samples/sample-acmsmall-tagged.pdf docclean
+	zip -r tagged.zip  \
+	samples/sample-acmsmall-tagged* \
+	samples/*.bib samples/*png samples/sampleteaser.pdf \
 	acmart.pdf acmguide.pdf  *.cls ACM-Reference-Format.*
 
 
