@@ -14,6 +14,13 @@ PDF = $(PACKAGE).pdf acmguide.pdf
 BIBLATEXFILES= $(wildcard *.bbx) $(wildcard *.cbx) $(wildcard *.dbx) $(wildcard *.lbx)
 SAMPLEBIBLATEXFILES=$(patsubst %,samples/%,$(BIBLATEXFILES))
 
+ACMCPSAMPLES= \
+	samples/sample-acmcp-Discussion.pdf \
+	samples/sample-acmcp-Invited.pdf \
+	samples/sample-acmcp-Position.pdf \
+	samples/sample-acmcp-Research.pdf \
+	samples/sample-acmcp-Review.pdf \
+
 all:  ${PDF} ALLSAMPLES
 
 %.pdf:  %.dtx   $(PACKAGE).cls
@@ -145,5 +152,14 @@ distros: all docclean
 	samples/*.bib \
 	acmart.pdf acmguide.pdf  *.cls ACM-Reference-Format.*
 
+acmcp.zip: ${ACMCPSAMPLES} acmart.cls
+	zip $@ $+
+
+samples/sample-acmcp.tex: samples/samples.ins samples/samples.dtx
+	cd samples; pdflatex samples.ins; cd ..
+
+
+samples/sample-acmcp-%.tex: samples/sample-acmcp.tex samples/acm-jdslogo.png
+	sed 's/acmArticleType{Review}/acmArticleType{$*}/' $< > $@
 
 .PHONY: all ALLSAMPLES docclean clean distclean archive zip

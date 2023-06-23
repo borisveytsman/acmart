@@ -1256,8 +1256,16 @@
 % \acmCodeLink{https://github.com/repository/code}
 % \acmDataLink{https://datadryad.org/stash/dataset/doi:DOI}
 % \end{verbatim}
-% You may repeat these commands if you have several repositories. 
+% You may repeat these commands if you have several repositories.
 %
+%
+% \cs{acmContributions}%
+% The command \cs{acmContributions}\marg{contributions} sets the
+% contributions of the authors, for example,
+% \begin{verbatim}
+% \acmContributions{AW designed the study, CD performed it, all
+% authors contributed to the writing.}
+% \end{verbatim}
 %
 % ACM cover page should have the following obligatory sections:
 % \begin{itemize}
@@ -2269,7 +2277,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2023/06/11 v1.90a Typesetting articles for the Association for Computing Machinery]
+[2023/06/22 v1.91 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -5582,7 +5590,7 @@
 % 
 % \end{macro}
 %
-% \begin{macro}{\acmCodeLink}
+% \begin{macro}{\acmCodeDataLink}
 % \changes{v1.87}{2022/08/13}{Introduced macro}
 % \changes{v1.87}{2022/08/28}{Added possibility to have several links}
 % The code link
@@ -5596,6 +5604,13 @@
 \def\@acmCodeDataLink{}
 %    \end{macrocode}
 % 
+% \end{macro}
+%
+% \begin{macro}{\acmContributions}
+% \changes{v1.91}{2023/06/22}{Restored the macro}
+% The authors' contrubution statement
+\def\acmContributions#1{\gdef\@acmContributions{#1}}
+\acmContributions{}
 % \end{macro}
 %
 % \begin{macro}{\acmDataLink}
@@ -6422,6 +6437,9 @@
     \fi
     \ifx\@keywords\@empty\else\bigskip
       Keywords: \@keywords\par
+    \fi
+    \ifx\@acmContributions\@empty\else\bigskip
+      \@acmContributions\par
     \fi
     \ifx\@empty\@authorsaddresses\else\bigskip\@setauthorsaddresses\fi
     \zsaveposy{@ACM@acmcpbox@y}%
@@ -7658,6 +7676,7 @@
 % nonacm}
 % \changes{v1.86}{2022/06/26}{Special treatment of ACM Engage materials}
 % \changes{v1.87}{2022/08/14}{Special treatment of ACMCP}
+% \changes{v1.91}{2023/06/22}{Redesigned ACMP labels}
 %   The page style for all pages but the first one
 %    \begin{macrocode}
 \AtBeginDocument{%
@@ -7770,7 +7789,7 @@
   \renewcommand{\footrulewidth}{0.1\p@}%
   \fancyheadoffset[L]{46pt}%
   \fancyhead[L]{\makebox[\z@][l]{%
-      \raisebox{-\dimexpr(0.25\textheight*\ACM@ArticleType@nr)}{%
+      \raisebox{-\dimexpr(0.2\textheight*(\ACM@ArticleType@nr-2))}{%
       \rotatebox{90}{\colorbox{@ACM@Article@color}{\color{white}%
           \strut\ACM@ArticleType~Article}}}}%
     \ACM@linecountL}%
@@ -7941,7 +7960,7 @@
   \renewcommand{\footrulewidth}{0.1\p@}%
   \fancyheadoffset[L]{46pt}%
   \fancyhead[L]{\makebox[\z@][l]{%
-      \raisebox{-\dimexpr(0.25\textheight*\ACM@ArticleType@nr)}{%
+      \raisebox{-\dimexpr(0.2\textheight*(\ACM@ArticleType@nr-2))}{%
       \rotatebox{90}{\colorbox{@ACM@Article@color}{\color{white}%
           \strut\ACM@ArticleType~Article}}}}%
     \ACM@linecountL\@acmBadgeL}%
