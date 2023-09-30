@@ -1548,7 +1548,7 @@
 %
 % \DescribeEnv{anonsuppress}%
 % When the option |anonymous| is selected, \TeX\ suppresses author
-% information (including the number of authors) for a blind review.
+% information (including the number of authors) for an anonymous review.
 % However, sometimes the information identifying the authors may be
 % present in the body of the paper.  For example,
 % \begin{verbatim}
@@ -2277,7 +2277,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2023/06/22 v1.91 Typesetting articles for the Association for Computing Machinery]
+[2023/09/30 v1.92 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2389,6 +2389,8 @@
 % \changes{1.85}{2022/05/08}{Added CC licenses}
 % \changes{1.87}{2022/08/02}{New format: |acmcp|}
 % \changes{1.90a}{2023/06/11}{Changes in the sample keywords and concepts}
+% \changes{1.92}{2023/09/30}{Documentation update: use of `anonymous'
+% throughout} 
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -6124,7 +6126,7 @@
 %
 % \begin{macro}{\anon}
 % \changes{v1.82}{2022/01/11}{Introduced macro}%
-% We provide \cs{anon} command, which blinds parts of the text
+% We provide \cs{anon} command, which obscures parts of the text
 %   if the package option |anonymous| is set
 %    \begin{macrocode}
 \newcommand{\anon}[2][ANONYMIZED]{%
