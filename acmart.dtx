@@ -2277,7 +2277,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2023/09/30 v1.92 Typesetting articles for the Association for Computing Machinery]
+[2023/10/14 v1.92 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -3466,16 +3466,9 @@
 %
 %
 %
-% Adding |hyperxmp|
-% \changes{v1.72}{2020/06/14}{Added hyperxmp}
-% \changes{v1.76}{2021/02/21}{Moved hyperxmp before hyperref, see
-% \url{https://github.com/borisveytsman/acmart/issues/425}}
-%    \begin{macrocode}
-\RequirePackage{hyperxmp}
-%    \end{macrocode}
 %
 %
-% And now, |hyperref|
+% Adding |hyperref|
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
 % \changes{v1.46}{2017/08/25}{Delayed hypersetup since journal options
 % may change screen mode}
@@ -3483,10 +3476,14 @@
 % \changes{v1.58}{2019/26/01}{Suppressed \cs{addtocounter} in pdf
 % subject}
 % \changes{1.85}{2022/05/08}{Added: acmengage}
+% \changes{v1.76}{2021/02/21}{Moved hyperxmp before hyperref, see
+% \url{https://github.com/borisveytsman/acmart/issues/425}}
+% \changes{1.92}{2023/10/14}{Moved hyperxmp again due to kernel update}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
 \RequirePackage[bookmarksnumbered,unicode]{hyperref}
+\RequirePackage{hyperxmp}
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
   \def\unskip{}%
@@ -5611,8 +5608,10 @@
 % \begin{macro}{\acmContributions}
 % \changes{v1.91}{2023/06/22}{Restored the macro}
 % The authors' contrubution statement
+%    \begin{macrocode}
 \def\acmContributions#1{\gdef\@acmContributions{#1}}
 \acmContributions{}
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\acmDataLink}
@@ -6073,8 +6072,7 @@
 %
 % \end{macro}
 %
-%
-%
+%%
 %
 % \begin{macro}{\copyrightyear}
 %   By default, the copyright year is the same as \cs{acmYear}, but
@@ -6139,7 +6137,7 @@
 %
 % \end{macro}
 %
-%
+% 
 %\subsection{Maketitle hook}
 %\label{sec:hook}
 %
