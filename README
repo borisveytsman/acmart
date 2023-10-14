@@ -13,6 +13,8 @@ The production version is the one on CTAN and ACM sites.
 Changes
 
 Version 1.92   Documentation update
+	       Emergency change: changed order of hyperref and hyperxmp
+	       due to changes in the undelying packages
 
 Version 1.91   Minor changes in ACMCP format
 
