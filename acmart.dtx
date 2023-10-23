@@ -306,7 +306,7 @@
 %   acmsmall & Small single-column format.  Used for ACMJCSS, CIE, CSUR,
 %            DLT, FAC, GAMES, JACM, JATS,  JDIQ, JDS, JEA, JERIC,
 %            JETC, JRC, PACMCGIT, PACMHCI, PACMMOD, PACMNET,
-%            PACMPL, TAAS, TACCESS, TACO,
+%            PACMPL, PACMSE, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
 %            TOCE, TOCHI, TOCL,
@@ -2143,6 +2143,7 @@
 %     PACMOD & PACM on Management of Data\\
 %     PACMNET & PACM on Networking\\
 %     PACMPL & PACM on Programming Languages \\
+%     PACMSE & PACM on Software Engineering \\
 %     POMACS & PACM on Measurement and Analysis of Computing Systems \\
 %     TAAS & ACM Transactions on Autonomous and Adaptive Systems\\
 %     TACCESS & ACM Transactions on Accessible Computing\\
@@ -2379,7 +2380,8 @@
 % \changes{1.90a}{2023/06/11}{Changes in the sample keywords and concepts}
 % \changes{1.92}{2023/09/30}{Documentation update: use of `anonymous'
 % throughout} 
-%
+% \changes{v1.93}{2023/10/22}{Added PACMSE journal option}
+% 
 % And the driver code:
 %    \begin{macrocode}
 %<*gobble>
@@ -4357,6 +4359,7 @@
   PACMMOD,%
   PACMNET,%
   PACMPL,%
+  PACMSE,%
   POMACS,%
   TAAS,%
   TACCESS,%
@@ -4513,6 +4516,12 @@
   \def\@journalName{Proceedings of the ACM on Programming Languages}%
   \def\@journalNameShort{Proc. ACM Program. Lang.}%
   \def\@permissionCodeOne{2475-1421}%
+  \@ACM@screentrue
+  \PackageInfo{\@classname}{Using screen mode due to \@journalCode}%
+\or % PACMSE
+  \def\@journalName{Proceedings of the ACM on Software Engineering}%
+  \def\@journalNameShort{Proc. ACM Softw. Eng.}%
+  \def\@permissionCodeOne{2994-970X}%
   \@ACM@screentrue
   \PackageInfo{\@classname}{Using screen mode due to \@journalCode}%
 \or % POMACS

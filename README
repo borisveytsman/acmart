@@ -17,6 +17,8 @@ Version 2.00   ACM switches to electronic only version.
 	       New copyright wording.
 	       Deleted acmPrice.
 
+Version 1.93   Added PACMSE
+
 Version 1.92   Documentation update
 	       Emergency change: changed order of hyperref and hyperxmp
 	       due to changes in the undelying packages
