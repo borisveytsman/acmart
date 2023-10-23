@@ -12,6 +12,11 @@ The production version is the one on CTAN and ACM sites.
 
 Changes
 
+Version 2.00   ACM switches to electronic only version.
+	       We do not print article tabs anymore.
+	       New copyright wording.
+	       Deleted acmPrice.
+
 Version 1.92   Documentation update
 	       Emergency change: changed order of hyperref and hyperxmp
 	       due to changes in the undelying packages
