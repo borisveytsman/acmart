@@ -2266,7 +2266,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2023/10/22 v2.00 Typesetting articles for the Association for Computing Machinery]
+[2023/11/05 v2.00 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -6239,6 +6239,7 @@
 % \changes{v1.87}{2022/07/30}{CC license are allowed for non-acm
 % publications}
 % \changes{v2.00}{2023/10/24}{Deleted acmPrice}
+% \changes{v2.00}{2023/11/05}{Added ``ACM'' for papers}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -6336,7 +6337,7 @@
         \else
           \if@ACM@nonacm\else
             \if@ACM@journal@bibstrip
-              \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\\
+              ACM~\@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\\
               \@formatdoi{\@acmDOI}%
             \else % Conference
               \ifx\@acmISBN\@empty\else ACM~ISBN~\@acmISBN\\\fi
