@@ -67,7 +67,7 @@
 %% the commands and values with those provided to you when you
 %% complete the rights form.
 %
-\setcopyright{acmcopyright}
+\setcopyright{acmlicensed}
 \copyrightyear{2018}
 \acmYear{2018}
 \acmDOI{XXXXXXX.XXXXXXX}
@@ -84,7 +84,6 @@
 %%
 %%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
 %%  June 03--05, 2018, Woodstock, NY} 
-\acmPrice{15.00}
 \acmISBN{978-1-4503-XXXX-X/18/06}
 %</manuscript|sigconf|authordraft|sigplan|sigchi|sigchi-a|acmsmall-conf|sigconf-i13n>
 
@@ -271,6 +270,11 @@
 \acmCodeLink{https://github.com/borisveytsman/acmart}
 \acmDataLink{htps://zenodo.org/link}
 %%
+%% Authors' contribution
+\acmContributions{BT and GKMT designed the study; LT, VB, and AP
+  conducted the experiments, BR, HC, CP and JS analyzed the results,
+  JPK developed analytical predictions, all authors participated in
+  writing the manuscript.}
 %%
 %% Sometimes the addresses are too long to fit on the page.  In this
 %% case uncomment the lines below and fill them accodingly.
@@ -421,7 +425,7 @@ author's own version, with {\itshape very} few changes to the source.
 \section{Template Overview}
 As noted in the introduction, the ``\verb|acmart|'' document class can
 be used to prepare many different kinds of documentation --- a
-double-blind initial submission of a full-length technical paper, a
+double-anonymous initial submission of a full-length technical paper, a
 two-page SIGGRAPH Emerging Technologies abstract, a ``camera-ready''
 journal article, a SIGCHI Extended Abstract, and more --- all by
 selecting the appropriate {\itshape template style} and {\itshape
@@ -466,7 +470,7 @@ of these parameters can be found in the {\itshape \LaTeX\ User's Guide.}
 
 Frequently-used parameters, or combinations of parameters, include:
 \begin{itemize}
-\item {\texttt{anonymous,review}}: Suitable for a ``double-blind''
+\item {\texttt{anonymous,review}}: Suitable for a ``double-anonymous''
   conference submission. Anonymizes the work and includes line
   numbers. Use with the \texttt{\acmSubmissionID} command to print the
   submission's unique ID on each page of the work.

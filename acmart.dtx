@@ -306,7 +306,7 @@
 %   acmsmall & Small single-column format.  Used for ACMJCSS, CIE, CSUR,
 %            DLT, FAC, GAMES, JACM, JATS,  JDIQ, JDS, JEA, JERIC,
 %            JETC, JRC, PACMCGIT, PACMHCI, PACMMOD, PACMNET,
-%            PACMPL, TAAS, TACCESS, TACO,
+%            PACMPL, PACMSE, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
 %            TOCE, TOCHI, TOCL,
@@ -869,14 +869,12 @@
 %
 % \DescribeMacro{\acmArticleSeq}%
 % The articles in the same issue of a journal have a \emph{sequence
-% number}.  It is used to vertically position the black blob on the first
-% page of some formats.  By default it is the same as the article number,
+% number}.  By default it is the same as the article number,
 % but the command \cs{acmArticleSeq}\marg{n} can be used to change it:
 % \begin{verbatim}
 % \acmArticle{39}   % The sequence number will be 39 by default
 % \acmArticleSeq{5} % We redefine it to 5
 % \end{verbatim}
-% Setting this number to zero suppresses the blob.
 %
 % \DescribeMacro{\acmSubmissionID}%
 % If your paper got a Submission~ID from the Conference Management
@@ -886,18 +884,6 @@
 % \end{verbatim}
 %
 %
-% \DescribeMacro{\acmPrice}%
-% The macro \cs{acmPrice}\marg{price} sets the price for the article,
-% for example,
-% \begin{verbatim}
-% \acmPrice{25.00}
-% \end{verbatim}
-% Note that you do not need to put the dollar sign here, just the
-% amount.  By default the price is \$15.00, unless the copyright is
-% set to |usgov|, |rightsretained|, |iw3c2w3|, or |iw3c2w3g|, when it
-% is suppressed.  Note that to override the defaults you need to set
-% the price \emph{after} the \cs{setcopyright} command.  Also, the
-% command |\acmPrice{}| suppresses the printing of the price.
 %
 % \DescribeMacro{\acmISBN}%
 % Book-like volumes have ISBN numbers attached to them.  The macro
@@ -1006,8 +992,8 @@
 %
 % \DescribeMacro{\setcopyright}
 % There are several possibilities for the copyright of the papers
-% published by the ACM: the authors may transfer the rights to the ACM,
-% license them to the ACM, some or all authors might be employees of the
+% published by the ACM: the authors may license the paper 
+% to the ACM, some or all authors might be employees of the
 % US or Canadian governments, etc.  Accordingly the command
 % \verb|\setcopyright{...}| is introduced.  Its argument is the
 % copyright status of the paper, for example,
@@ -1027,8 +1013,6 @@
 %     \midrule
 %     \texttt{none} & The copyright and permission information is not
 %     typeset.  (This is the option for some ACM conferences.) \\
-%     \texttt{acmcopyright} & The authors transfer the copyright to the
-%     ACM (the ``traditional'' choice).\\
 %     \texttt{acmlicensed} & The authors retain the copyright but
 %     license the publication rights to ACM\@. \\
 %     \texttt{rightsretained} & The authors retain the copyright and
@@ -1060,8 +1044,15 @@
 %     \texttt{cc} & Creative Commons license.  If this key is set,
 %     \textsl{doclicense} images are used to typeset the license. See
 %     also \cs{setcctype} command.  Note that at present this license
-%     can be used only for \texttt{acmengage} format or for
-%     \texttt{nonacm} publications.\\
+%     can be used only either for \texttt{acmengage} format, or for
+%     \texttt{nonacm} publications, or for the authors that meet any
+%     of the following requirements: (a)~part of the ACM Open Program;
+%     (b)~publishing in a Gold Open Access publication;
+%     (c)~paying the Open Access APC;
+%     (d)~part of the Google publishing agreement.\\
+%     \texttt{acmcopyright} & The authors transfer the copyright to the
+%     ACM.  This choice is no longer available for the
+%     non-commissioned authors and will trigger a warning.\\
 %     \bottomrule
 %   \end{tabularx}
 % \end{table}
@@ -1258,8 +1249,16 @@
 % \acmCodeLink{https://github.com/repository/code}
 % \acmDataLink{https://datadryad.org/stash/dataset/doi:DOI}
 % \end{verbatim}
-% You may repeat these commands if you have several repositories. 
+% You may repeat these commands if you have several repositories.
 %
+%
+% \cs{acmContributions}%
+% The command \cs{acmContributions}\marg{contributions} sets the
+% contributions of the authors, for example,
+% \begin{verbatim}
+% \acmContributions{AW designed the study, CD performed it, all
+% authors contributed to the writing.}
+% \end{verbatim}
 %
 % ACM cover page should have the following obligatory sections:
 % \begin{itemize}
@@ -1542,7 +1541,7 @@
 %
 % \DescribeEnv{anonsuppress}%
 % When the option |anonymous| is selected, \TeX\ suppresses author
-% information (including the number of authors) for a blind review.
+% information (including the number of authors) for an anonymous review.
 % However, sometimes the information identifying the authors may be
 % present in the body of the paper.  For example,
 % \begin{verbatim}
@@ -2097,10 +2096,7 @@
 %
 % \DescribeMacro{\AtBeginMaketitle}%
 % Another hook is \cs{AtBeginMaketitle}.  The commands in this hook
-% are executed before \cs{maketitle}, for example,
-% \begin{verbatim}
-% \AtBeginMaketitle{\acmPrice{125.00}}
-% \end{verbatim}
+% are executed before \cs{maketitle}.
 %
 %
 %\subsection{Currently supported publications}
@@ -2149,6 +2145,7 @@
 %     PACMOD & PACM on Management of Data\\
 %     PACMNET & PACM on Networking\\
 %     PACMPL & PACM on Programming Languages \\
+%     PACMSE & PACM on Software Engineering \\
 %     POMACS & PACM on Measurement and Analysis of Computing Systems \\
 %     TAAS & ACM Transactions on Autonomous and Adaptive Systems\\
 %     TACCESS & ACM Transactions on Accessible Computing\\
@@ -2280,7 +2277,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2023/06/11 v1.90a Typesetting articles for the Association for Computing Machinery]
+[2023/11/05 v2.00 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2392,7 +2389,10 @@
 % \changes{1.85}{2022/05/08}{Added CC licenses}
 % \changes{1.87}{2022/08/02}{New format: |acmcp|}
 % \changes{1.90a}{2023/06/11}{Changes in the sample keywords and concepts}
-%
+% \changes{1.92}{2023/09/30}{Documentation update: use of `anonymous'
+% throughout} 
+% \changes{v1.93}{2023/10/22}{Added PACMSE journal option}
+% 
 % And the driver code:
 %    \begin{macrocode}
 %<*gobble>
@@ -3479,16 +3479,9 @@
 %
 %
 %
-% Adding |hyperxmp|
-% \changes{v1.72}{2020/06/14}{Added hyperxmp}
-% \changes{v1.76}{2021/02/21}{Moved hyperxmp before hyperref, see
-% \url{https://github.com/borisveytsman/acmart/issues/425}}
-%    \begin{macrocode}
-\RequirePackage{hyperxmp}
-%    \end{macrocode}
 %
 %
-% And now, |hyperref|
+% Adding |hyperref|
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
 % \changes{v1.46}{2017/08/25}{Delayed hypersetup since journal options
 % may change screen mode}
@@ -3496,10 +3489,14 @@
 % \changes{v1.58}{2019/26/01}{Suppressed \cs{addtocounter} in pdf
 % subject}
 % \changes{1.85}{2022/05/08}{Added: acmengage}
+% \changes{v1.76}{2021/02/21}{Moved hyperxmp before hyperref, see
+% \url{https://github.com/borisveytsman/acmart/issues/425}}
+% \changes{1.92}{2023/10/14}{Moved hyperxmp again due to kernel update}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
 \RequirePackage[bookmarksnumbered,unicode]{hyperref}
+\RequirePackage{hyperxmp}
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
   \def\unskip{}%
@@ -4393,6 +4390,7 @@
   PACMMOD,%
   PACMNET,%
   PACMPL,%
+  PACMSE,%
   POMACS,%
   TAAS,%
   TACCESS,%
@@ -4549,6 +4547,12 @@
   \def\@journalName{Proceedings of the ACM on Programming Languages}%
   \def\@journalNameShort{Proc. ACM Program. Lang.}%
   \def\@permissionCodeOne{2475-1421}%
+  \@ACM@screentrue
+  \PackageInfo{\@classname}{Using screen mode due to \@journalCode}%
+\or % PACMSE
+  \def\@journalName{Proceedings of the ACM on Software Engineering}%
+  \def\@journalNameShort{Proc. ACM Softw. Eng.}%
+  \def\@permissionCodeOne{2994-970X}%
   \@ACM@screentrue
   \PackageInfo{\@classname}{Using screen mode due to \@journalCode}%
 \or % POMACS
@@ -5235,12 +5239,8 @@
 % \end{macro}
 %
 % \begin{macro}{\acmPrice}
-%   The price
-%    \begin{macrocode}
-\def\acmPrice#1{\def\@acmPrice{#1}}
-\acmPrice{15.00}
-%    \end{macrocode}
-%
+% \changes{v2.00}{2023/10/22}{Deleted macro}
+%   The price---obsolete
 % \end{macro}
 %
 %
@@ -5613,7 +5613,7 @@
 % 
 % \end{macro}
 %
-% \begin{macro}{\acmCodeLink}
+% \begin{macro}{\acmCodeDataLink}
 % \changes{v1.87}{2022/08/13}{Introduced macro}
 % \changes{v1.87}{2022/08/28}{Added possibility to have several links}
 % The code link
@@ -5627,6 +5627,15 @@
 \def\@acmCodeDataLink{}
 %    \end{macrocode}
 % 
+% \end{macro}
+%
+% \begin{macro}{\acmContributions}
+% \changes{v1.91}{2023/06/22}{Restored the macro}
+% The authors' contrubution statement
+%    \begin{macrocode}
+\def\acmContributions#1{\gdef\@acmContributions{#1}}
+\acmContributions{}
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\acmDataLink}
@@ -5764,6 +5773,8 @@
 % to iw3c2w3 or iw3c2w3g}
 % \changes{v1.51}{2018/04/05}{Corrected the bug with price suppression}
 % \changes{v1.85}{2022/05/08}{Added CC licenses}
+% \changes{v2.00}{2023/10/22}{Deleted acmPrice}
+% \changes{v2.00}{2023/10/22}{Deleted acmPrice}
 % Keys:
 %    \begin{macrocode}
 \define@choicekey*{ACM@}{acmcopyrightmode}[%
@@ -5785,13 +5796,11 @@
   \fi
   \ifnum\acm@copyrightmode=3\relax % rightsretained
    \@acmownedfalse
-   \AtBeginDocument{\acmPrice{}}%
   \fi
   \ifnum\acm@copyrightmode=4\relax % usgov
    \@printpermissiontrue
    \@printcopyrightfalse
    \@acmownedfalse
-   \AtBeginDocument{\acmPrice{}}%
   \fi
   \ifnum\acm@copyrightmode=6\relax % cagov
    \@acmownedfalse
@@ -5813,15 +5822,12 @@
   \fi
   \ifnum\acm@copyrightmode=13\relax % iw3c2w3
    \@acmownedfalse
-   \AtBeginDocument{\acmPrice{}}%
   \fi
   \ifnum\acm@copyrightmode=14\relax % iw3c2w3g
    \@acmownedfalse
-   \AtBeginDocument{\acmPrice{}}%
   \fi
   \ifnum\acm@copyrightmode=15\relax % cc
    \@acmownedfalse
-   \AtBeginDocument{\acmPrice{}}%
   \fi}
 %    \end{macrocode}
 %
@@ -5829,7 +5835,7 @@
 %   This is the syntactic sugar around setting keys.
 %    \begin{macrocode}
 \def\setcopyright#1{\setkeys{ACM@}{acmcopyrightmode=#1}}
-\setcopyright{acmcopyright}
+\setcopyright{acmlicensed}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -5851,12 +5857,13 @@
 % licensedcagov}
 % \changes{v1.52}{2018/04/09}{Rewording of licenses}
 % \changes{v1.85}{2022/05/08}{Added CC licenses}
+% \changes{v2.00}{2023/10/22}{Changed wording}
 %   Here is the owner of the copyright
 %    \begin{macrocode}
 \def\@copyrightowner{%
   \ifcase\acm@copyrightmode\relax % none
   \or % acmcopyright
-  Association for Computing Machinery.
+  ACM\@.
   \or % acmlicensed
   Copyright held by the owner/author(s). Publication rights licensed to
   ACM\@.
@@ -5864,22 +5871,21 @@
   Copyright held by the owner/author(s).
   \or % usgov
   \or % usgovmixed
-  Association for Computing Machinery.
+  Copyright held by the owner/author(s).
   \or % cagov
-  Crown in Right of Canada.
+  Copyright Crown in Right of Canada.
   \or %cagovmixed
-  Association for Computing Machinery.
+  Copyright held by the owner/author(s).
   \or %licensedusgovmixed
   Copyright held by the owner/author(s). Publication rights licensed to
   ACM\@.
   \or % licensedcagov
-  Crown in Right of Canada. Publication rights licensed to
-  ACM\@.
+  Copyright held by the owner/author(s). 
   \or %licensedcagovmixed
   Copyright held by the owner/author(s). Publication rights licensed to
   ACM\@.
   \or % othergov
-  Association for Computing Machinery.
+  Copyright held by the owner/author(s). 
   \or % licensedothergov
   Copyright held by the owner/author(s). Publication rights licensed to
   ACM\@.
@@ -5911,6 +5917,7 @@
 % At present cC licenses can be used only for acmengage format or for
 % non-acm stuff.  This macro checks whether the CC license is
 % applicable and generates an error if not.
+% \changes{v2.00}{2023/10/22}{Moved to warning}
 %    \begin{macrocode}
 \def\@ACM@copyright@check@cc{%
   \if@ACM@nonacm
@@ -5921,7 +5928,7 @@
         \ClassInfo{\@classname}{Using CC license with ACM Enage
           material}%
       \else
-      \ClassError{\@classname}{%
+      \ClassWarning{\@classname}{%
         Sorry, Creative Commons licenses are\MessageBreak
         currently not used with ACM publications\MessageBreak
         typeset by the authors}{Please use nonacm 
@@ -5940,6 +5947,7 @@
 % \changes{v1.85}{2022/05/08}{Added CC licenses}
 % \changes{v1.87}{2022/07/30}{CC licenses now are allowed only for
 % non-acm or ACM engage publications}
+% \changes{v2.00}{2023/10/24}{Rewrote wording}
 %   The canned permission block.
 %    \begin{macrocode}
 \def\@copyrightpermission{%
@@ -5951,10 +5959,10 @@
    advantage and that copies bear this notice and the full citation on
    the first page. Copyrights for components of this work owned by
    others than ACM must be honored. Abstracting with credit is
-   permitted. To copy otherwise, or republish, to post on servers or to
-   redistribute to lists, requires prior specific permission
-   and\hspace*{.5pt}/or  a fee. Request permissions from
-   permissions@acm.org.
+   permitted. To copy otherwise, or republish, to post on servers or
+   to redistribute to lists, requires prior specific permission
+   and\hspace*{.5pt}/or 
+   a fee. Request permissions from permissions@acm.org.
   \or % acmlicensed
    Permission to make digital or hard copies of all or part of this
    work for personal or classroom use is granted without fee provided
@@ -5962,97 +5970,102 @@
    advantage and that copies bear this notice and the full citation on
    the first page. Copyrights for components of this work owned by
    others than the author(s) must be honored. Abstracting with credit
-   is permitted.  To copy otherwise, or republish, to post on servers
-   or to  redistribute to lists, requires prior specific permission
-   and\hspace*{.5pt}/or  a fee. Request permissions from
-   permissions@acm.org.
+   is permitted. To copy otherwise, or republish, to post on servers
+   or to redistribute to lists, requires prior specific permission
+   and\hspace*{.5pt}/or a fee. Request permissions from
+   permissions@acm.org. 
   \or % rightsretained
-   Permission to make digital or hard copies of part or all of this work
-   for personal or classroom use is granted without fee provided that
-   copies are not made or distributed for profit or commercial advantage
-   and that copies bear this notice and the full citation on the first
-   page. Copyrights for third-party components of this work must be
-   honored. For all other uses, contact the
-   owner\hspace*{.5pt}/author(s).
+   Permission to make digital or hard copies of part or all of this
+   work for personal or classroom use is granted without fee provided
+   that copies are not made or distributed for profit or commercial
+   advantage and that copies bear this notice and the full citation on
+   the first page. Copyrights for third-party components of this work
+   must be honored. For all other uses, contact the
+   owner\hspace*{.5pt}/author(s). 
   \or % usgov
    This paper is authored by an employee(s) of the United States
    Government and is in the public domain. Non-exclusive copying or
    redistribution is allowed, provided that the article citation is
    given and the authors and agency are clearly identified as its
-   source.
+   source. All others Request permissions from
+   owner\hspace*{.5pt}/author(s). 
   \or % usgovmixed
    ACM acknowledges that this contribution was authored or co-authored
    by an employee, contractor, or affiliate of the United States
    government. As such, the United States government retains a
    nonexclusive, royalty-free right to publish or reproduce this
-   article, or to allow others to do so, for government purposes only.
+   article, or to allow others to do so, for government purposes
+   only. Request permissions from owner\hspace*{.5pt}/author(s). 
   \or % cagov
-   This article was authored by employees of the Government of Canada.
-   As such, the Canadian government retains all interest in the
-   copyright to this work and grants to ACM a nonexclusive,
-   royalty-free right to publish or reproduce this article, or to allow
-   others to do so, provided that clear attribution is given both to
-   the authors and the Canadian government agency employing them.
-   Permission to make digital or hard copies for personal or classroom
-   use is granted. Copies must bear this notice and the full citation
-   on the first page.  Copyrights for components of this work owned by
-   others than the Canadian Government must be honored. To copy
-   otherwise, distribute, republish, or post, requires prior specific
-   permission and\hspace*{.5pt}/or a fee. Request permissions from
-   permissions@acm.org.
+   This article was authored by employees of the Government of
+   Canada. As such, the Canadian government retains all interest in
+   the copyright to this work and grants to ACM a nonexclusive,
+   royalty-free right to publish or reproduce this article, or to
+   allow others to do so, provided that clear attribution is given
+   both to the authors and the Canadian government agency employing
+   them. Permission to make digital or hard copies for personal or
+   classroom use is granted. Copies must bear this notice and the full
+   citation on the first page. Copyrights for components of this work
+   owned by others than the Canadian Government must be honored. To
+   copy otherwise, distribute, republish, or post, requires prior
+   specific permission and/or a fee. Request permissions from
+   owner\hspace*{.5pt}/author(s). 
   \or % cagovmixed
    ACM acknowledges that this contribution was co-authored by an
    affiliate of the national government of Canada. As such, the Crown
-   in Right of Canada retains an equal interest in the copyright.
-   Reprints must include clear attribution to ACM and the author's
-   government agency affiliation.  Permission to make digital or hard
-   copies for personal or classroom use is granted.  Copies must bear
-   this notice and the full citation on the first page. Copyrights for
-   components of this work owned by others than ACM must be honored.
-   To copy otherwise, distribute, republish, or post, requires prior
-   specific permission and\hspace*{.5pt}/or a fee. Request permissions
-   from permissions@acm.org.
+   in Right of Canada retains an equal interest in the
+   copyright. Reprints must include clear attribution to ACM and the
+   author’s government agency affiliation. Permission to make digital
+   or hard copies for personal or classroom use is granted. Copies
+   must bear this notice and the full citation on the first
+   page. Copyrights for components of this work owned by others than
+   ACM must be honored. To copy otherwise, distribute, republish, or
+   post, requires prior specific permission and/or a fee. Request
+   permissions from owner\hspace*{.5pt}/author(s). 
   \or % licensedusgovmixed
    Publication rights licensed to ACM\@. ACM acknowledges that this
    contribution was authored or co-authored by an employee, contractor
    or affiliate of the United States government. As such, the
    Government retains a nonexclusive, royalty-free right to publish or
    reproduce this article, or to allow others to do so, for Government
-   purposes only.
+   purposes only. Request permissions from
+   owner\hspace*{.5pt}/author(s). 
   \or % licensedcagov
-   This article was authored by employees of the Government of Canada.
-   As such, the Canadian government retains all interest in the
-   copyright to this work and grants to ACM a nonexclusive,
-   royalty-free right to publish or reproduce this article, or to allow
-   others to do so, provided that clear attribution is given both to
-   the authors and the Canadian government agency employing them.
-   Permission to make digital or hard copies for personal or classroom
-   use is granted. Copies must bear this notice and the full citation
-   on the first page.  Copyrights for components of this work owned by
-   others than the Canadian Government must be honored. To copy
-   otherwise, distribute, republish, or post, requires prior specific
-   permission and\hspace*{.5pt}/or a fee. Request permissions from
-   permissions@acm.org.
+   This article was authored by employees of the Government of
+   Canada. As such, the Canadian government retains all interest in
+   the copyright to this work and grants to ACM a nonexclusive,
+   royalty-free right to publish or reproduce this article, or to
+   allow others to do so, provided that clear attribution is given
+   both to the authors and the Canadian government agency employing
+   them. Permission to make digital or hard copies for personal or
+   classroom use is granted. Copies must bear this notice and the full
+   citation on the first page. Copyrights for components of this work
+   owned by others than the Canadian Government must be honored. To
+   copy otherwise, distribute, republish, or post, requires prior
+   specific permission and/or a fee. Request permissions from
+   owner\hspace*{.5pt}/author(s). 
   \or % licensedcagovmixed
-   Publication rights licensed to ACM\@. ACM acknowledges that this
+   Publication rights licensed to ACM. ACM acknowledges that this
    contribution was authored or co-authored by an employee, contractor
    or affiliate of the national government of Canada. As such, the
    Government retains a nonexclusive, royalty-free right to publish or
    reproduce this article, or to allow others to do so, for Government
-   purposes only.
+   purposes only. Request permissions from
+   owner\hspace*{.5pt}/author(s). 
   \or % othergov
    ACM acknowledges that this contribution was authored or co-authored
-   by an employee, contractor or affiliate of a national government. As
-   such, the Government retains a nonexclusive, royalty-free right to
-   publish or reproduce this article, or to allow others to do so, for
-   Government purposes only.
+   by an employee, contractor or affiliate of a national
+   government. As such, the Government retains a nonexclusive,
+   royalty-free right to publish or reproduce this article, or to
+   allow others to do so, for Government purposes only. Request
+   permissions from owner\hspace*{.5pt}/author(s). 
   \or % licensedothergov
    Publication rights licensed to ACM\@. ACM acknowledges that this
    contribution was authored or co-authored by an employee, contractor
    or affiliate of a national government. As such, the Government
    retains a nonexclusive, royalty-free right to publish or reproduce
    this article, or to allow others to do so, for Government purposes
-   only.
+   only. Request permissions from owner\hspace*{.5pt}/author(s). 
  \or % iw3c2w3
    This paper is published under the Creative Commons Attribution~4.0
    International (CC-BY~4.0) license. Authors reserve their rights to
@@ -6087,8 +6100,7 @@
 %
 % \end{macro}
 %
-%
-%
+%%
 %
 % \begin{macro}{\copyrightyear}
 %   By default, the copyright year is the same as \cs{acmYear}, but
@@ -6140,7 +6152,7 @@
 %
 % \begin{macro}{\anon}
 % \changes{v1.82}{2022/01/11}{Introduced macro}%
-% We provide \cs{anon} command, which blinds parts of the text
+% We provide \cs{anon} command, which obscures parts of the text
 %   if the package option |anonymous| is set
 %    \begin{macrocode}
 \newcommand{\anon}[2][ANONYMIZED]{%
@@ -6153,7 +6165,7 @@
 %
 % \end{macro}
 %
-%
+% 
 %\subsection{Maketitle hook}
 %\label{sec:hook}
 %
@@ -6255,7 +6267,10 @@
 % \changes{v1.76}{2021/04/05}{Put \cs{par} inside group for keywords}
 % \changes{v1.83}{2022/02/20}{I13n}
 % \changes{v1.85}{2022/05/08}{acmengage}
-% \changes{v1.87}{2022/07/30}{CC license are allowed for non-acm publications}
+% \changes{v1.87}{2022/07/30}{CC license are allowed for non-acm
+% publications}
+% \changes{v2.00}{2023/10/24}{Deleted acmPrice}
+% \changes{v2.00}{2023/11/05}{Added ``ACM'' for papers}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -6353,12 +6368,10 @@
         \else
           \if@ACM@nonacm\else
             \if@ACM@journal@bibstrip
-              \@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle
-              \ifx\@acmPrice\@empty\else\ \$\@acmPrice\fi\\
+              ACM~\@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\\
               \@formatdoi{\@acmDOI}%
             \else % Conference
-              \ifx\@acmISBN\@empty\else ACM~ISBN~\@acmISBN
-              \ifx\@acmPrice\@empty.\else\dots\$\@acmPrice\fi\\\fi
+              \ifx\@acmISBN\@empty\else ACM~ISBN~\@acmISBN\\\fi
               \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi%
             \fi
           \fi
@@ -6453,6 +6466,9 @@
     \fi
     \ifx\@keywords\@empty\else\bigskip
       Keywords: \@keywords\par
+    \fi
+    \ifx\@acmContributions\@empty\else\bigskip
+      \@acmContributions\par
     \fi
     \ifx\@empty\@authorsaddresses\else\bigskip\@setauthorsaddresses\fi
     \zsaveposy{@ACM@acmcpbox@y}%
@@ -7689,6 +7705,7 @@
 % nonacm}
 % \changes{v1.86}{2022/06/26}{Special treatment of ACM Engage materials}
 % \changes{v1.87}{2022/08/14}{Special treatment of ACMCP}
+% \changes{v1.91}{2023/06/22}{Redesigned ACMP labels}
 %   The page style for all pages but the first one
 %    \begin{macrocode}
 \AtBeginDocument{%
@@ -7801,7 +7818,7 @@
   \renewcommand{\footrulewidth}{0.1\p@}%
   \fancyheadoffset[L]{46pt}%
   \fancyhead[L]{\makebox[\z@][l]{%
-      \raisebox{-\dimexpr(0.25\textheight*\ACM@ArticleType@nr)}{%
+      \raisebox{-\dimexpr(0.2\textheight*(\ACM@ArticleType@nr-2))}{%
       \rotatebox{90}{\colorbox{@ACM@Article@color}{\color{white}%
           \strut\ACM@ArticleType~Article}}}}%
     \ACM@linecountL}%
@@ -7820,33 +7837,14 @@
 % \end{macro}
 %
 % \begin{macro}{\@folio@wd}
+% \changes{v2.00}{2023/10/22}{Obsoleted macro}
 % \begin{macro}{\@folio@ht}
+% \changes{v2.00}{2023/10/22}{Obsoleted macro}
 % \begin{macro}{\@folio@voffset}
+% \changes{v2.00}{2023/10/22}{Obsoleted macro}
 % \begin{macro}{\@folio@max}
+% \changes{v2.00}{2023/10/22}{Obsoleted macro}
 %   Folio blob width, height, offsets and max number
-%    \begin{macrocode}
-\newdimen\@folio@wd
-\@folio@wd=\z@
-\newdimen\@folio@ht
-\@folio@ht=\z@
-\newdimen\@folio@voffset
-\@folio@voffset=\z@
-\def\@folio@max{1}
-\ifcase\ACM@format@nr
-\relax % manuscript
-\or % acmsmall
-  \@folio@wd=45.75pt\relax
-  \@folio@ht=1.25in\relax
-  \@folio@voffset=.2in\relax
-  \def\@folio@max{8}
-\or % acmlarge
-  \@folio@wd=43.25pt\relax
-  \@folio@ht=79pt\relax
-  \@folio@voffset=.55in\relax
-  \def\@folio@max{10}
-\fi
-%    \end{macrocode}
-%
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -7856,36 +7854,8 @@
 % \changes{v1.44}{2017/08/11}{Suppress the blob if acmArticleSeq is empty}
 % \changes{v1.45}{2017/08/15}{Switched \cs{bfeseries}\cs{sffamily} to
 % \cs{sffamily}\cs{bfseries}}
+% \changes{v2.00}{2023/10/22}{Obsoleted macro}
 %   The macro to typeset the folio blob.
-%    \begin{macrocode}
-\def\@folioblob{\@tempcnta=0\@acmArticleSeq\relax
-  \ifnum\@tempcnta=0\relax\else
-%    \end{macrocode}
-% First, we calculate \cs{@acmArticleSeq} modulo \cs{@folio@max}
-%    \begin{macrocode}
-  \loop
-     \ifnum\@tempcnta>\@folio@max\relax
-      \advance\@tempcnta by - \@folio@max
-   \repeat
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-    \advance\@tempcnta by -1\relax
-    \@tempdima=\@folio@ht\relax
-    \multiply\@tempdima by \the\@tempcnta\relax
-    \advance\@tempdima by -\@folio@voffset\relax
-    \begin{picture}(0,0)
-    \makebox[\z@]{\raisebox{-\@tempdima}{%
-        \rlap{%
-          \raisebox{-0.45\@folio@ht}[\z@][\z@]{%
-            \rule{\@folio@wd}{\@folio@ht}}}%
-        \parbox{\@folio@wd}{%
-          \centering
-          \textcolor{white}{\LARGE\sffamily\bfseries\@acmArticle}}}}
-  \end{picture}\fi}
-
-%    \end{macrocode}
-%
 %
 % \end{macro}
 %
@@ -7902,6 +7872,7 @@
 % \changes{v1.59}{2019/04/20}{Moved page styles to \cs{AtBeginDocument}}
 % \changes{v1.87}{2022/08/14}{Special treatment for acmcp}
 % \changes{v1.89}{2022/12/27}{Moved badges here}
+% \changes{v2.00}{2023/10/22}{Deleted blobs}
 %   The page style for the first page only.
 %    \begin{macrocode}
 \AtBeginDocument{%
@@ -7924,22 +7895,20 @@
         \@acmNumber, Article \@acmArticle.  Publication date:
         \@acmPubDate.}%
       \fi%
-      \fancyhead[LE]{\ACM@linecountL\@folioblob\@acmBadgeL}%
+      \fancyhead[LE]{\ACM@linecountL\@acmBadgeL}%
       \fancyhead[LO]{\ACM@linecountL\@acmBadgeL}%
-      \fancyhead[RO]{\@acmBadgeR\@folioblob}%
+      \fancyhead[RO]{\@acmBadgeR}%
       \fancyhead[RE]{\@acmBadgeR}%
-      \fancyheadoffset[RO,LE]{0.6\@folio@wd}%
     \or % acmlarge
       \if@ACM@nonacm\else%
         \fancyfoot[RO,LE]{\footnotesize \@journalNameShort, Vol. \@acmVolume, No.
         \@acmNumber, Article \@acmArticle.  Publication date:
         \@acmPubDate.}%
       \fi%
-      \fancyhead[RO]{\@acmBadgeR\@folioblob}%
+      \fancyhead[RO]{\@acmBadgeR}%
       \fancyhead[RE]{\@acmBadgeR}%
-      \fancyhead[LE]{\ACM@linecountL\@folioblob\@acmBadgeL}%
+      \fancyhead[LE]{\ACM@linecountL\@acmBadgeL}%
       \fancyhead[LO]{\ACM@linecountL\@acmBadgeL}%
-      \fancyheadoffset[RO,LE]{1.4\@folio@wd}%
     \or % acmtog
       \if@ACM@nonacm\else%
         \fancyfoot[RO,LE]{\footnotesize \@journalNameShort, Vol. \@acmVolume, No.
@@ -7972,7 +7941,7 @@
   \renewcommand{\footrulewidth}{0.1\p@}%
   \fancyheadoffset[L]{46pt}%
   \fancyhead[L]{\makebox[\z@][l]{%
-      \raisebox{-\dimexpr(0.25\textheight*\ACM@ArticleType@nr)}{%
+      \raisebox{-\dimexpr(0.2\textheight*(\ACM@ArticleType@nr-2))}{%
       \rotatebox{90}{\colorbox{@ACM@Article@color}{\color{white}%
           \strut\ACM@ArticleType~Article}}}}%
     \ACM@linecountL\@acmBadgeL}%
