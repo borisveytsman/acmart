@@ -21,6 +21,9 @@ ACMCPSAMPLES= \
 	samples/sample-acmcp-Research.pdf \
 	samples/sample-acmcp-Review.pdf \
 
+TAGGEDSAMPLES = \
+	samples/sample-acmsmall-tagged.pdf 
+
 all:  ${PDF} ALLSAMPLES
 
 %.pdf:  %.dtx   $(PACKAGE).cls
@@ -174,6 +177,8 @@ samples/sample-acmcp.tex: samples/samples.ins samples/samples.dtx
 
 samples/sample-acmcp-%.tex: samples/sample-acmcp.tex samples/acm-jdslogo.png
 	sed 's/acmArticleType{Review}/acmArticleType{$*}/' $< > $@
+
+taggedsamples: ${TAGGEDSAMPLES}
 
 tagged: samples/sample-acmsmall-tagged.pdf docclean
 	zip -r tagged.zip  \

@@ -2868,6 +2868,37 @@
 %\subsection{Loading the base class and package}
 %\label{sec:loading}
 %
+% Before we load the base class we want to save the original
+% definitions of sectioning commands since |acmart| redefines them,
+% and we need the vanilla versions.
+% \begin{macro}{\@startsection@kernel}
+% \changes{v2.00}{2023/11/19}{Added macro}
+%    \begin{macrocode}
+\let\@startsection@kernel\@startsection
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@xsect@kernel}
+% \changes{v2.00}{2023/11/19}{Added macro}
+%    \begin{macrocode}
+\let\@xsect@kernel\@xsect
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@sect@kernel}
+% \changes{v2.00}{2023/11/19}{Added macro}
+%    \begin{macrocode}
+\let\@sect@kernel\@sect
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@ssect@kernel}
+% \changes{v2.00}{2023/11/19}{Added macro}
+%    \begin{macrocode}
+\let\@ssect@kernel\@ssect
+%    \end{macrocode}
+% \end{macro}
+% 
 % \changes{v1.13}{2016/06/06}{Increased font size for ACM Large}
 % \changes{v1.38}{2017/05/13}{Increase default font size for SIGPLAN}
 % \changes{v1.87}{2022/08/27}{Set font sizes for |acmengage| and |acmcp|}
@@ -3264,111 +3295,26 @@
 %
 % \begin{macro}{\@startsection}
 % \changes{v1.31}{2017/03/04}{Added \cs{tochangmeasure}}
+% \changes{v2.00}{2023/11/19}{Returned to latex versiion}
 % Before we call |hyperref|, we redefine \cs{startsection} commands to
 % their \LaTeX\ defaults since the |amsart| ones are too AMS-specific.
 % We need to do this early since we want |hyperref| to have a chance
 % to redefine them again:
 %    \begin{macrocode}
-\def\@startsection#1#2#3#4#5#6{%
-  \if@noskipsec \leavevmode \fi
-  \par
-  \@tempskipa #4\relax
-  \@afterindenttrue
-  \ifdim \@tempskipa <\z@
-    \@tempskipa -\@tempskipa \@afterindentfalse
-  \fi
-  \if@nobreak
-    \everypar{}%
-  \else
-    \addpenalty\@secpenalty\addvspace\@tempskipa
-  \fi
-  \@ifstar
-    {\@ssect{#3}{#4}{#5}{#6}}%
-    {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
-\def\@sect#1#2#3#4#5#6[#7]#8{%
-  \edef\@toclevel{\ifnum#2=\@m 0\else\number#2\fi}%
-  \ifnum #2>\c@secnumdepth
-    \let\@svsec\@empty
-  \else
-    \refstepcounter{#1}%
-    \protected@edef\@svsec{\@seccntformat{#1}\relax}%
-  \fi
-  \@tempskipa #5\relax
-  \ifdim \@tempskipa>\z@
-    \begingroup
-      #6{%
-        \@hangfrom{\hskip #3\relax\@svsec}%
-          \interlinepenalty \@M #8\@@par}%
-    \endgroup
-    \csname #1mark\endcsname{#7}%
-    \ifnum #2>\c@secnumdepth \else
-        \@tochangmeasure{\csname the#1\endcsname}%
-    \fi
-    \addcontentsline{toc}{#1}{%
-      \ifnum #2>\c@secnumdepth \else
-        \protect\numberline{\csname the#1\endcsname}%
-      \fi
-      #7}%
-  \else
-    \def\@svsechd{%
-      #6{\hskip #3\relax
-      \@svsec #8}%
-      \csname #1mark\endcsname{#7}%
-      \ifnum #2>\c@secnumdepth \else
-        \@tochangmeasure{\csname the#1\endcsname\space}%
-      \fi
-      \addcontentsline{toc}{#1}{%
-        \ifnum #2>\c@secnumdepth \else
-          \protect\numberline{\csname the#1\endcsname}%
-        \fi
-        #7}}%
-  \fi
-  \@xsect{#5}}
-\def\@xsect#1{%
-  \@tempskipa #1\relax
-  \ifdim \@tempskipa>\z@
-    \par \nobreak
-    \vskip \@tempskipa
-    \@afterheading
-  \else
-    \@nobreakfalse
-    \global\@noskipsectrue
-    \everypar{%
-      \if@noskipsec
-        \global\@noskipsecfalse
-       {\setbox\z@\lastbox}%
-        \clubpenalty\@M
-        \begingroup \@svsechd \endgroup
-        \unskip
-        \@tempskipa #1\relax
-        \hskip -\@tempskipa
-      \else
-        \clubpenalty \@clubpenalty
-        \everypar{}%
-      \fi}%
-  \fi
-  \ignorespaces}
+\let\@startsection\@startsection@kernel
+\let\@sect\@sect@kernel
+\let\@xsect\@xsect@kernel
 \def\@seccntformat#1{\csname the#1\endcsname\quad}
-\def\@ssect#1#2#3#4#5{%
-  \@tempskipa #3\relax
-  \ifdim \@tempskipa>\z@
-    \begingroup
-      #4{%
-        \@hangfrom{\hskip #1}%
-          \interlinepenalty \@M #5\@@par}%
-    \endgroup
-  \else
-    \def\@svsechd{#4{\hskip #1\relax #5}}%
-  \fi
-  \@xsect{#3}}
+\let\@ssect\@ssect@kernel
 %    \end{macrocode}
 %
 % \end{macro}
 %
-% \begin{macro}{\@startsection}
+% \begin{macro}{\@starttoc}
 % \changes{v1.31}{2017/03/04}{Redefined macro}
 % \changes{v1.43}{2017/07/09}{Added \cs{makeatletter}}
-%   The |amsart| package redefines \cs{startsection}.  Here we redefine
+% \changes{v2.00}{2023/11/19}{Ulrike's version}
+%   The |amsart| package redefines \cs{startt}.  Here we redefine
 %   it again to make the table of contents work.
 %    \begin{macrocode}
 \def\@starttoc#1#2{\begingroup\makeatletter
@@ -3376,7 +3322,9 @@
   \par\removelastskip\vskip\z@skip
   \@startsection{section}\@M\z@{\linespacing\@plus\linespacing}%
     {.5\linespacing}{\centering\contentsnamefont}{#2}%
+  \@starttoc@cfgpoint@before{#1}%NEW<<<<<<<<<< (name will change)
   \@input{\jobname.#1}%
+  \@starttoc@cfgpoint@after{#1}%NEW<<<<<<<<<<<<  (name will change)
   \if@filesw
     \@xp\newwrite\csname tf@#1\endcsname
     \immediate\@xp\openout\csname tf@#1\endcsname \jobname.#1\relax
@@ -3386,6 +3334,37 @@
 }
 %    \end{macrocode}
 %
+% \end{macro}
+%
+% \begin{macro}{\@tocline}
+% \changes{v2.00}{2023/11/19}{Hooks introduced by Ulrike Fischer}
+%    \begin{macrocode}
+\def\@tocline#1#2#3#4#5#6#7{\relax
+  \ifnum #1>\c@tocdepth % then omit
+  \else
+    \par \addpenalty\@secpenalty\addvspace{#2}%
+    \begingroup \hyphenpenalty\@M
+    \@ifempty{#4}{%
+      \@tempdima\csname r@tocindent\number#1\endcsname\relax
+    }{%
+      \@tempdima#4\relax
+    }%
+    \parindent\z@ \leftskip#3\relax \advance\leftskip\@tempdima\relax
+    \rightskip\@pnumwidth plus4em \parfillskip-\@pnumwidth
+    #5\leavevmode\hskip-\@tempdima
+    \UseHookWithArguments{contentsline/text/before}{4}{#1}{#6}{#7}{\@contentsline@destination}%NEW 
+    #6%
+    \UseHookWithArguments{contentsline/text/after}{4}{#1}{#6}{#7}{\@contentsline@destination}%NEW    
+    \nobreak\relax
+    \hfil\hbox to\@pnumwidth{%
+     \UseHookWithArguments{contentsline/page/before}{4}{#1}{#6}{#7}{\@contentsline@destination}%NEW
+     \@tocpagenum{#7}
+     \UseHookWithArguments{contentsline/page/after}{4}{#1}{#6}{#7}{\@contentsline@destination}%NEW
+     }\par
+    \nobreak
+    \endgroup
+  \fi}
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\l@subsection}
@@ -7515,6 +7494,16 @@
 % 
 % \end{macro}
 %
+% We stop tagging inside maketitle for now.  Ulrike's code again.
+%    \begin{macrocode}
+\ExplSyntaxOn
+\AddToHook{cmd/maketitle/before}
+ {\tagstructbegin{tag=Title}\tagmcbegin{} \tag_stop:}
+\AddToHook{cmd/maketitle/after}
+ {\tag_start:\tagmcend\tagstructend }
+\ExplSyntaxOff
+%    \end{macrocode}
+%
 %\subsection{Headers and Footers}
 %\label{sec:head_foot}
 %
@@ -8041,21 +8030,26 @@
 % \changes{v1.54}{2018/06/17}{Added Ross's patch for sectioning}
 % \changes{v1.68}{2020/01/19}{New command for unindent paras}
 % \changes{v1.69}{2020/02/02}{No dots for unindented paragraphs}
+% \changes{v2.00}{2023/11/18}{Ulrike's addition}
 %   Sectioning is different for different levels
 %    \begin{macrocode}
-\renewcommand\section{\@startsection{section}{1}{\z@}%
+\renewcommand\section{\def\@toclevel{1}%
+  \@startsection{section}{1}{\z@}%
   {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {.25\baselineskip}%
   {\ACM@NRadjust\@secfont}}
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+\renewcommand\subsection{\def\@toclevel{2}%
+  \@startsection{subsection}{2}{\z@}%
   {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {.25\baselineskip}%
   {\ACM@NRadjust\@subsecfont}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+\renewcommand\subsubsection{\def\@toclevel{3}%
+  \@startsection{subsubsection}{3}{\z@}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\ACM@NRadjust{\@subsubsecfont\@adddotafter}}}
-\renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
+\renewcommand\paragraph{\def\@toclevel{4}%
+  \@startsection{paragraph}{4}{\parindent}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\ACM@NRadjust{\@parfont\@adddotafter}}}
@@ -8063,8 +8057,8 @@
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\ACM@NRadjust{\@parfont}}}
-
-\renewcommand\part{\@startsection{part}{9}{\z@}%
+\renewcommand\part{\def\toclevel{9}%
+  \@startsection{part}{9}{\z@}%
   {-10\p@ \@plus -4\p@ \@minus -2\p@}%
   {4\p@}%
   {\ACM@NRadjust\@parfont}}
