@@ -2266,7 +2266,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2023/11/05 v2.00 Typesetting articles for the Association for Computing Machinery]
+[2023/12/29 v2.01 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -5209,7 +5209,12 @@
 %
 % \begin{macro}{\acmPrice}
 % \changes{v2.00}{2023/10/22}{Deleted macro}
-%   The price---obsolete
+% \changes{v2.01}{2023/12/29}{Now the macro produces a warning}
+% The price---obsolete
+%    \begin{macrocode}
+\def\acmPrice#1{\ClassWarning{\@classname}{The macro \string\acmPrice
+    is obsolete.  ACM no longer prints the price in bibstrip.}}
+%    \end{macrocode}
 % \end{macro}
 %
 %
