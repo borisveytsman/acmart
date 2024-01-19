@@ -306,16 +306,16 @@
 %   acmsmall & Small single-column format.  Used for ACMJCSS, CIE, CSUR,
 %            DLT, FAC, GAMES, JACM, JATS,  JDIQ, JDS, JEA, JERIC,
 %            JETC, JRC, PACMCGIT, PACMHCI, PACMMOD, PACMNET,
-%            PACMPL, PACMSE, TAAS, TACCESS, TACO,
+%            PACMPL, PACMSE, POMACS, TAAS, TACCESS, TACO,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
 %            TOCE, TOCHI, TOCL,
 %            TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly
 %            TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPML, TOPS, TORS
 %            TOS, TOSEM, TOSN, TQC, TRETS,
-%            TSAS, TSC, TSLP and TWEB, including special issues. \\
+%            TSAS, TSC, TSLP, and TWEB, including special issues. \\
 %   acmlarge  & Large single-column format.  Used for DTRAP, HEALTH,
-%           IMWUT, JOCCH, POMACS and TAP, including special issues. \\
+%           IMWUT, JOCCH, and TAP, including special issues. \\
 %   acmtog   & Large double-column format.  Used for
 %          TOG, including annual conference Technical Papers.\\
 %   sigconf & Proceedings format for most ACM
@@ -2266,7 +2266,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2023/12/29 v2.01 Typesetting articles for the Association for Computing Machinery]
+[2024/01/06 v2.02 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2381,6 +2381,7 @@
 % \changes{1.92}{2023/09/30}{Documentation update: use of `anonymous'
 % throughout} 
 % \changes{v1.93}{2023/10/22}{Added PACMSE journal option}
+% \changes{v2.01}{2024/01/06}{Documentation update: POMACS uses acmsmall}
 % 
 % And the driver code:
 %    \begin{macrocode}
@@ -4467,7 +4468,7 @@
   \def\@journalNameShort{ACM J. Data Inform. Quality}%
   \def\@permissionCodeOne{1936-1955}%
 \or % JDS
-  \def\@journalName{ACM/JMS Journal of Data Science}%
+  \def\@journalName{ACM/IMS Journal of Data Science}%
   \def\@journalNameShort{ACM/IMS J. Data Sci.}%
   \def\@permissionCodeOne{2831-3194}%
   \def\@permissionCodeTwo{2831-3194}%
@@ -4750,6 +4751,8 @@
 %
 % \begin{macro}{\acmConference}
 % \changes{v1.59}{2019/04/20}{Setting \cs{@ACM@journal@bibstrip}}
+% \changes{v2.02}{2024/01/06}{Moved here setting the conference title
+% for bibstrip}
 %   This is the conference command
 %    \begin{macrocode}
 \newcommand\acmConference[4][]{%
@@ -4761,6 +4764,11 @@
     \gdef\acmConference@shortname{#2}%
   \fi
   \global\@ACM@journal@bibstripfalse
+  \ifx\@acmBooktitle\@empty\relax
+    \acmBooktitle{Proceedings of \acmConference@name
+      \ifx\acmConference@name\acmConference@shortname\else
+      \ (\acmConference@shortname)\fi}%
+  \fi
 }
 \if@ACM@journal\else
 \acmConference[Conference'17]{ACM Conference}{July 2017}{Washington,
@@ -4772,17 +4780,14 @@
 %
 % \begin{macro}{\acmBooktitle}
 % \changes{v1.44}{2017/08/11}{Added macro}
+% \changes{v2.01}{2024/01/06}{Moved default conference title to
+% conference setting}
 % \begin{macro}{\@acmBooktitle}
 % \changes{v1.44}{2017/08/11}{Added macro}
 %   The book title of the conference:
 %    \begin{macrocode}
 \def\acmBooktitle#1{\gdef\@acmBooktitle{#1}}
 \acmBooktitle{}
-\ifx\acmConference@name\@undefined\else
-\acmBooktitle{Proceedings of \acmConference@name
-       \ifx\acmConference@name\acmConference@shortname\else
-       \ (\acmConference@shortname)\fi}
-\fi
 %    \end{macrocode}
 %
 % \end{macro}
