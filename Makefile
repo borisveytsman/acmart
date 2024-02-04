@@ -94,7 +94,7 @@ samples/sample-acmsmall-biblatex.pdf: samples/sample-acmsmall-biblatex.tex $(SAM
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
 	  do cd $(dir $@) && pdflatex-dev $(notdir $<); done
 
-samples/sample-xelatex.pdf:  samples/sample-xelatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
+samples/sample-sigconf-xelatex.pdf:  samples/sample-xelatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
 	cd $(dir $@) && xelatex-dev $(notdir $<)
 	- cd $(dir $@) && bibtex $(notdir $(basename $<))
 	cd $(dir $@) && xelatex-dev $(notdir $<)
@@ -102,7 +102,7 @@ samples/sample-xelatex.pdf:  samples/sample-xelatex.tex   samples/$(PACKAGE).cls
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
 	  do cd $(dir $@) && xelatex-dev $(notdir $<); done
 
-samples/sample-lualatex.pdf:  samples/sample-lualatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
+samples/sample-sigconf-lualatex.pdf:  samples/sample-lualatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
 	cd $(dir $@) && lualatex-dev $(notdir $<)
 	- cd $(dir $@) && bibtex $(notdir $(basename $<))
 	cd $(dir $@) && lualatex-dev $(notdir $<)
