@@ -12,7 +12,11 @@ The production version is the one on CTAN and ACM sites.
 
 Changes
 
-Version 2.02.  Documentation update.
+Version 2.03.  Cleaned generation of samples.
+	       New options for printing conference proceedings
+	       in ACM journals
+
+Version 2.02   Documentation update.
 	       Changes in TOG templates
 	       Corrected typo in ACM/IMS journals
 

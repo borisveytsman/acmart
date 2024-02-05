@@ -289,10 +289,12 @@
 % transactions, and course materials, while formats starting with
 % |sig| are intended for proceedings published as books.
 %
-% Note that sometimes conference proceedings are published as a
-% special issue (or issues) of an ACM journal.  In this case, you
-% should use the journal format for a conference paper.  Please
-% contact your conference committee if in doubt.
+% Sometimes conference proceedings are published as a special issue
+% (or issues) of an ACM journal.  In this case, you should use the
+% journal format.  The templates |sample-acmsmall-conf.tex| and
+% |sample-acmtog-conf.tex| show how to enter conference information.
+% Note that you need to comment out |\acmJournal{...}| line for such
+% papers to get the conference information in the footers and headers.
 %
 % \begin{table}
 %   \centering
@@ -2235,6 +2237,8 @@
 % \item[sample-sigplan:] A proceedings paper in the |sigplan| format.
 % \item[sample-acmsmall-conf:] A proceedings paper in the |acmsmall|
 % format for the publication in a journal using this option.
+% \item[sample-acmtog-conf:] A proceedings paper in the |acmtog|
+% format for the publication in a journal using this option.
 % \item[sample-acmcp:] A sample of ACM Cover Page used by JDS.
 % \item[sample-acmengage:] A sample of ACM Engage publication.
 % \end{description}
@@ -2781,6 +2785,17 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\if@ACM@journal@bibstrip@or@tog}
+% \changes{v2.03}{2024/02/04}{Introduced macro}
+% ACM TOG sometimes uses journal-like bibstrip even for conference
+% proceedings, so we need to set it separately
+%    \begin{macrocode}
+\newif\if@ACM@journal@bibstrip@or@tog
+%    \end{macrocode}
+%
+% \end{macro}
+%
+% 
 % \begin{macro}{\if@ACM@sigchiamode}
 %   The formatting of SIGCHI extended abstracts is quite unusual.  We have a
 %   special switch for them.
@@ -2809,7 +2824,6 @@
 %    \end{macrocode}
 % 
 % \end{macro}
-%
 %
 % 
 %
@@ -2855,6 +2869,7 @@
   \@ACM@journaltrue
 \or % acmtog
   \@ACM@journaltrue
+  \@ACM@journal@bibstrip@or@togtrue
 \or % sigconf
   \@ACM@journalfalse
 \or % siggraph
@@ -2875,7 +2890,8 @@
   \AtBeginDocument{\@ACM@printacmreffalse}%
 \fi
 \if@ACM@journal
- \@ACM@journal@bibstriptrue
+  \@ACM@journal@bibstriptrue
+  \@ACM@journal@bibstrip@or@togtrue
 \else
  \@ACM@journal@bibstripfalse
 \fi
@@ -4774,7 +4790,8 @@
 % And the syntactic sugar around it
 %    \begin{macrocode}
 \def\acmJournal#1{\setkeys{ACM}{acmJournal=#1}%
-  \global\@ACM@journal@bibstriptrue}
+  \global\@ACM@journal@bibstriptrue
+  \global\@ACM@journal@bibstrip@or@togtrue}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -4793,6 +4810,7 @@
 % \changes{v1.59}{2019/04/20}{Setting \cs{@ACM@journal@bibstrip}}
 % \changes{v2.02}{2024/01/06}{Moved here setting the conference title
 % for bibstrip}
+% \changes{v2.03}{2024/02/04}{Made setting bibstrip overriding journal}
 %   This is the conference command
 %    \begin{macrocode}
 \newcommand\acmConference[4][]{%
@@ -6290,6 +6308,7 @@
 % publications}
 % \changes{v2.00}{2023/10/24}{Deleted acmPrice}
 % \changes{v2.00}{2023/11/05}{Added ``ACM'' for papers}
+% \changes{v2.03}{2024/12/04}{Special processing for conferences in TOG}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -6330,7 +6349,7 @@
   \if@ACM@acmcp\else
     \ifx\@empty\@authorsaddresses\else
        \if@ACM@anonymous\else
-         \if@ACM@journal@bibstrip
+         \if@ACM@journal@bibstrip@or@tog
            \footnotetextauthorsaddresses{%
              \def\par{\let\par\@par}\parindent\z@\@setauthorsaddresses}%
          \fi
@@ -7725,6 +7744,7 @@
 % \changes{v1.86}{2022/06/26}{Special treatment of ACM Engage materials}
 % \changes{v1.87}{2022/08/14}{Special treatment of ACMCP}
 % \changes{v1.91}{2023/06/22}{Redesigned ACMP labels}
+% \changes{v2.03}{2024/02/04}{Special treatment of ACM TOG}
 %   The page style for all pages but the first one
 %    \begin{macrocode}
 \AtBeginDocument{%
@@ -7739,7 +7759,7 @@
       \@acmArticle\if@ACM@printfolios:\thepage\fi%
     \fi%
   }%
-  \if@ACM@journal@bibstrip
+  \if@ACM@journal@bibstrip@or@tog
     \ifcase\ACM@format@nr
     \relax % manuscript
       \fancyhead[LE]{\ACM@linecountL\if@ACM@printfolios\thepage\fi}%
@@ -7775,9 +7795,15 @@
       \fancyhead[RE]{\ACM@linecountR}%
       \fancyhead[RO]{\@headfootfont
         \shorttitle\quad\textbullet\quad\@acmArticlePage\ACM@linecountR}%
-      \if@ACM@nonacm\else%
-        \fancyfoot[RO,LE]{\footnotesize \@journalNameShort, Vol. \@acmVolume, No.
-        \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
+      \if@ACM@nonacm\else
+        \if@ACM@journal@bibstrip
+          \fancyfoot[RO,LE]{\footnotesize \@journalNameShort,
+            Vol. \@acmVolume, No.~\@acmNumber, Article \@acmArticle.
+            Publication date: \@acmPubDate.}%
+        \else
+          \fancyfoot[RO,LE]{\footnotesize \acmConference@shortname,
+            \acmConference@date, \acmConference@venue.}%
+         \fi
       \fi
     \else % Proceedings
       \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
@@ -7892,6 +7918,7 @@
 % \changes{v1.87}{2022/08/14}{Special treatment for acmcp}
 % \changes{v1.89}{2022/12/27}{Moved badges here}
 % \changes{v2.00}{2023/10/22}{Deleted blobs}
+% \changes{v2.03}{2024/02/04}{Special treatment of tog}
 %   The page style for the first page only.
 %    \begin{macrocode}
 \AtBeginDocument{%
@@ -7899,7 +7926,7 @@
   \fancyhf{}%
   \renewcommand{\headrulewidth}{\z@}%
   \renewcommand{\footrulewidth}{\z@}%
-  \if@ACM@journal@bibstrip
+  \if@ACM@journal@bibstrip@or@tog
     \ifcase\ACM@format@nr
     \relax % manuscript
       \fancyhead[L]{\ACM@linecountL\@acmBadgeL}%
@@ -7930,9 +7957,14 @@
       \fancyhead[LO]{\ACM@linecountL\@acmBadgeL}%
     \or % acmtog
       \if@ACM@nonacm\else%
-        \fancyfoot[RO,LE]{\footnotesize \@journalNameShort, Vol. \@acmVolume, No.
-        \@acmNumber, Article \@acmArticle.  Publication date:
-        \@acmPubDate.}%
+        \if@ACM@journal@bibstrip
+          \fancyfoot[RO,LE]{\footnotesize \@journalNameShort,
+            Vol. \@acmVolume, No.~\@acmNumber, Article \@acmArticle.
+            Publication date: \@acmPubDate.}%
+        \else
+          \fancyfoot[RO,LE]{\footnotesize \acmConference@shortname,
+            \acmConference@date, \acmConference@venue.}%
+         \fi
       \fi%
       \fancyhead[L]{\ACM@linecountL\@acmBadgeL}%
       \fancyhead[R]{\@acmBadgeR\ACM@linecountR}%

@@ -31,7 +31,7 @@
 %<acmsmall-biblatex>\documentclass[acmsmall,natbib=false]{acmart}
 %<acmsmall-submission>\documentclass[acmsmall,screen,review]{acmart}
 %<acmlarge>\documentclass[acmlarge]{acmart}
-%<acmtog>\documentclass[acmtog]{acmart}
+%<acmtog|acmtog-conf>\documentclass[acmtog]{acmart}
 %<sigconf>\documentclass[sigconf]{acmart}
 %<sigconf-biblatex>\documentclass[sigconf,natbib=false]{acmart}
 %<authordraft>\documentclass[sigconf,authordraft]{acmart}
@@ -80,6 +80,7 @@
 %<acmsmall|acmsmall-submission|acmsmall-biblatex>\acmJournal{JACM}
 %<acmlarge>\acmJournal{POMACS}
 %<acmtog>\acmJournal{TOG}
+%<acmtog-conf>%\acmJournal{TOG} % Comment out journal to get conference info in bibstrip.
 %<acmcp>\acmJournal{JDS}
 \acmVolume{37}
 \acmNumber{4}
@@ -121,10 +122,10 @@
 %% If you are preparing content for an event
 %% sponsored by ACM SIGGRAPH, you must use the "author year" style of
 %% citations and references.
-%<!acmtog>%% Uncommenting 
-%<!acmtog>%% the next command will enable that style.
-%<!acmtog>%%\citestyle{acmauthoryear}
-%<acmtog>\citestyle{acmauthoryear}
+%<!(acmtog|acmtog-conf)>%% Uncommenting 
+%<!(acmtog|acmtog-conf)>%% the next command will enable that style.
+%<!(acmtog|acmtog-conf)>%%\citestyle{acmauthoryear}
+%<acmtog|acmtog-conf>\citestyle{acmauthoryear}
 %</bibtex>
 
 %<*acmsmall-biblatex|sigconf-biblatex>
@@ -473,7 +474,7 @@ source file:
 %<acmsmall|acmsmall-conf>\documentclass[acmsmall]{acmart}
 %<acmsmall-submission>\documentclass[acmsmall,screen,review]{acmart}
 %<acmlarge>\documentclass[acmlarge]{acmart}
-%<acmtog>\documentclass[acmtog]{acmart}
+%<acmtog|acmtog-conf>\documentclass[acmtog]{acmart}
 %<sigconf>\documentclass[sigconf]{acmart}
 %<authordraft>\documentclass[sigconf,authordraft]{acmart}
 %<sigplan>\documentclass[sigplan,screen]{acmart}
