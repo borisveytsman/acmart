@@ -8,6 +8,8 @@
 
 PACKAGE=acmart
 
+DEV=-dev # To switch dev on
+#DEV=
 
 PDF = $(PACKAGE).pdf acmguide.pdf
 
@@ -70,45 +72,47 @@ samples/%.cbx: %.cbx
 samples/%.dbx: %.dbx
 samples/%.lbx: %.lbx
 
+
+
 samples/%.pdf:  samples/%.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
-	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	cd $(dir $@) && pdflatex${DEV} $(notdir $<)
 	- cd $(dir $@) && bibtex $(notdir $(basename $<))
-	cd $(dir $@) && pdflatex-dev $(notdir $<)
-	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	cd $(dir $@) && pdflatex${DEV} $(notdir $<)
+	cd $(dir $@) && pdflatex${DEV} $(notdir $<)
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
-	  do cd $(dir $@) && pdflatex-dev $(notdir $<); done
+	  do cd $(dir $@) && pdflatex${DEV} $(notdir $<); done
 
 samples/sample-sigconf-biblatex.pdf: samples/sample-sigconf-biblatex.tex $(SAMPLEBIBLATEXFILES)
-	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	cd $(dir $@) && pdflatex${DEV} $(notdir $<)
 	- cd $(dir $@) && biber $(notdir $(basename $<))
-	cd $(dir $@) && pdflatex-dev $(notdir $<)
-	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	cd $(dir $@) && pdflatex${DEV} $(notdir $<)
+	cd $(dir $@) && pdflatex${DEV} $(notdir $<)
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
-	  do cd $(dir $@) && pdflatex-dev $(notdir $<); done
+	  do cd $(dir $@) && pdflatex${DEV} $(notdir $<); done
 
 samples/sample-acmsmall-biblatex.pdf: samples/sample-acmsmall-biblatex.tex $(SAMPLEBIBLATEXFILES)
-	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	cd $(dir $@) && pdflatex${DEV} $(notdir $<)
 	- cd $(dir $@) && biber $(notdir $(basename $<))
-	cd $(dir $@) && pdflatex-dev $(notdir $<)
-	cd $(dir $@) && pdflatex-dev $(notdir $<)
+	cd $(dir $@) && pdflatex${DEV} $(notdir $<)
+	cd $(dir $@) && pdflatex${DEV} $(notdir $<)
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
-	  do cd $(dir $@) && pdflatex-dev $(notdir $<); done
+	  do cd $(dir $@) && pdflatex${DEV} $(notdir $<); done
 
 samples/sample-sigconf-xelatex.pdf:  samples/sample-xelatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
-	cd $(dir $@) && xelatex-dev $(notdir $<)
+	cd $(dir $@) && xelatex${DEV} $(notdir $<)
 	- cd $(dir $@) && bibtex $(notdir $(basename $<))
-	cd $(dir $@) && xelatex-dev $(notdir $<)
-	cd $(dir $@) && xelatex-dev $(notdir $<)
+	cd $(dir $@) && xelatex${DEV} $(notdir $<)
+	cd $(dir $@) && xelatex${DEV} $(notdir $<)
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
-	  do cd $(dir $@) && xelatex-dev $(notdir $<); done
+	  do cd $(dir $@) && xelatex${DEV} $(notdir $<); done
 
 samples/sample-sigconf-lualatex.pdf:  samples/sample-lualatex.tex   samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst
-	cd $(dir $@) && lualatex-dev $(notdir $<)
+	cd $(dir $@) && lualatex${DEV} $(notdir $<)
 	- cd $(dir $@) && bibtex $(notdir $(basename $<))
-	cd $(dir $@) && lualatex-dev $(notdir $<)
-	cd $(dir $@) && lualatex-dev $(notdir $<)
+	cd $(dir $@) && lualatex${DEV} $(notdir $<)
+	cd $(dir $@) && lualatex${DEV} $(notdir $<)
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
-	  do cd $(dir $@) && lualatex-dev $(notdir $<); done
+	  do cd $(dir $@) && lualatex${DEV} $(notdir $<); done
 
 samples/sample-acmcp.pdf: samples/acm-jdslogo.png
 
