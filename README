@@ -12,6 +12,10 @@ The production version is the one on CTAN and ACM sites.
 
 Changes
 
+Version 2.04.  Compatibility with the new latex-dev format
+               eSSN is always printed, even if pSSN is present
+	       Wording change in copyright statement
+
 Version 2.03.  Cleaned generation of samples.
 	       New options for printing conference proceedings
 	       in ACM journals

@@ -2321,7 +2321,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2024/02/04 v2.03 Typesetting articles for the Association for Computing Machinery]
+[2024/03/31 v2.04 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -3531,6 +3531,10 @@
 % \changes{v1.76}{2021/02/21}{Moved hyperxmp before hyperref, see
 % \url{https://github.com/borisveytsman/acmart/issues/425}}
 % \changes{1.92}{2023/10/14}{Moved hyperxmp again due to kernel update}
+% \changes{2.04}{2024/03/17}{Explicitly load ifdraft since hyperxmp
+% tries to load it inside a group}
+% \changes{2.04}{2024/03/31}{Deleted loading ifdraft due to the new
+% release of hyperxmp}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
@@ -4810,12 +4814,13 @@
 % \end{macro}
 %
 % The defaults:
+% \changes{v2.04}{2024/03/17}{eISSN is printed, rather than pSSN}
 %    \begin{macrocode}
 \def\@journalCode@nr{0}
 \def\@journalName{}%
 \def\@journalNameShort{\@journalName}%
 \def\@permissionCodeOne{XXXX-XXXX}%
-\def\@permissionCodeTwo{}%
+\def\@permissionCodeTwo{\@permissionCodeOne}%
 %    \end{macrocode}
 %
 %
@@ -5908,6 +5913,7 @@
 % \changes{v1.52}{2018/04/09}{Rewording of licenses}
 % \changes{v1.85}{2022/05/08}{Added CC licenses}
 % \changes{v2.00}{2023/10/22}{Changed wording}
+% \changes{v2.04}{2024/03/28}{Changed wording}
 %   Here is the owner of the copyright
 %    \begin{macrocode}
 \def\@copyrightowner{%
@@ -5998,6 +6004,7 @@
 % \changes{v1.87}{2022/07/30}{CC licenses now are allowed only for
 % non-acm or ACM engage publications}
 % \changes{v2.00}{2023/10/24}{Rewrote wording}
+% \changes{v2.00}{2023/10/24}{Rewrote wording}
 %   The canned permission block.
 %    \begin{macrocode}
 \def\@copyrightpermission{%
@@ -6025,7 +6032,7 @@
    and\hspace*{.5pt}/or a fee. Request permissions from
    permissions@acm.org. 
   \or % rightsretained
-   Permission to make digital or hard copies of part or all of this
+   Permission to make digital or hard copies of all or part of this
    work for personal or classroom use is granted without fee provided
    that copies are not made or distributed for profit or commercial
    advantage and that copies bear this notice and the full citation on
@@ -6419,7 +6426,7 @@
         \else
           \if@ACM@nonacm\else
             \if@ACM@journal@bibstrip
-              ACM~\@permissionCodeOne/\@acmYear/\@acmMonth-ART\@acmArticle\\
+              ACM~\@permissionCodeTwo/\@acmYear/\@acmMonth-ART\@acmArticle\\
               \@formatdoi{\@acmDOI}%
             \else % Conference
               \ifx\@acmISBN\@empty\else ACM~ISBN~\@acmISBN\\\fi
