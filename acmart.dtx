@@ -2309,7 +2309,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2024/03/28 v2.04 Typesetting articles for the Association for Computing Machinery]
+[2024/03/31 v2.04 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -3528,11 +3528,12 @@
 % \changes{1.92}{2023/10/14}{Moved hyperxmp again due to kernel update}
 % \changes{2.04}{2024/03/17}{Explicitly load ifdraft since hyperxmp
 % tries to load it inside a group}
+% \changes{2.04}{2024/03/31}{Deleted loading ifdraft due to the new
+% release of hyperxmp}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
 \RequirePackage[bookmarksnumbered,unicode]{hyperref}
-\RequirePackage{ifdraft}
 \RequirePackage{hyperxmp}
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
