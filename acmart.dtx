@@ -1,6 +1,6 @@
 % \iffalse
 %
-% Copyright 2016-2023, Association for Computing Machinery
+% Copyright 2016-2024, Association for Computing Machinery
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
 % version 1.3 of this license or (at your option) any
@@ -57,7 +57,7 @@
 % \ifx\currentjob\guide\OnlyDescription\fi
 % \GetFileInfo{acmart.dtx}
 % \title{\LaTeX{} Class for the \emph{Association for Computing
-% Machinery}\thanks{\copyright 2016--2023, Association for Computing Machinery}}
+% Machinery}\thanks{\copyright 2016--2024, Association for Computing Machinery}}
 % \author{Boris Veytsman\thanks{%
 % \href{mailto:borisv@lk.net}{\texttt{borisv@lk.net}},
 % \href{mailto:boris@varphi.com}{\texttt{boris@varphi.com}}}}
@@ -2158,7 +2158,7 @@
 %     TDS & ACM/IMS Transactions on Data Science\\
 %     TEAC & ACM Transactions on Economics and Computation\\
 %     TECS & ACM Transactions on Embedded Computing Systems \\
-%     TELO & ACM Transactions on Evolutionary Learning \\
+%     TELO & ACM Transactions on Evolutionary Learning and Optimization\\
 %     THRI & ACM Transactions on Human-Robot Interaction\\
 %     TIIS & ACM Transactions on Interactive Intelligent Systems\\
 %     TIOT & ACM Transactions on Internet of Things \\
@@ -2309,7 +2309,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2024/03/31 v2.04 Typesetting articles for the Association for Computing Machinery]
+[2024/04/03 v2.05 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -4391,6 +4391,7 @@
 % \changes{1.89}{2023/03/25}{Added PACMMOD}
 % \changes{1.89}{2023/03/25}{Added TOPML}
 % \changes{1.90}{2023/03/30}{Added TOPML eISSN}
+% \changes{2.05}{2024/04/04}{New data for TELO}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
@@ -4633,8 +4634,8 @@
   \def\@journalNameShort{ACM Trans. Embedd. Comput. Syst.}%
   \def\@permissionCodeOne{1539-9087}%
 \or % TELO
-  \def\@journalName{ACM Transactions on Evolutionary Learning}%
-  \def\@journalNameShort{ACM Trans. Evol. Learn.}%
+  \def\@journalName{ACM Transactions on Evolutionary Learning and Optimization}%
+  \def\@journalNameShort{ACM Trans. Evol. Learn. Optim.}%
   \def\@permissionCodeOne{2688-3007}%
 \or % THRI
   \def\@journalName{ACM Transactions on Human-Robot Interaction}%
