@@ -12,7 +12,9 @@ The production version is the one on CTAN and ACM sites.
 
 Changes
 
-Version 2.06.  Addes eISSN for a number of journals
+Version 2.06.  Added eISSN for a number of journals.
+               ACM no longer collects or prints authors'
+	       postal addresses
 
 Version 2.05   Changed title for TELO.
 

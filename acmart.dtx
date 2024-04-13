@@ -635,15 +635,12 @@
 % \author{Ben Trovato}
 % \additionalaffiliation{%
 %   \institution{The Th{\o}rv{\"a}ld Group}
-%   \streetaddress{1 Th{\o}rv{\"a}ld Circle}
 %   \city{Hekla}
 %   \country{Iceland}}
 % \affiliation{%
 %   \institution{Institute for Clarity in Documentation}
-%   \streetaddress{P.O. Box 1212}
 %   \city{Dublin}
-%   \state{Ohio}
-%   \postcode{43017-6221}}
+%   \state{Ohio}}
 % \end{verbatim}
 % Here Trovato and Tobin share their affiliation with the Institute
 % for Clarity in Documentation, but only Ben Trovato is affiliated
@@ -653,16 +650,14 @@
 % \DescribeMacro{\position}%
 % \DescribeMacro{\institution}%
 % \DescribeMacro{\department}%
-% \DescribeMacro{\streetaddress}%
 % \DescribeMacro{\city}%
 % \DescribeMacro{\state}%
-% \DescribeMacro{\postcode}%
 % \DescribeMacro{\country}%
 % The \cs{affiliation} and \cs{additionalaffiliation} commands are
 % further structured to interact with the metadata extraction tools.
 % Inside these commands you should use the \cs{position},
-% \cs{institution}, \cs{department}, \cs{city}, \cs{streetaddress},
-% \cs{state}, \cs{postcode} and \cs{country} macros to indicate the
+% \cs{institution}, \cs{department}, \cs{city}, 
+% \cs{state}, and \cs{country} macros to indicate the
 % corresponding parts of the affiliation.  Note that in some cases
 % (for example, journals) these parts are not printed in the resulting
 % copy, but they \emph{are} necessary since they are used by the XML
@@ -675,6 +670,11 @@
 % issued. Currently the absence of \cs{country} produces an error;
 % ACM may change this in the future.
 %
+% Starting 2024, ACM no longer collects or print postal addresses of
+% the authors.  Thus the commands \cs{streetaddress} and
+% \cs{postcode}, present in the previous versions of the class, now
+% produce a warining.
+%
 %
 % An example of the author block:
 % \begin{verbatim}
@@ -683,10 +683,8 @@
 % \affiliation{%
 %   \institution{University of New South Wales}
 %   \department{School of Biomedical Engineering}
-%   \streetaddress{Samuels Building (F25), Kensington Campus}
 %   \city{Sidney}
 %   \state{NSW}
-%   \postcode{2052}
 %   \country{Australia}}
 % \email{author@nsw.au.edu}
 % \author{A. N. Other}
@@ -737,51 +735,6 @@
 % \end{verbatim}
 %
 %
-% The command \cs{affiliation} formats its output according to
-% American conventions.  This might be wrong for some cases.
-% Consider, for example, a German address.  In Germany, the postcode is
-% put before the city and is not separated by a comma.  We can handle this
-% order using
-% \begin{verbatim}
-% \affiliation{%
-%   \institution{Fluginstitut}
-%   \streetaddress{Sonnenallee 17}
-%   \postcode{123456}
-%   \city{Helm}
-%   \country{Germany}}
-% \end{verbatim}
-% However, the comma after the postcode is unfortunate:  the address will
-% be typeset (in some formats) as
-% \begin{verbatim}
-% Fluginstitut
-% Sonenallee 17
-% 123456, Helm, Germany
-% \end{verbatim}
-%
-%
-% To overcome this problem, the command \cs{affiliation} has an
-% optional parameter |obeypunctuation|, which can be |false| (the
-% default) or |true|.  If this parameter is |true|, \cs{afffiliation}
-% obeys the author's command.  Thus
-% \begin{verbatim}
-% \affiliation[obeypunctuation=true]{%
-%   \institution{Fluginstitut}\\
-%   \streetaddress{Sonnenallee 17}\\
-%   \postcode{123456}
-%   \city{Helm},
-%   \country{Germany}}
-% \end{verbatim}
-% will be typeset as
-% \begin{verbatim}
-% Fluginstitut
-% Sonenallee 17
-% 123456 Helm, Germany
-% \end{verbatim}
-%
-% Note that you should \emph{not} use this option for journals.
-%
-% It is expected that these commands are inserted by the author of the
-% manuscript.
 %
 % \DescribeMacro{\thanks}%
 % Like |amsart| (and unlike standard \LaTeX{}), we allow
@@ -5112,10 +5065,8 @@
   \def\institution##1{##1\ignorespaces}%
   \def\department{\@ifnextchar[{\@department}{\@department[]}}%
   \def\@department[##1]##2{\unskip, ##2\ignorespaces}%
-  \let\streetaddress\position
   \let\city\position
   \let\state\position
-  \let\postcode\position
   \let\country\position
   Also with #1\unskip.\egroup}
 %    \end{macrocode}
@@ -6912,6 +6863,8 @@
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/15}{We now do not print this even in SIG}
+% \changes{v2.06}{2024/04/13}{We now do not collect postal information
+% anymore}
 % \begin{macro}{\city}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
@@ -6925,6 +6878,8 @@
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/15}{We now do not print this even in SIG}
+% \changes{v2.06}{2024/04/13}{We now do not collect postal information
+% anymore}
 % \begin{macro}{\country}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
@@ -6938,8 +6893,12 @@
 %   strange error if an author uses them outside \cs{affiliation}.  Of
 %   course we can make them produce an error message, but\ldots
 %    \begin{macrocode}
-\def\streetaddress#1{\unskip\ignorespaces}
-\def\postcode#1{\unskip\ignorespaces}
+\def\streetaddress#1{\ClassWarning{\@classname}{ACM no longer collects
+  authors' postal addresses.  I am ignoring your street
+  address}\unskip\ignorespaces} 
+\def\postcode#1{\ClassWarning{\@classname}{ACM no longer collects
+  authors' postal addresses.  I am ignoring your postal
+  code}\unskip\ignorespaces} 
 \if@ACM@journal
   \def\position#1{\unskip\ignorespaces}
   \def\institution#1{\global\@ACM@instpresenttrue
@@ -6957,10 +6916,8 @@
     \if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
   \newcommand\department[2][0]{\if@ACM@affiliation@obeypunctuation
     #2\else#2\par\fi}%
-%  \def\streetaddress#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
   \def\city#1{\global\@ACM@citypresenttrue\@ACM@addtoaddress{#1}}%
   \let\state\@ACM@addtoaddress
-%  \def\postcode#1{\if@ACM@affiliation@obeypunctuation#1\else\unskip\space#1\fi}%
   \def\country#1{\global\@ACM@countrypresenttrue\@ACM@addtoaddress{#1}}%
 \fi
 %    \end{macrocode}
@@ -7404,16 +7361,21 @@
 % \changes{v1.46}{2017/08/27}{Introduced macro}
 % \changes{v1.65}{2019/10/13}{Deleted cs{@addpunct}}
 % \changes{v1.77}{2021/04/16}{New separator of institutions}
+% \changes{v2.06}{2024/04/13}{\cs{streetaddress} and \cs{postcode} now
+% produce warnings}
 % Typesetting authors' addresses in the footnote style
 %    \begin{macrocode}
 \def\@mkauthorsaddresses{%
   \ifnum\num@authors>1\relax
   Authors' \else Author's \fi
-  \ifnum\num@authorgroups>1\relax
-  addresses: \else address: \fi
+  Contact Information:
   \bgroup
-  \def\streetaddress##1{\unskip, ##1}%
-  \def\postcode##1{\unskip, ##1}%
+  \def\streetaddress##1{\ClassWarning{\@classname}{ACM no longer collects
+  authors' postal addresses.  I am ignoring your street
+  address}\unskip\ignorespaces}% 
+  \def\postcode##1{\ClassWarning{\@classname}{ACM no longer collects
+  authors' postal addresses.  I am ignoring your postal
+  code}\unskip\ignorespaces}%
   \def\position##1{\unskip\ignorespaces}%
   \gdef\@ACM@institution@separator{, }%
   \def\institution##1{\unskip\@ACM@institution@separator ##1\gdef\@ACM@institution@separator{ and }}%
