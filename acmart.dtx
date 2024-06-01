@@ -386,11 +386,13 @@
 %
 % The option |balance| determines whether the last page in the two
 % column mode has balanced columns.  By default it is |true|; however,
-% it may lead to problems for some documents.  Set it to |false| if
-% you encounter compilation errors.  Note that for one page documents
-% \cs{balance} command might cause problems.  An alternative is the
+% it may lead to problems for some documents.  When there are many
+% figures near the end of the document, the attempts to balance
+% columns may lead to the loss of the figures.  Set this option to |false| if
+% you encounter problems.   An alternative is the
 % (experimental) option |pbalance|, which uses the new package
-% |pbalance| for this end.
+% |pbalance|.  You may want to try |pbalance=true| to see if you get
+% better results.  
 %
 % The option |urlbreakonhyphens| determines whether URLs can be split
 % between lines after hyphens.  By default it is true.  Set it to
@@ -2274,7 +2276,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2024/04/17 v2.07 Typesetting articles for the Association for Computing Machinery]
+[2024/05/27 v2.08 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -8206,9 +8208,10 @@
 % \cs{sffamily}\cs{bfseries}}
 % \changes{v1.67}{2020/01/11}{Deleted redefinitions of sections}
 % \changes{1.85}{2022/05/08}{Added: acmengage}
+% \changes{2.08}{2024/05/27}{Deleted uppercasing}
 % Fonts for sections etc. are different for different formats.
 %    \begin{macrocode}
-\def\@secfont{\sffamily\bfseries\section@raggedright\MakeTextUppercase}
+\def\@secfont{\sffamily\bfseries\section@raggedright}
 \def\@subsecfont{\sffamily\bfseries\section@raggedright}
 \def\@subsubsecfont{\sffamily\itshape}
 \def\@parfont{\itshape}
@@ -8217,16 +8220,16 @@
 \relax % manuscript
 \or % acmsmall
 \or % acmlarge
- \def\@secfont{\sffamily\large\section@raggedright\MakeTextUppercase}
+ \def\@secfont{\sffamily\large\section@raggedright}
  \def\@subsecfont{\sffamily\large\section@raggedright}
 \or % acmtog
- \def\@secfont{\sffamily\large\section@raggedright\MakeTextUppercase}
+ \def\@secfont{\sffamily\large\section@raggedright}
  \def\@subsecfont{\sffamily\large\section@raggedright}
 \or % sigconf
- \def\@secfont{\bfseries\Large\section@raggedright\MakeTextUppercase}
+ \def\@secfont{\bfseries\Large\section@raggedright}
  \def\@subsecfont{\bfseries\Large\section@raggedright}
 \or % siggraph
- \def\@secfont{\sffamily\bfseries\Large\section@raggedright\MakeTextUppercase}
+ \def\@secfont{\sffamily\bfseries\Large\section@raggedright}
  \def\@subsecfont{\sffamily\bfseries\Large\section@raggedright}
 \or % sigplan
  \def\@secfont{\bfseries\Large\section@raggedright}
@@ -8236,14 +8239,14 @@
  \def\@subparfont{\itshape}
 \or % sigchi
  \setcounter{secnumdepth}{1}
- \def\@secfont{\sffamily\bfseries\section@raggedright\MakeTextUppercase}
+ \def\@secfont{\sffamily\bfseries\section@raggedright}
  \def\@subsecfont{\sffamily\bfseries\section@raggedright}
 \or % sigchi-a
  \setcounter{secnumdepth}{0}
- \def\@secfont{\sffamily\bfseries\section@raggedright\MakeTextUppercase}
+ \def\@secfont{\sffamily\bfseries\section@raggedright}
  \def\@subsecfont{\sffamily\bfseries\section@raggedright}
 \or % acmengage
- \def\@secfont{\bfseries\Large\section@raggedright\MakeTextUppercase}
+ \def\@secfont{\bfseries\Large\section@raggedright}
  \def\@subsecfont{\bfseries\Large\section@raggedright}
 \or %acmcp
 \fi
