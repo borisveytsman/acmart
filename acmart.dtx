@@ -386,11 +386,13 @@
 %
 % The option |balance| determines whether the last page in the two
 % column mode has balanced columns.  By default it is |true|; however,
-% it may lead to problems for some documents.  Set it to |false| if
-% you encounter compilation errors.  Note that for one page documents
-% \cs{balance} command might cause problems.  An alternative is the
+% it may lead to problems for some documents.  When there are many
+% figures near the end of the document, the attempts to balance
+% columns may lead to the loss of the figures.  Set this option to |false| if
+% you encounter problems.   An alternative is the
 % (experimental) option |pbalance|, which uses the new package
-% |pbalance| for this end.
+% |pbalance|.  You may want to try |pbalance=true| to see if you get
+% better results.  
 %
 % The option |urlbreakonhyphens| determines whether URLs can be split
 % between lines after hyphens.  By default it is true.  Set it to
