@@ -14,6 +14,7 @@ DEV=-dev # To switch dev on
 PDF = $(PACKAGE).pdf acmguide.pdf
 
 BIBLATEXFILES= $(wildcard *.bbx) $(wildcard *.cbx) $(wildcard *.dbx) $(wildcard *.lbx)
+
 SAMPLEBIBLATEXFILES=$(patsubst %,samples/%,$(BIBLATEXFILES))
 
 ACMCPSAMPLES= \
@@ -21,7 +22,7 @@ ACMCPSAMPLES= \
 	samples/sample-acmcp-Invited.pdf \
 	samples/sample-acmcp-Position.pdf \
 	samples/sample-acmcp-Research.pdf \
-	samples/sample-acmcp-Review.pdf \
+	samples/sample-acmcp-Review.pdf 
 
 all:  ${PDF} ALLSAMPLES
 
@@ -46,6 +47,9 @@ acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
 %.cls:   %.ins %.dtx
 	pdflatex $<
 
+%-tagged.cls:   %.ins %.dtx
+	pdflatex $<
+
 
 ALLSAMPLES: $(SAMPLEBIBLATEXFILES)
 	cd samples; pdflatex samples.ins; cd ..
@@ -59,6 +63,7 @@ samples/%: %
 
 
 samples/$(PACKAGE).cls: $(PACKAGE).cls
+samples/$(PACKAGE)-tagged.cls: $(PACKAGE)-tagged.cls
 samples/ACM-Reference-Format.bst: ACM-Reference-Format.bst
 
 samples/abbrev.bib: ACM-Reference-Format.bst
@@ -116,7 +121,18 @@ samples/sample-sigconf-lualatex.pdf:  samples/sample-lualatex.tex   samples/$(PA
 
 samples/sample-acmcp.pdf: samples/acm-jdslogo.png
 
-.PRECIOUS:  $(PACKAGE).cfg $(PACKAGE).cls
+
+samples/sample-acmsmall-tagged.pdf:  samples/sample-acmsmall-tagged.tex   samples/$(PACKAGE)-tagged.cls samples/ACM-Reference-Format.bst
+	cd $(dir $@) && lualatex-dev $(notdir $<)
+	- cd $(dir $@) && bibtex $(notdir $(basename $<))
+	cd $(dir $@) && lualatex-dev $(notdir $<)
+	cd $(dir $@) && lualatex-dev $(notdir $<)
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $(basename $<).log) \
+	  do cd $(dir $@) && lualatex-dev $(notdir $<); done
+
+
+
+.PRECIOUS:  $(PACKAGE).cfg $(PACKAGE).cls $(PACKAGE)-tagged.cls
 
 docclean:
 	$(RM)  *.log *.aux \
@@ -124,7 +140,9 @@ docclean:
 	*.ilg *.ind *.out *.lof \
 	*.lot *.bbl *.blg *.gls *.cut *.hd \
 	*.dvi *.ps *.thm *.tgz *.zip *.rpi \
-	samples/$(PACKAGE).cls samples/ACM-Reference-Format.bst \
+	samples/$(PACKAGE).cls \
+	samples/$(PACKAGE)-tagged.cls \
+	samples/ACM-Reference-Format.bst \
 	samples/*.log samples/*.aux samples/*.out \
 	samples/*.bbl samples/*.blg samples/*.cut \
 	samples/acm-jdslogo.png \
@@ -132,7 +150,7 @@ docclean:
 
 
 clean: docclean
-	$(RM)  $(PACKAGE).cls \
+	$(RM)  $(PACKAGE).cls $(PACKAGE)-tagged.cls \
 	samples/*.tex
 
 distclean: clean

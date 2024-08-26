@@ -2239,6 +2239,24 @@
 % \item |figure*|: \cs{fulltextwidth}.
 % \end{enumerate}
 %
+%\subsection{Experiments with tagging}
+%\label{sec:ug_tagged}
+%
+% ACM is firmly committed to produce fully tagged PDFs compliant with
+% the accessibility standards.  We use the developmental version of
+% tagging code by \LaTeX3 team, see the details at
+% \url{https://www.latex-project.org/publications/indexbytopic/pdf/}
+% and \url{https://tug.org/twg/accessibility/overview.html}.
+%
+% At present this work is highly experimental.  You may try the
+% experiments by (1)~using the class |acmart-tagged| in the document
+% class line, and (2)~adding the command
+% \cs{DocumentMetadata}\marg{options} in the preamble, see the file
+% \path{sample-acmsmall-tagged.tex}.  If you do this, please \emph{do
+% not ask ACM for support}.  On the other hand, bug reports at
+% \url{https://github.com/borisveytsman/acmart/issues} will be
+% appreciated.  
+% 
 %
 %
 % \StopEventually{
@@ -2263,8 +2281,9 @@
 %<*gobble>
 \ProvidesFile{acmart.dtx}
 %</gobble>
-%<class>\ProvidesClass{acmart}
-[2024/05/27 v2.08 Typesetting articles for the Association for Computing Machinery]
+%<class&!tagged>\ProvidesClass{acmart}
+%<tagged>\ProvidesClass{acmart-tagged}
+[2024/08/25 v2.09 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2401,7 +2420,8 @@
 \end{document}
 %</gobble>
 %<*class>
-\def\@classname{acmart}
+%<!tagged>\def\@classname{acmart}
+%<tagged>\def\@classname{acmart-tagged}
 %    \end{macrocode}
 %
 %
@@ -2442,13 +2462,13 @@
 % \changes{1.87}{2022/08/13}{New format: acmcp}
 %   The possible formats
 %    \begin{macrocode}
-\define@choicekey*+{acmart.cls}{format}[\ACM@format\ACM@format@nr]{%
+\define@choicekey*+{\@classname.cls}{format}[\ACM@format\ACM@format@nr]{%
   manuscript, acmsmall, acmlarge, acmtog, sigconf, siggraph,
   sigplan, sigchi, sigchi-a, acmengage, acmcp}[manuscript]{}{%
   \ClassError{\@classname}{The option format must be manuscript,
     acmsmall, acmlarge, acmtog, sigconf, siggraph,
     sigplan, sigchi or sigchi-a}}
-\def\@DeclareACMFormat#1{\DeclareOptionX{#1}{\setkeys{acmart.cls}{format=#1}}}
+\def\@DeclareACMFormat#1{\DeclareOptionX{#1}{\setkeys{\@classname.cls}{format=#1}}}
 \@DeclareACMFormat{manuscript}
 \@DeclareACMFormat{acmsmall}
 \@DeclareACMFormat{acmlarge}
@@ -2468,7 +2488,7 @@
 % \begin{macro}{\if@ACM@screen}
 %   Whether we use screen mode
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{screen}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{screen}[true]{%
   \if@ACM@screen
     \PackageInfo{\@classname}{Using screen mode}%
   \else
@@ -2483,7 +2503,7 @@
 % \begin{macro}{\if@ACM@urlbreakonhyphens}
 % \changes{1.60}{2019/04/22}{introduced macro}
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{urlbreakonhyphens}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{urlbreakonhyphens}[true]{%
   \if@ACM@urlbreakonhyphens
     \PackageInfo{\@classname}{Using breaking urls on hyphens}%
   \else
@@ -2499,7 +2519,7 @@
 % \changes{v1.46}{2017/08/29}{Modified description}
 %   Whether we define theorem-like environments.
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{acmthm}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{acmthm}[true]{%
   \if@ACM@acmthm
     \PackageInfo{\@classname}{Requiring acmthm}%
   \else
@@ -2516,7 +2536,7 @@
 % \changes{v1.48}{2017/09/09}{Review mode now switches on folios}
 %   Whether we use review mode
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{review}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{review}[true]{%
   \if@ACM@review
     \PackageInfo{\@classname}{Using review mode}%
     \AtBeginDocument{\@ACM@printfoliostrue}%
@@ -2533,7 +2553,7 @@
 % \changes{v1.03}{2016/04/22}{Added macro}
 %   Whether we use author's-version mode
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{authorversion}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{authorversion}[true]{%
   \if@ACM@authorversion
     \PackageInfo{\@classname}{Using authorversion mode}%
   \else
@@ -2550,7 +2570,7 @@
 %   Special option for non-ACM publications
 %   using the ACM typesetting options.
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{nonacm}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{nonacm}[true]{%
   \if@ACM@nonacm
     \PackageInfo{\@classname}{Using nonacm mode}%
     \AtBeginDocument{\@ACM@printacmreffalse}%
@@ -2570,7 +2590,7 @@
 % \changes{v1.57}{2018/12/16}{Added macro}
 % Whether to balance the last page
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{balance}[true]{}{%
+\define@boolkey+{\@classname.cls}[@ACM@]{balance}[true]{}{%
   \PackageError{\@classname}{The option balance can be either true or
     false}}
 \ExecuteOptionsX{balance}
@@ -2583,7 +2603,7 @@
 % \changes{v1.76}{2021/03/16}{Added macro}
 % Whether to balance the last page
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{pbalance}[true]{}{%
+\define@boolkey+{\@classname.cls}[@ACM@]{pbalance}[true]{}{%
   \PackageError{\@classname}{The option pbalance can be either true or
     false}}
 \ExecuteOptionsX{pbalance=false}
@@ -2601,7 +2621,7 @@
 % \begin{macro}{\if@ACM@natbib}
 %   Whether we use |natbib| mode
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{natbib}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{natbib}[true]{%
   \if@ACM@natbib
     \PackageInfo{\@classname}{Explicitly selecting natbib mode}%
   \else
@@ -2617,7 +2637,7 @@
 % \begin{macro}{\if@ACM@anonymous}
 %   Whether we use anonymous mode
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{anonymous}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{anonymous}[true]{%
   \if@ACM@anonymous
     \PackageInfo{\@classname}{Using anonymous mode}%
   \else
@@ -2634,7 +2654,7 @@
 % \changes{v1.33}{2017/03/10}{Added macro (Michael D.~Adams)}
 %   Whether we use timestamp mode
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{timestamp}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{timestamp}[true]{%
   \if@ACM@timestamp
     \PackageInfo{\@classname}{Using timestamp mode}%
   \else
@@ -2652,7 +2672,7 @@
 % \changes{v1.36}{2017/05/13}{Corrected typo, thanks to bargteil}
 %   Whether we use author-draft mode
 %    \begin{macrocode}
-\define@boolkey+{acmart.cls}[@ACM@]{authordraft}[true]{%
+\define@boolkey+{\@classname.cls}[@ACM@]{authordraft}[true]{%
   \if@ACM@authordraft
     \PackageInfo{\@classname}{Using authordraft mode}%
     \@ACM@timestamptrue
@@ -2788,13 +2808,13 @@
 \ClassWarning{\@classname}{%
   The format siggraph is now obsolete.\MessageBreak
   I am switching to sigconf.}
-  \setkeys{acmart.cls}{format=sigconf}
+  \setkeys{\@classname.cls}{format=sigconf}
 \fi
 \ifnum\ACM@format@nr=7\relax % sigchi
 \ClassWarning{\@classname}{%
   The format sigchi is now obsolete.\MessageBreak
   I am switching to sigconf.}
-  \setkeys{acmart.cls}{format=sigconf}
+  \setkeys{\@classname.cls}{format=sigconf}
 \fi
 \ifnum\ACM@format@nr=8\relax % sigchi
 \ClassWarning{\@classname}{%
@@ -2860,6 +2880,42 @@
 % \changes{v1.13}{2016/06/06}{Increased font size for ACM Large}
 % \changes{v1.38}{2017/05/13}{Increase default font size for SIGPLAN}
 % \changes{v1.87}{2022/08/27}{Set font sizes for |acmengage| and |acmcp|}
+%
+%<*tagged>
+% \changes{v2.09}{2022/08/25}{Saved the old definitions (Ulrike's
+% code}
+% Before we load the base class we want to save the original
+% definitions of sectioning commands since |acmart| redefines them,
+% and we need the vanilla versions.
+% \begin{macro}{\@startsection@kernel}
+% \changes{v2.00}{2023/11/19}{Added macro}
+%    \begin{macrocode}
+\let\@startsection@kernel\@startsection
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@xsect@kernel}
+% \changes{v2.00}{2023/11/19}{Added macro}
+%    \begin{macrocode}
+\let\@xsect@kernel\@xsect
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@sect@kernel}
+% \changes{v2.00}{2023/11/19}{Added macro}
+%    \begin{macrocode}
+\let\@sect@kernel\@sect
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@ssect@kernel}
+% \changes{v2.00}{2023/11/19}{Added macro}
+%    \begin{macrocode}
+\let\@ssect@kernel\@ssect
+%    \end{macrocode}
+% \end{macro}
+% 
+%</tagged>
 %
 %
 % At this point we either have \cs{ACM@fontsize} or use defaults
@@ -3258,6 +3314,14 @@
 % We need to do this early since we want |hyperref| to have a chance
 % to redefine them again:
 %    \begin{macrocode}
+%</class>
+%<*tagged>
+\let\@startsection\@startsection@kernel
+\let\@sect\@sect@kernel
+\let\@ssect\@ssect@kernel
+\let\@xsect\@xsect@kernel
+%</tagged>
+%<*class&!tagged>
 \def\@startsection#1#2#3#4#5#6{%
   \if@noskipsec \leavevmode \fi
   \par
@@ -3337,7 +3401,6 @@
       \fi}%
   \fi
   \ignorespaces}
-\def\@seccntformat#1{\csname the#1\endcsname\quad}
 \def\@ssect#1#2#3#4#5{%
   \@tempskipa #3\relax
   \ifdim \@tempskipa>\z@
@@ -3350,11 +3413,14 @@
     \def\@svsechd{#4{\hskip #1\relax #5}}%
   \fi
   \@xsect{#3}}
+%</class&!tagged>
+%<*class>
+\def\@seccntformat#1{\csname the#1\endcsname\quad}
 %    \end{macrocode}
 %
 % \end{macro}
 %
-% \begin{macro}{\@startsection}
+% \begin{macro}{\@starttoc}
 % \changes{v1.31}{2017/03/04}{Redefined macro}
 % \changes{v1.43}{2017/07/09}{Added \cs{makeatletter}}
 %   The |amsart| package redefines \cs{startsection}.  Here we redefine
@@ -3365,7 +3431,9 @@
   \par\removelastskip\vskip\z@skip
   \@startsection{section}\@M\z@{\linespacing\@plus\linespacing}%
     {.5\linespacing}{\centering\contentsnamefont}{#2}%
+%<tagged>\@starttoc@cfgpoint@before{#1}%NEW<<<<<<<<<< (name will change)
   \@input{\jobname.#1}%
+%<tagged>\@starttoc@cfgpoint@after{#1}%NEW<<<<<<<<<<<<  (name will change)
   \if@filesw
     \@xp\newwrite\csname tf@#1\endcsname
     \immediate\@xp\openout\csname tf@#1\endcsname \jobname.#1\relax
@@ -6471,7 +6539,7 @@
     pdfsubject={\@concepts},
     pdfkeywords={\@keywords},
     pdfcreator={LaTeX with acmart
-      \csname ver@acmart.cls\endcsname\space
+      \csname ver@\@classname.cls\endcsname\space
       and hyperref
       \csname ver@hyperref.sty\endcsname}}%
   \andify\authors
@@ -7588,6 +7656,18 @@
 % 
 % \end{macro}
 %
+%<*tagged>
+% We stop tagging inside maketitle for now.  Ulrike's code again.
+%    \begin{macrocode}
+\ExplSyntaxOn
+\AddToHook{cmd/maketitle/before}
+ {\tagstructbegin{tag=Title}\tagmcbegin{} \tag_stop:}
+\AddToHook{cmd/maketitle/after}
+ {\tag_start:\tagmcend\tagstructend }
+\ExplSyntaxOff
+%    \end{macrocode}
+%</tagged>
+%
 %\subsection{Headers and Footers}
 %\label{sec:head_foot}
 %
@@ -8129,28 +8209,33 @@
 % \changes{v1.69}{2020/02/02}{No dots for unindented paragraphs}
 %   Sectioning is different for different levels
 %    \begin{macrocode}
-\renewcommand\section{\@startsection{section}{1}{\z@}%
+\renewcommand\section{\def\@toclevel{1}%
+  \@startsection{section}{1}{\z@}%
   {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {.25\baselineskip}%
   {\ACM@NRadjust\@secfont}}
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+\renewcommand\subsection{\def\@toclevel{2}%
+  \@startsection{subsection}{2}{\z@}%
   {-.75\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {.25\baselineskip}%
   {\ACM@NRadjust\@subsecfont}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+\renewcommand\subsubsection{\def\@toclevel{3}%
+  \@startsection{subsubsection}{3}{\z@}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\ACM@NRadjust{\@subsubsecfont\@adddotafter}}}
-\renewcommand\paragraph{\@startsection{paragraph}{4}{\parindent}%
+\renewcommand\paragraph{\def\@toclevel{4}%
+  \@startsection{paragraph}{4}{\parindent}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\ACM@NRadjust{\@parfont\@adddotafter}}}
-\newcommand\noindentparagraph{\@startsection{paragraph}{4}{\z@}%
+\newcommand\noindentparagraph{\def\@toclevel{4}%
+  \@startsection{paragraph}{4}{\z@}%
   {-.5\baselineskip \@plus -2\p@ \@minus -.2\p@}%
   {-3.5\p@}%
   {\ACM@NRadjust{\@parfont}}}
-
-\renewcommand\part{\@startsection{part}{9}{\z@}%
+\renewcommand\part{\def\@toclevel{9}%
+  \@startsection{part}{9}{\z@}%
   {-10\p@ \@plus -4\p@ \@minus -2\p@}%
   {4\p@}%
   {\ACM@NRadjust\@parfont}}

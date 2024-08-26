@@ -14,7 +14,19 @@
 %TC:envir comment 0 0
 %TCMACROS
 %% 
-%% 
+%</all>
+%<*tagged>
+%% The tagged file should start with the metadata commands.
+%% We also need currently use lualatex-dev for compilation!
+\ifx\HCode\Undef
+\DocumentMetadata{
+ pdfversion=2.0,pdfstandard=ua-2,
+ testphase={phase-III,firstaid,math,title}}
+\else
+\DocumentMetadata{}
+\fi
+%</tagged>
+%<*all>
 %% The first command in your LaTeX source must be the \documentclass
 %% command.
 %%
@@ -27,7 +39,8 @@
 %%
 %%
 %<manuscript>\documentclass[manuscript,screen,review]{acmart}
-%<acmsmall|acmsmall-conf>\documentclass[acmsmall]{acmart}
+%<acmsmall&!tagged>\documentclass[acmsmall]{acmart}
+%<acmsmall-conf>\documentclass[acmsmall]{acmart}
 %<acmsmall-biblatex>\documentclass[acmsmall,natbib=false]{acmart}
 %<acmsmall-submission>\documentclass[acmsmall,screen,review]{acmart}
 %<acmlarge>\documentclass[acmlarge]{acmart}
@@ -41,7 +54,7 @@
 %<sigconf-i13n>\documentclass[sigconf, language=french,
 %<sigconf-i13n>language=german, language=spanish, language=english]{acmart}
 %<acmcp>\documentclass[acmcp]{acmart}
-
+%<acmsmall&tagged>\documentclass[acmsmall]{acmart-tagged}
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
