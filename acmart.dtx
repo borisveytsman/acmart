@@ -1794,7 +1794,10 @@
 % when using Bib\LaTeX\ instead of Bib\TeX, that we summarize briefly
 % here (please refer to the official Bib\LaTeX\ documentation for more details).
 %
-% In the preamble of your document you need to load the Bib\LaTeX\ package
+% First of all, you need to pass the \verb|natbib=false| option to the document class,
+% and remove the \verb|\citestyle{acmauthoryear}| command from the sources (if present).
+%
+% Then, in the preamble of your document you need to load the Bib\LaTeX\ package
 % and select the approriate bibliography style, as follows
 % \begin{verbatim}
 % \RequirePackage[
