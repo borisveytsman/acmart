@@ -5270,10 +5270,12 @@
 % Adding a footnote mark to the authors
 %    \begin{macrocode}
 \newcommand\authornotemark[1][\relax]{%
-  \ifx#1\relax\relax\relax
-  \g@addto@macro\addresses{\@authornotemark}%
-  \else
-  \g@addto@macro\addresses{\@@authornotemark{#1}}%
+  \if@ACM@anonymous\else
+    \ifx#1\relax\relax\relax
+      \g@addto@macro\addresses{\@authornotemark}%
+    \else
+      \g@addto@macro\addresses{\@@authornotemark{#1}}%
+    \fi
   \fi}
 %    \end{macrocode}
 %
