@@ -1959,30 +1959,6 @@
 % document.
 %
 %
-%\subsection{Creative Commons licenses for ACM publications}
-%\label{sec:ug_cc}
-%
-% At present ACM does not allow the authors to typeset Creative
-% Commons license for most ACM publications.  These licenses can be
-% used under an agreement with the ACM publishing office.  In this
-% case they are inserted by ACM itself.
-%
-% The exceptions are ACM Engage format, which allows Creative Commons
-% license, and conferences organized and copyrighted by IW3C2.  In
-% these cases the authors should use correspondingly
-% |\setcopyright{cc}|, |\setcopyright{iw3c2w3}|, or
-% |\setcopyright{iw3c2w3g}| (the latter should be used by Google
-% employees).
-%
-% Yet another case is the typesetting of non-ACM materials, when the
-% option |nonacm| is used.  This case is somewhat opposite, because
-% for this case \emph{only} Creative Common licenses are supported.
-%
-% The command |\setcopyright{cc}| produces an error unless the format is
-% |acmengage| or |nonacm| option is selected.  On the other hand, if
-% the option |nonacm| is selected, any argument of |\setcopyright|
-% other than |cc| is treated as |none|. 
-%
 %
 %\subsection{Disabled or forbidden commands}
 %\label{sec:ug_disabled}
@@ -2280,7 +2256,7 @@
 %</gobble>
 %<class&!tagged>\ProvidesClass{acmart}
 %<tagged>\ProvidesClass{acmart-tagged}
-[2024/08/25 v2.09 Typesetting articles for the Association for Computing Machinery]
+[2024/10/19 v2.10 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -8246,8 +8222,8 @@
 % \changes{v1.45}{2017/08/15}{Switched \cs{bfeseries}\cs{sffamily} to
 % \cs{sffamily}\cs{bfseries}}
 % \changes{v1.67}{2020/01/11}{Deleted redefinitions of sections}
-% \changes{1.85}{2022/05/08}{Added: acmengage}
-% \changes{2.08}{2024/05/27}{Deleted uppercasing}
+% \changes{v1.85}{2022/05/08}{Added: acmengage}
+% \changes{v2.08}{2024/05/27}{Deleted uppercasing}
 % Fonts for sections etc. are different for different formats.
 %    \begin{macrocode}
 \def\@secfont{\sffamily\bfseries\section@raggedright}
@@ -8295,6 +8271,27 @@
 % \end{macro}
 % \end{macro}
 % \end{macro}
+%
+% \changes{v2.10}{2024/10/19}{Added tocindent for paragraphs and
+% subparagraphs} 
+% Amasat does not define tocindents for paragraphs and subparagraphs.
+% Here we add them
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@for\@tempa:=-1,0,1,2,3,4,5\do{%
+    \@ifundefined{r@tocindent\@tempa}{%
+      \@xp\gdef\csname r@tocindent\@tempa\endcsname{0pt}}{}%
+  }%
+}
+\def\@writetocindents{%
+  \begingroup
+  \@for\@tempa:=-1,0,1,2,3,4,5\do{%
+    \immediate\write\@auxout{%
+      \string\newlabel{tocindent\@tempa}{%
+        \csname r@tocindent\@tempa\endcsname}}%
+  }%
+  \endgroup}
+%    \end{macrocode}
 %
 % \begin{macro}{\@adddotafter}
 %   Add punctuation after a sectioning command

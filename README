@@ -12,6 +12,8 @@ The production version is the one on CTAN and ACM sites.
 
 Changes
 
+Version 2.10.  Bug fixes.  Documentation update.
+
 Version 2.09.  Experimental tagging code is now in the main branch.
 	       Creative Commons license is now allowed for all materials. 
 
