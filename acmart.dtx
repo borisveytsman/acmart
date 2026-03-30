@@ -1310,14 +1310,15 @@
 % example,
 % \begin{verbatim}
 % \DocumentMetadata{
-%  lang        = en,
-%  pdfstandard = ua-2,
-%  pdfstandard = a-4f, 
-%  tagging=on,
-%  tagging-setup={math/setup=mathml-SE} 
+%  lang          = en,
+%  pdfversion    = 2.0,
+%  pdfstandard   = ua-2,
+%  pdfstandard   = a-4f,
+%  tagging       = on,
+%  tagging-setup = {math/setup=mathml-SE}
 % }
 % \end{verbatim}
-% You must use \texttt{lualatex} to make the document fully tagged.  
+% You must use \texttt{lualatex} (from TeX Live 2025 or later) to make the document fully tagged.
 %
 %\subsection{Algorithms}
 %\label{sec:ug_algorithms}
@@ -2356,23 +2357,6 @@
 % \item |figure*|: \cs{fulltextwidth}.
 % \end{enumerate}
 %
-%\subsection{Experiments with tagging}
-%\label{sec:ug_tagged}
-%
-% ACM is firmly committed to produce fully tagged PDFs compliant with
-% the accessibility standards.  We use the developmental version of
-% tagging code by \LaTeX3 team, see the details at
-% \url{https://www.latex-project.org/publications/indexbytopic/pdf/}
-% and \url{https://tug.org/twg/accessibility/overview.html}.
-%
-% At present this work is highly experimental.  You may try the
-% experiments by (1)~using the class |acmart-tagged| in the document
-% class line, and (2)~adding the command
-% \cs{DocumentMetadata}\oarg{options} in the preamble, see the file
-% \path{sample-acmsmall-tagged.tex}.  If you do this, please \emph{do
-% not ask ACM for support}.  On the other hand, bug reports at
-% \url{https://github.com/borisveytsman/acmart/issues} will be
-% appreciated.  
 % 
 %
 %

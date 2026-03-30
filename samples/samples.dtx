@@ -17,15 +17,16 @@
 %</all>
 %<*tagged>
 %% The tagged file should start with the metadata commands.
-%% We also need currently use lualatex-dev for compilation!
+%% We also currently need to use lualatex (TeX Live 2025 or later) for compilation!
 \ifx\HCode\Undef
 \DocumentMetadata{
- pdfversion=2.0,pdfstandard=ua-2,
- testphase=latest,
- tagging=on,
- tagging-setup={math/setup=mathml-SE},
- lang = en
- }
+  lang          = en,
+  pdfversion    = 2.0,
+  pdfstandard   = ua-2,
+  pdfstandard   = a-4f,
+  tagging       = on,
+  tagging-setup = {math/setup=mathml-SE}
+}
 \else
 \DocumentMetadata{}
 \fi
