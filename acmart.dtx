@@ -745,9 +745,9 @@
 %
 %  \DescribeMacro{\correspondingauthor}%
 % The command \cs{correspondingauthor} after an author's name marks
-% the corresponding author.  Note that there could be more than one
+% the corresponding author.  Note that there could be no more than one
 % corresponding author.  Make sure that you have the email of the
-% author entered.
+% author entered.  
 %
 % \DescribeMacro{\thanks}%
 % Like |amsart| (and unlike standard \LaTeX{}), we allow
@@ -799,6 +799,7 @@
 % command since this confuses the metadata extraction software.  (Actually
 % these commands now produce errors.)
 %
+%
 % \DescribeMacro{\authornotemark}%
 % Sometimes one may need to have the same footnote connected to
 % several authors.  The command \cs{authornotemark}\oarg{number} adds
@@ -808,10 +809,12 @@
 % \authornote{Both authors contributed equally to the paper}
 % ...
 % \author{A. N. Other}
-% \authornotemark[1]
+% \authornotemark[2]
 % \end{verbatim}
 % The correct numbering of these marks is the responsibility of the
-% user.  
+% user. Note that the corresponding author, if present, is marked with
+% the star.  Thus  the numbering of footnotes starts with 2 (the dagger
+% symbol). 
 %
 % \DescribeMacro{\acmVolume}%
 % \DescribeMacro{\acmNumber}%
@@ -2425,7 +2428,7 @@
 %</gobble>
 %<class&!tagged>\ProvidesClass{acmart}
 %<tagged>\ProvidesClass{acmart-tagged}
-[2026/08/16 v2.20 Typesetting articles for the Association for Computing Machinery]
+[2026/08/30 v2.21 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -4102,9 +4105,7 @@
 %    \end{macrocode}
 %
 % \changes{v2.18}{2026/05/31}{Added pifont}
-%    \begin{macrocode}
-\RequirePackage{pifont}
-%    \end{macrocode}
+% \changes{v2.21}{2026/08/30}{Deleted pifont}
 %
 %\subsection{Image descriptions}
 %\label{sec:description}
@@ -5393,9 +5394,15 @@
 % \end{macro}
 %
 % \begin{macro}{\@titlenotes}
-%   The title notes
+% \changes{v2.21}{2026/08/30}{Added corresponding author note}
+%   The title notes.  We put here the note for the corresponding
+%   author, so it is always printed first.
 %    \begin{macrocode}
-\def\@titlenotes{}
+\def\@titlenotes{%
+  \if@ACM@corresponding@present
+   \footnotetext[1]{Corresponding author}%
+  \fi
+}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -5440,7 +5447,7 @@
 % \end{macro}
 %
 % \begin{macro}{\@authornotes}
-%   The author notes
+%   The author notes.
 %    \begin{macrocode}
 \def\@authornotes{}
 %    \end{macrocode}
@@ -5461,23 +5468,42 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\if@ACM@corresponding@present}
+% \changes{v2.21}{2026/08/30}{Added macro}
+% A switch to control whether there is a corresponding author already
+% defined.
+%    \begin{macrocode}
+\newif\if@ACM@corresponding@present
+\@ACM@corresponding@presentfalse
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\correspondingauthor}
 % \changes{v2.18}{2026/05/31}{Added macro}
+% \changes{v2.21}{2026/08/30}{Throw error if more than two
+% corresponding authors}
 % Mark the author as corresponding author
 %    \begin{macrocode}
 \newcommand\correspondingauthor{%
   \if@ACM@anonymous\else
-  \g@addto@macro\addresses{\@correspondingauthormark}%
+    \if@ACM@corresponding@present
+        \ClassError{\@classname}{You can have no more than one
+          corresponding author}
+    \fi
+    \@ACM@corresponding@presenttrue
+    \g@addto@macro\addresses{\@correspondingauthormark}%
+    
   \fi}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@correspondingauthormark}
 % \changes{v2.18}{2026/05/31}{Added macro}
+% \changes{v2.21}{2026/08/30}{Print asterisk}
 % Print the envelope
 %    \begin{macrocode}
 \def\@correspondingauthormark{\g@addto@macro\@currentauthors{%
-    \advance\hfuzz by 5pt\relax\textsuperscript{\ding{41}}\relax}}
+    \advance\hfuzz by 5pt\relax\textsuperscript{*}\relax}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6598,13 +6624,17 @@
 % \changes{v2.03}{2023/12/04}{Special processing for conferences in
 % TOG}
 % \changes{v2.11}{2024/12/07}{Deleted conference date from bibstrip}
+% \changes{v2.21}{2026/08/30}{Start footnotes from 2}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
 %  Another note: there is a subtle difference between author notes,
 %  title notes and thanks.  The latter two refer to the paper itself
 %  and therefore belong to the copyright/permission block.  By the
-%  way, this was the default behavior of the old ACM classes.
+% way, this was the default behavior of the old ACM classes.
+%
+% We reserve asterisk for corresponding authors, so we start footnotes
+% from 2.
 %    \begin{macrocode}
 \def\maketitle{\@beginmaketitlehook
   \@ACM@maketitle@typesettrue
@@ -6618,13 +6648,14 @@
   \let\@footnotemark\@footnotemark@nolink
   \let\@footnotetext\@footnotetext@nolink
   \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+  \setcounter{footnote}{1}%
   \hsize=\textwidth
   \def\@makefnmark{\hbox{\@textsuperscript{\@thefnmark}}}%
   \@mktitle\if@ACM@sigchiamode\else\@mkauthors\fi\@mkteasers
   \@printtopmatter
   \if@ACM@sigchiamode\@mkauthors\fi
-  \setcounter{footnote}{0}%
   \def\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}%
+  \setcounter{footnote}{1}%
   \@titlenotes
   \@subtitlenotes
   \@authornotes
@@ -8980,7 +9011,7 @@
 %
 % \begin{macro}{\showISBNx}
 % \begin{macro}{\showISBNxiii}
-% \changes{v2.19}{2026/08/04}{Added macros}
+% \changes{v2.21}{2026/08/23}{Added macros}
 % The bibliography style calls \cs{showISBNx} for a 10-digit
 % \textsc{isbn} and \cs{showISBNxiii} for a 13-digit one.
 %    \begin{macrocode}
