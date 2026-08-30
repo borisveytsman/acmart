@@ -16,6 +16,7 @@ Changes
 Version 2.21   2028-08-23
 	       Bibliography change: ISBN is now shown if present
 	       (thanks to Dirk Beyer)
+	       Only one author can be a corresponding author
 	       
 
 Version 2.20   2028-08-16
