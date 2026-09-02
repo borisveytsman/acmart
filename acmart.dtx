@@ -6742,9 +6742,15 @@
   \endgroup
   \if@ACM@engage\@typesetengagemetadata\fi  
   \setcounter{footnote}{0}%
+  \if@ACM@review
+    \linenumbers
+  \fi
   \@mkabstract
   \ifx\@translatedabstracts\@empty\else
   \@translatedabstracts\fi
+  \if@ACM@review
+    \nolinenumbers
+  \fi
   \if@ACM@printccs
   \ifx\@concepts\@empty\else\bgroup
       {\@specialsection{CCS Concepts}%
@@ -6785,6 +6791,9 @@
   \@printendtopmatter
   \@afterindentfalse
   \@afterheading
+  \if@ACM@review
+    \linenumbers
+  \fi
   \if@ACM@acmcp
     \set@ACM@acmcpbox
     \AtEndDocument{\end@ACM@color@frame}%
@@ -7928,82 +7937,13 @@
 % spurious underfull messages (Benjamin Byholm)}
 % \changes{v1.64}{2019/08/24}{Bug fix: made the spacing on the left
 % and the right size equal}
+% \changes{2026/07/21}{Changed line numbering to use the lineno package}
 %   This is the box displayed in review mode
 %    \begin{macrocode}
 \if@ACM@review
-  \newsavebox{\ACM@linecount@bx}
-  \newlength\ACM@linecount@bxht
-  \newcount\ACM@linecount
-  \ACM@linecount\@ne\relax
-  \def\ACM@mk@linecount{%
-    \savebox{\ACM@linecount@bx}[4em][t]{\parbox[t]{4em}{\normalfont
-        \normalsize
-        \setlength{\ACM@linecount@bxht}{0pt}%
-        \loop{\color{red}\scriptsize\the\ACM@linecount}\\
-        \global\advance\ACM@linecount by \@ne
-        \addtolength{\ACM@linecount@bxht}{\baselineskip}%
-        \ifdim\ACM@linecount@bxht<\textheight\repeat
-        {\color{red}\scriptsize\the\ACM@linecount}\hfill
-        \global\advance\ACM@linecount by \@ne}}}
+  \RequirePackage[switch]{lineno}
+  \renewcommand\linenumberfont{\color{red}\scriptsize}
 \fi
-%    \end{macrocode}
-%
-% \end{macro}
-%
-% \begin{macro}{\ACM@linecountL}
-% \changes{v1.33}{2017/03/29}{Renamed macro}
-% \changes{v1.34}{2017/04/10}{Rulers now are continuous}
-%   How to display the box on the left
-%    \begin{macrocode}
-\def\ACM@linecountL{%
-  \if@ACM@review
-  \ACM@mk@linecount
-  \begin{picture}(0,0)%
-    \put(-26,-22){\usebox{\ACM@linecount@bx}}%
-  \end{picture}%
-  \fi}
-%    \end{macrocode}
-%
-% \end{macro}
-%
-% \begin{macro}{\ACM@linecountR}
-% \changes{v1.33}{2017/03/29}{Added macro}
-% \changes{v1.34}{2017/04/10}{Rulers now are continuous}
-% \changes{v1.69}{2020/02/02}{Do not increase numbers in one column format}
-% \changes{1.85}{2022/05/08}{Added: acmengage}
-% How to display the box on the right.  In one column formats we do
-%   not step the numbers.
-%    \begin{macrocode}
-\def\ACM@linecountR{%
-  \if@ACM@review
-    \ifcase\ACM@format@nr
-    \relax % manuscript
-         \relax
-       \or % acmsmall
-         \relax
-       \or % acmlarge
-         \relax
-       \or % acmtog
-          \ACM@mk@linecount
-       \or % sigconf
-          \ACM@mk@linecount
-       \or % siggraph
-          \ACM@mk@linecount
-       \or % sigplan
-          \ACM@mk@linecount
-       \or % sigchi
-          \ACM@mk@linecount
-       \or % sigchi-a
-          \ACM@mk@linecount
-       \or % acmengage
-          \ACM@mk@linecount
-       \or % acmcp
-         \relax
-    \fi
-    \begin{picture}(0,0)%
-      \put(20,-22){\usebox{\ACM@linecount@bx}}%
-     \end{picture}%
-  \fi}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -8101,26 +8041,26 @@
   \if@ACM@journal@bibstrip@or@tog
     \ifcase\ACM@format@nr
     \relax % manuscript
-      \fancyhead[LE]{\ACM@linecountL\if@ACM@printfolios\thepage\fi}%
+      \fancyhead[LE]{\if@ACM@printfolios\thepage\fi}%
       \fancyhead[RO]{\if@ACM@printfolios\thepage\fi}%
       \fancyhead[RE]{\@shortauthors}%
-      \fancyhead[LO]{\ACM@linecountL\shorttitle}%
+      \fancyhead[LO]{\shorttitle}%
       \if@ACM@nonacm\else%
         \fancyfoot[RO,LE]{\footnotesize Manuscript submitted to ACM}
       \fi%
     \or % acmsmall
-      \fancyhead[LE]{\ACM@linecountL\@headfootfont\@acmArticlePage}%
+      \fancyhead[LE]{\@headfootfont\@acmArticlePage}%
       \fancyhead[RO]{\@headfootfont\@acmArticlePage}%
       \fancyhead[RE]{\@headfootfont\@shortauthors}%
-      \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
+      \fancyhead[LO]{\@headfootfont\shorttitle}%
       \if@ACM@nonacm\else%
         \fancyfoot[RO,LE]{\footnotesize \@journalNameShort, Vol. \@acmVolume, No.
         \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
       \fi
     \or % acmlarge
-      \fancyhead[LE]{\ACM@linecountL\@headfootfont
+      \fancyhead[LE]{\@headfootfont
       \@acmArticlePage\quad\textbullet\quad\@shortauthors}%
-      \fancyhead[LO]{\ACM@linecountL}%
+      \fancyhead[LO]{}%
       \fancyhead[RO]{\@headfootfont
         \shorttitle\quad\textbullet\quad\@acmArticlePage}%
       \if@ACM@nonacm\else%
@@ -8128,12 +8068,12 @@
         \@acmNumber, Article \@acmArticle.  Publication date: \@acmPubDate.}%
       \fi
     \or % acmtog
-      \fancyhead[LE]{\ACM@linecountL\@headfootfont
+      \fancyhead[LE]{\@headfootfont
         \@acmArticlePage\quad\textbullet\quad\@shortauthors}%
-      \fancyhead[LO]{\ACM@linecountL}%
-      \fancyhead[RE]{\ACM@linecountR}%
+      \fancyhead[LO]{}%
+      \fancyhead[RE]{}%
       \fancyhead[RO]{\@headfootfont
-        \shorttitle\quad\textbullet\quad\@acmArticlePage\ACM@linecountR}%
+        \shorttitle\quad\textbullet\quad\@acmArticlePage}%
       \if@ACM@nonacm\else
         \if@ACM@journal@bibstrip
           \fancyfoot[RO,LE]{\footnotesize \@journalNameShort,
@@ -8146,49 +8086,47 @@
       \fi
     \else % Proceedings
       \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
-      \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
-      \fancyhead[RE]{\@headfootfont\@shortauthors\ACM@linecountR}%
+      \fancyhead[LO]{\@headfootfont\shorttitle}%
+      \fancyhead[RE]{\@headfootfont\@shortauthors}%
       \if@ACM@nonacm
-        \fancyhead[LE]{\ACM@linecountL}%
-        \fancyhead[RO]{\ACM@linecountR}%
+        \fancyhead[LE]{}%
+        \fancyhead[RO]{}%
       \else%
         \if@ACM@engage
-          \fancyhead[LE]{\ACM@linecountL\@headfootfont\footnotesize
+          \fancyhead[LE]{\@headfootfont\footnotesize
             EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi}%
           \fancyhead[RO]{\@headfootfont
-            EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi
-            \ACM@linecountR}%
+            EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi}%
         \else
-          \fancyhead[LE]{\ACM@linecountL\@headfootfont\footnotesize
+          \fancyhead[LE]{\@headfootfont\footnotesize
             \acmConference@shortname,
             \acmConference@date, \acmConference@venue}%
           \fancyhead[RO]{\@headfootfont
             \acmConference@shortname,
-            \acmConference@date, \acmConference@venue\ACM@linecountR}%
+            \acmConference@date, \acmConference@venue}%
          \fi
       \fi
     \fi
   \else % Proceedings
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
-    \fancyhead[LO]{\ACM@linecountL\@headfootfont\shorttitle}%
-    \fancyhead[RE]{\@headfootfont\@shortauthors\ACM@linecountR}%
+    \fancyhead[LO]{\@headfootfont\shorttitle}%
+    \fancyhead[RE]{\@headfootfont\@shortauthors}%
     \if@ACM@nonacm
-      \fancyhead[LE]{\ACM@linecountL}%
-      \fancyhead[RO]{\ACM@linecountR}%
+      \fancyhead[LE]{}%
+      \fancyhead[RO]{}%
     \else%
       \if@ACM@engage
-        \fancyhead[LE]{\ACM@linecountL\@headfootfont
+        \fancyhead[LE]{\@headfootfont
           EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi}%
         \fancyhead[RO]{\@headfootfont
-          EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi
-          \ACM@linecountR}%
+          EngageCSEdu. \ifx\@acmDOI\@empty\else\@formatdoi{\@acmDOI}\fi}%
       \else
-        \fancyhead[LE]{\ACM@linecountL\@headfootfont
+        \fancyhead[LE]{\@headfootfont
           \acmConference@shortname,
           \acmConference@date, \acmConference@venue}%
         \fancyhead[RO]{\@headfootfont
           \acmConference@shortname,
-          \acmConference@date, \acmConference@venue\ACM@linecountR}%
+          \acmConference@date, \acmConference@venue}%
        \fi
     \fi
   \fi
@@ -8204,8 +8142,7 @@
   \fancyhead[L]{\makebox[\z@][l]{%
       \raisebox{-\dimexpr(0.2\textheight*(\ACM@ArticleType@nr-2))}{%
       \rotatebox{90}{\colorbox{@ACM@Article@color}{\color{white}%
-          \strut\ACM@ArticleType~Article}}}}%
-    \ACM@linecountL}%
+          \strut\ACM@ArticleType~Article}}}}}%
   \fancyhead[R]{\makebox[\z@][r]{\box\@ACM@acmcpbox}}%
   \fancyfoot[L,C]{}%
   \fancyfoot[R]{\footnotesize
@@ -8268,7 +8205,7 @@
   \if@ACM@journal@bibstrip@or@tog
     \ifcase\ACM@format@nr
     \relax % manuscript
-      \fancyhead[L]{\ACM@linecountL\@acmBadgeL}%
+      \fancyhead[L]{\@acmBadgeL}%
       \fancyhead[R]{\@acmBadgeR}%
       \fancyfoot[RO,LE]{\if@ACM@printfolios\small\thepage\fi}%
       \if@ACM@nonacm\else%
@@ -8280,8 +8217,8 @@
         \@acmNumber, Article \@acmArticle.  Publication date:
         \@acmPubDate.}%
       \fi%
-      \fancyhead[LE]{\ACM@linecountL\@acmBadgeL}%
-      \fancyhead[LO]{\ACM@linecountL\@acmBadgeL}%
+      \fancyhead[LE]{\@acmBadgeL}%
+      \fancyhead[LO]{\@acmBadgeL}%
       \fancyhead[RO]{\@acmBadgeR}%
       \fancyhead[RE]{\@acmBadgeR}%
     \or % acmlarge
@@ -8292,8 +8229,8 @@
       \fi%
       \fancyhead[RO]{\@acmBadgeR}%
       \fancyhead[RE]{\@acmBadgeR}%
-      \fancyhead[LE]{\ACM@linecountL\@acmBadgeL}%
-      \fancyhead[LO]{\ACM@linecountL\@acmBadgeL}%
+      \fancyhead[LE]{\@acmBadgeL}%
+      \fancyhead[LO]{\@acmBadgeL}%
     \or % acmtog
       \if@ACM@nonacm\else%
         \if@ACM@journal@bibstrip
@@ -8305,16 +8242,16 @@
             \acmConference@date, \acmConference@venue.}%
          \fi
       \fi%
-      \fancyhead[L]{\ACM@linecountL\@acmBadgeL}%
-      \fancyhead[R]{\@acmBadgeR\ACM@linecountR}%
+      \fancyhead[L]{\@acmBadgeL}%
+      \fancyhead[R]{\@acmBadgeR}%
     \else % Conference proceedings
-      \fancyhead[L]{\ACM@linecountL\@acmBadgeL}%
-      \fancyhead[R]{\@acmBadgeR\ACM@linecountR}%
+      \fancyhead[L]{\@acmBadgeL}%
+      \fancyhead[R]{\@acmBadgeR}%
       \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
     \fi
   \else
-    \fancyhead[L]{\ACM@linecountL\@acmBadgeL}%
-    \fancyhead[R]{\@acmBadgeR\ACM@linecountR}%
+    \fancyhead[L]{\@acmBadgeL}%
+    \fancyhead[R]{\@acmBadgeR}%
     \fancyfoot[C]{\if@ACM@printfolios\footnotesize\thepage\fi}%
   \fi
   \if@ACM@timestamp
@@ -8334,7 +8271,7 @@
       \raisebox{-\dimexpr(0.2\textheight*(\ACM@ArticleType@nr-2))}{%
       \rotatebox{90}{\colorbox{@ACM@Article@color}{\color{white}%
           \strut\ACM@ArticleType~Article}}}}%
-    \ACM@linecountL\@acmBadgeL}%
+    \@acmBadgeL}%
   \fancyhead[R]{\@acmBadgeR\makebox[\z@][r]{\box\@ACM@acmcpbox}}%
   \fancyfoot[L,C]{}%
   \fancyfoot[R]{\footnotesize
