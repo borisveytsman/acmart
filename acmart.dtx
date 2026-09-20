@@ -300,7 +300,9 @@
 % the headers, and no folios, since the page numbers of such a paper
 % are assigned by the proceedings rather than by the article.  If you
 % do want the folios, say |\settopmatter{printfolios=true}| after
-% \cs{acmConference}.
+% \cs{acmConference}.  Both formats keep the journal authors block and
+% the footnote with the authors' contact information, since these
+% formats do not print the contact information in the authors block.
 %
 % \begin{table}
 %   \centering
@@ -2941,6 +2943,22 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\if@ACM@addressesinfootnote}
+% \changes{v2.21}{2026/08/28}{Introduced macro}
+% The formats using the journal-style authors block do not print the
+% authors' contact information there, so they print it in a footnote on
+% the first page instead.  Whether they do is a property of the format
+% and of \cs{acmJournal}, and unlike
+% \cs{if@ACM@journal@bibstrip@or@tog} it must not be changed by
+% \cs{acmConference}: a journal format used for conference proceedings
+% still has the journal-style authors block, so it still needs the
+% footnote.
+%    \begin{macrocode}
+\newif\if@ACM@addressesinfootnote
+%    \end{macrocode}
+%
+% \end{macro}
+%
 % 
 % \begin{macro}{\if@ACM@sigchiamode}
 %   The formatting of SIGCHI extended abstracts is quite unusual.  We have a
@@ -3038,6 +3056,7 @@
 \if@ACM@journal
   \@ACM@journal@bibstriptrue
   \@ACM@journal@bibstrip@or@togtrue
+  \@ACM@addressesinfootnotetrue
 \else
  \@ACM@journal@bibstripfalse
 \fi
@@ -5054,11 +5073,13 @@
 %    \end{macrocode}
 % \begin{macro}{\acmJournal}
 % \changes{v1.59}{2019/04/20}{Setting \cs{@ACM@journal@bibstrip}}
+% \changes{v2.21}{2026/08/28}{Setting \cs{@ACM@addressesinfootnote}}
 % And the syntactic sugar around it
 %    \begin{macrocode}
 \def\acmJournal#1{\setkeys{ACM}{acmJournal=#1}%
   \global\@ACM@journal@bibstriptrue
-  \global\@ACM@journal@bibstrip@or@togtrue}
+  \global\@ACM@journal@bibstrip@or@togtrue
+  \global\@ACM@addressesinfootnotetrue}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -6625,6 +6646,9 @@
 % TOG}
 % \changes{v2.11}{2024/12/07}{Deleted conference date from bibstrip}
 % \changes{v2.21}{2026/08/30}{Start footnotes from 2}
+% \changes{v2.21}{2026/08/28}{The footnote with the authors' contact
+%   information no longer depends on the style of the bibstrip and the
+%   page headers}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -6669,7 +6693,7 @@
   \if@ACM@acmcp\else
     \ifx\@empty\@authorsaddresses\else
        \if@ACM@anonymous\else
-         \if@ACM@journal@bibstrip@or@tog
+         \if@ACM@addressesinfootnote
            \footnotetextauthorsaddresses{%
              \def\par{\let\par\@par}\parindent\z@\@setauthorsaddresses}%
          \fi
