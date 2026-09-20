@@ -6274,9 +6274,16 @@
 % \begin{macro}{\@formatdoi}
 % \changes{v1.03}{2016/04/22}{Added macro}
 % \changes{v1.32}{2017/04/07}{New doi format}
-%   Print a clickable DOI
+% \changes{v2.21}{2026/09/20}{Print the DOI the way the bibliography
+% styles do}
+%   Print a clickable DOI.  The bibliography styles shipped with the
+%   class, \texttt{ACM-Reference-Format.bst} as well as the
+%   \textsf{biblatex} styles, print a DOI as the bare DOI with a
+%   \texttt{doi:} prefix, linked to the \url{https://doi.org/}
+%   address; we use the same format here, so that the DOI of the
+%   article is typeset like the DOIs of the works it cites.
 %    \begin{macrocode}
-\def\@formatdoi#1{\url{https://doi.org/#1}}
+\def\@formatdoi#1{\href{https://doi.org/#1}{doi:\nolinkurl{#1}}}
 %    \end{macrocode}
 %
 % \end{macro}
