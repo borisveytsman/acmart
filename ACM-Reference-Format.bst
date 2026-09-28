@@ -2156,7 +2156,12 @@ FUNCTION { output.issue.doi.coden.isxn.lccn.url.eprint }
   after.block 'output.state :=
 
   output.issue
-  output.isbn
+  doi empty.or.unknown
+    {
+      output.isbn
+    }
+    { }
+  if$
   output.coden  % CODEN is functionally like ISSN, so output them sequentially
   output.issn
   output.lccn
