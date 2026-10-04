@@ -14,25 +14,25 @@ all:  ${PDF}
 	cd samples && ${MAKE} $@
 
 %.pdf:  %.dtx   $(PACKAGE).cls
-	pdflatex $<
+	lualatex $<
 	- bibtex $*
-	pdflatex $<
+	lualatex $<
 	- makeindex -s gind.ist -o $*.ind $*.idx
 	- makeindex -s gglo.ist -o $*.gls $*.glo
-	pdflatex $<
+	lualatex $<
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $*.log) \
-	do pdflatex $<; done
+	do lualatex $<; done
 
 
 acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
-	pdflatex -jobname acmguide $(PACKAGE).dtx
+	lualatex -jobname acmguide $(PACKAGE).dtx
 	- bibtex acmguide
-	pdflatex -jobname acmguide $(PACKAGE).dtx
+	lualatex -jobname acmguide $(PACKAGE).dtx
 	while ( grep -q '^LaTeX Warning: Label(s) may have changed' acmguide.log) \
-	do pdflatex -jobname acmguide $(PACKAGE).dtx; done
+	do lualatex -jobname acmguide $(PACKAGE).dtx; done
 
 %.cls:   %.ins %.dtx
-	pdflatex $<
+	lualatex $<
 
 
 tagged:

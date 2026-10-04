@@ -84,20 +84,14 @@
 % profession.  It was one of the
 % early adopters of \TeX\ for its typesetting.
 %
-% It provided several different classes for a number of journals and
-% conference proceedings.  Unfortunately during the years since these
-% classes were written, the code was patched many times, and
-% supporting different versions of the classes became difficult.
+% This consolidated template package replaces all previous independent
+% class files and packages and provides a single up-to-date \LaTeX\
+% class. The package uses only free \TeX\ packages and fonts included
+% in \TeX Live, Mik\TeX\ and other popular \TeX\ distributions.
 %
-% This new consolidated template package replaces all previous
-% independent class files and packages and provides a single
-% up-to-date LaTeX package with optional calls. The package uses only
-% free \TeX\ packages and fonts included in \TeX Live, Mik\TeX\ and
-% other popular \TeX\ distributions. The new ACM templates use a new
-% font set (libertine) which will need to be installed on your machine
-% before using the templates. Please download and install the
-% libertine font set before writing your paper. Fonts used in the
-% template cannot be substituted; margin adjustments are not allowed. 
+% ACM strictly adheres to its brand identity in all publications.
+% Thus the fonts used in the template cannot be substituted; margin
+% adjustments and other style changes are not allowed.
 %
 %  I am grateful to
 %  Michael D.~Adams,
@@ -164,11 +158,12 @@
 %
 %
 % This class uses many commands and customizaton options, so it might
-% appear intimidating for a casual user.  Do not panic!  Many of these
-% commands and options can be safely left with their default values
-% or the values recommended by your conference or journal editors.  If
-% you have problems or questions, do not hesitate to ask me directly
-% or the community at \url{https://github.com/borisveytsman/acmart},
+% appear intimidating for a casual user.  Do not
+% panic~\cite{adams1981hitchhiker}! Many of these commands and options
+% can be safely left with the values recommended by your conference
+% committee or journal editors.  If you have problems or questions, do
+% not hesitate to ask me directly or the community at
+% \url{https://github.com/borisveytsman/acmart},
 % \url{https://tex.stackexchange.com} or the closest \TeX\ Users
 % Group.  The world-wide \TeX\ Users Group is at
 % \url{https://tug.org/}; please consider joining us if you use \TeX\
@@ -261,7 +256,19 @@
 %\subsection{Invocation and options}
 %\label{sec:invocation}
 %
-% To use this class, put in the preamble of your document
+% ACM is committed to prodicing accessible tagged PDF (see more
+% details in Section~\ref{sec:ug-tagging}).  Thus we recommend to
+% start the file with the \cs{DocumentMetadata} command,
+% \begin{verbatim}
+% \DocumentMetadata{
+%  pdfversion=2.0,pdfstandard=ua-2,
+%  tagging=on,
+%  tagging-setup={math/setup=mathml-SE},
+%  lang = en
+%  }
+% \end{verbatim}
+%
+% The class itself is invoked by the command
 % \begin{quote}
 %   \cs{documentclass}\oarg{options}|{acmart}|
 % \end{quote}
@@ -274,7 +281,8 @@
 %
 %
 % The option |format| describes the format of the output.  There are
-% several possible values for this option, for example,
+% several possible values for this option, listed in
+% Table~\ref{tab:opts_format}. 
 % \begin{verbatim}
 %   \documentclass[format=acmtog]{acmart}
 % \end{verbatim}
@@ -282,27 +290,32 @@
 % \begin{verbatim}
 %   \documentclass[acmtog, review=false]{acmart}
 % \end{verbatim}
-% The possible formats are listed in Table~\ref{tab:opts_format}.
 % Note that formats starting with |acm| are intended for journals,
 % transactions, and course materials, while formats starting with
 % |sig| are intended for proceedings published as books.
 %
-% Sometimes conference proceedings are published as a special issue
-% (or issues) of an ACM journal.  In this case, you should use the
-% journal format.  The templates |sample-acmsmall-conf.tex| and
-% |sample-acmtog-conf.tex| show how to enter conference information.
-% Note that you need to comment out |\acmJournal{...}| line for such
-% papers to get the conference information in the footers and headers.
-% The |acmtog| format then puts the conference name, date and venue
-% into the footers instead of the journal name, volume, issue and
-% article number.  The |acmsmall| format uses the headers and footers
-% of the proceedings formats: the conference name, date and venue in
-% the headers, and no folios, since the page numbers of such a paper
-% are assigned by the proceedings rather than by the article.  If you
-% do want the folios, say |\settopmatter{printfolios=true}| after
-% \cs{acmConference}.  Both formats keep the journal authors block and
-% the footnote with the authors' contact information, since these
-% formats do not print the contact information in the authors block.
+% Sometimes conference proceedings are published not as a book, but as
+% a special issue (or issues) of an ACM journal.  In this case, you
+% should use the journal format.  The templates
+% |sample-acmsmall-conf.tex| and |sample-acmtog-conf.tex| show how to
+% enter conference information.  Note that you need to comment out
+% |\acmJournal{...}| line for such papers to get the conference
+% information in the footers and headers.  The |acmtog| format then
+% puts the conference name, date and venue into the footers instead of
+% the journal name, volume, issue and article number.  The |acmsmall|
+% format uses the headers and footers of the proceedings formats: the
+% conference name, date and venue in the headers, and no folios, since
+% the page numbers of such a paper are assigned by the proceedings
+% rather than by the article.  If you do want the folios, say
+% |\settopmatter{printfolios=true}| after \cs{acmConference}.  Both
+% formats keep the journal authors block and the footnote with the
+% authors' contact information, since these formats do not print the
+% contact information in the authors block.
+%
+% Two formats in Table~\ref{opts_format}, |acmengage| and |acmcp| are
+% used for special ACM publications.  They are described in
+% Secitons~\ref{sec:ug_engage} and~\ref{sec:ug_acmcp}
+% below.  
 %
 % \begin{table}
 %   \centering
@@ -338,14 +351,7 @@
 %   \bottomrule
 %   \end{tabularx}
 % \end{table}
-%
-% Starting in 2020, ACM retired formats |sigchi| and |sigchi-a|.
-% SIGCHI conferences now use |sigconf| format for their publications.
-% If a file uses |sigchi| format, a warning is issued, and the format
-% is automatically switched to |sigconf|.  Format |sigchi-a| can be
-% used for non-ACM documents only (see Section~\ref{sec:sigchi-a}).
-% The format |acmcp| is used for ACM cover pages discussed in
-% Section~\ref{sec:ug_acmcp}.
+% 
 %
 %
 % There are several Boolean options that can take |true| or |false|
@@ -361,14 +367,9 @@
 %
 % Two samples in the |samples| directory, |manuscript| and
 % |acmsmall-submission|, show manuscripts formatted for submission to
-% ACM.
+% reviewers.
 %
-% The default for the option |screen| depends on the publication.  At
-% present it is |false| for all publications \emph{but} PACM, since
-% PACM is now electronic-only.  Thus PACM titles~(see
-% Table~\ref{tab:pubs}) set this option to |true|.  In the future this
-% option may involve additional features suitable for on-screen
-% versions of articles.
+% The option |screen| formats the publication for on-screen viewing.  
 %
 % The option |natbib| is used when the corresponding
 % \BibTeX\ style is based on |natbib|.  In most cases you do not need
@@ -384,12 +385,12 @@
 % confusing different revisions.  The footer also includes the page range of
 % the document.  This helps detect missing pages in hard copies.
 %
-% The option |authordraft| is intended for authors' drafts that are not
+% The option |authordraft| is for authors' drafts that are not
 % intended for distribution.  It typesets a copyright block to give the
 % author an idea of its size and the overall size of the paper but
 % overprints it with the phrase ``Unpublished working draft. Not for
 % distribution.'', which is also used as a watermark.  This option sets
-% |timestamp| and |review| to |true|, but these can be
+% |timestamp| and |review| to |true|, but thiss can be
 % overriden by setting these options to |false| \emph{after}
 % setting |authordraft| to |true|.
 %
@@ -397,15 +398,15 @@
 % column mode has balanced columns.  By default it is |true|; however,
 % it may lead to problems for some documents.  When there are many
 % figures near the end of the document, the attempts to balance
-% columns may lead to the loss of the figures.  Set this option to |false| if
-% you encounter problems.   An alternative is the
-% (experimental) option |pbalance|, which uses the new package
-% |pbalance|.  You may want to try |pbalance=true| to see if you get
-% better results.  
+% columns may lead to the loss of the figures.  Set this option to
+% |false| if you encounter problems.  An alternative is the
+% (experimental) option |pbalance|, which uses the newer package
+% |pbalance|.  If you have problems with |balance|, you may want to try
+% |pbalance=true| to see if you get better results.
 %
 % The option |urlbreakonhyphens| determines whether URLs can be split
 % between lines after hyphens.  By default it is true.  Set it to
-% |false| to disallow these breaks.
+% |false| to disallow such breaks.
 %
 % \begin{table}
 %   \centering
@@ -417,7 +418,7 @@
 %     \midrule
 %     review & false & A review version: lines are numbered and
 %     hyperlinks are colored\\
-%     screen & {\rmfamily see text} & A screen version:
+%     screen & true & A screen version:
 %     hyperlinks are colored\\
 %     natbib & true & Whether to use the |natbib| package (see
 %     Section~\ref{sec:ug_bibliography})\\
@@ -443,24 +444,21 @@
 %   \end{tabularx}
 % \end{table}
 %
-% The option |language| is used to define the languages for the
+% Lastly, the option |language| is used to define the languages for the
 % multi-language papers.  It is discussed in
 % Section~\ref{sec:ug_i13n}. 
 %
 %\subsection{Top matter}
 %\label{sec:ug_topmatter}
 %
-% A number of commands set up \emph{top matter} or (in
-% computer science jargon) \emph{metadata} for an article.  They
+% A number of commands set up \emph{top matter} (or in
+% computer science jargon, \emph{metadata}) for the article.  They
 % establish the publication name, article title, authors, DOI and
 % other data.  Some of these commands, like \cs{title} and \cs{author},
 % should be put by the authors.  Others, like \cs{acmVolume} and
 % \cs{acmDOI}---by the editors.  Below we describe these commands and
-% mention who should issue them.  These macros should be used
-% \emph{before} the \cs{maketitle} command.  Note that in previous
-% versions of ACM classes some of these commands should be used before
-% \cs{maketitle}, and some after it. Now they all must be used before
-% \cs{maketitle}.
+% mention who should issue them.  These commands should be entered
+% \emph{before} the \cs{maketitle} command.  
 %
 %
 % This class internally loads the |amsart| class, so many top-matter
@@ -476,7 +474,7 @@
 % \end{verbatim}
 % The currently recognized journals are listed in
 % Table~\ref{tab:pubs}.  Note that conference proceedings published in
-% \emph{book} form do not set this macro.
+% \emph{book} form should not use this macro.
 %
 %
 %
@@ -499,12 +497,12 @@
 % \end{verbatim}
 %
 % \DescribeMacro{\acmBooktitle}%
-% By default we assume that conference proceedings are published
+% By default conference proceedings are published
 % in the book named \emph{Proceedings of \textsc{CONFERENCE}}, where
 % \textsc{CONFERENCE} is the name of the conference inferred from the
 % command \cs{acmConference} above.  However, sometimes the book title
-% is different.  The command \cs{acmBooktitle} can be used to set this
-% title, for example,
+% is different.  The command \cs{acmBooktitle} can be used to override
+% the inferred title, for example,
 % \begin{verbatim}
 % \acmBooktitle{Companion to the first International Conference on the
 % Art, Science and Engineering of Programming (Programming '17)}
@@ -552,8 +550,8 @@
 % manuscript.
 %
 % \DescribeMacro{\subtitle}%
-% Besides title, ACM classes allow a subtitle, set with the
-% \cs{subtitle}\marg{subtitle} macro.
+% Besides title, ACM allows an optional subtitle, defined by the
+% \cs{subtitle}\marg{subtitle} macro. 
 %
 % The commands for specifying authors are highly structured.
 % The reason is they serve double duty:  the authors' information is
@@ -592,7 +590,7 @@
 %
 %
 % Sometimes an author has several affiliations.  In this case, the
-% \cs{affiliation} command should be repeated:
+% \cs{affiliation} command might be repeated:
 % \begin{verbatim}
 % \author{...}
 % \orcid{...}
@@ -600,10 +598,11 @@
 % \affiliation{...}
 % \email{...}
 % \end{verbatim}
-% Similarly you can repeat the \cs{email} command.
+% Similarly you may repeat the \cs{email} command.
 %
 % You may have several authors with the same affiliation, different
-% affiliations, or overlapping affiliations (author~$A_1$ is affiliated
+% affiliations for the same author,
+% or overlapping affiliations (for example, author~$A_1$ is affiliated
 % with institutions $I_1$ and $I_2$, while author $A_2$ is affiliated
 % with $I_2$ only, author $A_3$ is affiliated with
 % $I_1$ and $I_3$, etc.).  The recommended solution is to put the
@@ -670,7 +669,7 @@
 % \cs{institution}, \cs{department}, \cs{city}, 
 % \cs{state}, and \cs{country} macros to indicate the
 % corresponding parts of the affiliation.  Note that in some cases
-% (for example, journals) these parts are not printed in the resulting
+% these parts are not printed in the resulting
 % copy, but they \emph{are} necessary since they are used by the XML
 % metadata extraction programs.  Do \emph{not} put commas or |\\|
 % between the elements of \cs{affiliation}.  They will be provided
@@ -717,10 +716,6 @@
 %   \state{NSW}
 %   \country{Australia}}
 % \end{verbatim}
-%
-% Note that the old ACM conference formats did not allow more than six
-% authors and required some effort from authors to achieve
-% alignment.  The new format is much better in this.
 %
 %  Sometimes an author works in several departments within the same
 %  insitution.  There could be two situations: the departments are
@@ -798,8 +793,7 @@
 % \end{verbatim}
 %
 % Please never use a \cs{footnote} inside an \cs{author} or \cs{title}
-% command since this confuses the metadata extraction software.  (Actually
-% these commands now produce errors.)
+% command since this confuses the metadata extraction software.  
 %
 %
 % \DescribeMacro{\authornotemark}%
@@ -964,8 +958,9 @@
 % There are several possibilities for the copyright of the papers
 % published by the ACM: the authors may license the paper 
 % to the ACM, some or all authors might be employees of the
-% US or Canadian governments, etc.  Accordingly the command
-% \verb|\setcopyright{...}| is introduced.  Its argument is the
+% US or Canadian governments, etc.  The command
+% \verb|\setcopyright{...}| is used to describe the copyright
+% information.  Its argument is the 
 % copyright status of the paper, for example,
 % \verb|\setcopyright{acmcopyright}|.  The possible values for this
 % command are listed in Table~\ref{tab:setcopyright}.  This command
@@ -1058,23 +1053,23 @@
 % \cs{copyrightyear} command to tell \TeX\ about the copyright owner and
 % year.  Also, you should be aware that due to the different sizes of
 % the permssion blocks for the printed version and authors' version,
-% the page breaks might be different between them.
+% the page breaks might be different too.
 %
 % \DescribeEnv{abstract}%
 % The environment |abstract| must \emph{precede} the \cs{maketitle}
-% command.  Again, this is different from the standard \LaTeX.
+% command.  This is different from the standard \LaTeX.
 % Putting |abstract| after \cs{maketitle} will trigger an error.
 %
 %
 % \DescribeEnv{teaserfigure}%
-% A special kind of figure is used for many two-column conference
+% A special kind of figure is used for some two-column conference
 % proceedings.  This figure is placed just after the authors but
 % before the main text.  The environment |teaserfigure| is used for these
 % figures.  This environment must be used \emph{before}
 % \cs{maketitle}, for example,
 % \begin{verbatim}
 % \begin{teaserfigure}
-%   \includegraphics[width=\textwidth]{sampleteaser}
+%   \includegraphics[width=\textwidth, alt={Teaser figure}]{sampleteaser}
 %   \caption{This is a teaser}
 %   \label{fig:teaser}
 % \end{teaserfigure}
@@ -1321,7 +1316,7 @@
 % \cs{keywords}, |abstract|) for the main language of the paper.  
 %
 %
-%\subsection{Tagging}
+%\subsection{Accessibility and tagging}
 %\label{sec:ug-tagging}
 %
 %
@@ -1342,15 +1337,15 @@
 %  tagging-setup={math/setup=mathml-SE} 
 % }
 % \end{verbatim}
-% You must use \texttt{lualatex} to make the document fully tagged.
-% For some features you may need \texttt{lualatex-dev}.
+% It is recommended to use \texttt{lualatex} to make the document
+% fully tagged.  For some features you may need \texttt{lualatex-dev}.
 %
-%
-%
-% At present this code is still experimental.  If you use it, please
-% \emph{do not ask ACM for support}.  On the other hand, bug reports
-% at \url{https://github.com/borisveytsman/acmart/issues} will be
-% appreciated.
+% In particular, accessible documents should have text description of
+% all graphical materials, for example
+% \begin{verbatim}
+% \includegraphics[width=\columnwidth, alt={photo of a Ford model T
+% car}]{ford} 
+% \end{verbatim}
 %
 %
 %\subsection{Algorithms}
@@ -2331,6 +2326,9 @@
 % |sample-acm...| are templates for journal articles and special
 % materials.
 %
+% All samples have \cs{DocumentMetadata} command and are set to
+% produce tagged PDF (see Section~\ref{sec:ug-tagging} above).
+%
 % Here is the list of the samples:
 % \begin{description}
 % \item[acmmanuscript:] A proceedings paper in the manuscript format.
@@ -2357,52 +2355,9 @@
 % format for the publication in a journal using this option.
 % \item[acmcp:] A sample of ACM Cover Page used by JDS.
 % \item[acmengage:] A sample of ACM Engage publication.
-% \item[acmsmall-tagged:] A journal paper in the |acmsmall| format
-% with the tagging code, see Section~\ref{sec:ug-tagging}.
-% \item[sigconf-tagged:] A proceedings paper in the standard |sigconf|
-% format with the tagging code, see Section~\ref{sec:ug-tagging}.
 % \end{description}
 %
 %
-%
-%\subsection{A note about \texttt{sigchi-a} format}
-%\label{sec:sigchi-a}
-%
-% Starting in Spring 2020 ACM retired SIGCHI Extended Abstract format
-% (|sigchi-a|).  ACM will not, under any circumstances, accept
-% documents in this format for publication and will not offer
-% technical support to the authors who use this template.
-%
-% You may use this format in the |nonacm| mode only, as in
-% \begin{verbatim}
-% \documentclass[sigchi-a, nonacm]{acmart}
-% \end{verbatim}
-%
-%
-%
-% \DescribeEnv{sidebar}%
-% \DescribeEnv{marginfigure}%
-% \DescribeEnv{margintable}%
-% This format has large margin uses for special figures and
-% tables. This package provides three environments for this with
-% optional captions:
-% \begin{description}
-% \item[sidebar:] textual information in the margin,
-% \item[marginfigure:] a figure in the margin,
-% \item[margintable:] a table in the margin.
-% \end{description}
-%
-% The environments |figure| and |table| produce figures and tables
-% with the width of the text column.  The environments |figure*| and
-% |table*| produce ``wide'' figures and tables, which take a large
-% part of the margin.
-%
-% The horizontal sizes of figures are:
-% \begin{enumerate}
-% \item |figure|:  \cs{columnwidth},
-% \item |marginfigure|: \cs{marginparwidth},
-% \item |figure*|: \cs{fulltextwidth}.
-% \end{enumerate}
 %
 %
 %
@@ -2430,7 +2385,7 @@
 %</gobble>
 %<class&!tagged>\ProvidesClass{acmart}
 %<tagged>\ProvidesClass{acmart-tagged}
-[2026/08/30 v2.21 Typesetting articles for the Association for Computing Machinery]
+[2026/10/04 v2.21 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2562,10 +2517,24 @@
 % And the driver code:
 %    \begin{macrocode}
 %<*gobble>
+\DocumentMetadata{
+ pdfversion=2.0,pdfstandard=ua-2,
+ tagging=on,
+ tagging-setup={math/setup=mathml-SE},
+ lang = en
+ }
 \documentclass{ltxdoc}
-\usepackage{array,booktabs,amsmath,graphicx,fancyvrb,tabularx, longtable}
+\usepackage{array,booktabs,amsmath,graphicx,fancyvrb,tabularx,
+  longtable}
+\usepackage{iftex}
+\ifpdftex
 \usepackage[tt=false, type1=true]{libertine}
 \usepackage[varqu]{zi4}
+\else
+\usepackage{fontspec}
+\usepackage[tt=false]{libertine}
+\setmonofont[StylisticSet=3]{Inconsolatazi4}
+\fi
 \usepackage[libertine]{newtxmath}
 \usepackage[tableposition=top]{caption}
 \usepackage{hypdoc}
@@ -7171,34 +7140,41 @@
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.73}{2020/09/07}{Check the presence in affil}
+% \end{macro}
 % \begin{macro}{\position}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
+% \end{macro}
 % \begin{macro}{\department}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.30}{2017/02/10}{Added optional parameter}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
+% \end{macro}
 % \begin{macro}{\streetaddress}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/15}{We now do not print this even in SIG}
 % \changes{v2.06}{2024/04/13}{We now do not collect postal information
 % anymore}
+% \end{macro}
 % \begin{macro}{\city}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/15}{We now do not print this even in SIG}
 % \changes{v1.73}{2020/09/07}{Check the presence in affil}
+% \end{macro}
 % \begin{macro}{\state}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/15}{We now do not print this even in SIG}
+% \end{macro}
 % \begin{macro}{\postcode}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/15}{We now do not print this even in SIG}
 % \changes{v2.06}{2024/04/13}{We now do not collect postal information
 % anymore}
+% \end{macro}
 % \begin{macro}{\country}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
@@ -7241,13 +7217,6 @@
 \fi
 %    \end{macrocode}
 %
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\@mkauthors}
