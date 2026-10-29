@@ -14,11 +14,7 @@
 %TC:envir comment 0 0
 %TCMACROS
 %% 
-%</all>
-%<*tagged>
 %% The tagged file should start with the metadata commands.
-%% We also need currently use lualatex-dev for compilation!
-\ifx\HCode\Undef
 \DocumentMetadata{
  pdfversion=2.0,pdfstandard=ua-2,
  testphase=latest,
@@ -26,12 +22,8 @@
  tagging-setup={math/setup=mathml-SE},
  lang = en
  }
-\else
-\DocumentMetadata{}
-\fi
-%</tagged>
-%<*all>
-%% The first command in your LaTeX source must be the \documentclass
+%% The first command in your LaTeX source after \MetaData
+% must be the \documentclass
 %% command.
 %%
 %% For submission and review of your manuscript please change the
@@ -385,13 +377,10 @@
 %% information and the body of the document, and typically spans the
 %% page.
 \begin{teaserfigure}
-%<!tagged> \includegraphics[width=\textwidth]{sampleteaser}
-%<tagged> \includegraphics[width=\textwidth,
-%<tagged> alt={Enjoying the baseball game from the third-base
-%<tagged>  seats. Ichiro Suzuki preparing to bat.}]{sampleteaser}
+ \includegraphics[width=\textwidth,
+ alt={Enjoying the baseball game from the third-base
+  seats. Ichiro Suzuki preparing to bat.}]{sampleteaser}
   \caption{Seattle Mariners at Spring Training, 2010.}
-%<!tagged>  \Description{Enjoying the baseball game from the third-base
-%<!tagged>  seats. Ichiro Suzuki preparing to bat.} 
   \label{fig:teaser}
 \end{teaserfigure}
 %</sigconf|sigplan|conf>
@@ -406,11 +395,6 @@
 %% information and builds the first part of the formatted document.
 \maketitle
 
-%<*tagged>
-% Normally papers do not have table of contents.  Here we insert it to
-% test tagging code...
-%\tableofcontents
-%</tagged>
 
 \section{Introduction}
 ACM's consolidated article template, introduced in 2017, provides a
@@ -491,7 +475,7 @@ This document uses the following string as the first command in the
 source file:
 \begin{verbatim}
 %<manuscript>\documentclass[manuscript,screen,review]{acmart}
-%<acmsmall&!(tagged|submission|biblatex)>\documentclass[acmsmall]{acmart}
+%<acmsmall&!(submission|biblatex)>\documentclass[acmsmall]{acmart}
 %<acmsmall&submission>\documentclass[acmsmall,screen,anonymous,review]{acmart}
 %<acmsmall&biblatex>\documentclass[acmsmall,natbib=false]{acmart}
 %<acmlarge>\documentclass[acmlarge]{acmart}
@@ -504,7 +488,6 @@ source file:
 %<sigconf&i13n>\documentclass[sigconf, language=french,
 %<sigconf&i13n>language=german, language=spanish, language=english]{acmart}
 %<acmcp>\documentclass[acmcp]{acmart}
-%<acmsmall&tagged>\documentclass[acmsmall]{acmart-tagged}
 \end{verbatim}
 
 
@@ -778,14 +761,12 @@ third-party material, you must clearly identify it as such, as shown
 in the example below.
 \begin{figure}[h]
   \centering
-%<!tagged> \includegraphics[width=\linewidth]{sample-franklin}
-%<tagged> \includegraphics[width=\linewidth,
-%<tagged> alt={A woman and a girl in white dresses sit in
-%<tagged> an open car.}]{sample-franklin}
+ \includegraphics[width=\linewidth,
+ alt={A woman and a girl in white dresses sit in
+ an open car.}]{sample-franklin}
   \caption{1907 Franklin Model D roadster. Photograph by Harris \&
     Ewing, Inc. [Public domain], via Wikimedia
     Commons. (\url{https://goo.gl/VLCRBB}).}
-%<!tagged>  \Description{A woman and a girl in white dresses sit in an open car.}
 \end{figure}
 
 Your figures should contain a caption which describes the figure to
@@ -822,11 +803,9 @@ figure in your article, place the command immediately before the
 \verb|\maketitle| command:
 \begin{verbatim}
   \begin{teaserfigure}
-%<!tagged> \includegraphics[width=\textwidth]{sampleteaser}
-%<tagged> \includegraphics[width=\textwidth,
-%<tagged> alt={figure description}]{sampleteaser}
+ \includegraphics[width=\textwidth,
+ alt={figure description}]{sampleteaser}
     \caption{figure caption}
-%<!tagged>    \Description{figure description}
   \end{teaserfigure}
 \end{verbatim}
 
