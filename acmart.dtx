@@ -1271,7 +1271,7 @@
 %
 % This key can use any language defined in \textsl{babel}
 % package~\cite{Braams22:Babel} (currently the package is tested with
-% English, French, German and Spanish languages.  If \cs{keywords} are
+% English, French, German and Spanish languages).  If \cs{keywords} are
 % used, then other languages may
 % require a translation of \cs{keywordsname} macro).  Actually
 % \textsl{acmart} loads \textsl{babel} internally, so you can use  the
@@ -1315,13 +1315,15 @@
 % Use the standard commands (\cs{title}, \cs{subtitle},
 % \cs{keywords}, |abstract|) for the main language of the paper.  
 %
+% Note that |lang| key in \cs{DocumentMetadata} command should
+% correspond to the main language of the paper.
 %
 %\subsection{Accessibility and tagging}
 %\label{sec:ug-tagging}
 %
 %
 % ACM is firmly committed to produce fully tagged PDFs compliant with
-% the accessibility standards.
+% US ADA and EAA accessibility guidelines.
 % 
 % The \LaTeX\ tagging project,
 % \url{https://latex3.github.io/tagging-project/} is aimed to create
@@ -1337,11 +1339,12 @@
 %  tagging-setup={math/setup=mathml-SE} 
 % }
 % \end{verbatim}
-% It is recommended to use \texttt{lualatex} to make the document
-% fully tagged.  For some features you may need \texttt{lualatex-dev}.
+% You need to use \texttt{lualatex} to make the document fully
+% tagged and the PDF as accessible as possible.For some features you may
+% need \texttt{lualatex-dev}.
 %
-% In particular, accessible documents should have text description of
-% all graphical materials, for example
+% In particular, accessible documents should have alt text description of
+% all figures and other graphics, for example
 % \begin{verbatim}
 % \includegraphics[width=\columnwidth, alt={photo of a Ford model T
 % car}]{ford} 
@@ -2385,7 +2388,7 @@
 %</gobble>
 %<class&!tagged>\ProvidesClass{acmart}
 %<tagged>\ProvidesClass{acmart-tagged}
-[2026/10/29 v2.21 Typesetting articles for the Association for Computing Machinery]
+[2026/11/01 v2.21 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}

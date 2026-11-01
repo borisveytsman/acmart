@@ -53,7 +53,7 @@ docclean:
 
 
 clean: docclean
-	$(RM)  $(PACKAGE).cls $(PACKAGE)-tagged.cls 
+	$(RM)  $(PACKAGE).cls *.html
 	cd samples && ${MAKE} $@
 
 distclean: clean
