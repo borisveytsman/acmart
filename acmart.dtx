@@ -1588,6 +1588,10 @@
 % |\begin{anonsuppress}| and |\end{anonsuppress}| should start on a
 % line of their own with no leading or trailing spaces.
 %
+% In anonymous mode the names of citation link targets in the PDF
+% are replaced by |cite.1|, |cite.2|, \dots, so the bibliography
+% keys do not leak.
+%
 % \DescribeMacro{\anon}%
 % To suppress short snippets of information, use the command
 % \cs{anon}\oarg{substitute}\marg{suppressed-text}.  By default
@@ -3626,11 +3630,25 @@
 % tries to load it inside a group}
 % \changes{2.04}{2024/03/31}{Deleted loading ifdraft due to the new
 % release of hyperxmp}
+% \changes{2.22}{2026/10/27}{Anonymized citation link targets in
+% anonymous mode}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
 \RequirePackage[bookmarksnumbered,unicode]{hyperref}
 \RequirePackage{hyperxmp}
+\if@ACM@anonymous
+\newcount\ACM@cite@nr
+\def\ACM@cite@map#1#2{\global\@namedef{ACM@cite@#1}{#2}}
+\AtBeginDocument{\let\ACM@destfilter\HyperDestNameFilter
+  \def\HyperDestNameFilter#1{\ACM@destfilter{\ifcsname ACM@cite@#1\endcsname
+    \csname ACM@cite@#1\endcsname\else#1\fi}}%
+  \let\ACM@anchorstart\hyper@anchorstart
+  \def\hyper@anchorstart#1{\in@{\relax cite.}{\relax#1}\ifin@
+    \global\advance\ACM@cite@nr\@ne\immediate\write\@auxout
+    {\string\ACM@cite@map{#1}{cite.\the\ACM@cite@nr}}\fi
+    \ACM@anchorstart{#1}}}
+\fi
 \pdfstringdefDisableCommands{%
   \def\addtocounter#1#2{}%
   \def\unskip{}%
