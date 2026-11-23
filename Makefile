@@ -63,11 +63,21 @@ distclean: clean
 #
 # Archive for the distribution. Includes typeset documentation
 #
-archive:  all clean
+.PHONY: check-bst-version
+check-bst-version:
+	@class_version=$$(sed -n 's/^\[[0-9/][0-9/]* v\([0-9][0-9.]*\) .*\][[:space:]]*$$/\1/p' $(PACKAGE).dtx); \
+	bst_version=$$(sed -n 's/^%%%[[:space:]]*acmart-version[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' ACM-Reference-Format.bst); \
+	if [ -z "$$class_version" ] || [ "$$bst_version" != "$$class_version" ]; then \
+	  printf 'ACM-Reference-Format.bst acmart-version must match %s.dtx (found "%s", expected "%s").\n' \
+	    '$(PACKAGE)' "$$bst_version" "$$class_version" >&2; \
+	  exit 1; \
+	fi
+
+archive:  check-bst-version all clean
 	COPYFILE_DISABLE=1 tar -C .. -czvf ../$(PACKAGE).tgz --exclude '*~' --exclude '*.tgz' --exclude '*.zip'  --exclude CVS --exclude '.git*' --exclude LICENSE $(PACKAGE); mv ../$(PACKAGE).tgz .
 
 # distros
-distros: all docclean
+distros: check-bst-version all docclean
 	zip -r acm-distro.zip  \
 	acmart.pdf acmguide.pdf samples *.cls ACM-Reference-Format.* LICENSE \
 	--exclude samples/sample-acmengage*
