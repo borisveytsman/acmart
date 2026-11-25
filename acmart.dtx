@@ -2388,7 +2388,7 @@
 %</gobble>
 %<class&!tagged>\ProvidesClass{acmart}
 %<tagged>\ProvidesClass{acmart-tagged}
-[2026/11/01 v2.21 Typesetting articles for the Association for Computing Machinery]
+[2026/11/24 v2.22 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -6035,6 +6035,15 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\@subject}
+% \changes{v2.22}{2026/11/24}{Introduced macro}
+% The storage macro for PDF subject
+%    \begin{macrocode}
+\let\@subject\@empty
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \begin{macro}{\ccsdesc}
 % \changes{v1.40}{2017/05/27}{Now we can parse |Significance~General| nodes}
 %   The first argument is the significance, the second is the
@@ -6055,11 +6064,19 @@
 % \changes{v1.56}{2018/10/23}{End the concepts list with a period
 % (Philip Quinn)}
 % \changes{v1.69}{2019/02/06}{Use math right arrow in text}
+% \changes{v2.22}{2026/11/24}{Compile \cs{@subject} separately from
+% \cs{@concepts}} 
 %   The parser of the expression |Significance~General~Specific| (we need
 %   |textcomp| for |\textrightarrow|).  Note that |Specific| can be empty!
 %    \begin{macrocode}
 \def\textrightarrow{$\rightarrow$}
 \def\ccsdesc@parse#1~#2~#3~{%
+  \g@addto@macro{\@subject}{#2}%
+  \edef\@tempa{|#3|}%
+  \edef\@tempb{||}%
+  \ifx\@tempb\@tempa\g@addto@macro{\@subject}{; }%
+  \else\g@addto@macro{\@subject}{ -> #3; }%
+  \fi
   \stepcounter{@concepts}%
   \expandafter\ifx\csname CCS@General@#2\endcsname\relax
     \expandafter\gdef\csname CCS@General@#2\endcsname{\textbullet\
@@ -6627,6 +6644,7 @@
 % \changes{v2.21}{2026/08/28}{The footnote with the authors' contact
 %   information no longer depends on the style of the bibstrip and the
 %   page headers}
+% \changes{v2.22}{2026/11/24}{Use of \cs{@subject}} 
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -6768,7 +6786,7 @@
   \hypersetup{%
     pdfauthor={\metadata@authors},
     pdftitle={\@title},
-    pdfsubject={\@concepts},
+    pdfsubject={\@subject},
     pdfkeywords={\@keywords},
     pdfcreator={LaTeX with acmart
       \csname ver@\@classname.cls\endcsname\space
