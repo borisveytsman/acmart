@@ -58,6 +58,7 @@ ENTRY
         url           % UTAH
         bookpages     % UTAH
         numpages
+        pagetotal
         lastaccessed  % UTAH: used only for @Misc{...}
         coden         % UTAH
         isbn          % UTAH
@@ -159,6 +160,16 @@ FUNCTION { empty.or.zero }
   duplicate$ empty$
     { pop$ #1 }
     { "0" = }
+  if$
+}
+
+FUNCTION { get.numpages }
+{
+  %% Fall back to BibLaTeX's pagetotal when it is supplied.
+  numpages empty.or.unknown
+  pagetotal missing$ not and
+    { pagetotal }
+    { numpages }
   if$
 }
 
@@ -487,7 +498,7 @@ FUNCTION { format.articleno }
   articleno empty.or.unknown eid empty.or.unknown and
      { "" }
      {
-        numpages empty.or.unknown
+        get.numpages empty.or.unknown
           { "articleno or eid field, but no numpages field, in "
             cite$ * warning$ }
           { }
@@ -998,26 +1009,26 @@ FUNCTION { reduce.pages.to.page.count }
   %% " p4 = " page.count * *
   %% " in " cite$ * * warning$
 
-  p1 p3 =   p2 "1" =   and   numpages empty.or.unknown   and
+  p1 p3 =   p2 "1" =   and   get.numpages empty.or.unknown   and
     { "INFO: reduced pages = [" pages * "] to numpages = [" * page.count * "]" * warning$ }
     {
-      numpages empty.or.unknown
+      get.numpages empty.or.unknown
         { pages }
-        { numpages }
+        { get.numpages }
       if$
       'page.count :=
     }
   if$
 
-  p1 "1" =   p3 empty.or.unknown   and   numpages empty.or.unknown   and
+  p1 "1" =   p3 empty.or.unknown   and   get.numpages empty.or.unknown   and
     {
       p2 'page.count :=
       "INFO: reduced pages = [" pages * "] to numpages = [" * page.count * "]" * warning$
     }
     {
-      numpages empty.or.unknown
+      get.numpages empty.or.unknown
         { pages }
-        { numpages }
+        { get.numpages }
       if$
       'page.count :=
     }
@@ -1486,7 +1497,7 @@ FUNCTION { format.pages }
 FUNCTION { format.pages.check.without.articleno }
 { %% format pages field only if articleno is absent
   %% Stack out: pages-specification
-  numpages missing$ pages missing$ and
+  get.numpages missing$ pages missing$ and
     { "page numbers missing in both pages and numpages fields in " cite$ * warning$ }
     { }
   if$
@@ -1495,9 +1506,9 @@ FUNCTION { format.pages.check.without.articleno }
     {
       pages missing$
         {
-	   numpages empty.or.unknown
+	   get.numpages empty.or.unknown
 	     {""}
-             { "\bibinfo{numpages}{" numpages * "}~pages" * }
+             { "\bibinfo{numpages}{" get.numpages * "}~pages" * }
 	  if$
 	}
         { format.pages }
@@ -1575,7 +1586,7 @@ FUNCTION { format.articleno.numpages }
       ""
     }
     {
-      numpages empty.or.unknown
+      get.numpages empty.or.unknown
         {
           pages empty.or.unknown
             {
@@ -1586,7 +1597,7 @@ FUNCTION { format.articleno.numpages }
             { reduce.pages.to.page.count }
           if$
         }
-        { numpages 'page.count := }
+        { get.numpages 'page.count := }
       if$
 
       %% The Article number is now handled in format.day.month.year because
@@ -1600,7 +1611,7 @@ FUNCTION { format.articleno.numpages }
 
 FUNCTION {calc.format.page.count}
 {
-  numpages empty.or.unknown
+  get.numpages empty.or.unknown
    {
      pages empty.or.unknown
         {
@@ -1609,7 +1620,7 @@ FUNCTION {calc.format.page.count}
         { reduce.pages.to.page.count }
      if$
    }
-   { numpages 'page.count := }
+   { get.numpages 'page.count := }
   if$
   format.page.count
 }
